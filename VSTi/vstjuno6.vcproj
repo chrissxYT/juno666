@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding = "Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.10"
+	Version="7.00"
 	Name="vstjuno6"
 	ProjectGUID="{0BE38C13-3D1F-4DB2-8D5E-AC1248551703}"
 	SccProjectName=""
@@ -71,13 +71,7 @@
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
 				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -139,24 +133,13 @@
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
 				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 	</Configurations>
-	<References>
-	</References>
 	<Files>
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
-			<File
-				RelativePath="juno_keyboard.cpp">
-			</File>
 			<File
 				RelativePath="VstJuno6.cpp">
 			</File>
@@ -166,15 +149,18 @@
 			<File
 				RelativePath="VstJuno6proc.cpp">
 			</File>
+			<File
+				RelativePath="juno_keyboard.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="">
 			<File
-				RelativePath="juno_keyboard.h">
+				RelativePath="VstJuno6.h">
 			</File>
 			<File
-				RelativePath="VstJuno6.h">
+				RelativePath="juno_keyboard.h">
 			</File>
 		</Filter>
 		<Filter
@@ -184,13 +170,13 @@
 				RelativePath="common\AEffect.h">
 			</File>
 			<File
-				RelativePath="common\aeffectx.h">
-			</File>
-			<File
 				RelativePath="common\AudioEffect.cpp">
 			</File>
 			<File
 				RelativePath="common\AudioEffect.hpp">
+			</File>
+			<File
+				RelativePath="common\aeffectx.h">
 			</File>
 			<File
 				RelativePath="common\audioeffectx.cpp">
