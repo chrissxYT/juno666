@@ -236,7 +236,7 @@ void Scheduler::scheduleSampleRate(GoObject *obj, bool schedule)
 }
 
 int running = 0;
-
+static Scheduler *sched;
 void Scheduler::start(DSPOutput *_dsp)
 {
     dsp = _dsp;
@@ -248,7 +248,7 @@ void Scheduler::start(DSPOutput *_dsp)
     running = 1;
 
 
-
+	sched = this;
     tickThread = CreateThread(NULL, 0, runSynth, NULL, 0, &ThreadID);
 
 //    pthread_create(&tickThread, NULL, (DWORD *()(void*)&runSynth, NULL);
@@ -278,11 +278,10 @@ void Scheduler::resume()
 //puts("ready");
 }
 
-extern Scheduler *schedule;
 
 DWORD CALLBACK runSynth(void *)
 {
-    schedule->run();
+    sched->run();
     /* not reached */
     return 0;
 }

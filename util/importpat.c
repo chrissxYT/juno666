@@ -20,11 +20,15 @@ unsigned char get3hex(FILE *in)
     return ((value1 << 4) + value2);
 }
 
-int loadPatFile(char *name, juno_patch *patch)
+int loadPatFile(char *listname, juno_patch *patch)
 {
-    FILE *in;
+    FILE *in,*list;
     int i;
-
+	int b;
+	int a;
+	int len;
+	char c;
+    char pname[40];
     double lfo_rate;
     double lfo_delay;
     double dco_lfo;
@@ -45,37 +49,83 @@ int loadPatFile(char *name, juno_patch *patch)
     unsigned char sw1;
     unsigned char sw2;
 
-    in = fopen(name, "rb");
-    if (in == NULL)
+	
+
+    list = fopen(listname, "rb");
+    if (list == NULL)
         return -1;
-
-    for (i = 0; i < NUM_PATCHES; i++)
+next:;
+	for (i=0;i<40;i++)
+	{
+	b = getc(list);
+	if (b==EOF)
+	{
+		puts("done");
+		return;
+	}
+	if (b==0xd)
+	{
+		getc(list);
+		pname[i]=0;
+		goto readit;
+	}
+	pname[i] = b;
+	}
+   
+readit:;
     {
-        char *name = patch[i].name;
-        char c = 0;
-        int len = 0;
+		
+        char *name = pname;
+		printf("reading %s\n",name);
+		in=fopen(name,"rb");
+		if (in==NULL)
+		{
+			puts("error");
+			return;
+		}
+		fseek(in,4,SEEK_SET);
+		i=getc(in);
+        c = 0;
+        len = 0;
 
-        patch[i].version = 1;
+        
+		if (patch[i].used)
+		{
+		puts("patch already assigned, search another slot");
+		for (a =0;a<NUM_PATCHES;a++)
+		    {
+			if (!patch[a].used)
+			{
+				i = a;
+				printf("new slot %d\n",i);
+				break;
+			}
+			}
+		}
+		patch[i].version = 1;
         patch[i].used = 1;
-
-        lfo_rate = get3hex(in);
-        lfo_delay = get3hex(in);
-        dco_lfo = get3hex(in);
-        dco_pwm = get3hex(in);
-        dco_noise = get3hex(in);
-        vcf_frq = get3hex(in);
-        vcf_res = get3hex(in);
-        vcf_env = get3hex(in);
-        vcf_lfo = get3hex(in);
-        vcf_kbd = get3hex(in);
-        vca_level = get3hex(in);
-        env_attack = get3hex(in);
-        env_decay = get3hex(in);
-        env_sustain = get3hex(in);
-        env_release = get3hex(in);
-        dco_sub = get3hex(in);
-        sw1 = get3hex(in);
-        sw2 = get3hex(in);
+		for (a=0;a<strlen(name);a++)
+		{
+			patch[i].name[a] = name[a];
+		}
+        lfo_rate = getc(in);
+        lfo_delay = getc(in);
+        dco_lfo = getc(in);
+        dco_pwm = getc(in);
+        dco_noise = getc(in);
+        vcf_frq = getc(in);
+        vcf_res = getc(in);
+        vcf_env = getc(in);
+        vcf_lfo = getc(in);
+        vcf_kbd = getc(in);
+        vca_level = getc(in);
+        env_attack = getc(in);
+        env_decay = getc(in);
+        env_sustain = getc(in);
+        env_release = getc(in);
+        dco_sub = getc(in);
+        sw1 = getc(in);
+        sw2 = getc(in);
   
 
 //get switches flag 1
@@ -159,20 +209,11 @@ int loadPatFile(char *name, juno_patch *patch)
 			patch[i].dco_noise==0)
 			printf("patch %d: warning, no generator is active\n",i+1);
 
-
-        c = getc(in);
-
 //read the name of the patch till the end of the line
-        while ( c != 0xa )
-        {
-            if ( len < PATCH_NAME_LEN && c!=0xd)
-            {
-                *name++ = c;
-            }
-            c = getc(in);
-            len++;
-        }
+   
+		fclose(in);
     }
+	goto next;
 }
 
 int

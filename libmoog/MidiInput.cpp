@@ -129,12 +129,22 @@ nvoices(nv)
     for (int i = 0;i < nvoices;i++)
     {
         voices[i].note = -1;
-        sprintf(tmpname, "voice%d_pitch", i);
-   
-		voices[i].pitchOutput = jc->getOutput(tmpname);//addOutput(tmpname, false);
-        sprintf(tmpname, "voice%d_gate", i);
         
-		voices[i].gateOutput = jc->getOutput(tmpname);//addOutput(tmpname, false);
+#ifdef TARGET_VST
+		sprintf(tmpname, "voice%d_pitch", i);
+		voices[i].pitchOutput = jc->getOutput(tmpname);
+#else
+		sprintf(tmpname, "sig%d", i);
+		voices[i].pitchOutput = addOutput(tmpname, false);
+#endif
+        
+#ifdef TARGET_VST       
+		sprintf(tmpname, "voice%d_gate", i);
+		voices[i].gateOutput = jc->getOutput(tmpname);
+#else
+		sprintf(tmpname, "amp%d", i);
+		voices[i].gateOutput = addOutput(tmpname, false);
+#endif
     }
 
 	addInput("hold_switch", midi_holdChanged, 0, 1);

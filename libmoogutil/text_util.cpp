@@ -19,7 +19,7 @@
  * Copyright (c) 1998 Cobite, Inc. All Rights Reserved.
  * @author Karl LaRocca
  * @created Fri Nov  6 14:33:29 1998
- * @version $Revision: 1.3 $$Date: 2004/03/31 12:01:19 $
+ * @version $Revision: 1.4 $$Date: 2004/04/21 09:58:15 $
  */
 #include <ctype.h>
 #include <string.h>
@@ -28,7 +28,7 @@
 #include "text_util.h"
 #include "rcsid.h"
 
-//RCSID("$Id: text_util.cpp,v 1.3 2004/03/31 12:01:19 brainslayer Exp $");
+//RCSID("$Id: text_util.cpp,v 1.4 2004/04/21 09:58:15 brainslayer Exp $");
 
 char *
 chop(char *src)
@@ -88,8 +88,8 @@ lower_case(char *src)
 char *
 reverse(char *src)
 {
-	int i;
-	int len = strlen(src);
+	size_t i;
+	size_t len = strlen(src);
 	char tmp;
 
 	for (i = len / 2;--i >= 0;)
@@ -191,7 +191,7 @@ cents2money(long cents)
 	{
 		while (cents > 0)
 		{
-			*d++ = '0' + (cents % 10);
+			*d++ = (char)('0' + (cents % 10));
 			cents = cents / 10;
 
 			if (idx == 1)

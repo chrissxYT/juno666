@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.9 $$Date: 2004/04/18 16:47:50 $
+ * $Revision: 1.10 $$Date: 2004/04/21 09:57:52 $
  */
 
 #include <stdio.h>
@@ -33,9 +33,6 @@
 
 String patchFileName;
 juno_patch *patches;
-MidiInput *midiInput = NULL;
-Scheduler *schedule;
-ConnectionManager *connection;
 
 #ifdef DOMAIN
 int main(int argc, char **argv)
@@ -64,16 +61,16 @@ int Juno666(int argc, char **argv)
     if (strcmp(numVoicesStr, "") != 0)
         numVoices = atoi(numVoicesStr);
 
-    schedule = new Scheduler();
+    Scheduler *schedule = new Scheduler();
 
-    connection = new ConnectionManager();
+    ConnectionManager *connection = new ConnectionManager();
 
     JunoControl *junoControl = new JunoControl(numVoices, schedule);
 
+	MidiInput *midiInput = new MidiInput(junoControl, numVoices, schedule);
+
     if (settings.getInt("devices", "use-midi"))
     {
-        midiInput = new MidiInput(junoControl, numVoices, schedule);
-
         if (midiInput->isOpen())
         {
             midiInput->start();
@@ -85,12 +82,12 @@ int Juno666(int argc, char **argv)
         }
     }
 
-    initSynth(junoControl, &settings, midiInput, numVoices);
+    initSynth(junoControl, &settings, midiInput,connection,schedule, numVoices);
 
     patches = juno_patchset_new();
     load_patches(patchFileName, patches);
 
-    JunoKeyboard *keyboard = new JunoKeyboard(numVoices, schedule, connection);
+	JunoKeyboard *keyboard = new JunoKeyboard(numVoices,junoControl, midiInput,schedule, connection);
     junoControl->MoogObject::getOutput("patch_change")->setData(0);
 
     puts("press any key to abort");

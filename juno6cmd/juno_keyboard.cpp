@@ -11,8 +11,6 @@ wrapper for keyboard functions, replaces GTK UI
 #include "juno_keyboard.h"
 
 extern Settings *settings;
-extern JunoControl *junoControl;
-extern MidiInput *midiInput;
 extern JunoKeyboard *keyboard;
 extern juno_patch *patches;
 
@@ -52,7 +50,7 @@ void JunoKeyboard_holdChanged(MoogObject *o, double data, long)
     ((JunoKeyboard *)o)->holdChanged(data);
 }
 
-
+JunoControl *junoControl;
 void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
 {
     if (userdata > NUM_PATCHES)
@@ -101,10 +99,11 @@ void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
 }
 
 int initz=0;
-JunoKeyboard::JunoKeyboard(int _numVoices, Scheduler *sched, ConnectionManager *conn):
+JunoKeyboard::JunoKeyboard(int _numVoices, JunoControl *ctl,MidiInput *midi,Scheduler *sched, ConnectionManager *conn):
 MoogObject(sched, conn),
 numVoices(_numVoices)
 {
+	junoControl = ctl;
     octaveTranspose = -1;
     keyTransposePressed = 0;
     keyTranspose = 0;
@@ -122,13 +121,13 @@ numVoices(_numVoices)
         tmp1.sprintf("sig%d", i);
         tmp2.sprintf("voice%d_pitch", i);
         addInput(tmp2, NULL, 0, 0);
-        PATCH(midiInput, tmp1, this, tmp2);
+       // PATCH(midi, tmp1, this, tmp2);
         pitchOutputs[i] = junoControl->getOutput(tmp2);
 
         tmp1.sprintf("amp%d", i);
         tmp2.sprintf("voice%d_gate", i);
         addInput(tmp2, JunoKeyboard_midiGateChanged, i, 1);
-        PATCH(midiInput, tmp1, this, tmp2);
+      //  PATCH(midi, tmp1, this, tmp2);
         gateOutputs[i] = junoControl->getOutput(tmp2);
     }
 
@@ -136,13 +135,13 @@ numVoices(_numVoices)
     addInput("octave_transpose", JunoKeyboard_octaveTransposeChanged, 0, 1);
     addInput("transpose_switch", JunoKeyboard_keyTransposeChanged, 0, 1);
     addInput("master_tune", JunoKeyboard_masterTuneChanged, 0, 1);
-    addInput("hold_switch", JunoKeyboard_holdChanged, 0, 1);
+  //  addInput("hold_switch", JunoKeyboard_holdChanged, 0, 1);
     addInput("patch_change", Junokeyboard_changePatch, 0, 1);
 
     PATCH(junoControl, "octave_transpose", this, "octave_transpose");
     PATCH(junoControl, "transpose_switch", this, "transpose_switch");
     PATCH(junoControl, "master_tune", this, "master_tune");
-    PATCH(junoControl, "hold_switch", this, "hold_switch");
+   // PATCH(junoControl, "hold_switch", this, "hold_switch");
     PATCH(junoControl, "patch_change", this, "patch_change");
     initz=1;
 }
@@ -179,12 +178,12 @@ void JunoKeyboard::gtkKeyPressed(unsigned int voice, unsigned int key)
 
     if (keyTransposePressed)
     {
-        transposeVoices(pow(2, ((double)(key % 12) - keyTranspose) / 12));
+        transposeVoices(pow((double)2, ((double)(key % 12) - keyTranspose) / 12));
         keyTranspose = key % 12;
     }
     else
     {
-        double val = CPS(midi_notes[key+36 - octaveTranspose * 12 + keyTranspose]) * pow(2, masterTune / 12);
+        double val = CPS(midi_notes[key+36 - octaveTranspose * 12 + keyTranspose]) * pow((double)2, masterTune / 12);
         pitchOutputs[voice]->setData(val);
         gateOutputs[voice]->setData(1.0);
 
@@ -216,7 +215,7 @@ void JunoKeyboard::octaveTransposeChanged(double data)
     int octaves = (int)octaveTranspose - (int)data;
     octaveTranspose = (int)data;
 
-    transposeVoices(pow(2, (double)octaves));
+    transposeVoices(pow((double)2, (double)octaves));
 }
 
 void JunoKeyboard::keyTransposeChanged(double data)
@@ -229,7 +228,7 @@ void JunoKeyboard::keyTransposeChanged(double data)
 void JunoKeyboard::masterTuneChanged(double data)
 {
     data = data * 2 - 1;
-    double adjustment = pow(2, (data - masterTune) / 12.0);
+    double adjustment = pow((double)2, (data - masterTune) / 12.0);
     masterTune = data;
 
     //printf("master tune changed to %f adjustment=%f\n", data, adjustment);

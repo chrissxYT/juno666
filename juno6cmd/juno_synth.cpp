@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/17 13:46:20 $
+ * $Revision: 1.6 $$Date: 2004/04/21 09:57:56 $
  */
 #include <stdlib.h>
 #include <libmoog/JunoSynth.h>
@@ -28,7 +28,7 @@
 #include <libmoog/JunoPatch.h>
 
 //FIXME: this is grosser than gross
-JunoControl *junoControl;
+
 
 DSPOutput *dsp;
 int numV;
@@ -46,15 +46,14 @@ HPF *hpf;
 extern Settings *settings;
 extern String patchFileName;
 
-extern Scheduler *schedule;
-extern ConnectionManager *connection;
+
 
 bool stereo;
-
+static ConnectionManager *conn;
 ConnectionManager* 
 getConnectionManager()
 {
-    return connection;
+    return conn;
 }
 
 void
@@ -65,11 +64,14 @@ setScope(int v)
 }
 
 void
-initSynth(JunoControl *_junoControl,
+initSynth(JunoControl *junoControl,
     Settings *settings,
     MidiInput *midiInput,
+	ConnectionManager *connection,
+	Scheduler *schedule,
     int numVoices)
 {
+	conn = connection;
     stereo = strcmp("yes",
         settings->getString("devices", "stereo_output")) == 0;
 
@@ -87,7 +89,7 @@ initSynth(JunoControl *_junoControl,
 
     //FIXME: we have to hold on to the junoControl pointer... sloppy
     puts("copy control");
-    junoControl = _junoControl;
+//    junoControl = _junoControl;
 
     puts("new dsp");
     dsp = new DSPOutput(junoControl, schedule, connection, settings->getString("devices", "dsp-output"),
