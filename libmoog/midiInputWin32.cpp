@@ -222,7 +222,7 @@ switch( cmd )
 	    printf("change program to %d\n",data[0]);
 	    if (data[0]>NUM_PATCHES)
 	    {
-	    printf("can't change. highes patch number is\n",NUM_PATCHES);
+            printf("can't change. highes patch number is %d\n",NUM_PATCHES);
             return;
 	    }
 	    loadPatch(&patches[data[0]]); 

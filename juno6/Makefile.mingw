@@ -1,6 +1,6 @@
 include ../Makefile.mingwinc
 
-GTK_CFLAGS=$(shell gtk-config --cflags)
+GTK_CFLAGS=
 INCLUDE_PATH=-Iumg/base/include -I../include -I../lib/glib-2.0/include -I../lib/gtk+/include -I../include/glib-2.0 -I../
 CPPFLAGS=$(INCLUDE_PATH) $(GTK_CFLAGS) -Wall $(OPTIMIZE) $(DEBUG) $(PROFILE)
 LDFLAGS= -L./ -L./libmoog -L./libmoogutil -L./libgmoog -lgmoog -lmoog -lmoogutil -lgthread

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:45:33 $
+ * $Revision: 1.2 $$Date: 2004/03/31 08:31:40 $
  */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
@@ -65,8 +65,8 @@ class MidiInput : public MoogObject
  public:
     MidiInput( const char* device, int polyphony = 1 );
     ~MidiInput();
-    inline void            start();
-    inline void            stop();
+    void            start();
+    void            stop();
      bool isOpen();
 
     inline virtual const char *getClassName()      {return "MidiInput"; }
