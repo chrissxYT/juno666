@@ -25,7 +25,7 @@
 #include "ConnectionList.h"
 #include "ConnectionManager.h"
 
-MoogObject::MoogObject(Scheduler *sched)
+MoogObject::MoogObject(Scheduler *sched) : GoObject(sched)
 {
 
 #ifdef LIBMOOG_DEBUG
@@ -33,7 +33,6 @@ MoogObject::MoogObject(Scheduler *sched)
 #endif
 
 	contextTag = NULL;
-	schedule = sched;
 	/* create a default unique name for every object */
 	name = new char[strlen("MoogObject")+10];
 	sprintf(name, "MoogObject_%d", goHandle);

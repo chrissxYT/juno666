@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.8 $$Date: 2004/04/16 14:39:00 $
+ * $Revision: 1.9 $$Date: 2004/04/16 15:23:57 $
  */
 #ifndef _MOOGOBJECT_H
 #define _MOOGOBJECT_H
@@ -97,7 +97,6 @@ protected:
 	virtual void disconnectTo(ConnectionInfo *);
 
 public:
-	Scheduler *schedule;
 #ifdef LIBMOOG_DEBUG
 	bool debug_flag;
 #endif

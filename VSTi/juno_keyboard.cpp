@@ -173,6 +173,8 @@ void JunoKeyboard::midiGateChanged(int voiceNum, double data)
 
 void JunoKeyboard::gtkKeyPressed(unsigned int voice, unsigned int key)
 {
+	if (!initz)
+		return;
 	if (keyTransposePressed)
 	{
 		transposeVoices(pow((double)2, (double)(((double)(key % 12) - keyTranspose) / 12)));
@@ -190,6 +192,8 @@ void JunoKeyboard::gtkKeyPressed(unsigned int voice, unsigned int key)
 
 void JunoKeyboard::gtkKeyReleased(unsigned int voice)
 {
+	if (!initz)
+		return;
 	if (!holdPressed)
 	{
 
@@ -204,6 +208,8 @@ void JunoKeyboard::gtkKeyReleased(unsigned int voice)
 
 void JunoKeyboard::octaveTransposeChanged(double data)
 {
+if (!initz)
+	return;
 	//printf("octave transpose changed to %f\n", data);
 
 	int octaves = (int)octaveTranspose - (int)data;
@@ -214,6 +220,8 @@ void JunoKeyboard::octaveTransposeChanged(double data)
 
 void JunoKeyboard::keyTransposeChanged(double data)
 {
+	if (!initz)
+		return;
 	//printf("key transpose changed to %f\n", data);
 	keyTransposePressed = (data) ? 1 : 0;
 }
@@ -221,6 +229,8 @@ void JunoKeyboard::keyTransposeChanged(double data)
 
 void JunoKeyboard::masterTuneChanged(double data)
 {
+	if (!initz)
+		return;
 	data = data * 2 - 1;
 	double adjustment = pow((double)2, (double)((data - masterTune) / 12.0));
 	masterTune = data;
@@ -231,6 +241,8 @@ void JunoKeyboard::masterTuneChanged(double data)
 
 void JunoKeyboard::holdChanged(double data)
 {
+	if (!initz)
+		return;
 	//printf("hold changed to %f\n", data);
 	if (!(holdPressed = (data) ? 1 : 0))
 	{
@@ -242,6 +254,8 @@ void JunoKeyboard::holdChanged(double data)
 
 void JunoKeyboard::transposeVoices(double tune)
 {
+	if (!initz)
+		return;
 	//printf( "TRANSPOSE BY %f\n", tune );
 	for (int i = 0;i < numVoices;i++)
 		pitchOutputs[i]->setData(pitchOutputs[i]->data * tune);

@@ -19,21 +19,22 @@
 #include <stdlib.h>
 #include <libmoogutil/debug.h>
 #include <libmoogutil/rcsid.h>
-
 #include "GoObject.h"
+#include "Scheduler.h"
 
-RCSID("$Id: GoObject.cpp,v 1.2 2004/03/31 12:01:19 brainslayer Exp $");
+RCSID("$Id: GoObject.cpp,v 1.3 2004/04/16 15:23:56 brainslayer Exp $");
 
-int GoObject::nextGoHandle = 0;
+
 
 #include "MoogObject.h"
 
-GoObject::GoObject()
+GoObject::GoObject(Scheduler *sched)
 {
+	schedule = sched;
 	CLEAR_LIST_NODE(&controlListNode);
 	CLEAR_LIST_NODE(&sampleListNode);
 
-	goHandle = nextGoHandle++;
+	goHandle = schedule->nextGoHandle++;
 }
 
 bool GoObject::isControlScheduled()

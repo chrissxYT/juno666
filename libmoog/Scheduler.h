@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.8 $$Date: 2004/04/16 14:39:00 $
+ * $Revision: 1.9 $$Date: 2004/04/16 15:23:57 $
  */
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
@@ -54,7 +54,7 @@ class Scheduler
 	void safeListOp(list_head *node, list_head *list, bool add);
 
 public:
-
+    int nextGoHandle;
 	void run();
 
 	void Init();

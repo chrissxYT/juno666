@@ -31,7 +31,7 @@ list_head *currentListIter;
 
 void Scheduler::Init()
 {
-
+	nextGoHandle = 0;
 	tickThread;
 	controlRate = 0;
 	sampleRate = 0;
