@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:17 $
+ * $Revision: 1.3 $$Date: 2004/03/31 12:26:18 $
  */
 #include <gtk/gtk.h>
 #include "version.h"
@@ -28,8 +28,7 @@ static GtkWidget *about_credits_vbox;
 static GtkWidget *about_credits_text_hbox, *about_credits_text, *about_credits_text_scrollbar;
 static GtkWidget *bbox, *close_btn;
 
-static gchar *credit_text = "\
-      BrainSlayer\nJuno6 algorithm basement by Ultramaster\n";
+static gchar *credit_text = "original code: \nUltramaster Corp.\nWin32 and VSTi porting:\nSebastian Gottschall\nSzoradi Balazs\n";
 
 void show_about_window(void)
 {
