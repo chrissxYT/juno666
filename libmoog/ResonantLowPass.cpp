@@ -75,7 +75,7 @@ void ResonantLowPass_resonanceChanged(MoogObject *o, double data, long userData)
 }
 
 
-ResonantLowPass::ResonantLowPass(Scheduler *sched): MoogObject(sched)
+ResonantLowPass::ResonantLowPass(Scheduler *sched): MoogObject(sched, NULL)
 {
 	if (!basicLowPassFilterInitialized)
 	{
@@ -87,7 +87,7 @@ ResonantLowPass::ResonantLowPass(Scheduler *sched): MoogObject(sched)
 	init();
 }
 
-ResonantLowPass::ResonantLowPass(FilterPrototype *fp, Scheduler *sched): MoogObject(sched)
+ResonantLowPass::ResonantLowPass(FilterPrototype *fp, Scheduler *sched): MoogObject(sched, NULL)
 {
 	proto = fp;
 	init();

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/04/09 07:19:05 $
+ * $Revision: 1.7 $$Date: 2004/04/17 13:46:20 $
  */
 
 #include <stdio.h>
@@ -38,7 +38,8 @@
 #include <libgmoog/Scope.h>
 
 extern String patchFileName;
-
+extern Scheduler *schedule;
+extern ConnectionManager *connection;
 
 void init();
 void initPerformanceSection();
@@ -196,7 +197,7 @@ void initGui(JunoControl *_junoControl,
     settings = _settings;
     midiInput = _midiInput;
 
-    keyboard = new JunoKeyboard(numVoices);
+    keyboard = new JunoKeyboard(numVoices, schedule, connection);
 
     mainMenu = gtk_item_factory_new(GTK_TYPE_MENU, "<Main>", NULL);
     gtk_item_factory_create_items(mainMenu, mainwin_general_menu_entry_count,
@@ -487,13 +488,13 @@ static void powerSwitched(GtkWidget *widget, gpointer data)
 
     if (value) // power on
     {
-        Scheduler::resume();
+        schedule->resume();
     }
 
     else // power off
     {
         //exit(0);
-        Scheduler::suspend();
+        schedule->suspend();
     }
 }
 
@@ -560,7 +561,7 @@ void init()
     gtk_widget_show(GTK_WIDGET(powerswitch));
     powerled = gtk_juno_led_new();
     gtk_widget_show(powerled);
-    tuneKnob = new JunoKnob("master_tune");
+    tuneKnob = new JunoKnob("master_tune", schedule, connection);
     tuneKnob->setValue(.5);
 
     gtk_juno_led_set_state(GTK_JUNO_LED(powerled), 1);
@@ -585,20 +586,20 @@ void init()
 
 void initPerformanceSection()
 {
-    performanceSection.dcoSlider = new JunoSlider("bender_dco");
-    performanceSection.vcfSlider = new JunoSlider("bender_vcf");
+    performanceSection.dcoSlider = new JunoSlider("bender_dco", schedule, connection);
+    performanceSection.vcfSlider = new JunoSlider("bender_vcf", schedule, connection);
 
-    performanceSection.octaveTransposeSwitch = new JunoSwitch(GTK_JUNO_SWITCH_3WAY, "octave_transpose");
+    performanceSection.octaveTransposeSwitch = new JunoSwitch(GTK_JUNO_SWITCH_3WAY, "octave_transpose", schedule, connection);
 
-    performanceSection.lfoTrig = new JunoLfoTrigger("lfo_trigger");
-    performanceSection.pitchBender = new JunoBender("bender");
+    performanceSection.lfoTrig = new JunoLfoTrigger("lfo_trigger", schedule, connection);
+    performanceSection.pitchBender = new JunoBender("bender", schedule, connection);
 }
 
 void initTransposeHoldSection()
 {
     //FIXME: the transpose button should be momentary
-    transposeHoldSection.transposeButton = new JunoButton(GTK_JUNO_BUTTON_CREAM, "transpose_switch");
-    transposeHoldSection.holdButton = new JunoButton(GTK_JUNO_BUTTON_YELLOW, "hold_switch");
+    transposeHoldSection.transposeButton = new JunoButton(GTK_JUNO_BUTTON_CREAM, "transpose_switch", schedule, connection);
+    transposeHoldSection.holdButton = new JunoButton(GTK_JUNO_BUTTON_YELLOW, "hold_switch", schedule, connection);
 
     gtk_signal_connect(GTK_OBJECT(transposeHoldSection.transposeButton->widget),
         "pressed",
@@ -618,11 +619,11 @@ void initTransposeHoldSection()
 
 void initArpeggioSection()
 {
-    arpeggioSection.rateSlider = new JunoSlider("arpeggio_rate");
-    arpeggioSection.onOffButton = new JunoButton(GTK_JUNO_BUTTON_ORANGE, "arpeggio_switch");
+    arpeggioSection.rateSlider = new JunoSlider("arpeggio_rate", schedule, connection);
+    arpeggioSection.onOffButton = new JunoButton(GTK_JUNO_BUTTON_ORANGE, "arpeggio_switch", schedule, connection);
 
-    arpeggioSection.modeSwitch = new JunoSwitch(GTK_JUNO_SWITCH_3WAY, "arpeggio_mode");
-    arpeggioSection.rangeSwitch = new JunoSwitch(GTK_JUNO_SWITCH_3WAY, "arpeggio_range");
+    arpeggioSection.modeSwitch = new JunoSwitch(GTK_JUNO_SWITCH_3WAY, "arpeggio_mode", schedule, connection);
+    arpeggioSection.rangeSwitch = new JunoSwitch(GTK_JUNO_SWITCH_3WAY, "arpeggio_range", schedule, connection);
 
     gtk_signal_connect(GTK_OBJECT(arpeggioSection.onOffButton->widget),
         "pressed",
@@ -632,26 +633,26 @@ void initArpeggioSection()
 
 void initLfoSection()
 {
-    lfoSection.rateSlider = new JunoSlider("lfo_rate");
-    lfoSection.delaySlider = new JunoSlider("lfo_delay");
-    lfoSection.modeSwitch = new JunoSwitch(GTK_JUNO_SWITCH_2WAY, "lfo_mode");
+    lfoSection.rateSlider = new JunoSlider("lfo_rate", schedule, connection);
+    lfoSection.delaySlider = new JunoSlider("lfo_delay", schedule, connection);
+    lfoSection.modeSwitch = new JunoSwitch(GTK_JUNO_SWITCH_2WAY, "lfo_mode", schedule, connection);
 
 }
 
 void initDcoSection()
 {
-    dcoSection.lfoSlider = new JunoSlider("dco_lfo");
-    dcoSection.pwmSlider = new JunoSlider("dco_pwm");
+    dcoSection.lfoSlider = new JunoSlider("dco_lfo", schedule, connection);
+    dcoSection.pwmSlider = new JunoSlider("dco_pwm", schedule, connection);
 
-    dcoSection.subSlider = new JunoSlider("dco_sub");
+    dcoSection.subSlider = new JunoSlider("dco_sub", schedule, connection);
 
-    dcoSection.noiseSlider = new JunoSlider("dco_noise");
+    dcoSection.noiseSlider = new JunoSlider("dco_noise", schedule, connection);
 
-    dcoSection.pulseButton = new JunoButton(GTK_JUNO_BUTTON_CREAM, "dco_pulse_switch");
-    dcoSection.sawButton = new JunoButton(GTK_JUNO_BUTTON_YELLOW, "dco_saw_switch");
-    dcoSection.subButton = new JunoButton(GTK_JUNO_BUTTON_ORANGE, "dco_sub_switch");
+    dcoSection.pulseButton = new JunoButton(GTK_JUNO_BUTTON_CREAM, "dco_pulse_switch", schedule, connection);
+    dcoSection.sawButton = new JunoButton(GTK_JUNO_BUTTON_YELLOW, "dco_saw_switch", schedule, connection);
+    dcoSection.subButton = new JunoButton(GTK_JUNO_BUTTON_ORANGE, "dco_sub_switch", schedule, connection);
 
-    dcoSection.pwmSwitch = new JunoSwitch(GTK_JUNO_SWITCH_3WAY, "dco_pwm_mod");
+    dcoSection.pwmSwitch = new JunoSwitch(GTK_JUNO_SWITCH_3WAY, "dco_pwm_mod", schedule, connection);
 
     gtk_signal_connect(GTK_OBJECT(dcoSection.pulseButton->widget),
         "pressed",
@@ -671,38 +672,38 @@ void initDcoSection()
 
 void initHpfSection()
 {
-    hpfSection.frqSlider = new JunoSlider("hpf_frq");
+    hpfSection.frqSlider = new JunoSlider("hpf_frq", schedule, connection);
 }
 
 void initVcfSection()
 {
-    vcfSection.frqSlider = new JunoSlider("vcf_frq");
-    vcfSection.resSlider = new JunoSlider("vcf_res");
-    vcfSection.envSlider = new JunoSlider("vcf_env");
-    vcfSection.lfoSlider = new JunoSlider("vcf_lfo");
-    vcfSection.kbdSlider = new JunoSlider("vcf_kbd");
-    vcfSection.invertSwitch = new JunoSwitch(GTK_JUNO_SWITCH_2WAY, "vcf_env_invert");
+    vcfSection.frqSlider = new JunoSlider("vcf_frq", schedule, connection);
+    vcfSection.resSlider = new JunoSlider("vcf_res", schedule, connection);
+    vcfSection.envSlider = new JunoSlider("vcf_env", schedule, connection);
+    vcfSection.lfoSlider = new JunoSlider("vcf_lfo", schedule, connection);
+    vcfSection.kbdSlider = new JunoSlider("vcf_kbd", schedule, connection);
+    vcfSection.invertSwitch = new JunoSwitch(GTK_JUNO_SWITCH_2WAY, "vcf_env_invert", schedule, connection);
 }
 
 void initVcaSection()
 {
-    vcaSection.envSwitch = new JunoSwitch(GTK_JUNO_SWITCH_2WAY, "vca_mode");
-    vcaSection.volumeSlider = new JunoSlider("volume");
+    vcaSection.envSwitch = new JunoSwitch(GTK_JUNO_SWITCH_2WAY, "vca_mode", schedule, connection);
+    vcaSection.volumeSlider = new JunoSlider("volume", schedule, connection);
 }
 
 void initEnvSection()
 {
-    envSection.attackSlider = new JunoSlider("env_attack");
-    envSection.decaySlider = new JunoSlider("env_decay");
-    envSection.sustainSlider = new JunoSlider("env_sustain");
-    envSection.releaseSlider = new JunoSlider("env_release");
+    envSection.attackSlider = new JunoSlider("env_attack", schedule, connection);
+    envSection.decaySlider = new JunoSlider("env_decay", schedule, connection);
+    envSection.sustainSlider = new JunoSlider("env_sustain", schedule, connection);
+    envSection.releaseSlider = new JunoSlider("env_release", schedule, connection);
 }
 
 void initChorusSection()
 {
-    chorusSection.offButton = new JunoButton(GTK_JUNO_BUTTON_CREAM, "chorus_off_switch");
-    chorusSection.oneButton = new JunoButton(GTK_JUNO_BUTTON_YELLOW, "chorus_I_switch");
-    chorusSection.twoButton = new JunoButton(GTK_JUNO_BUTTON_ORANGE, "chorus_II_switch");
+    chorusSection.offButton = new JunoButton(GTK_JUNO_BUTTON_CREAM, "chorus_off_switch", schedule, connection);
+    chorusSection.oneButton = new JunoButton(GTK_JUNO_BUTTON_YELLOW, "chorus_I_switch", schedule, connection);
+    chorusSection.twoButton = new JunoButton(GTK_JUNO_BUTTON_ORANGE, "chorus_II_switch", schedule, connection);
 
     gtk_signal_connect(GTK_OBJECT(chorusSection.offButton->widget),
         "pressed",
@@ -722,15 +723,15 @@ void initChorusSection()
 
 void initPatchSection()
 {
-    patchSection.bankLed = new JunoAlphaLed("bank");
-    patchSection.patchLed = new JunoAlphaLed("patch");
+    patchSection.bankLed = new JunoAlphaLed("bank", schedule, connection);
+    patchSection.patchLed = new JunoAlphaLed("patch", schedule, connection);
     for (int i = 0;i < 10;i++)
     {
         String tmp;
         tmp.sprintf("patch_%d", i);
 
         patchSection.patchButtons[i] = new JunoButton(GTK_JUNO_BUTTON_CREAM,
-            (const char *)tmp, false);
+            (const char *)tmp, schedule, connection, false);
         gtk_signal_connect(GTK_OBJECT(patchSection.patchButtons[i]->widget),
             "pressed",
             GTK_SIGNAL_FUNC(buttonPressed),
@@ -740,8 +741,8 @@ void initPatchSection()
     patchSection.usedLed = gtk_juno_led_new();
     gtk_widget_show(patchSection.usedLed);
 
-    patchSection.saveButton = new JunoButton(GTK_JUNO_BUTTON_YELLOW, "patch_save", false);
-    patchSection.loadButton = new JunoButton(GTK_JUNO_BUTTON_ORANGE, "patch_load", false);
+    patchSection.saveButton = new JunoButton(GTK_JUNO_BUTTON_YELLOW, "patch_save", schedule, connection, false);
+    patchSection.loadButton = new JunoButton(GTK_JUNO_BUTTON_ORANGE, "patch_load", schedule, connection, false);
 
     gtk_signal_connect(GTK_OBJECT(patchSection.bankLed->widget),
         "value_changed",

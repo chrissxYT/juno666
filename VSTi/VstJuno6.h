@@ -19,105 +19,123 @@
 
 enum
 {
-	// Global
-	kNumPrograms = 128,
-	kNumOutputs = 2,
+    // Global
+    kNumPrograms = 128,
+    kNumOutputs = 2,
 
-	// Parameters Tags
-	kBender = 0,
-	kBender_dco,
-	kBender_vcf,
-	kLfo_trigger,
-	kVolume,
-	kOctave_transpose,
-	kMaster_tune,
-	kTranspose_switch,
-	kHold_switch,
-	kArpeggio_switch,
-	kArpeggio_mode,
-	kArpeggio_range,
-	kArpeggio_rate,
-	kLfo_rate,
-	kLfo_delay,
-	kLfo_mode,
-	kDco_lfo,
-	kDco_pwm,
-	kDco_pwm_mod,
-	kDco_pulse_switch,
-	kDco_saw_switch,
-	kDco_sub_switch,
-	kDco_sub,
-	kDco_noise,
-	kHpf_frq,
-	kVcf_frq,
-	kVcf_res,
-	kVcf_env_invert,
-	kVcf_env,
-	kVcf_lfo,
-	kVcf_kbd,
-	kVca_mode,
-	kEnv_attack,
-	kEnv_decay,
-	kEnv_sustain,
-	kEnv_release,
-	kChorus_off_switch,
-	kChorus_I_switch,
-	kChorus_II_switch,
-	kPanningSlider,
-	kStereoSwitch,
-	kNumParams
+    // Parameters Tags
+    kBender = 0,
+    kBender_dco,
+    kBender_vcf,
+    kLfo_trigger,
+    kVolume,
+    kOctave_transpose,
+    kMaster_tune,
+    kTranspose_switch,
+    kHold_switch,
+    kArpeggio_switch,
+    kArpeggio_mode,
+    kArpeggio_range,
+    kArpeggio_rate,
+    kLfo_rate,
+    kLfo_delay,
+    kLfo_mode,
+    kDco_lfo,
+    kDco_pwm,
+    kDco_pwm_mod,
+    kDco_pulse_switch,
+    kDco_saw_switch,
+    kDco_sub_switch,
+    kDco_sub,
+    kDco_noise,
+    kHpf_frq,
+    kVcf_frq,
+    kVcf_res,
+    kVcf_env_invert,
+    kVcf_env,
+    kVcf_lfo,
+    kVcf_kbd,
+    kVca_mode,
+    kEnv_attack,
+    kEnv_decay,
+    kEnv_sustain,
+    kEnv_release,
+    kChorus_off_switch,
+    kChorus_I_switch,
+    kChorus_II_switch,
+    kPanningSlider,
+    kStereoSwitch,
+    kNumParams
 };
 
 class VstJuno6: public AudioEffectX
 {
 public:
-	Scheduler *schedule;
-	VstJuno6(audioMasterCallback audioMaster);
-	~VstJuno6();
+    Scheduler *schedule;
+    ConnectionManager *connection;
 
-	virtual void process(float **inputs, float **outputs, long sampleframes);
-	virtual void processReplacing(float **inputs, float **outputs, long sampleframes);
-	virtual long processEvents(VstEvents *events);
+    VstJuno6(audioMasterCallback audioMaster);
+    ~VstJuno6();
 
-	virtual void setProgram(long program);
-	virtual void setProgramName(char *name);
-	virtual void getProgramName(char *name);
-	virtual bool getProgramNameIndexed(long category, long index, char *text);
-	virtual bool copyProgram(long destination);
+    virtual void process(float **inputs, float **outputs, long sampleframes);
+    virtual void processReplacing(float **inputs, float **outputs, long sampleframes);
+    virtual long processEvents(VstEvents *events);
 
-	virtual void setParameter(long index, float value);
-	virtual float getParameter(long index);
-	virtual void getParameterLabel(long index, char *label);
-	virtual void getParameterDisplay(long index, char *text);
-	virtual void getParameterName(long index, char *text);
+    virtual void setProgram(long program);
+    virtual void setProgramName(char *name);
+    virtual void getProgramName(char *name);
+    virtual bool getProgramNameIndexed(long category, long index, char *text);
+    virtual bool copyProgram(long destination);
 
-	virtual void setSampleRate(float sampleRate);
-	virtual void setBlockSize(long blockSize);
+    virtual void setParameter(long index, float value);
+    virtual float getParameter(long index);
+    virtual void getParameterLabel(long index, char *label);
+    virtual void getParameterDisplay(long index, char *text);
+    virtual void getParameterName(long index, char *text);
 
-	virtual void resume();
+    virtual void setSampleRate(float sampleRate);
+    virtual void setBlockSize(long blockSize);
 
-	virtual bool getEffectName(char *name);
-	virtual bool getVendorString(char *text);
-	virtual bool getProductString(char *text);
-	virtual long getVendorVersion()
-	{
-		return 1000;
-	}
-	virtual long canDo(char *text);
+    virtual void resume();
 
-	void initSynth(int numVoices);
+    virtual bool getEffectName(char *name);
+    virtual bool getVendorString(char *text);
+    virtual bool getProductString(char *text);
+    virtual long getVendorVersion()
+    {
+        return 1000;
+    }
+    virtual long canDo(char *text);
+
+    void initSynth(int numVoices);
+
+ConnectionManager* VstJuno6::getConnectionManager();
 
 private:
-	void initProcess();
+    void initProcess();
 
-	long currentDelta;
+    long currentDelta;
 
-	VSTOutput *dsp;
+    VSTOutput *dsp;
 
-	Mixer *voiceMix;
-	JunoChorus *chorus;
-	JunoChorus *chorus2;
-	HPF *hpf;
+    Mixer *voiceMix;
+    JunoChorus *chorus;
+    JunoChorus *chorus2;
+    HPF *hpf;
+
+JunoVoice *voice[64];
+
+JunoKeyboard *keyboard;
+MidiInput *midiInput;
+
+juno_patch *patches;
+
+JunoArpeggio *arpeggio;
+JunoControl *control;
+Attenuator *pwmLfo;
+JunoLfo *lfo;
+Rand *noise;
+
 };
 
 #endif /* __VstJuno6_H__ */

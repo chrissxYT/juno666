@@ -19,7 +19,7 @@
 #include "IIR2.h"
 #include "Scheduler.h"
 
-IIR2::IIR2(Scheduler *sched): MoogObject(sched)
+IIR2::IIR2(Scheduler *sched): MoogObject(sched, NULL)
 {
 	gain = 0;
 	cx[0] = cx[1] = cy[0] = cy[1] = 0;

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
+ * $Revision: 1.4 $$Date: 2004/04/17 13:46:21 $
  */
 #ifndef _MIXER_H
 #define _MIXER_H
@@ -32,24 +32,24 @@
 class Mixer: public MoogObject
 {
 private:
-	int numChannels;
-	void init(int);
-	Output *output;
-	double **inputData;
+    int numChannels;
+    void init(int);
+    Output *output;
+    double **inputData;
 
 public:
-	Mixer(Scheduler *sched, int, int obj = 0, ...);
-	~Mixer();
+    Mixer(Scheduler *sched, ConnectionManager *conn, int, int obj = 0, ...);
+    ~Mixer();
 
-	void connectTo(ConnectionInfo *info);
-	void disconnectTo(ConnectionInfo *info);
+    void connectTo(ConnectionInfo *info);
+    void disconnectTo(ConnectionInfo *info);
 
-	void sampleGo();
+    void sampleGo();
 
-	const char *getClassName()
-	{
-		return "Mixer";
-	}
+    const char *getClassName()
+    {
+        return "Mixer";
+    }
 };
 
 #endif /* _MIXER_H */

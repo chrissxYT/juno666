@@ -100,11 +100,11 @@ void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
     junoControl->MoogObject::getOutput("chorus_II_switch")->setData(patch->chorus_II_switch);
 }
 
-
 int initz=0;
-JunoKeyboard::JunoKeyboard(int _numVoices)
+JunoKeyboard::JunoKeyboard(int _numVoices, Scheduler *sched, ConnectionManager *conn):
+MoogObject(sched, conn),
+numVoices(_numVoices)
 {
-    numVoices = _numVoices;
     octaveTranspose = -1;
     keyTransposePressed = 0;
     keyTranspose = 0;
@@ -164,8 +164,7 @@ if (!initz)return;
     //printf("%f\n",inputs[voiceNum * 2].data);
     if (data > 0)
     {
-        JunoKeyboard::gtkKeyPressed(voiceNum,pitch_to_note(Scheduler::nyquistFreq * *inputs[voiceNum * 2].data) - 36);
-
+        JunoKeyboard::gtkKeyPressed(voiceNum,pitch_to_note(schedule->nyquistFreq * *inputs[voiceNum * 2].data) - 36);
     }
     else
     {

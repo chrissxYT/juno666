@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/16 14:39:00 $
+ * $Revision: 1.6 $$Date: 2004/04/17 13:46:21 $
  */
 #include "JunoPulse.h"
 #include "Scheduler.h"
@@ -36,7 +36,7 @@ void JunoPulse_sync(MoogObject *o, double data, long)
 	((JunoPulse *)o)->sync();
 }
 
-JunoPulse::JunoPulse(Scheduler *sched): MoogObject(sched)
+JunoPulse::JunoPulse(Scheduler *sched): MoogObject(sched, NULL)
 {
 	addPorts("frq", INPUT, JunoPulse_horizBoundsChanged, 0, schedule->sampleControlRatio,
 		"amp", INPUT, NULL,

@@ -20,7 +20,7 @@
 #include "Attenuator.h"
 #include "Scheduler.h"
 
-Attenuator::Attenuator(Scheduler *sched, double _amp, double _zro): MoogObject(sched)
+Attenuator::Attenuator(Scheduler *sched, double _amp, double _zro): MoogObject(sched, NULL)
 {
 	addPorts("sig", INPUT, NULL,
 		"amp", INPUT, NULL,

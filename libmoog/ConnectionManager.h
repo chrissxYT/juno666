@@ -21,47 +21,49 @@
 class ConnectionInfo;
 class MoogObject;
 
-#define PATCH( a, b, c, d ) ConnectionManager::connect( a, b, c, d )
+#define PATCH( a, b, c, d ) getConnectionManager()->connect( a, b, c, d )
 
 class ConnectionManager
 {
 protected:
-	static int reconnect;
+    int reconnect;
 
 public:
-	ConnectionManager()
-	{
-		reconnect = 0;
-	}
+    ConnectionManager()
+    {
+        reconnect = 0;
+    }
 
-	/* the general interface: calls a hook connect/disc. or the base impl */
-	static ConnectionInfo *connect(MoogObject *f, int o, MoogObject *t, int i);
-	static ConnectionInfo *connect(MoogObject *f, const char *, MoogObject *t, const char *);
-	static void disconnect(ConnectionInfo *);
+    ~ConnectionManager(){}
+
+    /* the general interface: calls a hook connect/disc. or the base impl */
+    ConnectionInfo *connect(MoogObject *f, int o, MoogObject *t, int i);
+    ConnectionInfo *connect(MoogObject *f, const char *, MoogObject *t, const char *);
+    void disconnect(ConnectionInfo *);
 
 protected:
-	/* called by connect/disconnect or by a ConnectionManager impl.
-	 * ll is for low-level. this does the actual patching of inputs
-	 * to outputs and allocates/deallocates the ConnectionInfo class
-	 */
-	static ConnectionInfo *llConnect(MoogObject *, int, MoogObject *, int);
-	static ConnectionInfo *llConnect(MoogObject *, const char *, MoogObject *, const char *);
-	static void llDisconnect(ConnectionInfo *);
-
-	virtual ConnectionInfo *connectImpl(MoogObject *from,
-		int onum,
-		MoogObject *to,
-		int inum) = 0;
-	virtual ConnectionInfo *connectImpl(MoogObject *from,
-		const char *oname,
-		MoogObject *to,
-		const char *iname) = 0;
-	virtual void disconnectImpl(ConnectionInfo *info) = 0;
-
-	static int isReconnecting()
-	{
-		return reconnect;
-	}
+    /* called by connect/disconnect or by a ConnectionManager impl.
+     * ll is for low-level. this does the actual patching of inputs
+     * to outputs and allocates/deallocates the ConnectionInfo class
+     */
+    ConnectionInfo *llConnect(MoogObject *, int, MoogObject *, int);
+    ConnectionInfo *llConnect(MoogObject *, const char *, MoogObject *, const char *);
+    void llDisconnect(ConnectionInfo *);
+/*
+    virtual ConnectionInfo *connectImpl(MoogObject *from,
+        int onum,
+        MoogObject *to,
+        int inum) = 0;
+    virtual ConnectionInfo *connectImpl(MoogObject *from,
+        const char *oname,
+        MoogObject *to,
+        const char *iname) = 0;
+    virtual void disconnectImpl(ConnectionInfo *info) = 0;
+*/
+    int isReconnecting()
+    {
+        return reconnect;
+    }
 };
 
 #endif /* _ConnectionManager_H */

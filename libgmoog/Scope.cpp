@@ -17,89 +17,90 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:18 $
+ * $Revision: 1.3 $$Date: 2004/04/17 13:46:20 $
  */
 #include "Scope.h"
 #include <libmoog/Scheduler.h>
 #include <gtk/gtk.h>
 
 gint delete_event_handler(GtkWidget *widget,
-	GdkEvent *event,
-	gpointer data)
+    GdkEvent *event,
+    gpointer data)
 {
-	((Scope *)data)->popdown();
-	return (TRUE);
+    ((Scope *)data)->popdown();
+    return (TRUE);
 }
 
 
-Scope::Scope()
+Scope::Scope(Scheduler *sched):
+MoogObject(sched, NULL)
 {
-	addInput("sync", NULL, 0, 0);
-	addInput("sig", NULL, 0, 0);
+    addInput("sync", NULL, 0, 0);
+    addInput("sig", NULL, 0, 0);
 
-	showing = 0;
-	mainWindow = NULL;
+    showing = 0;
+    mainWindow = NULL;
 
-	widget = GTK_SCOPE(gtk_scope_new());
-	gtk_widget_show(GTK_WIDGET(widget));
+    widget = GTK_SCOPE(gtk_scope_new());
+    gtk_widget_show(GTK_WIDGET(widget));
 }
 
 void Scope::sampleGo()
 {
-	/* avoid deadlock: implicitly, sampleGo and controlGo have Scheduler lock
-	 * if we block on getting GTK lock, we could deadlock with a gtk signal
-	 * handler, which has GTK lock and may need Scheduler lock, so we just try
-	 * to update if possible:
-	 */
+    /* avoid deadlock: implicitly, sampleGo and controlGo have Scheduler lock
+     * if we block on getting GTK lock, we could deadlock with a gtk signal
+     * handler, which has GTK lock and may need Scheduler lock, so we just try
+     * to update if possible:
+     */
 
-	int draw = gtk_scope_plot(widget,
-		*inputs[0].data > 0.0, *inputs[1].data);
+    int draw = gtk_scope_plot(widget,
+        *inputs[0].data > 0.0, *inputs[1].data);
 
-	if (draw)
-	{
-		if (g_mutex_trylock(gdk_threads_mutex))
-		{
-			gtk_scope_draw(widget);
-			g_mutex_unlock(gdk_threads_mutex);
-		}
-		else
-		{
-			widget->pos = 0;
-			debug(DEBUG_STATUS, "gdk lock busy, skipping scope update");
-		}
-	}
+    if (draw)
+    {
+        if (g_mutex_trylock(gdk_threads_mutex))
+        {
+            gtk_scope_draw(widget);
+            g_mutex_unlock(gdk_threads_mutex);
+        }
+        else
+        {
+            widget->pos = 0;
+            debug(DEBUG_STATUS, "gdk lock busy, skipping scope update");
+        }
+    }
 }
 
 void Scope::toggle()
 {
-	if (showing)
-		popdown();
-	else
-		popup();
+    if (showing)
+        popdown();
+    else
+        popup();
 }
 
 void Scope::popup()
 {
-	if (!mainWindow)
-	{
-		mainWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-		gtk_widget_show(mainWindow);
-		gtk_container_add(GTK_CONTAINER(mainWindow), GTK_WIDGET(widget));
-		gtk_signal_connect(GTK_OBJECT(mainWindow),
-			"delete_event",
-			GTK_SIGNAL_FUNC(delete_event_handler),
-			this);
+    if (!mainWindow)
+    {
+        mainWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        gtk_widget_show(mainWindow);
+        gtk_container_add(GTK_CONTAINER(mainWindow), GTK_WIDGET(widget));
+        gtk_signal_connect(GTK_OBJECT(mainWindow),
+            "delete_event",
+            GTK_SIGNAL_FUNC(delete_event_handler),
+            this);
 
-	}
+    }
 
-	gtk_widget_show(mainWindow);
-	showing = 1;
-	Scheduler::scheduleSampleRate(this, true);
+    gtk_widget_show(mainWindow);
+    showing = 1;
+    schedule->scheduleSampleRate(this, true);
 }
 
 void Scope::popdown()
 {
-	gtk_widget_hide(mainWindow);
-	showing = 0;
-	Scheduler::scheduleSampleRate(this, false);
+    gtk_widget_hide(mainWindow);
+    showing = 0;
+    schedule->scheduleSampleRate(this, false);
 }

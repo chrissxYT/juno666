@@ -19,7 +19,7 @@
 #include "Rms.h"
 #include "Scheduler.h"
 
-Rms::Rms(Scheduler *sched): MoogObject(sched)
+Rms::Rms(Scheduler *sched): MoogObject(sched, NULL)
 {
 	addPorts("sig", INPUT, NULL,
 		"pow", OUTPUT, true,

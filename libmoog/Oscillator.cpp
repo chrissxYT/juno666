@@ -18,7 +18,7 @@
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
  *
- * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
+ * $Revision: 1.4 $$Date: 2004/04/17 13:46:21 $
  */
 
 #include <stdio.h>
@@ -41,12 +41,12 @@ oscillator_sync_changed(MoogObject *o, double data, long userData)
 	((Oscillator *)o)->syncChanged(data);
 }
 
-Oscillator::Oscillator(Scheduler *sched, DataBlock *w /* = NULL */): MoogObject(sched)
+Oscillator::Oscillator(Scheduler *sched, DataBlock *w /* = NULL */): MoogObject(sched, NULL)
 {
 	init(w);
 }
 
-Oscillator::Oscillator(DataBlock *w, double frq, double amp = 1, double zro = 0, Scheduler *sched = NULL): MoogObject(sched)
+Oscillator::Oscillator(DataBlock *w, double frq, double amp = 1, double zro = 0, Scheduler *sched = NULL): MoogObject(sched, NULL)
 {
 	init(w);
 	set(I_OSC_FRQ, frq);

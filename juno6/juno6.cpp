@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.11 $$Date: 2004/04/15 21:53:09 $
+ * $Revision: 1.12 $$Date: 2004/04/17 13:46:20 $
  */
 
 #include <stdio.h>
@@ -28,13 +28,14 @@
 #include <libmoogutil/String.h>
 #include <sys/types.h>
 #include <libmoogutil/debug.h>
-//#include <util/cpudetect.h>
 #include <libmoog/JunoPatch.h>
 #include "juno_gui.h"
 #include <libmoog/JunoSynth.h>
 
 String patchFileName;
 juno_patch *patches;
+Scheduler *schedule;
+ConnectionManager *connection;
 
 #ifdef DOMAIN
 int main(int argc, char **argv)
@@ -68,12 +69,17 @@ int Juno666(int argc, char **argv)
 
     if (strcmp(numVoicesStr, "") != 0)
         numVoices = atoi(numVoicesStr);
-    Scheduler::Init();
-    JunoControl *junoControl = new JunoControl(numVoices);
+
+    schedule = new Scheduler();
+    connection = new ConnectionManager();
+
+    schedule->Init();
+
+    JunoControl *junoControl = new JunoControl(numVoices, schedule);
 
     if (settings.getInt("devices", "use-midi"))
     {
-        midiInput = new MidiInput(junoControl, numVoices);
+        midiInput = new MidiInput(junoControl, numVoices, schedule);
 
         if (midiInput->isOpen())
         {
@@ -101,7 +107,7 @@ int Juno666(int argc, char **argv)
 
     delete midiInput;
 
-    Scheduler::DeInit();
+    schedule->DeInit();
 
     return (0);
 }

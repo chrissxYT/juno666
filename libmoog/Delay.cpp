@@ -35,7 +35,7 @@ delay_feedback_changed(MoogObject *o, double data, long userData)
 	((Delay *)o)->feedbackChanged(data);
 }
 
-Delay::Delay(Scheduler *sched, int _dsize): MoogObject(sched)
+Delay::Delay(Scheduler *sched, int _dsize): MoogObject(sched, NULL)
 {
 	dsize = _dsize;
 	dline = new double[dsize];

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/03/31 12:01:18 $
+ * $Revision: 1.4 $$Date: 2004/04/17 13:46:20 $
  */
 #ifndef SCOPE_H
 #define SCOPE_H
@@ -28,24 +28,24 @@
 class Scope: public MoogObject
 {
 public:
-	GtkScope *widget;
-	GtkWidget *mainWindow;
-	int showing;
+    GtkScope *widget;
+    GtkWidget *mainWindow;
+    int showing;
 
-	int scale;
-	int scalepos;
+    int scale;
+    int scalepos;
 
-	Scope();
-	void sampleGo();
-	void popup();
-	void popdown();
-	void toggle();
-	void setScale(int scale);
+    Scope(Scheduler *schedule);
+    void sampleGo();
+    void popup();
+    void popdown();
+    void toggle();
+    void setScale(int scale);
 
-	const char *getClassName()
-	{
-		return "Scope";
-	}
+    const char *getClassName()
+    {
+        return "Scope";
+    }
 };
 
 #endif /* SCOPE_H */

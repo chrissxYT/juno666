@@ -26,7 +26,7 @@ void Rand_freqChanged(MoogObject *o, double data, long userData)
 	((Rand *)o)->freqChanged(data);
 }
 
-Rand::Rand(Scheduler *sched, int _type, double amp): MoogObject(sched)
+Rand::Rand(Scheduler *sched, int _type, double amp): MoogObject(sched, NULL)
 {
 	addPorts("frq", INPUT, Rand_freqChanged, 1, 0,
 		"amp", INPUT, NULL,

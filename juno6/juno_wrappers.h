@@ -25,205 +25,214 @@
 
 class JunoKeyboard: public MoogObject
 {
-	friend void JunoKeyboard_midiGateChanged(MoogObject *, double, long);
-	friend void JunoKeyboard_gtkKeyPressed(GtkWidget *, guint, guint, gpointer);
-	friend void JunoKeyboard_gtkKeyReleased(GtkWidget *, guint, gpointer);
-	friend void JunoKeyboard_octaveTransposeChanged(MoogObject *, double, long);
-	friend void JunoKeyboard_keyTransposeChanged(MoogObject *, double, long);
-	friend void JunoKeyboard_masterTuneChanged(MoogObject *, double, long);
-	friend void JunoKeyboard_holdChanged(MoogObject *, double, long);
+    friend void JunoKeyboard_midiGateChanged(MoogObject *, double, long);
+    friend void JunoKeyboard_gtkKeyPressed(GtkWidget *, guint, guint, gpointer);
+    friend void JunoKeyboard_gtkKeyReleased(GtkWidget *, guint, gpointer);
+    friend void JunoKeyboard_octaveTransposeChanged(MoogObject *, double, long);
+    friend void JunoKeyboard_keyTransposeChanged(MoogObject *, double, long);
+    friend void JunoKeyboard_masterTuneChanged(MoogObject *, double, long);
+    friend void JunoKeyboard_holdChanged(MoogObject *, double, long);
 
-	int octaveTranspose;
-	int keyTransposePressed;
-	int keyTranspose;
-	int holdPressed;
-	int numVoices;
-	double masterTune;
+    int octaveTranspose;
+    int keyTransposePressed;
+    int keyTranspose;
+    int holdPressed;
+    int numVoices;
+    double masterTune;
 
-	int *savedGateInfo;
-	Output **pitchOutputs;
-	Output **gateOutputs;
+    int *savedGateInfo;
+    Output **pitchOutputs;
+    Output **gateOutputs;
 
-	void midiGateChanged(int, double);
-	void gtkKeyPressed(unsigned int, unsigned int);
-	void gtkKeyReleased(unsigned int);
-	void octaveTransposeChanged(double);
-	void keyTransposeChanged(double);
-	void masterTuneChanged(double);
-	void holdChanged(double);
+    void midiGateChanged(int, double);
+    void gtkKeyPressed(unsigned int, unsigned int);
+    void gtkKeyReleased(unsigned int);
+    void octaveTransposeChanged(double);
+    void keyTransposeChanged(double);
+    void masterTuneChanged(double);
+    void holdChanged(double);
 
-	void transposeVoices(double);
+    void transposeVoices(double);
 
 public:
-	GtkWidget *widget;
+    GtkWidget *widget;
 
-	JunoKeyboard(int);
-	~JunoKeyboard();
+    JunoKeyboard(int _numVoices, Scheduler *sched, ConnectionManager *conn);
+    ~JunoKeyboard();
 
-	int getKeyTranspose()
-	{
-		return keyTranspose;
-	}
+    int getKeyTranspose()
+    {
+        return keyTranspose;
+    }
 
-	const char *getClassName()
-	{
-		return ("JunoKeyboard");
-	}
+    const char *getClassName()
+    {
+        return ("JunoKeyboard");
+    }
 };
 
 /***********************/
 
 class JunoSlider: public MoogObject
 {
-	friend void JunoSlider_midiValueChanged(MoogObject *, double, long);
+    friend void JunoSlider_midiValueChanged(MoogObject *, double, long);
 
-	Output *output;
-	void midiValueChanged(double);
+    Output *output;
+    void midiValueChanged(double);
 public:
-	void setValue(double);
-	double getValue();
-	GtkWidget *widget;
-	GtkAdjustment *adj;
+    void setValue(double);
+    double getValue();
+    GtkWidget *widget;
+    GtkAdjustment *adj;
 
-	JunoSlider(const char *name);
-	void updateOutput();
-	const char *getClassName()
-	{
-		return ("JunoSlider");
-	}
+    JunoSlider(const char *name, Scheduler *sched, ConnectionManager *conn);
+    void updateOutput();
+    const char *getClassName()
+    {
+        return ("JunoSlider");
+    }
 };
 
 /***********************/
 
 class JunoButton: public MoogObject
 {
-	friend void JunoButton_midiValueChanged(MoogObject *, double, long);
+    friend void JunoButton_midiValueChanged(MoogObject *, double, long);
 
-	int state;
-	Output *output;
+    int state;
+    Output *output;
 
-	void midiValueChanged(double);
+    void midiValueChanged(double);
 
 public:
-	GtkWidget *widget;
-	GtkWidget *led;
+    GtkWidget *widget;
+    GtkWidget *led;
 
-	JunoButton(GtkJunoButtonType type, const char *name, bool useLed = true);
+    JunoButton(GtkJunoButtonType type, 
+               const char *name, 
+               Scheduler *sched, 
+               ConnectionManager *conn, 
+               bool useLed = true);
 
-	void buttonPressed();
-	void set(int _state);
-	void setLed(int);
-	void setValue(double);
-	double getValue();
-	const char *getClassName()
-	{
-		return ("JunoButton");
-	}
+    void buttonPressed();
+    void set(int _state);
+    void setLed(int);
+    void setValue(double);
+    double getValue();
+    const char *getClassName()
+    {
+        return ("JunoButton");
+    }
 };
 
 /***********************/
 
 class JunoSwitch: public MoogObject
 {
-	friend void JunoSwitch_midiValueChanged(MoogObject *, double, long);
+    friend void JunoSwitch_midiValueChanged(MoogObject *, double, long);
 
-	Output *output;
+    Output *output;
 
-	void midiValueChanged(double);
+    void midiValueChanged(double);
 
 public:
-	GtkWidget *widget;
-	void setValue(double);
-	double getValue();
-	JunoSwitch(GtkJunoSwitchType type, const char *name);
-	void updateOutput();
-	const char *getClassName()
-	{
-		return ("JunoSwitch");
-	}
+    GtkWidget *widget;
+    void setValue(double);
+    double getValue();
+    JunoSwitch(GtkJunoSwitchType type, const char *name, 
+               Scheduler *sched, ConnectionManager *conn);
+    void updateOutput();
+    const char *getClassName()
+    {
+        return ("JunoSwitch");
+    }
 };
 
 /***********************/
 
 class JunoKnob: public MoogObject
 {
-	friend void JunoKnob_midiValueChanged(MoogObject *, double, long);
+    friend void JunoKnob_midiValueChanged(MoogObject *, double, long);
 
-	Output *output;
+    Output *output;
 
 public:
-	void midiValueChanged(double);
-	GtkWidget *widget;
-	void setValue(double);
-	double getValue();
-	JunoKnob(const char *name);
-	void updateOutput();
-	const char *getClassName()
-	{
-		return "JunoKnob";
-	}
+    void midiValueChanged(double);
+    GtkWidget *widget;
+    void setValue(double);
+    double getValue();
+    JunoKnob(const char *name,
+             Scheduler *sched, ConnectionManager *conn);
+
+    void updateOutput();
+    const char *getClassName()
+    {
+        return "JunoKnob";
+    }
 };
 
 /***********************/
 
 class JunoAlphaLed: public MoogObject
 {
-	friend void JunoAlphaLed_midiValueChanged(MoogObject *, double, long);
+    friend void JunoAlphaLed_midiValueChanged(MoogObject *, double, long);
 
-	Output *output;
+    Output *output;
 
-	void midiValueChanged(double);
+    void midiValueChanged(double);
 
 public:
-	GtkWidget *widget;
-	void setValue(double);
-	JunoAlphaLed(const char *);
-	void updateOutput();
-	const char *getClassName()
-	{
-		return "JunoAlphaLed";
-	}
-	int getValue();
+    GtkWidget *widget;
+    void setValue(double);
+    JunoAlphaLed(const char *, Scheduler *sched, ConnectionManager *conn);
+
+    void updateOutput();
+    const char *getClassName()
+    {
+        return "JunoAlphaLed";
+    }
+    int getValue();
 };
 
 /***********************/
 class JunoBender: public MoogObject
 {
-	friend void JunoBender_midiValueChanged(MoogObject *, double, long);
+    friend void JunoBender_midiValueChanged(MoogObject *, double, long);
 
-	Output *output;
+    Output *output;
 
-	void midiValueChanged(double);
+    void midiValueChanged(double);
 
 public:
-	GtkWidget *widget;
+    GtkWidget *widget;
 
-	JunoBender(const char *name);
-	void updateOutput();
-	const char *getClassName()
-	{
-		return "JunoBender";
-	}
+    JunoBender(const char *name, Scheduler *sched, ConnectionManager *conn);
+
+    void updateOutput();
+    const char *getClassName()
+    {
+        return "JunoBender";
+    }
 };
 
 /***********************/
 class JunoLfoTrigger: public MoogObject
 {
-	friend void JunoLfoTrigger_midiValueChanged(MoogObject *, double, long);
+    friend void JunoLfoTrigger_midiValueChanged(MoogObject *, double, long);
 
-	Output *output;
+    Output *output;
 
-	void midiValueChanged(double);
+    void midiValueChanged(double);
 
 public:
-	GtkWidget *widget;
+    GtkWidget *widget;
 
-	JunoLfoTrigger(const char *name);
-	void updateOutput();
-	const char *getClassName()
-	{
-		return "JunoLfoTrigger";
-	}
+    JunoLfoTrigger(const char *name, Scheduler *sched, ConnectionManager *conn);
+    void updateOutput();
+    const char *getClassName()
+    {
+        return "JunoLfoTrigger";
+    }
 };
 
 #endif /* _JUNO_WRAPPERS_H */

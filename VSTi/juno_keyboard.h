@@ -7,49 +7,62 @@
 
 class JunoKeyboard: public MoogObject
 {
-	friend void JunoKeyboard_midiGateChanged(MoogObject *, double, long);
-	friend void JunoKeyboard_gtkKeyPressed(int, int, void *);
-	friend void JunoKeyboard_gtkKeyReleased(int, void *);
-	friend void JunoKeyboard_octaveTransposeChanged(MoogObject *, double, long);
-	friend void JunoKeyboard_keyTransposeChanged(MoogObject *, double, long);
-	friend void JunoKeyboard_masterTuneChanged(MoogObject *, double, long);
-	friend void JunoKeyboard_holdChanged(MoogObject *, double, long);
+    friend void JunoKeyboard_midiGateChanged(MoogObject *, double, long);
+    friend void JunoKeyboard_gtkKeyPressed(int, int, void *);
+    friend void JunoKeyboard_gtkKeyReleased(int, void *);
+    friend void JunoKeyboard_octaveTransposeChanged(MoogObject *, double, long);
+    friend void JunoKeyboard_keyTransposeChanged(MoogObject *, double, long);
+    friend void JunoKeyboard_masterTuneChanged(MoogObject *, double, long);
+    friend void JunoKeyboard_holdChanged(MoogObject *, double, long);
+    friend void Junokeyboard_changePatch(MoogObject *o, double data, long userdata);
 
-	int octaveTranspose;
-	int keyTransposePressed;
-	int keyTranspose;
-	int holdPressed;
-	int numVoices;
-	double masterTune;
+    int octaveTranspose;
+    int keyTransposePressed;
+    int keyTranspose;
+    int holdPressed;
+    int numVoices;
+    double masterTune;
 
-	int *savedGateInfo;
-	Output **pitchOutputs;
-	Output **gateOutputs;
+    int *savedGateInfo;
+    Output **pitchOutputs;
+    Output **gateOutputs;
 
-	void midiGateChanged(int, double);
-	void gtkKeyPressed(unsigned int, unsigned int);
-	void gtkKeyReleased(unsigned int);
-	void octaveTransposeChanged(double);
-	void keyTransposeChanged(double);
-	void masterTuneChanged(double);
-	void holdChanged(double);
+    void midiGateChanged(int, double);
+    void gtkKeyPressed(unsigned int, unsigned int);
+    void gtkKeyReleased(unsigned int);
+    void octaveTransposeChanged(double);
+    void keyTransposeChanged(double);
+    void masterTuneChanged(double);
+    void holdChanged(double);
+    void changePatch();
 
-	void transposeVoices(double);
+    void transposeVoices(double);
+
+    JunoControl *control;
+    MidiInput *midiInput;
+    juno_patch *patches;
 
 public:
 
-	JunoKeyboard(int, Scheduler *sched);
-	~JunoKeyboard();
+    JunoKeyboard(
 
-	int getKeyTranspose()
-	{
-		return keyTranspose;
-	}
+JunoControl *_control,
+MidiInput *_midiInput,
+juno_patch *_patches,
 
-	const char *getClassName()
-	{
-		return ("JunoKeyboard");
-	}
+int, Scheduler *sched, ConnectionManager *conn);
+
+    ~JunoKeyboard();
+
+    int getKeyTranspose()
+    {
+        return keyTranspose;
+    }
+
+    const char *getClassName()
+    {
+        return ("JunoKeyboard");
+    }
 };
 
 #endif

@@ -20,67 +20,66 @@
 #include "Scheduler.h"
 #include "ConnectionInfo.h"
 
-Balance::Balance(Scheduler *sched): MoogObject(sched), rms1(sched), rms2(sched)
+Balance::Balance(Scheduler *sched): MoogObject(sched, NULL), rms1(sched), rms2(sched)
 {
-	addPorts("sig", OUTPUT, true,
-		NULL);
+    addPorts("sig", OUTPUT, true, NULL);
 
-	inputs.appendElement(rms1.getInput(I_RMS_SIG));
-	inputs.appendElement(rms2.getInput(I_RMS_SIG));
+    inputs.appendElement(rms1.getInput(I_RMS_SIG));
+    inputs.appendElement(rms2.getInput(I_RMS_SIG));
 
-	power1 = &rms1.getOutput(O_RMS_POWER)->data;
-	power2 = &rms2.getOutput(O_RMS_POWER)->data;
+    power1 = &rms1.getOutput(O_RMS_POWER)->data;
+    power2 = &rms2.getOutput(O_RMS_POWER)->data;
 
-	output = &outputs[O_BAL_SIG]; // just for optimization
-	inSig = inputs[1].data;
+    output = &outputs[O_BAL_SIG]; // just for optimization
+    inSig = inputs[1].data;
 
-	schedule->scheduleSampleRate(this, true);
+    schedule->scheduleSampleRate(this, true);
 }
 
 Balance::~Balance()
 {
-	/* unborrow the inputs rms so they won't get double deleted
-	 * from the back is more efficient for the SimpleArray
-	 */
+    /* unborrow the inputs rms so they won't get double deleted
+     * from the back is more efficient for the SimpleArray
+     */
 
-	inputs.removeElement(I_BAL_SIG2);
-	inputs.removeElement(I_BAL_SIG1);
+    inputs.removeElement(I_BAL_SIG2);
+    inputs.removeElement(I_BAL_SIG1);
 }
 
 void Balance::connectTo(ConnectionInfo *info)
 {
-	if (info->input == rms1.getInput(0))
-		rms1.connectTo(info);
-	else
-		rms2.connectTo(info);
+    if (info->input == rms1.getInput(0))
+        rms1.connectTo(info);
+    else
+        rms2.connectTo(info);
 
-	inSig = inputs[1].data;
+    inSig = inputs[1].data;
 }
 
 void Balance::disconnectTo(ConnectionInfo *info)
 {
-	if (info->input == rms1.getInput(0))
-		rms1.disconnectTo(info);
-	else
-		rms2.disconnectTo(info);
+    if (info->input == rms1.getInput(0))
+        rms1.disconnectTo(info);
+    else
+        rms2.disconnectTo(info);
 
-	inSig = inputs[1].data;
+    inSig = inputs[1].data;
 }
 
 Input *Balance::getInput(const char *name)
 {
-	if (strcmp(name, "pow") == 0)
-		return rms1.getInput("sig");
-	else if (strcmp(name, "sig") == 0)
-		return rms2.getInput("sig");
+    if (strcmp(name, "pow") == 0)
+        return rms1.getInput("sig");
+    else if (strcmp(name, "sig") == 0)
+        return rms2.getInput("sig");
 
-	return NULL;
+    return NULL;
 }
 
 void Balance::sampleGo()
 {
-	if (*power2 == 0)
-		output->setData(0);
-	else
-		output->setData(*inSig * (*power1 / *power2));
+    if (*power2 == 0)
+        output->setData(0);
+    else
+        output->setData(*inSig * (*power1 / *power2));
 }

@@ -20,98 +20,95 @@
 #include <string.h>
 #include <libmoogutil/debug.h>
 
-/* $Id: Mixer.cpp,v 1.4 2004/04/16 14:39:00 brainslayer Exp $ */
+/* $Id: Mixer.cpp,v 1.5 2004/04/17 13:46:21 strepto Exp $ */
 
 #include "Mixer.h"
 #include "Scheduler.h"
 #include "ConnectionManager.h"
 
-Mixer::Mixer(Scheduler *sched, int n, int objs, ...): MoogObject(sched)
+Mixer::Mixer(Scheduler *sched, ConnectionManager *conn, int n, int objs, ...): MoogObject(sched, conn)
 {
-	init(n);
+    init(n);
 
-	va_list ap;
-	va_start(ap, objs);
-	for (int i = 0;i < objs;i++)
-	{
-		char tmpname[20];
-		sprintf(tmpname, "sig%d", i);
+    va_list ap;
+    va_start(ap, objs);
+    for (int i = 0;i < objs;i++)
+    {
+        char tmpname[20];
+        sprintf(tmpname, "sig%d", i);
 
-		ConnectionManager::connect((MoogObject *)va_arg(ap, MoogObject *),
-			"sig",
-			this,
-			tmpname);
-	}
-	va_end(ap);
+        PATCH((MoogObject *)va_arg(ap, MoogObject *), "sig", this, tmpname);
+    }
+    va_end(ap);
 }
 
 void
 Mixer::init(int n)
 {
-	numChannels = n;
+    numChannels = n;
 
-	char tmpname[20];
-	int i;
+    char tmpname[20];
+    int i;
 
-	double mix = 2.0 / n;
+    double mix = 2.0 / n;
 
-	for (i = 0;i < numChannels;i++)
-	{
-		sprintf(tmpname, "amp%d", i);
-		addInput(tmpname);
-		sprintf(tmpname, "sig%d", i);
-		addInput(tmpname);
-		set(I_MIX_AMP(i), mix);
-	}
+    for (i = 0;i < numChannels;i++)
+    {
+        sprintf(tmpname, "amp%d", i);
+        addInput(tmpname);
+        sprintf(tmpname, "sig%d", i);
+        addInput(tmpname);
+        set(I_MIX_AMP(i), mix);
+    }
 
-	output = addOutput("sig", true);
-	inputData = new double *[numChannels * 2];
+    output = addOutput("sig", true);
+    inputData = new double *[numChannels * 2];
 
-	for (int i = 0;i < numChannels * 2;i++)
-		inputData[i] = inputs[i].data;
+    for (int i = 0;i < numChannels * 2;i++)
+        inputData[i] = inputs[i].data;
 
-	schedule->scheduleSampleRate(this, true);
+    schedule->scheduleSampleRate(this, true);
 }
 
 Mixer::~Mixer()
 {
-	delete[]inputData;
+    delete[]inputData;
 }
 
 void Mixer::connectTo(ConnectionInfo *info)
 {
-	MoogObject::connectTo(info);
+    MoogObject::connectTo(info);
 
-	for (int i = 0;i < numChannels * 2;i++)
-		inputData[i] = inputs[i].data;
+    for (int i = 0;i < numChannels * 2;i++)
+        inputData[i] = inputs[i].data;
 }
 
 void Mixer::disconnectTo(ConnectionInfo *info)
 {
-	MoogObject::disconnectTo(info);
+    MoogObject::disconnectTo(info);
 
-	for (int i = 0;i < numChannels * 2;i++)
-		inputData[i] = inputs[i].data;
+    for (int i = 0;i < numChannels * 2;i++)
+        inputData[i] = inputs[i].data;
 }
 
 void Mixer::sampleGo()
 {
-	register int i = numChannels * 2;
-	double tmpdata = 0;
+    register int i = numChannels * 2;
+    double tmpdata = 0;
 
-	while (i > 0)
-	{
-		i--;
-		tmpdata += *inputData[i] * *inputData[i-1];
-		i--;
-	}
-	/*if (tmpdata > 1.0)
-		tmpdata = 1;
-	if (tmpdata < -1.0)
-		tmpdata = -1;*/
+    while (i > 0)
+    {
+        i--;
+        tmpdata += *inputData[i] * *inputData[i-1];
+        i--;
+    }
+    /*if (tmpdata > 1.0)
+        tmpdata = 1;
+    if (tmpdata < -1.0)
+        tmpdata = -1;*/
 
-	output->setData(tmpdata);
+    output->setData(tmpdata);
 
-	MOOG_DEBUG("%f", tmpdata);
+    MOOG_DEBUG("%f", tmpdata);
 }
 
