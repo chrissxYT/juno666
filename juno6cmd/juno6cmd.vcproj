@@ -110,56 +110,17 @@
 				RelativePath="juno6.cpp">
 			</File>
 			<File
-				RelativePath="juno_arpeggio.cpp">
-			</File>
-			<File
-				RelativePath="juno_chorus.cpp">
-			</File>
-			<File
-				RelativePath="juno_control.cpp">
-			</File>
-			<File
 				RelativePath="juno_keyboard.cpp">
 			</File>
 			<File
-				RelativePath="juno_lfo.cpp">
-			</File>
-			<File
-				RelativePath="juno_patch.c">
-			</File>
-			<File
 				RelativePath="juno_synth.cpp">
-			</File>
-			<File
-				RelativePath="juno_voice.cpp">
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc">
 			<File
-				RelativePath="juno_arpeggio.h">
-			</File>
-			<File
-				RelativePath="juno_chorus.h">
-			</File>
-			<File
-				RelativePath="juno_control.h">
-			</File>
-			<File
 				RelativePath="juno_keyboard.h">
-			</File>
-			<File
-				RelativePath="juno_lfo.h">
-			</File>
-			<File
-				RelativePath="juno_patch.h">
-			</File>
-			<File
-				RelativePath="juno_synth.h">
-			</File>
-			<File
-				RelativePath="juno_voice.h">
 			</File>
 			<File
 				RelativePath="version.h">

@@ -70,6 +70,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalDependencies="kernel32.lib"
 				OutputFile="../lib/libmoog.lib"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -135,10 +136,28 @@
 				RelativePath="Input.cpp">
 			</File>
 			<File
+				RelativePath="JunoArpeggio.cpp">
+			</File>
+			<File
+				RelativePath="JunoChorus.cpp">
+			</File>
+			<File
+				RelativePath="JunoControl.cpp">
+			</File>
+			<File
+				RelativePath="JunoLfo.cpp">
+			</File>
+			<File
+				RelativePath="JunoPatch.c">
+			</File>
+			<File
 				RelativePath="JunoPulse.cpp">
 			</File>
 			<File
 				RelativePath="JunoSaw.cpp">
+			</File>
+			<File
+				RelativePath="JunoVoice.cpp">
 			</File>
 			<File
 				RelativePath="Mixer.cpp">
@@ -235,10 +254,31 @@
 				RelativePath="Input.h">
 			</File>
 			<File
+				RelativePath="JunoArpeggio.h">
+			</File>
+			<File
+				RelativePath="JunoChorus.h">
+			</File>
+			<File
+				RelativePath="JunoControl.h">
+			</File>
+			<File
+				RelativePath="JunoLfo.h">
+			</File>
+			<File
+				RelativePath="JunoPatch.h">
+			</File>
+			<File
 				RelativePath="JunoPulse.h">
 			</File>
 			<File
 				RelativePath="JunoSaw.h">
+			</File>
+			<File
+				RelativePath="JunoSynth.h">
+			</File>
+			<File
+				RelativePath="JunoVoice.h">
 			</File>
 			<File
 				RelativePath="MidiInputWin32.h">
@@ -282,10 +322,6 @@
 			<File
 				RelativePath="pitch.h">
 			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 		</Filter>
 	</Files>
 	<Globals>

@@ -113,28 +113,10 @@
 				RelativePath="juno6.cpp">
 			</File>
 			<File
-				RelativePath="juno_arpeggio.cpp">
-			</File>
-			<File
-				RelativePath="juno_chorus.cpp">
-			</File>
-			<File
-				RelativePath="juno_control.cpp">
-			</File>
-			<File
 				RelativePath="juno_gui.cpp">
 			</File>
 			<File
-				RelativePath="juno_lfo.cpp">
-			</File>
-			<File
-				RelativePath="juno_patch.c">
-			</File>
-			<File
 				RelativePath="juno_synth.cpp">
-			</File>
-			<File
-				RelativePath="juno_voice.cpp">
 			</File>
 			<File
 				RelativePath="juno_wrappers.cpp">
@@ -147,28 +129,13 @@
 				RelativePath="about.h">
 			</File>
 			<File
-				RelativePath="juno_arpeggio.h">
+				RelativePath="juno_background.h">
 			</File>
 			<File
-				RelativePath="juno_chorus.h">
-			</File>
-			<File
-				RelativePath="juno_control.h">
+				RelativePath="juno_background_mask.h">
 			</File>
 			<File
 				RelativePath="juno_gui.h">
-			</File>
-			<File
-				RelativePath="juno_lfo.h">
-			</File>
-			<File
-				RelativePath="juno_patch.h">
-			</File>
-			<File
-				RelativePath="juno_synth.h">
-			</File>
-			<File
-				RelativePath="juno_voice.h">
 			</File>
 			<File
 				RelativePath="juno_wrappers.h">
