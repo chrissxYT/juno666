@@ -1,0 +1,165 @@
+NiceC
+
+Version 4
+
+Copyright 1997 Roger Moser, Switzerland
+=======================================
+
+
+What is it
+----------
+
+NiceC is a fast, learning and easy to use C source formatter.
+It completely formats C or C++ source codes according to your
+style which it has learned from a sample of your source code.
+
+
+Installation
+------------
+
+Copy NICEC.EXE to a subdirectory that is listed in the DOS PATH and then
+let NiceC learn your style by running "nicec -l sample.c". That's all.
+
+If you are upgrading from version 1, you should run "nicec -l nicec.cfg" and
+then check in nicec.cfg if the style of "x::x():a() {}" is your style.
+
+NICEC.EXE contains both versions, 16-bit and 32-bit. If you start it under
+Windows 95 or NT, the 32-bit version runs which can process long file names.
+Otherwise the 16-bit version runs.
+
+
+Usage, Command line options
+---------------------------
+
+Usage:   NICEC [options] filenames
+         NICEC [options] <input >output
+
+Options: -l                learn
+         -tn[,n]           tab spacing in input and output file
+         -tn,0             no tabs in output file
+         -b                if, else, for, while and do always with {}
+         -cfilename[.cfg]  configuration file
+
+Default: -t8,8
+         -cNICEC.CFG
+
+You can specify more than one filename and wildcards are allowed.
+
+
+Configuration file
+------------------
+
+NiceC saves your style in a configuration file. The default name is
+NICEC.CFG (in the same subdirectory as NICE.EXE). If you detect errors,
+you may modify the configuration file with an ASCII editor.
+
+The meaning of the configuration file should be clear except following:
+
+Configuration file:             Explanation:
+~~~~~~~~~~~~~~~~~~~             ~~~~~~~~~~~~
+  char *t[] = {0, 1, 2}; //     If there is a tab before '2' then NiceC
+                                preserves the tabs within a initialization
+                                list.
+                                If there is a tab before '//' then NiceC
+                                preserves the tabs before comments.
+
+void calculate(int a,           The indentation of the continuation of the
+               int b);          function declaration defines whether the
+                                continuation has a fixed indentation or is
+                                aligned to '('.
+
+  a b;                          If there is a tab between 'a' and 'b' then
+                                NiceC preserves the tabs within statements.
+
+  stat1;                        If 'stat1;' and 'stat2;' are on separate
+  stat2;                        lines then NiceC will put every statement
+                                on a separate line.
+
+  if (ok && i == k & 2          The indentation of the continuation of the
+      || x > 0)                 'if' and the 'while' statement defines
+          while (ok             whether the continuation has a fixed
+              && i > 0)         indentation or is aligned to '('.
+
+  calculate(v1,                 The indentation of the continuation of the
+            v2);                function call defines whether the
+                                continuation has a fixed indentation or is
+                                aligned to '('.
+
+lab:                            If 'lab:' is at the first column then NiceC
+                                will put all labels at the beginning of the
+                                line. Otherwise it will outdent the labels
+                                according to the relative position of 'lab:'.
+
+
+Miscellaneous
+-------------
+
+NiceC always creates backup files with the extension .BAK (or .BK0, .BK1 etc.
+if there would be a name conflict).
+
+NiceC is a copyright reserved free software. That means, you may use and
+distribute it freely but you may not pretend that you have written it.
+
+
+Known problems
+--------------
+
+- Preprocessor commands are left unchanged.
+- 'asm' statements are not formatted.
+- Old style function declarations are not supported.
+- Macros are not expanded when looking at the structure of the program.
+- Sometimes the indentation of multi-line comments is wrong.
+- Sometimes the 'operator' key word is not surrounded by the correct
+  number of spaces.
+- The option '-b' may still have bugs.
+
+
+History
+-------
+
+Version 4 (22-Jul-97):
+  Bug fix:
+  - NiceC formatted following in a wrong way:
+	struct {
+		void (*f)();
+	};
+
+Version 3 (08-Feb-97):
+  - Nicec also accepts '$' in variable and function names.
+  Bug fix:
+  - The 32-bit version sometimes hung if there was a tab before a comment.
+
+Version 2 (06-Feb-97):
+  New features:
+  - If run under Windows 95 or NT, long file names are properly handled.
+  - If the right brace is on the same line, NiceC counts the spaces before it.
+  - NiceC supports reading from stdin and writing to stdout.
+  - The command line option '-b' tells NiceC to insert braces after 'if',
+    'else', 'for', 'while' and 'do', if there are no braces.
+    (Use this option with caution for there still may be bugs).
+  Bug fixes:
+  - 'asm' statements did not work.
+  - NiceC did not correctly count the spaces around the '+' in a[i+1].
+  - NiceC incorrectly learned following:
+	x = a
+	    + b;
+  - NiceC formatted following in a wrong way:
+	y::y()
+		: b()
+	{
+	}
+  - Some small bugs are fixed.
+
+Version 1 (17-Sep-95):
+  First release.
+
+
+Feedback
+--------
+
+If NiceC cannot learn your style or if it changes your source in an
+undesired way then please send me a E-mail with a small example of
+your source code and the configuration file.
+
+Roger Moser
+CompuServe 100111,762 (100111.762@compuserve.com)
