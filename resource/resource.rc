@@ -9,3 +9,17 @@ IDB_WHITE_BUTTON  BITMAP DISCARDABLE "whitebutton.bmp"
 IDB_YELLOW_BUTTON BITMAP DISCARDABLE "yellowbutton.bmp"  
 IDB_ORANGE_BUTTON BITMAP DISCARDABLE "orangebutton.bmp"
 IDB_LED           BITMAP DISCARDABLE "led.bmp"
+
+IDB_C             BITMAP DISCARDABLE "C.bmp"
+IDB_D             BITMAP DISCARDABLE "D.bmp"
+IDB_E             BITMAP DISCARDABLE "E.bmp"
+IDB_F             BITMAP DISCARDABLE "F.bmp"
+IDB_G             BITMAP DISCARDABLE "G.bmp"
+IDB_A             BITMAP DISCARDABLE "A.bmp"
+IDB_B             BITMAP DISCARDABLE "B.bmp"
+
+IDB_HALF          BITMAP DISCARDABLE "half.bmp"
+
+IDB_LAST          BITMAP DISCARDABLE "last.bmp"
+
+IDB_KNOB          BITMAP DISCARDABLE "knob.bmp"

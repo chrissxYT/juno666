@@ -8,13 +8,16 @@
 class Editor : public AEffGUIEditor, public CControlListener
 {
     public:
-        Editor (AudioEffect* effect, JunoControl *cntrl);
+        Editor (AudioEffect* effect, JunoControl *cntrl, MidiInput *midiinput);
         ~Editor ();
 
-        void addSlider (int x, int y, char *outputName);
+        void addKnob (int x, int y, char *outputName);
         void addButton (int x, int y, int bmp, char *outputName);
+        void addSlider (int x, int y, char *outputName);
         void addTwoSwitch (int x, int y, char *outputName);
         void addThreeSwitch (int x, int y, char *outputName);
+
+        void addKey (int x, int y, int note, int keyBmp);
 
     protected:
 
@@ -24,13 +27,19 @@ class Editor : public AEffGUIEditor, public CControlListener
         virtual void setParameter (long index, float value);
         virtual void valueChanged (CDrawContext* canvas, CControl* control);
 
+        float getParameter(long index);
+
     private:
+
+        MidiInput         *midiInput;
 
         JunoControl       *control;
 
         CBitmap           *bmpBackground;
 
         CControl          **guiControl;
+
+        CControl          **guiKeyboard;
 };
 
 #endif

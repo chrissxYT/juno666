@@ -2,14 +2,20 @@
 
 #include "../resource/resource.h"
 
-Editor::Editor (AudioEffect* fx, JunoControl *cntrl) : 
+Editor::Editor (AudioEffect* fx, JunoControl *cntrl, MidiInput *midiinput) : 
 AEffGUIEditor(fx),
-control(cntrl)
+control(cntrl),
+midiInput(midiinput)
 {
     guiControl = new CControl *[control->getNumOutputs()];
 
+    guiKeyboard = new CControl *[64];
+
     for(int i=0; i<control->getNumOutputs(); i++)
         guiControl[i] = NULL;
+
+    for(int i=0; i<64; i++)
+        guiKeyboard[i] = NULL;
 
     bmpBackground = new CBitmap(IDB_BACKGROUND);
     rect.top = rect.left = 0;
@@ -39,9 +45,11 @@ Editor::open (void* ptr)
     frame = new CFrame (size, ptr, this);
     frame->setBackground (bmpBackground);
 
+    addKnob (80, 52, "master_tune");
+
     addSlider(22, 127, "bender_dco");
     addSlider(41, 127, "bender_vcf");
-    addThreeSwitch(70, 140, "octave_transpose");
+    addThreeSwitch(70, 142, "octave_transpose");
 
     addButton(125, 43, IDB_WHITE_BUTTON, "transpose_switch");
     addButton(152, 43, IDB_YELLOW_BUTTON, "hold_switch");
@@ -93,9 +101,82 @@ Editor::open (void* ptr)
     addButton(781, 43, IDB_YELLOW_BUTTON, "chorus_I_switch");
     addButton(797, 43, IDB_ORANGE_BUTTON, "chorus_II_switch");
 
+    /* Keyboard */
+    addKey(130, 111,  0, IDB_C);
+    addKey(152, 111,  2, IDB_D);
+    addKey(174, 111,  4, IDB_E);
+    addKey(196, 111,  5, IDB_F);
+    addKey(218, 111,  7, IDB_G);
+    addKey(240, 111,  9, IDB_A);
+    addKey(262, 111, 11, IDB_B);
+
+    addKey(144, 111,  1, IDB_HALF);
+    addKey(171, 111,  3, IDB_HALF);
+    addKey(210, 111,  6, IDB_HALF);
+    addKey(234, 111,  8, IDB_HALF);
+    addKey(259, 111, 10, IDB_HALF);
+
+    addKey(284, 111, 12, IDB_C);
+    addKey(306, 111, 14, IDB_D);
+    addKey(328, 111, 16, IDB_E);
+    addKey(350, 111, 17, IDB_F);
+    addKey(372, 111, 19, IDB_G);
+    addKey(394, 111, 21, IDB_A);
+    addKey(416, 111, 23, IDB_B);
+
+    addKey(298, 111, 13, IDB_HALF);
+    addKey(325, 111, 14, IDB_HALF);
+    addKey(364, 111, 18, IDB_HALF);
+    addKey(388, 111, 20, IDB_HALF);
+    addKey(413, 111, 22, IDB_HALF);
+
+    addKey(438, 111, 24, IDB_C);
+    addKey(460, 111, 26, IDB_D);
+    addKey(482, 111, 28, IDB_E);
+    addKey(504, 111, 29, IDB_F);
+    addKey(526, 111, 31, IDB_G);
+    addKey(548, 111, 33, IDB_A);
+    addKey(570, 111, 35, IDB_B);
+
+    addKey(452, 111, 25, IDB_HALF);
+    addKey(479, 111, 27, IDB_HALF);
+    addKey(518, 111, 30, IDB_HALF);
+    addKey(542, 111, 32, IDB_HALF);
+    addKey(567, 111, 34, IDB_HALF);
+
+    addKey(592, 111, 36, IDB_C);
+    addKey(614, 111, 38, IDB_D);
+    addKey(636, 111, 40, IDB_E);
+    addKey(658, 111, 41, IDB_F);
+    addKey(680, 111, 43, IDB_G);
+    addKey(702, 111, 45, IDB_A);
+    addKey(724, 111, 47, IDB_B);
+
+    addKey(606, 111, 37, IDB_HALF);
+    addKey(633, 111, 39, IDB_HALF);
+    addKey(672, 111, 42, IDB_HALF);
+    addKey(696, 111, 44, IDB_HALF);
+    addKey(721, 111, 46, IDB_HALF);
+
+    addKey(746, 111, 48, IDB_C);
+    addKey(768, 111, 50, IDB_D);
+    addKey(790, 111, 52, IDB_E);
+    addKey(812, 111, 53, IDB_F);
+    addKey(834, 111, 55, IDB_G);
+    addKey(856, 111, 57, IDB_A);
+    addKey(878, 111, 59, IDB_B);
+
+    addKey(760, 111, 49, IDB_HALF);
+    addKey(787, 111, 51, IDB_HALF);
+    addKey(826, 111, 54, IDB_HALF);
+    addKey(850, 111, 56, IDB_HALF);
+    addKey(875, 111, 58, IDB_HALF);
+
+    addKey(900, 111, 60, IDB_LAST);
+
     for(int i=0; i<control->getNumOutputs(); i++)
     {
-        setParameter(i, (float) * control->getOutput(i)->getData());
+        setParameter(i, getParameter(i));
     }
 
     return true;    
@@ -106,19 +187,67 @@ Editor::setParameter (long index, float value)
 {   
     if (frame)
     {
+        if (index >= 1000)
+        {
+            guiKeyboard[index-1000]->setValue(value);
+            postUpdate();
+            return;
+        }
+
         if (guiControl[index])
         {
             guiControl[index]->setValue(value);
-
             postUpdate();
         }
     }
+}
+
+// FIXME: I allready exist in VstJuno6
+float 
+Editor::getParameter(long index)
+{
+    if (control)
+    {
+        float value = (float) * control->getOutput(index)->getData();
+        switch (control->getOutput(index)->getType())
+        {
+            case WAY2:
+                return value;
+                break;
+            case WAY3:
+                value += 1;
+                value /= 2;
+                return value;
+                break;
+            default:
+                return value;
+
+        }
+        return value;
+    }
+
+    return 0;
 }
 
 void
 Editor::valueChanged (CDrawContext* canvas, CControl* ccontrol)
 {   
     long tag = ccontrol->getTag();
+
+    if(tag>=1000)
+    {
+        if(ccontrol->getValue()==1)
+        {
+            midiInput->doNoteOn(0, (tag-1000) + 36, 127);
+        }
+        else
+        {
+            midiInput->doNoteOff(0, (tag-1000) + 36, 127);
+        }
+
+        ccontrol->update(canvas);
+        return;
+    }
 
     effect->setParameterAutomated (tag, ccontrol->getValue());
     ccontrol->update(canvas);
@@ -198,6 +327,48 @@ Editor::addThreeSwitch (int x, int y, char *outputName)
     CPoint point(0, 0);
 
     guiControl[tag] = new CVerticalSwitch(size, this, tag, 3, bitmap->getHeight() / 3, 3, bitmap, point);
+
+    frame->addView(guiControl[tag]);
+
+    bitmap->forget();
+}
+
+void
+Editor::addKey (int x, int y, int note, int keyBmp)
+{   
+    CBitmap *bitmap = new CBitmap(keyBmp);
+
+    bitmap->setTransparentColor(kWhiteCColor);
+
+    CRect size(x, y, x + bitmap->getWidth(), y + bitmap->getHeight() / 2);
+
+    CPoint point(0, 0);
+
+    guiKeyboard[note] = new CKickButton(size, this, note+1000, bitmap->getHeight() / 2, bitmap, point);
+/*
+    CRect mouseArea(x, 166, x + 22, 217);
+
+    guiKeyboard[note]->setMouseableArea(mouseArea);
+*/
+    guiKeyboard[note]->setTransparency(true);
+
+    frame->addView(guiKeyboard[note]);
+
+    bitmap->forget();
+}
+
+void
+Editor::addKnob (int x, int y, char *outputName)
+{   
+    CBitmap *bitmap = new CBitmap(IDB_KNOB);
+
+    int tag = control->getOutputNum(outputName);
+
+    CRect size(x, y, x + bitmap->getWidth(), y + bitmap->getHeight() / 100);
+
+    CPoint point(0, 0);
+
+    guiControl[tag] = new CAnimKnob(size, this, tag, 100, bitmap->getHeight() / 100, bitmap, point);
 
     frame->addView(guiControl[tag]);
 

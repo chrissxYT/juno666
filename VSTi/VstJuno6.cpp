@@ -29,7 +29,7 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 
     keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
 
-    setEditor( new Editor( this, control ) );
+    setEditor( new Editor( this, control, midiInput ) );
 
     setProgram(0);
 
@@ -64,11 +64,12 @@ void VstJuno6::setProgram(long program)
 
     control->MoogObject::getOutput("patch_change")->setData(program);
 
+    // Adjust the editor to the new program
     if (editor)
     {   
         for(int i=0; i<control->getNumOutputs(); i++)
         {
-            ((AEffGUIEditor*)editor)->setParameter(i, (float) * control->getOutput(i)->getData());
+            ((AEffGUIEditor*)editor)->setParameter(i, getParameter(i));
         }
     }
 }
