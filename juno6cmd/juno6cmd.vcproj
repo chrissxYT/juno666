@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="libmoogutil"
-	ProjectGUID="{C6B4AEFD-F334-49CA-AA5F-3438664B6B69}"
+	Name="juno6cmd"
+	ProjectGUID="{8D708D5A-6F8B-44A9-89C4-9AD04EDD1006}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -14,13 +14,13 @@
 			Name="Debug|Win32"
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/I.. /D STRING_WITHOUT_NUMBER /D LOCAL_RCSID"
+				AdditionalOptions="/I.."
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="5"
@@ -31,8 +31,14 @@
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="../lib/libmoogutil_d.lib"/>
+				Name="VCLinkerTool"
+				AdditionalDependencies="../lib/libmoog_d.lib winmm.lib"
+				OutputFile="../bin/juno6cmd_d.exe"
+				LinkIncremental="2"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile="$(OutDir)/juno6cmd.pdb"
+				SubSystem="1"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -45,20 +51,22 @@
 				Name="VCResourceCompilerTool"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/I.. /D STRING_WITHOUT_NUMBER /D LOCAL_RCSID"
+				AdditionalOptions="/I.."
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				OmitFramePointers="TRUE"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				StringPooling="TRUE"
 				RuntimeLibrary="4"
 				EnableFunctionLevelLinking="TRUE"
@@ -69,8 +77,15 @@
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="../lib/libmoogutil.lib"/>
+				Name="VCLinkerTool"
+				AdditionalDependencies="../lib/libmoog.lib winmm.lib"
+				OutputFile="../bin/juno6cmd.exe"
+				LinkIncremental="1"
+				GenerateDebugInformation="TRUE"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -83,6 +98,8 @@
 				Name="VCResourceCompilerTool"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
 		</Configuration>
 	</Configurations>
 	<Files>
@@ -90,44 +107,62 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm">
 			<File
-				RelativePath="String.cpp">
+				RelativePath="juno6.cpp">
 			</File>
 			<File
-				RelativePath="aclib.c">
+				RelativePath="juno_arpeggio.cpp">
 			</File>
 			<File
-				RelativePath="debug.cpp">
+				RelativePath="juno_chorus.cpp">
 			</File>
 			<File
-				RelativePath="hash.c">
+				RelativePath="juno_control.cpp">
 			</File>
 			<File
-				RelativePath="ini.c">
+				RelativePath="juno_keyboard.cpp">
 			</File>
 			<File
-				RelativePath="sio.cpp">
+				RelativePath="juno_lfo.cpp">
 			</File>
 			<File
-				RelativePath="text_util.cpp">
+				RelativePath="juno_patch.c">
+			</File>
+			<File
+				RelativePath="juno_synth.cpp">
+			</File>
+			<File
+				RelativePath="juno_voice.cpp">
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc">
 			<File
-				RelativePath="String.h">
+				RelativePath="juno_arpeggio.h">
 			</File>
 			<File
-				RelativePath="debug.h">
+				RelativePath="juno_chorus.h">
 			</File>
 			<File
-				RelativePath="hash.h">
+				RelativePath="juno_control.h">
 			</File>
 			<File
-				RelativePath="ini.h">
+				RelativePath="juno_keyboard.h">
 			</File>
 			<File
-				RelativePath="sio.h">
+				RelativePath="juno_lfo.h">
+			</File>
+			<File
+				RelativePath="juno_patch.h">
+			</File>
+			<File
+				RelativePath="juno_synth.h">
+			</File>
+			<File
+				RelativePath="juno_voice.h">
+			</File>
+			<File
+				RelativePath="version.h">
 			</File>
 		</Filter>
 	</Files>

@@ -149,7 +149,6 @@ int loadPatFile(char *name, juno_patch *patch)
 int
 main(int argc, char **argv)
 {
-	int i;
 	juno_patch *patches;
 
 	if (argc < 3)
