@@ -108,8 +108,6 @@ int loadPatFile(char *name, juno_patch *patch)
 		if (sw1 & 4) //octave down ('16)
 			octave_transpose = 1;
 
-		if (i == 79)
-			printf(" sw1 %d\n", sw1);
 		if (sw1 & 8)
 			patch[i].dco_pulse_switch = 1;
 		if (sw1 & 16)
