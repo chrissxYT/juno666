@@ -114,8 +114,6 @@ public:
     int isAnyVoicePlaying();
 
 private:
-    long currentDelta;
-
     int numVoices;
 
     VSTOutput *dsp;

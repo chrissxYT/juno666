@@ -24,7 +24,7 @@ void VstJuno6::resume()
 
 void VstJuno6::initSynth(int numVoices)
 {
-	int i;
+    int i;
     dsp = new VSTOutput(control, schedule, connection);
 
     lfo = new JunoLfo(control, numVoices, schedule, connection);
@@ -121,23 +121,7 @@ void VstJuno6::processReplacing(float **inputs, float **outputs, long sampleFram
 
     if (isAnyVoicePlaying())
     {
-        if (currentDelta > 0)
-        {
-            if (currentDelta >= sampleFrames) // future
-            {
-                currentDelta -= sampleFrames;
-                return;
-            }
-            memset(out1, 0, currentDelta * sizeof(float));
-            memset(out2, 0, currentDelta * sizeof(float));
-            out1 += currentDelta;
-            out2 += currentDelta;
-            sampleFrames -= currentDelta;
-            currentDelta = 0;
-        }
-
         dsp->setOutput1(out1);
-
         dsp->setOutput2(out2);
 
         while (--sampleFrames >= 0)
