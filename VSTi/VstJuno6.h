@@ -66,6 +66,7 @@ enum
     kPanningSlider,
     kStereoSwitch,
 	kUniSono,
+	kPatchChange,
     kNumParams
 };
 

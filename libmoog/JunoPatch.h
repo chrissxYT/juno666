@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/15 12:58:08 $
+ * $Revision: 1.4 $$Date: 2004/06/10 09:13:58 $
  */
 #ifndef JUNO_PATCH_H
 #define JUNO_PATCH_H
@@ -63,6 +63,7 @@ typedef struct
 	double chorus_I_switch;
 	double chorus_II_switch;
 	double panning;
+	double unisono;
 	char name[PATCH_NAME_LEN];
 } juno_patch;
 

@@ -22,8 +22,14 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
     midiInput = new MidiInput(control, numVoices, schedule);
  
     initSynth(numVoices);
+	patches = (juno_patch*)malloc(128*sizeof(juno_patch));
+	for (int i=0;i<128;i++)
+	{
+		juno_patch *current = &patches[i];
+		memcpy(current,&junofactory[i],sizeof(juno_patch));
+	}
 
-    patches = (juno_patch*)&junofactory;
+    //patches = junofactory;
 
     keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
 

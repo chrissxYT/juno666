@@ -83,9 +83,12 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="TRUE"
 				AdditionalDependencies="../lib/libmoog.lib"
 				OutputFile="../bin/importpat.exe"
 				LinkIncremental="1"
+				IgnoreAllDefaultLibraries="FALSE"
+				IgnoreDefaultLibraryNames="libguide.lib;libmmt.lib;libircmt.lib;libirc.lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="1"
 				OptimizeReferences="2"

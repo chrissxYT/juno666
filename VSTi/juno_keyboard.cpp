@@ -241,4 +241,6 @@ void JunoKeyboard::changePatch()
     control->MoogObject::getOutput("chorus_I_switch")->setData(patch->chorus_I_switch);
     control->MoogObject::getOutput("chorus_II_switch")->setData(patch->chorus_II_switch);
     control->MoogObject::getOutput("panning")->setData(patch->panning);
+	control->MoogObject::getOutput("unisono")->setData(patch->unisono);
+	
 }

@@ -75,6 +75,7 @@
 				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
+				StructMemberAlignment="0"
 				EnableFunctionLevelLinking="TRUE"
 				EnableEnhancedInstructionSet="2"
 				UsePrecompiledHeader="0"

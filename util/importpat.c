@@ -20,9 +20,9 @@ unsigned char get3hex(FILE *in)
 	return ((value1 << 4) + value2);
 }
 
-int loadPatFile(char *name, juno_patch *patch)
+int loadPatFile(char *name, juno_patch *patch,char *header)
 {
-	FILE *in;
+	FILE *in,*out;
 	int i;
 
 	double lfo_rate;
@@ -46,6 +46,7 @@ int loadPatFile(char *name, juno_patch *patch)
 	unsigned char sw2;
 
 	in = fopen(name, "rb");
+	out = fopen(header,"wb");
 	if (in == NULL)
 		return -1;
 
@@ -106,7 +107,7 @@ int loadPatFile(char *name, juno_patch *patch)
 			default: //should be 2
 				patch[i].chorus_I_switch = 1;
 		}
-
+		patch[i].unisono = 0;
 //get switches flag 2
 // -1 = env, 0 = man 1 = lfo
 		if (sw2 & 1)
@@ -172,6 +173,48 @@ int loadPatFile(char *name, juno_patch *patch)
 			c = getc(in);
 			len++;
 		}
+	 
+	 
+	fprintf(out,"{%d,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,\"%s\"},\r\n",
+	 patch[i].version,
+	 patch[i].used,
+	 patch[i].bender_dco,
+	 patch[i].bender_vcf,
+	 patch[i].lfo_trigger,
+	 patch[i].volume,
+	 patch[i].octave_transpose,
+	 patch[i].arpeggio_switch,
+	 patch[i].arpeggio_mode,
+	 patch[i].arpeggio_range,
+	 patch[i].arpeggio_rate,
+	 patch[i].lfo_rate,
+	 patch[i].lfo_delay,
+	 patch[i].lfo_mode,
+	 patch[i].dco_lfo,
+	 patch[i].dco_pwm,
+	 patch[i].dco_pwm_mod,
+	 patch[i].dco_pulse_switch,
+	 patch[i].dco_saw_switch,
+	 patch[i].dco_sub_switch,
+	 patch[i].dco_sub,
+	 patch[i].dco_noise,
+	 patch[i].hpf_frq,
+	 patch[i].vcf_frq,
+	 patch[i].vcf_res,
+	 patch[i].vcf_env_invert,
+	 patch[i].vcf_env,
+	 patch[i].vcf_lfo,
+	 patch[i].vcf_kbd,
+	 patch[i].vca_mode,
+	 patch[i].env_attack,
+	 patch[i].env_decay,
+	 patch[i].env_sustain,
+	 patch[i].env_release,
+	 patch[i].chorus_I_switch,
+	 patch[i].chorus_II_switch,
+	 patch[i].panning,
+	 patch[i].unisono,
+	 patch[i].name);
 	}
 }
 
@@ -182,12 +225,12 @@ main(int argc, char **argv)
 
 	if (argc < 3)
 	{
-		fprintf(stderr, "Usage: %s 'patfile' 'patchfile'\n", argv[0]);
+		fprintf(stderr, "Usage: %s 'patfile' 'patchfile' 'header'\n", argv[0]);
 		return 1;
 	}
 
 	patches = juno_patchset_new();
-	loadPatFile(argv[1], patches);
+	loadPatFile(argv[1], patches,argv[3]);
 
 	save_patches(argv[2], patches);
 	juno_patchset_delete(patches);

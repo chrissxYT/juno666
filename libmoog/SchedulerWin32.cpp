@@ -131,7 +131,6 @@ Scheduler::Scheduler()
 
     suspended = 0;
     nextGoHandle = 0;
-    tickThread;
     controlRate = 0;
     sampleRate = 0;
     sampleControlRatio = DEFAULT_SAMPLE_CONTROL_RATIO;
@@ -249,7 +248,7 @@ void Scheduler::start(DSPOutput *_dsp)
 
 
 	sched = this;
-    tickThread = CreateThread(NULL, 0, runSynth, NULL, 0, &ThreadID);
+    //tickThread = CreateThread(NULL, 0, runSynth, NULL, 0, &ThreadID);
 
 //    pthread_create(&tickThread, NULL, (DWORD *()(void*)&runSynth, NULL);
 }
@@ -281,12 +280,12 @@ void Scheduler::resume()
 
 DWORD CALLBACK runSynth(void *)
 {
-    sched->run();
+   // sched->run();
     /* not reached */
     return 0;
 }
 
-void Scheduler::run()
+void Scheduler::run(int frames)
 {
     int controlCount = 0;
     GoObject *obj;
