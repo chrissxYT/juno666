@@ -101,7 +101,7 @@ G_BEGIN_DECLS
 #  endif
 #endif
 #ifndef G_INLINE_FUNC
-#  if defined (__GNUC__) && (__OPTIMIZE__)
+#  if defined (__GNUC__) && defined (__OPTIMIZE__)
 #    define G_INLINE_FUNC extern inline
 #  elif defined (G_CAN_INLINE) && !defined (__GNUC__)
 #    define G_INLINE_FUNC static inline
@@ -232,10 +232,10 @@ g_bit_nth_lsf (gulong mask,
   do
     {
       nth_bit++;
-      if (mask & (1 << (gulong) nth_bit))
+      if (mask & (1UL << nth_bit))
 	return nth_bit;
     }
-  while (nth_bit < 31);
+  while (nth_bit < ((GLIB_SIZEOF_LONG * 8) - 1));
   return -1;
 }
 G_INLINE_FUNC gint
@@ -247,7 +247,7 @@ g_bit_nth_msf (gulong mask,
   do
     {
       nth_bit--;
-      if (mask & (1 << (gulong) nth_bit))
+      if (mask & (1UL << nth_bit))
 	return nth_bit;
     }
   while (nth_bit > 0);
