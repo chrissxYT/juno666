@@ -55,7 +55,7 @@ NamedObject::setName(const char *n)
 		name = NULL;
 	else
 	{
-		int len = strlen(n);
+		size_t len = strlen(n);
 		name = new char[len+1];
 		memcpy(name, n, len);
 		name[len] = 0;

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.10 $$Date: 2004/04/16 14:39:00 $
+ * $Revision: 1.11 $$Date: 2004/04/19 14:16:46 $
  */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
@@ -58,7 +58,9 @@ public:
 	int running;
 	int nvoices;
 	int lastNote;
+	int holdPressed;
 	struct midi_voice *voices;
+	int *savedGateInfo;
 
 	JunoControl *control;
 
@@ -67,6 +69,7 @@ public:
 	inline void doNoteOn(unsigned int c, unsigned int n, unsigned int v);
 	inline void doNoteOff(unsigned int c, unsigned int n, unsigned int v);
 	inline void doPitchBend(unsigned int amount);
+	inline void holdChanged(double data);
 
 	MidiInput(JunoControl *jc, int nv, Scheduler *sched);
 	~MidiInput();

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/18 22:25:14 $
+ * $Revision: 1.5 $$Date: 2004/04/19 14:16:46 $
  */
 #ifndef _OSCILLATOR_H
 #define _OSCILLATOR_H
@@ -51,7 +51,7 @@ protected:
     double *inSync;
 
     double *waveData;
-    int waveDataLen;
+	size_t waveDataLen;
     double pos;
     double scale;
     double speed;

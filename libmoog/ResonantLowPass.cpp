@@ -182,7 +182,7 @@ void ResonantLowPass::recalcFilter()
         coefptr += 4;
     }
 }
-
+#define denormal_fix  0.00000001
 void ResonantLowPass::sampleGo()
 {
     double *coefptr = coef;
@@ -200,9 +200,9 @@ void ResonantLowPass::sampleGo()
         hist1 = *hist1ptr;
         hist2 = *hist2ptr;
 
-        tmpOutput = tmpOutput - hist1 * (*coefptr++);
+		tmpOutput = tmpOutput - hist1 * (*coefptr++);
 
-        newhist = tmpOutput - hist2 * (*coefptr++);
+		newhist = tmpOutput - hist2 * (*coefptr++);
 
         tmpOutput = newhist + hist1 * (*coefptr++);
 

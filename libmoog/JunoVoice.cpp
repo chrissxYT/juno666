@@ -124,7 +124,7 @@ pwmLfo(_pwmLfo)
 {
 //    jc = _jc;
 //    voiceNum = _voiceNum;
-
+    init = 0;
     vcamode = 0;
     addInput("lfo", JunoVoice_lfoChanged, 0, JUNO_CONTROL_RATE);
     addInput("env", JunoVoice_envChanged, 0, JUNO_CONTROL_RATE);
@@ -220,6 +220,7 @@ pwmLfo(_pwmLfo)
 
     /* the output of the voice is the sig output of the voiceVol */
     outputs.appendElement(voiceVol.getOutput("sig"));
+	init = 1;
 }
 
 JunoVoice::~JunoVoice()
@@ -238,12 +239,14 @@ void JunoVoice::attachVoice(MoogObject *src)
 
 void JunoVoice::envChanged(double data)
 {
+	if (!init)return;
     env = data;
     updateVcf();
 }
 
 void JunoVoice::lfoChanged(double data)
 {
+	if (!init)return;
     lfo = data;
     //printf("lfo is %f\n", lfo);
     updateVcf();
@@ -252,6 +255,7 @@ void JunoVoice::lfoChanged(double data)
 
 void JunoVoice::kbdChanged(double data)
 {
+	if (!init)return;
     // this gets rid of a lot of clicks for me, KARL
 
     pulse.sync();
@@ -271,6 +275,7 @@ void JunoVoice::kbdChanged(double data)
 
 void JunoVoice::benderChanged(double data)
 {
+	if (!init)return;
     //printf("bender changed to %f\n", data);
     bender = data;
     updateVcf();
@@ -279,6 +284,7 @@ void JunoVoice::benderChanged(double data)
 
 void JunoVoice::benderdcoChanged(double data)
 {
+	if (!init)return;
     //printf("benderdco changed to %f\n", data);
     benderdco = data;
     updateFrq();
@@ -286,6 +292,7 @@ void JunoVoice::benderdcoChanged(double data)
 
 void JunoVoice::bendervcfChanged(double data)
 {
+	if (!init)return;
     //printf("bendervcf changed to %f\n", data);
     bendervcf = data;
     updateVcf();
@@ -293,6 +300,7 @@ void JunoVoice::bendervcfChanged(double data)
 
 void JunoVoice::subSwitchChanged(double data)
 {
+	if (!init)return;
     if (data)
     {
         if (!subOscConnection)
@@ -309,6 +317,7 @@ void JunoVoice::subSwitchChanged(double data)
 
 void JunoVoice::dcolfoChanged(double data)
 {
+	if (!init)return;
     //printf("dcolfo changed to %f\n", data);
     dcolfo = data;
     updateFrq();
@@ -316,12 +325,14 @@ void JunoVoice::dcolfoChanged(double data)
 
 void JunoVoice::vcffrqChanged(double data)
 {
+	if (!init)return;
     vcffrq = data;
     updateVcf();
 }
 
 void JunoVoice::vcfresChanged(double data)
 {
+	if (!init)return;
     vcf.set("resonance", pow(data / 2, 2.0));
     updateVcf();
 }
@@ -329,6 +340,7 @@ void JunoVoice::vcfresChanged(double data)
 
 void JunoVoice::pwmModeChanged(double data)
 {
+	if (!init)return;
     //printf("pwmMode changed to %f\n", data);
 
     if (data == 0.0)
@@ -359,6 +371,7 @@ void JunoVoice::pwmModeChanged(double data)
 
 void JunoVoice::vcfenvinvertChanged(double data)
 {
+	if (!init)return;
     if (!data)
         vcfenvinvert = 1.0;
     else
@@ -367,24 +380,28 @@ void JunoVoice::vcfenvinvertChanged(double data)
 
 void JunoVoice::vcfenvChanged(double data)
 {
+	if (!init)return;
     vcfenv = pow(data, 4.0);
     updateVcf();
 }
 
 void JunoVoice::vcflfoChanged(double data)
 {
+	if (!init)return;
     vcflfo = pow(data, 4.0);
     updateVcf();
 }
 
 void JunoVoice::vcfkbdChanged(double data)
 {
+	if (!init)return;
     vcfkbd = data;
     updateVcf();
 }
 
 void JunoVoice::vcamodeChanged(double data)
 {
+	if (!init)return;
     if (data)
     {
         PATCH(&gateAdsr, "sig", &voiceVol, "amp");
@@ -399,6 +416,7 @@ void JunoVoice::vcamodeChanged(double data)
 
 void JunoVoice::updateVcf()
 {
+	if (!init)return;
     double tmp = vcffrq;
 
     //printf("tmp is %f\n", tmp);
@@ -424,6 +442,7 @@ void JunoVoice::updateVcf()
 
 void JunoVoice::updateFrq()
 {
+	if (!init)return;
     double frq = kbd * pow((double)2, (double)(2 * lfo * dcolfo / 12) * pow((double)2, (double)(bender * benderdco)));
 
     pulse.set("frq", frq);

@@ -58,7 +58,7 @@ void MoogObject::addPorts(char *name, ...)
         if (io == OUTPUT)
         {
 
-            bool continuousOutput = va_arg(va, int);
+            bool continuousOutput = va_arg(va, bool);
 
             addOutput(name, continuousOutput);
         }

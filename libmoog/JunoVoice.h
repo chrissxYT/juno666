@@ -55,6 +55,7 @@ class JunoVoice: public MoogObject
 
     JunoControl *jc;
     int voiceNum;
+	int init;
 
     /* basic elements */
     //PulseWave pulse;

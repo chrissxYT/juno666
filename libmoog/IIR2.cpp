@@ -44,16 +44,11 @@ void IIR2::disconnectTo(ConnectionInfo *info)
 	in = inputs[0].data;
 }
 
-
+#define denormal_fix  0.00000001
 void IIR2::sampleGo()
 {
 	double out = gain * *in;
-	out = out + cx[0] * x[0] + cx[1] * x[1] - cy[0] * y[0] - cy[1] * y[1];
-
-#ifndef _MSC_VER
-	if (isnan(out)) //check for not a number
-		out = 0;
-#endif
+	out = out + cx[0] * x[0] + cx[1] * x[1] - cy[0] * y[0] - cy[1] * y[1] ;//+ denormal_fix;
 
 	x[1] = x[0];
 	x[0] = *in;
@@ -62,5 +57,5 @@ void IIR2::sampleGo()
 	y[0] = out;
 
 	output->setData(out);
-	MOOG_DEBUG("in %f out %f", *in, out);
 }
+

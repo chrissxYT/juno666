@@ -100,7 +100,7 @@ numVoices(_numVoices)
     PATCH(control, "octave_transpose", this, "octave_transpose");
     PATCH(control, "transpose_switch", this, "transpose_switch");
     PATCH(control, "master_tune", this, "master_tune");
-    PATCH(control, "hold_switch", this, "hold_switch");
+    //PATCH(control, "hold_switch", this, "hold_switch");
     PATCH(control, "patch_change", this, "patch_change");
 
     initz = 1;

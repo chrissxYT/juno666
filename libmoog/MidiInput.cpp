@@ -6,6 +6,7 @@ Win32 MIDI Implementation for Juno 666 project. (c) 2003 - 2004 Sebastian Gottsc
 #include <sys/types.h>
 #include <libmoogutil/debug.h>
 #include "MidiInput.h"
+#include "ConnectionManager.h"
 
 #include "Scheduler.h"
 #include "pitch.h"
@@ -96,6 +97,12 @@ void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwP
 
 #endif
 
+
+void midi_holdChanged(MoogObject *obj,double data,long userdata)
+{
+((MidiInput*)obj)->holdChanged(data);
+}
+
 MidiInput::MidiInput(JunoControl *jc, int nv, Scheduler *sched): 
 MoogObject(sched, NULL),
 control(jc),
@@ -111,6 +118,8 @@ nvoices(nv)
 #endif
 
     voices = new midi_voice[nvoices];
+	savedGateInfo = new int[nvoices];
+	memset(savedGateInfo, 0, nvoices * sizeof(int));
 
     running = 0;
     lastNote = -1;
@@ -127,6 +136,9 @@ nvoices(nv)
         puts("adding output 2");
         voices[i].gateOutput = addOutput(tmpname, false);
     }
+
+	addInput("hold_switch", midi_holdChanged, 0, 1);
+	PATCH(control, "hold_switch", this, "hold_switch");
 
 #ifndef TARGET_VST
 
@@ -170,7 +182,7 @@ MidiInput::~MidiInput()
         midiInClose(handle);
     }
 #endif
-
+    delete[]savedGateInfo;
     delete[](voices);
 }
 
@@ -339,6 +351,7 @@ MidiInput::doNoteOn(unsigned int c, unsigned int n, unsigned int v)
             voices[i].pitchOutput->setData(CPS(midi_notes[n]));
 
             voices[i].gateOutput->setData(v / 127.0);
+			savedGateInfo[i] = 1;
             lastNote = i;
             break;
         }
@@ -357,6 +370,7 @@ MidiInput::allNotesOff()
 
         // important to keep outputting the pitch signal though
         voices[i].gateOutput->setData(0);
+		savedGateInfo[i] = 0;
 
     }
 
@@ -368,15 +382,19 @@ MidiInput::doNoteOff(unsigned int c, unsigned int n, unsigned int v)
     //debug( DEBUG_STATUS, "MidiInput::noteOff %d %d %d", c, n, v );
 
     // stop all voices playing this note ( because of race condition? )
-    for (int i = 0;i < nvoices;i++)
+    if (!holdPressed)
+	{
+	for (int i = 0;i < nvoices;i++)
     {
         if (voices[i].note == (int)n)
         {
             voices[i].note = -1;
             // important to keep outputting the pitch signal though
             voices[i].gateOutput->setData(0);
+			savedGateInfo[i] = 0;
         }
     }
+	}
 }
 
 void
@@ -398,6 +416,16 @@ MidiInput::doPitchBend(unsigned int amount)
 #else
     outputs[0].setData(pitchBend);
 #endif
+}
+
+void MidiInput::holdChanged(double data)
+{
+    if (!(holdPressed = (data) ? 1 : 0))
+    {
+        for (int i = 0;i < nvoices;i++)
+            if (!savedGateInfo[i])
+                voices[i].gateOutput->setData(0.0);
+    }
 }
 
 bool
