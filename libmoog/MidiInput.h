@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.12 $$Date: 2004/04/24 08:01:24 $
+ * $Revision: 1.13 $$Date: 2004/05/24 11:31:57 $
  */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
@@ -57,6 +57,7 @@ class MidiInput: public MoogObject
 public:
     int running;
     int nvoices;
+	bool isUniSono;
     int lastNote;
     int holdPressed;
     struct midi_voice *voices;
@@ -66,10 +67,11 @@ public:
 
     inline void *run();
     inline void allNotesOff();
-    inline void doNoteOn(unsigned int c, unsigned int n, unsigned int v);
-    inline void doNoteOff(unsigned int c, unsigned int n, unsigned int v);
+    void doNoteOn(unsigned int c, unsigned int n, unsigned int v);
+    void doNoteOff(unsigned int c, unsigned int n, unsigned int v);
     inline void doPitchBend(unsigned int amount);
     inline void holdChanged(double data);
+	inline void doUniSono(double data);
 
     MidiInput(JunoControl *jc, int nv, Scheduler *sched);
     ~MidiInput();

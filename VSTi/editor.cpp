@@ -14,11 +14,11 @@ midiInput(midiinput)
     guiControl = new CControl *[control->getNumOutputs()];
 
     guiKeyboard = new CControl *[MAX_KEYBOARD_KEYS];
-
-    for(int i=0; i<control->getNumOutputs(); i++)
+	int i;
+    for(i=0; i<control->getNumOutputs(); i++)
         guiControl[i] = NULL;
 
-    for(int i=0; i<MAX_KEYBOARD_KEYS; i++)
+    for(i=0; i<MAX_KEYBOARD_KEYS; i++)
         guiKeyboard[i] = NULL;
 
     bmpBackground = new CBitmap(IDB_BACKGROUND);
@@ -48,6 +48,11 @@ Editor::open (void* ptr)
 
     frame = new CFrame (size, ptr, this);
     frame->setBackground (bmpBackground);
+
+
+	/* UniSono */
+	addButton(900,43,IDB_WHITE_BUTTON, "unisono");
+
 
     addKnob (80, 52, "master_tune");
 

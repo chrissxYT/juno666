@@ -103,6 +103,11 @@ void midi_holdChanged(MoogObject *obj,double data,long)
     ((MidiInput*)obj)->holdChanged(data);
 }
 
+void midi_doUniSono(MoogObject *obj,double data,long)
+{
+	((MidiInput*)obj)->doUniSono(data);
+}
+
 MidiInput::MidiInput(JunoControl *jc, int nv, Scheduler *sched): 
 MoogObject(sched, NULL),
 control(jc),
@@ -120,6 +125,7 @@ nvoices(nv)
 
     running = 0;
     lastNote = -1;
+	isUniSono = false;
 
     addOutput("bend", false);
 
@@ -143,6 +149,9 @@ nvoices(nv)
 
     addInput("hold_switch", midi_holdChanged, 0, 1);
     PATCH(control, "hold_switch", this, "hold_switch");
+	addInput("unisono",midi_doUniSono,0,1);
+	PATCH(control, "unisono", this, "unisono");
+
 
 #ifndef TARGET_VST
 
@@ -343,6 +352,26 @@ MidiInput::doNoteOn(unsigned int c, unsigned int n, unsigned int v)
     /* try to avoid re-using the same note as long as possible, so that
      * if it has a Release envelope, it will get as much time as possible
      */
+	if (isUniSono == true)
+	{
+	for (int i=0;i<nvoices;i++)
+	{
+		voices[i].note = n;
+		double detune = 0;
+		if (i)
+			detune+=midi_notes[0];
+		if (i%2)
+        voices[i].pitchOutput->setData(CPS(midi_notes[n])+CPS(detune/2));
+		else
+		voices[i].pitchOutput->setData(CPS(midi_notes[n])-CPS(detune/2));
+
+        voices[i].gateOutput->setData(v / 127.0);
+        savedGateInfo[i] = 1;
+	}
+
+	}
+	else
+	{
     int start = (lastNote + 1) % nvoices;
     int i = start;
 
@@ -362,6 +391,7 @@ MidiInput::doNoteOn(unsigned int c, unsigned int n, unsigned int v)
 
         i = (i + 1) % nvoices;
     } while (i != start);
+	}
 }
 
 void
@@ -387,6 +417,9 @@ MidiInput::doNoteOff(unsigned int c, unsigned int n, unsigned int v)
     // stop all voices playing this note ( because of race condition? )
     if (!holdPressed)
     {
+		
+		
+		
         for (int i = 0;i < nvoices;i++)
         {
             if (voices[i].note == (int)n)
@@ -397,6 +430,7 @@ MidiInput::doNoteOff(unsigned int c, unsigned int n, unsigned int v)
                 savedGateInfo[i] = 0;
             }
         }
+		
     }
 }
 
@@ -430,4 +464,14 @@ MidiInput::holdChanged(double data)
             if (!savedGateInfo[i])
                 voices[i].gateOutput->setData(0.0);
     }
+}
+
+void MidiInput::doUniSono(double data)
+{
+if (data>0)
+	isUniSono = true;
+else
+	isUniSono = false;
+
+allNotesOff();
 }
