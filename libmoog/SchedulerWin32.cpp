@@ -29,8 +29,7 @@ static int set_realtime_priority();
 static volatile int needListSync = 0;
 static list_head *currentListIter;
 static CRITICAL_SECTION beginListOpMutex;
-//static pthread_cond_t  listOpCompleteCond =(pthread_cond_t) PTHREAD_COND_INITIALIZER;
-//static pthread_cond_t  resumeCondition = (pthread_cond_t) PTHREAD_COND_INITIALIZER;
+
 
 DSPOutput *Scheduler::dsp = NULL;
 HANDLE Scheduler::tickThread;
@@ -41,17 +40,83 @@ int Scheduler::sampleControlRatio = DEFAULT_SAMPLE_CONTROL_RATIO;
 double Scheduler::nyquistFreq = 0;
 int Scheduler::suspended = 0;
 
+
+enum
+{
+	SIGNAL = 0,
+	BROADCAST = 1,
+	MAX_EVENTS = 2
+};
+
+typedef struct
+{
+
+
+	HANDLE events_[MAX_EVENTS];
+	// Signal and broadcast event HANDLEs.
+} pthread_cond_t;
+
+int
+pthread_cond_init(pthread_cond_t *cv)
+{
+	// Create an auto-reset event.
+	cv->events_[SIGNAL] = CreateEvent(NULL, // no security
+		FALSE, // auto-reset event
+		FALSE, // non-signaled initially
+		NULL); // unnamed
+
+	// Create a manual-reset event.
+	cv->events_[BROADCAST] = CreateEvent(NULL, // no security
+		TRUE, // manual-reset
+		FALSE, // non-signaled initially
+		NULL); // unnamed
+	return 0;
+}
+
+
+int
+pthread_cond_wait(pthread_cond_t *cv,
+	CRITICAL_SECTION *external_mutex)
+{
+	// Release the <external_mutex> here and wait for either event
+	// to become signaled, due to <pthread_cond_signal> being
+	// called or <pthread_cond_broadcast> being called.
+	LeaveCriticalSection(external_mutex);
+	WaitForMultipleObjects(2, // Wait on both <events_>
+		cv->events_,
+		FALSE, // Wait for either event to be signaled
+		INFINITE); // Wait "forever"
+
+	// Reacquire the mutex before returning.
+	EnterCriticalSection(external_mutex);
+	return 0;
+}
+
+int
+pthread_cond_signal(pthread_cond_t *cv)
+{
+	// Try to release one waiting thread.
+	PulseEvent(cv->events_[SIGNAL]);
+	return 0;
+}
+
+
+static pthread_cond_t listOpCompleteCond;
+
+
+
+
+
 LIST_HEAD(Scheduler::controlRateList);
 LIST_HEAD(Scheduler::sampleRateList);
 
 void Scheduler::DeInit()
 {
-////puts("deinit");
 	DeleteCriticalSection(&beginListOpMutex);
 }
 void Scheduler::Init()
 {
-////puts("init");
+	pthread_cond_init(&listOpCompleteCond);
 	InitializeCriticalSection(&beginListOpMutex);
 }
 void Scheduler::setSampleRate(int actual)
@@ -68,14 +133,10 @@ void Scheduler::setSampleControlRatio(int r)
 	/* force some recalculation done in setSampleRate */
 	setSampleRate(sampleRate);
 }
-int listEnterFlag = 0;
 void Scheduler::safeListOp(list_head *node, list_head *list, bool add)
 {
 	needListSync++;
-////puts("try to enter");
 	EnterCriticalSection(&beginListOpMutex);
-////puts("ready");
-	listEnterFlag = 1;
 	/* since the synth thread runs with the beginListOpMutex locked,
 	 * getting here means that that thread is now waiting on the condition
 	 * variable, so we are safe to proceed, or this IS the synth thread
@@ -121,11 +182,11 @@ void Scheduler::safeListOp(list_head *node, list_head *list, bool add)
 
 out:
 	needListSync--;
-//    pthread_cond_signal(&listOpCompleteCond);
-//puts("try to leave");
+	pthread_cond_signal(&listOpCompleteCond);
+
 	LeaveCriticalSection(&beginListOpMutex);
-//puts("ready");
-	listEnterFlag = 0;
+
+
 }
 
 void Scheduler::scheduleControlRate(GoObject *obj, bool schedule)
@@ -194,13 +255,6 @@ void Scheduler::run()
 	int controlCount = 0;
 	GoObject *obj;
 
-
-	debug(DEBUG_APPMSG1, "[Attempting to set process priority, expect error if not root]");
-
-	if (set_realtime_priority() < 0)
-		debug(DEBUG_SYSERROR, "Problem with set_realtime_priority");
-
-//    pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
 	while (running)
 	{
 
@@ -238,12 +292,10 @@ void Scheduler::run()
 		/* this is so we can run even without a DSPOutput object */
 		if (!dsp && needListSync > 0)
 		{
-			while (listEnterFlag)
-			{
-				puts("waiting");
-			}
+
+
+			pthread_cond_wait(&listOpCompleteCond, &beginListOpMutex);
 		}
-//	    pthread_cond_wait(&listOpCompleteCond, &beginListOpMutex);
 	}
 }
 
@@ -257,8 +309,11 @@ void Scheduler::run()
 
 void dataWrittenCallback()
 {
-//    if (needListSync > 0)
-//	pthread_cond_wait(&listOpCompleteCond, &beginListOpMutex);
+	if (needListSync > 0)
+	{
+
+		pthread_cond_wait(&listOpCompleteCond, &beginListOpMutex);
+	}
 }
 
 
