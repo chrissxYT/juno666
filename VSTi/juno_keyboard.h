@@ -7,6 +7,7 @@
 
 class JunoKeyboard: public MoogObject
 {
+	friend void JunoBender_midiValueChanged(MoogObject *o, double data, long userdata);
 	friend void JunoKeyboard_midiGateChanged(MoogObject *, double, long);
 	friend void JunoKeyboard_gtkKeyPressed(int, int, void *);
 	friend void JunoKeyboard_gtkKeyReleased(int, void *);
@@ -38,6 +39,7 @@ class JunoKeyboard: public MoogObject
     void holdChanged(double);
 */
 	void changePatch();
+	void changeBender(double);
 
 	void transposeVoices(double);
 

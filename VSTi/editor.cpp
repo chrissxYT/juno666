@@ -7,8 +7,9 @@
 
 #define KEY_CONTROL_TAG_OFFSET 1024
 
-Editor::Editor(AudioEffect *fx, JunoControl *cntrl, MidiInput *midiinput):
-AEffGUIEditor(fx),
+Editor::Editor(Scheduler *sched, ConnectionManager *conn,AudioEffect *fx, JunoControl *cntrl, MidiInput *midiinput): 
+    MoogObject(sched,conn),
+    AEffGUIEditor(fx),
 	control(cntrl),
 	midiInput(midiinput)
 {
@@ -22,10 +23,6 @@ AEffGUIEditor(fx),
 	for (i = 0;i < MAX_KEYBOARD_KEYS;i++)
 		guiKeyboard[i] = NULL;
 
-	bmpBackground = new CBitmap(IDB_BACKGROUND);
-	rect.top = rect.left = 0;
-	rect.bottom = (short)bmpBackground->getHeight();
-	rect.right = (short)bmpBackground->getWidth();
 }
 
 Editor::~Editor()
@@ -46,10 +43,7 @@ Editor::open(void *ptr)
 {
 	AEffGUIEditor::open(ptr);
 
-	CRect size(0, 0, bmpBackground->getWidth(), bmpBackground->getHeight());
 
-	frame = new CFrame(size, ptr, this);
-	frame->setBackground(bmpBackground);
 	int idx = 0;
 
 	while (true)
@@ -59,6 +53,9 @@ Editor::open(void *ptr)
 			break;
 		switch (type.controltype)
 		{
+			case UIBITMAP:
+				addBitmap(type.posx, type.posy, type.resource_id, ptr);
+				break;
 			case UIBUTTON:
 				addButton(type.posx, type.posy, type.resource_id, type.control_name);
 				break;
@@ -176,6 +173,28 @@ Editor::valueChanged(CDrawContext *canvas, CControl *ccontrol)
 	ccontrol->update(canvas);
 }
 
+
+void Editor::addBitmap(int x, int y, int bmp, void *ptr)
+{
+	bmpBackground = new CBitmap(bmp);
+	rect.top = y;
+	rect.left = x;
+	rect.bottom = (short)bmpBackground->getHeight();
+	rect.right = (short)bmpBackground->getWidth();
+	CRect size(0, 0, bmpBackground->getWidth(), bmpBackground->getHeight());
+	frame = new CFrame(size, ptr, this);
+	frame->setBackground(bmpBackground);
+}
+void controlChanged(MoogObject *o, double data, long userdata)
+{
+	((Editor *)o)->changeControl(userdata,data);
+}
+
+void Editor::changeControl(long tag,double value)
+{
+	guiControl[tag]->setValue(value);
+}
+
 void
 Editor::addSlider(int x, int y, char *outputName)
 {
@@ -183,6 +202,7 @@ Editor::addSlider(int x, int y, char *outputName)
 	CBitmap *sliderPick = new CBitmap(IDB_SLIDER_PICK);
 
 	int tag = control->getOutputNum(outputName);
+	
 
 	CRect size(x, y, x + sliderBg->getWidth(), y + sliderBg->getHeight());
 
@@ -199,10 +219,16 @@ Editor::addSlider(int x, int y, char *outputName)
 	((CVerticalSlider *)guiControl[tag])->setFreeClick(false);
 
 	frame->addView(guiControl[tag]);
+	addInput(outputName,controlChanged,tag,0);
+	PATCH(control,outputName,this,outputName);
+
 
 	sliderBg->forget();
 	sliderPick->forget();
 }
+
+
+
 
 void
 Editor::addButton(int x, int y, int bmp, char *outputName)
@@ -216,6 +242,8 @@ Editor::addButton(int x, int y, int bmp, char *outputName)
 	guiControl[tag] = new COnOffButton(size, this, tag, bitmap);
 
 	frame->addView(guiControl[tag]);
+	addInput(outputName,controlChanged,tag,0);
+	PATCH(control,outputName,this,outputName);
 
 	bitmap->forget();
 }
@@ -234,6 +262,8 @@ Editor::addTwoSwitch(int x, int y, char *outputName)
 	guiControl[tag] = new CVerticalSwitch(size, this, tag, 2, bitmap->getHeight() / 2, 2, bitmap, point);
 
 	frame->addView(guiControl[tag]);
+	addInput(outputName,controlChanged,tag,0);
+	PATCH(control,outputName,this,outputName);
 
 	bitmap->forget();
 }
@@ -252,6 +282,8 @@ Editor::addThreeSwitch(int x, int y, char *outputName)
 	guiControl[tag] = new CVerticalSwitch(size, this, tag, 3, bitmap->getHeight() / 3, 3, bitmap, point);
 
 	frame->addView(guiControl[tag]);
+	addInput(outputName,controlChanged,tag,0);
+	PATCH(control,outputName,this,outputName);
 
 	bitmap->forget();
 }
@@ -264,7 +296,7 @@ Editor::addKey(int x, int y, int key, int bmp)
 
 	CBitmap *bitmap = new CBitmap(bmp);
 
-	// bitmap->setTransparentColor(kWhiteCColor);
+	 bitmap->setTransparentColor(kWhiteCColor);
 
 	CRect size(x, y, x + bitmap->getWidth(), y + bitmap->getHeight() / 2);
 
@@ -293,6 +325,8 @@ Editor::addKnob(int x, int y, char *outputName)
 	guiControl[tag] = new CAnimKnob(size, this, tag, 100, bitmap->getHeight() / 100, bitmap, point);
 
 	frame->addView(guiControl[tag]);
+	addInput(outputName,controlChanged,tag,0);
+	PATCH(control,outputName,this,outputName);
 
 	bitmap->forget();
 }
@@ -311,6 +345,8 @@ Editor::addKickButton(int x, int y, int bmp, char *outputName)
 	guiControl[tag] = new CKickButton(size, this, tag, bitmap->getHeight() / 2, bitmap, point);
 
 	frame->addView(guiControl[tag]);
+	addInput(outputName,controlChanged,tag,0);
+	PATCH(control,outputName,this,outputName);
 
 	bitmap->forget();
 }

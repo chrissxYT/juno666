@@ -5,14 +5,21 @@
 
 #include <libmoog/moog.h>
 
-class Editor: public AEffGUIEditor, public CControlListener
+class Editor: public AEffGUIEditor, public CControlListener, public MoogObject
 {
 public:
-	Editor(AudioEffect *effect, JunoControl *cntrl, MidiInput *midiinput);
+	Editor(Scheduler *sched,ConnectionManager *conn,AudioEffect *effect, JunoControl *cntrl, MidiInput *midiinput);
 	~Editor();
 
+	const char *getClassName()
+	{
+		return "JunoEditor";
+	}
+
+	void addBitmap(int x, int y, int bmp, void *ptr); //no control yet
 	void addKnob(int x, int y, char *outputName);
 	void addButton(int x, int y, int bmp, char *outputName);
+	void changeControl(long tag,double value);
 	void addSlider(int x, int y, char *outputName);
 	void addTwoSwitch(int x, int y, char *outputName);
 	void addThreeSwitch(int x, int y, char *outputName);
@@ -33,10 +40,8 @@ protected:
 private:
 
 	MidiInput *midiInput;
-
-	JunoControl *control;
-
 	CBitmap *bmpBackground;
+	JunoControl *control;
 
 	CControl **guiControl;
 

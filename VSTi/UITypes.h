@@ -8,6 +8,7 @@
 #define UITHREESWITCH 5
 #define UITWOSWITCH 6
 #define UIKEY 7
+#define UIBITMAP 8
 
 typedef struct
 {

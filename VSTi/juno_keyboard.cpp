@@ -36,6 +36,11 @@ void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
 	((JunoKeyboard *)o)->changePatch();
 }
 
+void JunoBender_midiValueChanged(MoogObject *o, double data, long userdata)
+{
+	((JunoKeyboard *)o)->changeBender(data);
+}
+
 JunoKeyboard::JunoKeyboard(
 	JunoControl *_control,
 	MidiInput *_midiInput,
@@ -85,6 +90,10 @@ MoogObject(sched, conn),
 	// PATCH(control, "transpose_switch", this, "transpose_switch");
 	// PATCH(control, "master_tune", this, "master_tune");
 	PATCH(control, "patch_change", this, "patch_change");
+
+	addInput("bender_in", JunoBender_midiValueChanged, 0, 1);
+
+	PATCH(midiInput, "bend", this, "bender_in");
 
 	initz = 1;
 }
@@ -188,6 +197,11 @@ void JunoKeyboard::transposeVoices(double tune)
 	pitchOutputs[i]->setData(pitchOutputs[i]->data * tune);
 }
 */
+
+void JunoKeyboard::changeBender(double value)
+{
+	control->MoogObject::getOutput("bender")->setData(value);
+}
 void JunoKeyboard::changePatch()
 {
 	if (!initz)

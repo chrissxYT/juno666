@@ -101,7 +101,7 @@
 				OptimizeForProcessor="2"
 				AdditionalIncludeDirectories="./common"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;WINDOWS=1"
-				StringPooling="FALSE"
+				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
 				StructMemberAlignment="0"

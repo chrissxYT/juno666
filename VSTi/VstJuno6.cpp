@@ -33,7 +33,7 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 
 	keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
 
-	setEditor(new Editor(this, control, midiInput));
+	setEditor(new Editor(schedule,connection,this, control, midiInput));
 
 	setProgram(0);
 
