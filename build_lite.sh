@@ -19,12 +19,12 @@ MAKEFLAGS="USE_STATIC=y USE_DEBUG=n"
 # hack: in juno6, there may be .o files we don't want:
 rm -f copy_patch.o list_patches.o
 #mv juno6.o juno6.startup
-cp ../.libs/*.dll .
 #rm juno_background*.*
-/bin/g++ -mms-bitfields -mno-cygwin  -o juno6athlon-xp.exe -L. -lgdk-0 -lgtk-0 -lglib-2.0-0 -lgthread-2.0-0 -lgui *.o /lib/w32api/libwinmm.a
-#/bin/g++ -mms-bitfields -mno-cygwin -o juno6athlon-xp.exe -L. -lpthread -lgdk-0 -lgtk-0 -lgthread-2.0-0 *.o ../.libs/libglib-2.0.a ../.libs/libiconv.a ../.libs/libintl.a ../.libs/libiconv.a /lib/w32api/libwinmm.a
+/bin/g++ -mms-bitfields -mno-cygwin  -o juno6athlon-xp.exe -L. -L../lib -lgdk-0 -lgtk-0 -lglib-2.0-0 -lgthread-2.0-0 *.o /lib/w32api/libwinmm.a
 strip juno6athlon-xp.exe
+mkdir ../bin
 cp juno6athlon-xp.exe ../bin
+
 
 
 

@@ -1,7 +1,7 @@
 include ../Makefile.include
 
-INCLUDE_DIRS=-I..
-CFLAGS=$(PIC) $(PROFILE) $(OPTIMIZE) $(DEBUG)  -Wall $(INCLUDE_DIRS) $(shell gtk-config --cflags)
+INCLUDE_DIRS=-I../include -I../lib/glib-2.0/include -I../lib/gtk+/include -I../include/glib-2.0 -I../
+CFLAGS=$(PIC) $(PROFILE) $(OPTIMIZE) $(DEBUG)  -Wall $(INCLUDE_DIRS)
 CPPFLAGS=$(CFLAGS)
 LIB_OBJS=	juno_slider.o\
 		juno_knob.o\

@@ -16,5 +16,5 @@ endif
 
 
 
-CC=/bin/gcc
-CXX=/bin/g++
+CC=gcc
+CXX=g++

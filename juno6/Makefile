@@ -1,9 +1,9 @@
 include ../Makefile.include
 
 GTK_CFLAGS=$(shell gtk-config --cflags)
-INCLUDE_PATH=-I.. -Iumg/base/include $(GTK_CFLAGS)
+INCLUDE_PATH=-Iumg/base/include -I../include -I../lib/glib-2.0/include -I../lib/gtk+/include -I../include/glib-2.0 -I../
 CPPFLAGS=$(INCLUDE_PATH) $(GTK_CFLAGS) -Wall $(OPTIMIZE) $(DEBUG) $(PROFILE)
-LDFLAGS= -L./ -lgmoog -lmoog -lmoogutil $(shell gtk-config --libs) -lgthread
+LDFLAGS= -L./ -lgmoog -lmoog -lmoogutil -lgthread
 
 PROGS=juno6 list_patches copy_patch
 
