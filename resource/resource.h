@@ -22,3 +22,4 @@
 #define IDB_LAST                        2218
 
 #define IDB_KNOB                        2219
+#define IDB_BENDER			2220
