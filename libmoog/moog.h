@@ -17,45 +17,45 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:45:33 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:31:38 $
  */
 #ifndef MOOG_H
 #define MOOG_H
 
-#include <moog/ADSR.h>
-#include <moog/Attenuator.h>
-#include <moog/Balance.h>
-#include <moog/Chorus.h>
-#include <moog/ConnectionInfo.h>
-#include <moog/ConnectionList.h>
-#include <moog/ConnectionManager.h>
-#include <moog/DSPDevice.h>
-//#include <moog/DSPInput.h>
-#include <moog/DSPOutput.h>
-#include <moog/DataBlock.h>
-#include <moog/Delay.h>
-#include <moog/GoObject.h>
-#include <moog/HPF.h>
-#include <moog/IIR2.h>
-#include <moog/Input.h>
-#include <moog/JunoPulse.h>
-#include <moog/JunoSaw.h>
+#include <libmoog/ADSR.h>
+#include <libmoog/Attenuator.h>
+#include <libmoog/Balance.h>
+#include <libmoog/Chorus.h>
+#include <libmoog/ConnectionInfo.h>
+#include <libmoog/ConnectionList.h>
+#include <libmoog/ConnectionManager.h>
+#include <libmoog/DSPDevice.h>
+//#include <libmoog/DSPInput.h>
+#include <libmoog/DSPOutput.h>
+#include <libmoog/DataBlock.h>
+#include <libmoog/Delay.h>
+#include <libmoog/GoObject.h>
+#include <libmoog/HPF.h>
+#include <libmoog/IIR2.h>
+#include <libmoog/Input.h>
+#include <libmoog/JunoPulse.h>
+#include <libmoog/JunoSaw.h>
 #ifndef POSIX
-#include <moog/MidiInputWin32.h>
+#include <libmoog/MidiInputWin32.h>
 #else
-#include <moog/MidiInput.h>
+#include <libmoog/MidiInput.h>
 #endif
-#include <moog/Mixer.h>
-#include <moog/MoogObject.h>
-#include <moog/Oscillator.h>
-#include <moog/Output.h>
-#include <moog/Rand.h>
-#include <moog/ResonantLowPass.h>
-#include <moog/Rms.h>
-#include <moog/Scheduler.h>
-#include <moog/Settings.h>
-#include <moog/WaveGen.h>
-#include <moog/pitch.h>
+#include <libmoog/Mixer.h>
+#include <libmoog/MoogObject.h>
+#include <libmoog/Oscillator.h>
+#include <libmoog/Output.h>
+#include <libmoog/Rand.h>
+#include <libmoog/ResonantLowPass.h>
+#include <libmoog/Rms.h>
+#include <libmoog/Scheduler.h>
+#include <libmoog/Settings.h>
+#include <libmoog/WaveGen.h>
+#include <libmoog/pitch.h>
 
 #endif /* MOOG_H */
 

@@ -17,14 +17,14 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:45:33 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:31:38 $
  */
 #ifndef _GOOBJECT_H
 #define _GOOBJECT_H
 
-#include <util/list.h>
+#include <libmoogutil/list.h>
 
-/* $Id: GoObject.h,v 1.1 2004/03/26 18:45:33 brainslayer Exp $ */
+/* $Id: GoObject.h,v 1.2 2004/03/30 10:31:38 brainslayer Exp $ */
 
 class GoObject {
     friend class     Scheduler;

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:45:33 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:31:38 $
  */
 #ifndef _INPUT_H
 #define _INPUT_H
@@ -25,7 +25,7 @@
 class ConnectionInfo;
 class MoogObject;
 
-#include <util/SimpleArray.h>
+#include <libmoogutil/SimpleArray.h>
 #include "NamedObject.h"
 
 typedef void (*moog_callback_t)(MoogObject*, double, long);

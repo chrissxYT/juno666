@@ -17,12 +17,15 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:45:33 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:31:38 $
  */
 #ifndef WAVEGEN_H
 #define WAVEGEN_H
 
 #include "DataBlock.h"
+#ifndef M_PI
+#define M_PI		3.14159265358979323846 
+#endif
 
 DataBlock* wg_line( int size, double start, double end );
 DataBlock* wg_lines( int size, int nsegs, double initial, ... );

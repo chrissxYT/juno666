@@ -17,13 +17,13 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:45:33 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:31:38 $
  */
 #ifndef _CONNECTIONINFO_H
 #define _CONNECTIONINFO_H
 
 #include <stdio.h>
-#include <util/debug.h>
+#include <libmoogutil/debug.h>
 
 class Input;
 class Output;

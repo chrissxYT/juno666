@@ -17,12 +17,12 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:45:33 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:31:38 $
  */
 #ifndef _OUTPUT_H
 #define _OUTPUT_H
 
-#include <util/SimpleArray.h>
+#include <libmoogutil/SimpleArray.h>
 #include "ConnectionList.h"
 #include "NamedObject.h"
 #include "Input.h"

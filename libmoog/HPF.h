@@ -20,6 +20,10 @@
 
 #include "IIR2.h"
 
+#ifndef M_PI
+#define M_PI		3.14159265358979323846 
+#endif
+
 class HPF : public IIR2
 {
     friend void HPF_frqChanged(MoogObject *o, double data, long userData);

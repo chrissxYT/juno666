@@ -75,7 +75,7 @@ depend: .depend
 
 .depend: Makefile
 	touch .depend
-	makedepend -f .depend $(INCLUDE_DIRS) -I/usr/include/g++-2 *.C *.c
+	makedepend -f .depend $(INCLUDE_DIRS) -I/usr/include/g++-2 *.cpp *.c
 
 
 .PHONY: objs depend

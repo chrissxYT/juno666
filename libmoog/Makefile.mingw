@@ -1,4 +1,4 @@
-include ../Makefile.include
+include ../Makefile.mingwinc
 
 INCLUDE_DIRS=-I..
 DEFINES=-D_REENTRANT -D_GNU_SOURCE -DUSE_FASTMEMCPY

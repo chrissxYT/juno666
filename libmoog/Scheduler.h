@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:45:33 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:31:38 $
  */
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
@@ -26,7 +26,7 @@
 #define DEFAULT_SAMPLE_CONTROL_RATIO 32
 #endif
 
-#include <util/list.h>
+#include <libmoogutil/list.h>
 #include <windows.h>
 //#include <pthread.h>
 

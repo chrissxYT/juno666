@@ -17,13 +17,13 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:45:33 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:31:38 $
  */
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <util/ini.h>
-#include <util/String.h>
+#include <libmoogutil/ini.h>
+#include <libmoogutil/String.h>
 
 class Settings
 {

@@ -17,12 +17,17 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:45:33 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:31:38 $
  */
 #ifndef RMS_H
 #define RMS_H
 
 #include "MoogObject.h"
+
+#ifndef M_PI
+#define M_PI		3.14159265358979323846 
+#endif
+
 
 #define I_RMS_SIG   0
 #define O_RMS_POWER 0

@@ -21,6 +21,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#ifndef M_PI
+#define M_PI		3.14159265358979323846 
+#endif
 
 void szxform(
     double a0, double a1, double a2, /* numerator coefficients */
