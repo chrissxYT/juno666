@@ -39,10 +39,10 @@ class Number;
 class StringBuffer
 {
 public:
-	size_t refCount;
+	int refCount;
 	char *data;
-	size_t len;
-	size_t buflen;
+	int len;
+	int buflen;
 
 	StringBuffer(const char *, int);
 	StringBuffer(StringBuffer &);
@@ -64,11 +64,11 @@ protected:
 
 	/* copy on write */
 	void cow();
-	int replaceInternal(const char *, size_t, const char *, size_t);
+	int replaceInternal(const char *, int, const char *, int);
 
 public:
 	String();
-	String(const char *s, size_t = -1);
+	String(const char *s, int = -1);
 	String(const String &);
 
 	String(int);
@@ -80,11 +80,11 @@ public:
 	~String();
 
 	const String &assign(const String &);
-	const String &assign(const char *, size_t);
+	const String &assign(const char *, int);
 
 	void append(const String &);
 	void append(const char *);
-	void append(const char *, size_t);
+	void append(const char *, int);
 	void appendChar(const char);
 
 	int getLength()const
@@ -106,8 +106,8 @@ public:
 	String &ltrim(const char = ' ');
 	String &upper();
 	String &lower();
-	int find(const char, size_t = 0)const;
-	int find(const char *, size_t = 0)const;
+	int find(const char, int = 0)const;
+	int find(const char *, int = 0)const;
 	int replace(const String &, const String &);
 	int replace(const String &, const char *);
 	int replace(const char *, const String &);

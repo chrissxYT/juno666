@@ -98,6 +98,7 @@ fprintf ( verbose, "loop %d\n", sampleFrames);
 
 fclose ( verbose );
 */
+
 int VstJuno6::isAnyVoicePlaying()
 {
     int found = false;

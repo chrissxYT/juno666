@@ -138,6 +138,7 @@ public:
 
         if(playing)
         {
+
             pwmAttenuator.on();
 
             pulse.on();
