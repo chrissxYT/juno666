@@ -24,9 +24,9 @@ AEffect *main(audioMasterCallback audioMaster);
 #endif
 
 //------------------------------------------------------------------------
-AEffect* __cdecl main(audioMasterCallback audioMaster)
+AEffect *__cdecl main(audioMasterCallback audioMaster)
 {
-	
+
 	// Get VST Version
 	if (!audioMaster(0, audioMasterVersion, 0, 0, 0, 0))
 		return 0; // old version

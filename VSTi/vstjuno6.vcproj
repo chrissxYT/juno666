@@ -101,7 +101,7 @@
 				OptimizeForProcessor="2"
 				AdditionalIncludeDirectories="./common"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;WINDOWS=1"
-				StringPooling="TRUE"
+				StringPooling="FALSE"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
 				StructMemberAlignment="0"
@@ -171,6 +171,12 @@
 			</File>
 			<File
 				RelativePath="juno_keyboard.cpp">
+			</File>
+			<File
+				RelativePath=".\JunoUI.h">
+			</File>
+			<File
+				RelativePath=".\UITypes.h">
 			</File>
 			<File
 				RelativePath="VstJuno6.cpp">

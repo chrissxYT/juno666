@@ -1,93 +1,93 @@
 #include "VstJuno6.h"
 
-ConnectionManager* VstJuno6::getConnectionManager()
+ConnectionManager *VstJuno6::getConnectionManager()
 {
-    return connection;
+	return connection;
 }
 
 void VstJuno6::setSampleRate(float sampleRate)
 {
-    AudioEffectX::setSampleRate(sampleRate);
+	AudioEffectX::setSampleRate(sampleRate);
 
-    schedule->setSampleRate((int)sampleRate);
+	schedule->setSampleRate((int)sampleRate);
 }
 
 void VstJuno6::setBlockSize(long blockSize)
 {
-    AudioEffectX::setBlockSize(blockSize);
+	AudioEffectX::setBlockSize(blockSize);
 }
 
 void VstJuno6::resume()
 {
-    wantEvents();
+	wantEvents();
 }
 
 void VstJuno6::initSynth(int numVoices)
 {
-    int i;
-    dsp = new VSTOutput(control, schedule, connection);
+	int i;
+	dsp = new VSTOutput(control, schedule, connection);
 
-    lfo = new JunoLfo(control, numVoices, schedule, connection);
+	lfo = new JunoLfo(control, numVoices, schedule, connection);
 
-    pwmLfo = new Attenuator(schedule);
+	pwmLfo = new Attenuator(schedule);
 
-    noise = new Rand(schedule);
+	noise = new Rand(schedule);
 
-    voiceMix = new Mixer(schedule, connection, numVoices);
+	voiceMix = new Mixer(schedule, connection, numVoices);
 
-    hpf = new HPF(schedule);
+	hpf = new HPF(schedule);
 
-    PATCH(lfo, "sig", pwmLfo, "sig");
+	PATCH(lfo, "sig", pwmLfo, "sig");
 
-    pwmLfo->set("amp", .5);
+	pwmLfo->set("amp", .5);
 
-    pwmLfo->set("zro", .5);
+	pwmLfo->set("zro", .5);
 
-    for (i = 0;i < numVoices;i++)
-    {
-        //debug(DEBUG_APPMSG1, "CREATING VOICE %d",i);
-        voice[i] = new JunoVoice(control, i, noise, lfo, pwmLfo, schedule, connection);
-        char *tmp = new char[6];
-        sprintf(tmp, "sig%d", i);
-        PATCH(voice[i], "sig", voiceMix, tmp);
-    }
+	for (i = 0;i < numVoices;i++)
+	{
+		//debug(DEBUG_APPMSG1, "CREATING VOICE %d",i);
+		voice[i] = new JunoVoice(control, i, noise, lfo, pwmLfo, schedule, connection);
+		char *tmp = new char[6];
+		sprintf(tmp, "sig%d", i);
+		PATCH(voice[i], "sig", voiceMix, tmp);
+	}
 
-    arpeggio = new JunoArpeggio(control, numVoices, voice, schedule, connection);
+	arpeggio = new JunoArpeggio(control, numVoices, voice, schedule, connection);
 
-    PATCH(voiceMix, "sig", hpf, "sig");
+	PATCH(voiceMix, "sig", hpf, "sig");
 
-    PATCH(control, "hpf_frq", hpf, "frq");
-    //FIXME: tune the Q of the hpf
+	PATCH(control, "hpf_frq", hpf, "frq");
+	//FIXME: tune the Q of the hpf
 
-    hpf->set("Q", 0.0);
+	hpf->set("Q", 0.0);
 
-    chorus = new JunoChorus(hpf, "sig", 0);
+	chorus = new JunoChorus(hpf, "sig", 0);
 
-    PATCH(control, "chorus_off_switch", chorus, "off");
-    PATCH(control, "chorus_I_switch", chorus, "I");
-    PATCH(control, "chorus_II_switch", chorus, "II");
+	PATCH(control, "chorus_off_switch", chorus, "off");
+	PATCH(control, "chorus_I_switch", chorus, "I");
+	PATCH(control, "chorus_II_switch", chorus, "II");
 
-    PATCH(chorus, "sig", dsp, "sig0");
-    PATCH(control, "volume", dsp, "amp0");
+	PATCH(chorus, "sig", dsp, "sig0");
+	PATCH(control, "volume", dsp, "amp0");
 
-    // for stereo
-    chorus2 = new JunoChorus(hpf, "sig", 1);
-    PATCH(control, "chorus_off_switch", chorus2, "off");
-    PATCH(control, "chorus_I_switch", chorus2, "I");
-    PATCH(control, "chorus_II_switch", chorus2, "II");
+	// for stereo
+	chorus2 = new JunoChorus(hpf, "sig", 1);
+	PATCH(control, "chorus_off_switch", chorus2, "off");
+	PATCH(control, "chorus_I_switch", chorus2, "I");
+	PATCH(control, "chorus_II_switch", chorus2, "II");
 
-    PATCH(chorus2, "sig", dsp, "sig1");
-    PATCH(control, "volume", dsp, "amp1");
+	PATCH(chorus2, "sig", dsp, "sig1");
+	PATCH(control, "volume", dsp, "amp1");
 
-    for (i = 0;i < numVoices;i++)
-    {
-        control->getOutput((String)"voice" + i + (String)"_pitch")->setData(CPS(666));
-    }
+	for (i = 0;i < numVoices;i++)
+	{
+		control->getOutput((String)"voice" + i + (String)"_pitch")->setData(CPS(666));
+	}
 }
 
 void VstJuno6::process(float **inputs, float **outputs, long sampleFrames)
 {
-    processReplacing(inputs, outputs, sampleFrames);
+	processReplacing(inputs, outputs, sampleFrames);
 }
 
 /*
@@ -102,62 +102,62 @@ fclose ( verbose );
 
 int VstJuno6::isAnyVoicePlaying()
 {
-    int found = false;
+	int found = false;
 
-    for (int i = 0;i < numVoices;i++)
-    {
-        if(voice[i]->isPlaying())
-        {
-            found = true;
-        }
-    }
-    return found;
+	for (int i = 0;i < numVoices;i++)
+	{
+		if (voice[i]->isPlaying())
+		{
+			found = true;
+		}
+	}
+	return found;
 }
 
 void VstJuno6::processReplacing(float **inputs, float **outputs, long sampleFrames)
 {
-    float *out1 = outputs[0];
-    float *out2 = outputs[1];
+	float *out1 = outputs[0];
+	float *out2 = outputs[1];
 
-    if (isAnyVoicePlaying())
-    {
-        dsp->setOutput1(out1);
-        dsp->setOutput2(out2);
-        {
-            schedule->run(sampleFrames);
-        }
-    }
-    else
-    {
-        memset(out1, 0, sampleFrames * sizeof(float));
-        memset(out2, 0, sampleFrames * sizeof(float));
-    }
+	if (isAnyVoicePlaying())
+	{
+		dsp->setOutput1(out1);
+		dsp->setOutput2(out2);
+		{
+			schedule->run(sampleFrames);
+		}
+	}
+	else
+	{
+		memset(out1, 0, sampleFrames * sizeof(float));
+		memset(out2, 0, sampleFrames * sizeof(float));
+	}
 }
 
 
 long VstJuno6::processEvents(VstEvents *ev)
 {
-    unsigned char cmd = 0;
-    unsigned char channel = 0;
-    unsigned char data[2];
-    VstMidiEvent *event;
-    char *midiData;
+	unsigned char cmd = 0;
+	unsigned char channel = 0;
+	unsigned char data[2];
+	VstMidiEvent *event;
+	char *midiData;
 
-    for (long i = 0;i < ev->numEvents;i++)
-    {
-        if ((ev->events[i])->type != kVstMidiType)
-            continue;
+	for (long i = 0;i < ev->numEvents;i++)
+	{
+		if ((ev->events[i])->type != kVstMidiType)
+			continue;
 
-        event = (VstMidiEvent *)ev->events[i];
-        midiData = event->midiData;
+		event = (VstMidiEvent *)ev->events[i];
+		midiData = event->midiData;
 
-        cmd = midiData[0] & 0xf0;
-        channel = midiData[0] & 0x0f;
-        data[0] = midiData[1] & 0xff;
-        data[1] = midiData[2] & 0xff;
+		cmd = midiData[0] & 0xf0;
+		channel = midiData[0] & 0x0f;
+		data[0] = midiData[1] & 0xff;
+		data[1] = midiData[2] & 0xff;
 
-        midiInput->proc(cmd, channel, data);
-    }
+		midiInput->proc(cmd, channel, data);
+	}
 
-    return 1;
+	return 1;
 }

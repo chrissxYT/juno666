@@ -5,42 +5,42 @@
 
 #include <libmoog/moog.h>
 
-class Editor : public AEffGUIEditor, public CControlListener
+class Editor: public AEffGUIEditor, public CControlListener
 {
-    public:
-        Editor (AudioEffect* effect, JunoControl *cntrl, MidiInput *midiinput);
-        ~Editor ();
+public:
+	Editor(AudioEffect *effect, JunoControl *cntrl, MidiInput *midiinput);
+	~Editor();
 
-        void addKnob (int x, int y, char *outputName);
-        void addButton (int x, int y, int bmp, char *outputName);
-        void addSlider (int x, int y, char *outputName);
-        void addTwoSwitch (int x, int y, char *outputName);
-        void addThreeSwitch (int x, int y, char *outputName);
-        void addKickButton (int x, int y, int bmp, char *outputName);
+	void addKnob(int x, int y, char *outputName);
+	void addButton(int x, int y, int bmp, char *outputName);
+	void addSlider(int x, int y, char *outputName);
+	void addTwoSwitch(int x, int y, char *outputName);
+	void addThreeSwitch(int x, int y, char *outputName);
+	void addKickButton(int x, int y, int bmp, char *outputName);
 
-        void addKey (int x, int y, int key, int bmp);
+	void addKey(int x, int y, int key, int bmp);
 
-    protected:
+protected:
 
-        virtual long open (void* ptr);      
-        virtual void close ();
+	virtual long open(void *ptr);
+	virtual void close();
 
-        virtual void setParameter (long index, float value);
-        virtual void valueChanged (CDrawContext* canvas, CControl* control);
+	virtual void setParameter(long index, float value);
+	virtual void valueChanged(CDrawContext *canvas, CControl *control);
 
-        float getParameter(long index);
+	float getParameter(long index);
 
-    private:
+private:
 
-        MidiInput         *midiInput;
+	MidiInput *midiInput;
 
-        JunoControl       *control;
+	JunoControl *control;
 
-        CBitmap           *bmpBackground;
+	CBitmap *bmpBackground;
 
-        CControl          **guiControl;
+	CControl **guiControl;
 
-        CControl          **guiKeyboard;
+	CControl **guiKeyboard;
 };
 
 #endif
