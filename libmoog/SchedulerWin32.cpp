@@ -40,65 +40,110 @@ int Scheduler::sampleControlRatio = DEFAULT_SAMPLE_CONTROL_RATIO;
 double Scheduler::nyquistFreq = 0;
 int Scheduler::suspended = 0;
 
+typedef HANDLE pthread_mutex_t;
 
-enum
-{
-	SIGNAL = 0,
-	BROADCAST = 1,
-	MAX_EVENTS = 2
-};
 
 typedef struct
 {
+	int waiters_count_;
+	// Number of waiting threads.
 
+	CRITICAL_SECTION waiters_count_lock_;
+	// Serialize access to <waiters_count_>.
 
-	HANDLE events_[MAX_EVENTS];
-	// Signal and broadcast event HANDLEs.
+	HANDLE sema_;
+	// Semaphore used to queue up threads waiting for the condition to
+	// become signaled.
+
+	HANDLE waiters_done_;
+	// An auto-reset event used by the broadcast/signal thread to wait
+	// for all the waiting thread(s) to wake up and be released from the
+	// semaphore.
+
+	size_t was_broadcast_;
+	// Keeps track of whether we were broadcasting or signaling.  This
+	// allows us to optimize the code if we're just signaling.
 } pthread_cond_t;
+
+
+
 
 int
 pthread_cond_init(pthread_cond_t *cv)
 {
-	// Create an auto-reset event.
-	cv->events_[SIGNAL] = CreateEvent(NULL, // no security
-		FALSE, // auto-reset event
-		FALSE, // non-signaled initially
+	cv->waiters_count_ = 0;
+	cv->was_broadcast_ = 0;
+	cv->sema_ = CreateSemaphore(NULL, // no security
+		0, // initially 0
+		0x7fffffff, // max count
 		NULL); // unnamed
-
-	// Create a manual-reset event.
-	cv->events_[BROADCAST] = CreateEvent(NULL, // no security
-		TRUE, // manual-reset
+	InitializeCriticalSection(&cv->waiters_count_lock_);
+	cv->waiters_done_ = CreateEvent(NULL, // no security
+		FALSE, // auto-reset
 		FALSE, // non-signaled initially
 		NULL); // unnamed
 	return 0;
 }
+
+
+
 
 
 int
 pthread_cond_wait(pthread_cond_t *cv,
-	CRITICAL_SECTION *external_mutex)
+	HANDLE *external_mutex)
 {
-	// Release the <external_mutex> here and wait for either event
-	// to become signaled, due to <pthread_cond_signal> being
-	// called or <pthread_cond_broadcast> being called.
-	LeaveCriticalSection(external_mutex);
-	WaitForMultipleObjects(2, // Wait on both <events_>
-		cv->events_,
-		FALSE, // Wait for either event to be signaled
-		INFINITE); // Wait "forever"
+	// Avoid race conditions.
+	EnterCriticalSection(&cv->waiters_count_lock_);
+	cv->waiters_count_++;
+	LeaveCriticalSection(&cv->waiters_count_lock_);
 
-	// Reacquire the mutex before returning.
-	EnterCriticalSection(external_mutex);
+	// This call atomically releases the mutex and waits on the
+	// semaphore until <pthread_cond_signal> or <pthread_cond_broadcast>
+	// are called by another thread.
+	SignalObjectAndWait(*external_mutex, cv->sema_, INFINITE, FALSE);
+
+	// Reacquire lock to avoid race conditions.
+	EnterCriticalSection(&cv->waiters_count_lock_);
+
+	// We're no longer waiting...
+	cv->waiters_count_--;
+
+	// Check to see if we're the last waiter after <pthread_cond_broadcast>.
+	int last_waiter = cv->was_broadcast_ && cv->waiters_count_ == 0;
+
+	LeaveCriticalSection(&cv->waiters_count_lock_);
+
+	// If we're the last waiter thread during this particular broadcast
+	// then let all the other threads proceed.
+	if (last_waiter)
+		// This call atomically signals the <waiters_done_> event and waits until
+		// it can acquire the <external_mutex>.  This is required to ensure fairness.
+		SignalObjectAndWait(cv->waiters_done_, *external_mutex, INFINITE, FALSE);
+	else
+		// Always regain the external mutex since that's the guarantee we
+		// give to our callers.
+		WaitForSingleObject(*external_mutex, INFINITE);
 	return 0;
 }
+
+
+
 
 int
 pthread_cond_signal(pthread_cond_t *cv)
 {
-	// Try to release one waiting thread.
-	PulseEvent(cv->events_[SIGNAL]);
+	EnterCriticalSection(&cv->waiters_count_lock_);
+	int have_waiters = cv->waiters_count_ > 0;
+	LeaveCriticalSection(&cv->waiters_count_lock_);
+
+	// If there aren't any waiters, then this is a no-op.
+	if (have_waiters)
+		ReleaseSemaphore(cv->sema_, 1, 0);
 	return 0;
 }
+
+
 
 
 static pthread_cond_t listOpCompleteCond;
@@ -255,6 +300,7 @@ void Scheduler::run()
 	int controlCount = 0;
 	GoObject *obj;
 
+//EnterCriticalSection(&beginListOpMutex);
 	while (running)
 	{
 
@@ -294,7 +340,7 @@ void Scheduler::run()
 		{
 
 
-			pthread_cond_wait(&listOpCompleteCond, &beginListOpMutex);
+			pthread_cond_wait(&listOpCompleteCond, (HANDLE *)&beginListOpMutex);
 		}
 	}
 }
@@ -312,7 +358,7 @@ void dataWrittenCallback()
 	if (needListSync > 0)
 	{
 
-		pthread_cond_wait(&listOpCompleteCond, &beginListOpMutex);
+		pthread_cond_wait(&listOpCompleteCond, (HANDLE *)&beginListOpMutex);
 	}
 }
 

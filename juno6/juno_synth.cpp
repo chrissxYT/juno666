@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/07 10:58:50 $
+ * $Revision: 1.6 $$Date: 2004/04/07 11:26:30 $
  */
 #include <stdlib.h>
 #include <libmoog/JunoSynth.h>
@@ -26,7 +26,7 @@
 #include <libmoog/JunoArpeggio.h>
 #include <libmoog/JunoChorus.h>
 #include <libgmoog/Scope.h>
-#include "juno_patch.h"
+#include <libmoog/JunoPatch.h>
 
 //FIXME: this is grosser than gross
 JunoControl *junoControl;

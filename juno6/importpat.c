@@ -1,4 +1,4 @@
-#include "juno_patch.h"
+#include <libmoog/JunoPatch.h>
 #include <stdio.h>
 #include <errno.h>
 unsigned char desc[128];

@@ -7,6 +7,7 @@ wrapper for keyboard functions, replaces GTK UI
 
 
 #include <libmoog/JunoControl.h>
+#include <libmoog/JunoPatch.h>
 #include "juno_keyboard.h"
 
 extern Settings *settings;
@@ -54,6 +55,11 @@ void JunoKeyboard_holdChanged(MoogObject *o, double data, long)
 
 void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
 {
+	if (userdata > NUM_PATCHES)
+	{
+		printf("can't change. highest patch number is %d\n", NUM_PATCHES);
+		return;
+	}
 	juno_patch *patch =&patches[userdata];
 	junoControl->MoogObject::getOutput("bender_dco")->setData(patch->bender_dco);
 	junoControl->MoogObject::getOutput("bender_vcf")->setData(patch->bender_vcf);

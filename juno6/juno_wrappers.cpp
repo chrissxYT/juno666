@@ -16,6 +16,7 @@
  *     arising from the use of UltraMaster Juno-6.
  */
 #include <libmoog/JunoControl.h>
+#include <libmoog/JunoPatch.h>
 #include "juno_wrappers.h"
 
 //FIXME: globals from juno_gui.C
@@ -63,8 +64,12 @@ void JunoKeyboard_holdChanged(MoogObject *o, double data, long)
 }
 
 void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
-{
-	printf("change patch to %d\n",userdata);
+{	if (userdata > NUM_PATCHES)
+	{
+		printf("can't change. highest patch number is %d\n", NUM_PATCHES);
+		return;
+	}
+	
 	juno_patch *patch = &patches[userdata];
 	junoControl->MoogObject::getOutput("bender_dco")->setData(patch->bender_dco);
 	junoControl->MoogObject::getOutput("bender_vcf")->setData(patch->bender_vcf);

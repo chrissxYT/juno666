@@ -17,14 +17,14 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/04/06 09:57:01 $
+ * $Revision: 1.1 $$Date: 2004/04/07 11:26:32 $
  */
 #include <sys/stat.h>
 #include <libmoogutil/sio.h>
 #include <libmoogutil/debug.h>
 #include <stdlib.h>
 
-#include "juno_patch.h"
+#include "JunoPatch.h"
 
 void
 init_patch(juno_patch *patch)

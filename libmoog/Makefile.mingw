@@ -42,6 +42,7 @@ LIB_OBJS=ADSR.o\
 	JunoArpeggio.o\
 	JunoVoice.o\
 	JunoLfo.o\
+	JunoPatch.o\
 	ao_win32.o
 
 LIBNAME=libmoog.dll

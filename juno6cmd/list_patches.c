@@ -17,9 +17,9 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/04/06 09:57:01 $
+ * $Revision: 1.2 $$Date: 2004/04/07 11:26:31 $
  */
-#include "juno_patch.h"
+#include <libmoog/JunoPatch.h>
 #include <stdio.h>
 #include <errno.h>
 

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/04/07 10:58:51 $
+ * $Revision: 1.3 $$Date: 2004/04/07 11:26:32 $
  */
 
 #include <libmoogutil/String.h>

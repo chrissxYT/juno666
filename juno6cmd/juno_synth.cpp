@@ -17,15 +17,15 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/07 09:30:43 $
+ * $Revision: 1.4 $$Date: 2004/04/07 11:26:31 $
  */
 #include <stdlib.h>
-#include "juno_synth.h"
-#include "juno_voice.h"
-#include "juno_lfo.h"
-#include "juno_arpeggio.h"
-#include "juno_chorus.h"
-#include "juno_patch.h"
+#include <libmoog/JunoSynth.h>
+#include <libmoog/JunoVoice.h>
+#include <libmoog/JunoLfo.h>
+#include <libmoog/JunoArpeggio.h>
+#include <libmoog/JunoChorus.h>
+#include <libmoog/JunoPatch.h>
 
 //FIXME: this is grosser than gross
 JunoControl *junoControl;
@@ -49,15 +49,12 @@ extern String patchFileName;
 
 bool stereo;
 
-/*void
+void
 setScope(int v)
 {
-	if (scope == NULL || scope->showing == 0)
-		return;
+//just do nothing
 
-	PATCH(&voice[v]->sub, "sync", scope, "sync");
-
-}*/
+}
 
 void
 initSynth(JunoControl *_junoControl,

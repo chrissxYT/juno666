@@ -9,7 +9,6 @@ OBJS=juno6.o\
     juno_gui.o\
     juno_synth.o\
     juno_wrappers.o\
-    juno_patch.o\
     about.o\
 
 all: $(PROGS)

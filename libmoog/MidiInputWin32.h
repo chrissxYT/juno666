@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/04/07 09:30:43 $
+ * $Revision: 1.7 $$Date: 2004/04/07 11:26:32 $
  */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
@@ -26,7 +26,6 @@
 #include <windows.h>
 #include <mmsystem.h>
 #include "JunoControl.h"
-#include <juno6/juno_patch.h>
 
 
 /* Note, there should be various modes ( there are more than these )

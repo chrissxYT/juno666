@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/07 09:30:43 $
+ * $Revision: 1.4 $$Date: 2004/04/07 11:26:31 $
  */
 
 #include <stdio.h>
@@ -27,8 +27,8 @@
 #include <libmoogutil/String.h>
 #include <sys/types.h>
 #include <libmoogutil/debug.h>
-#include "juno_patch.h"
-#include "juno_synth.h"
+#include <libmoog/JunoPatch.h>
+#include <libmoog/JunoSynth.h>
 #include "juno_keyboard.h"
 
 String patchFileName;

@@ -13,7 +13,6 @@ Win32 MIDI Implementation for Juno 666 project. (c) 2003 - 2004 Sebastian Gottsc
 
 #include <sys/types.h>
 #include <libmoogutil/debug.h>
-#include <juno6/juno_gui.h>
 #include "MidiInputWin32.h"
 
 #include "Scheduler.h"
@@ -70,7 +69,7 @@ HMIDIIN handle;
 MidiInput *input;
 JunoControl *control;
 void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
-extern juno_patch *patches;
+
 
 
 
@@ -261,13 +260,8 @@ void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwP
 
 				debug(DEBUG_STATUS, "PGM_CHANGE %d %d\n", channel, data[0]);
 				printf("change program to %d\n", data[0]);
-				if (data[0] > NUM_PATCHES)
-				{
-					printf("can't change. highes patch number is %d\n", NUM_PATCHES);
-					return;
-				}
 				control->MoogObject::getOutput("patch_change")->setData(data[0]);
-				//input->loadPatch(&patches[data[0]]);
+				
 				break;
 
 			case MIDI_CHN_PRESSURE: //0xD0

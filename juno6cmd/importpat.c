@@ -1,4 +1,4 @@
-#include "juno_patch.h"
+#include <libmoog/JunoPatch.h>
 #include <stdio.h>
 #include <errno.h>
 unsigned char desc[128];
@@ -149,6 +149,7 @@ int loadPatFile(char *name, juno_patch *patch)
 int
 main(int argc, char **argv)
 {
+	int i;
 	juno_patch *patches;
 
 	if (argc < 3)

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/06 09:54:07 $
+ * $Revision: 1.5 $$Date: 2004/04/07 11:26:30 $
  */
 
 #include <stdio.h>
@@ -37,7 +37,7 @@
 
 #include "juno_gui.h"
 #include "juno_wrappers.h"
-#include "juno_patch.h"
+#include <libmoog/JunoPatch.h>
 #include "about.h"
 #include <libgmoog/Scope.h>
 
