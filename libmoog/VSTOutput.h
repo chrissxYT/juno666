@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/06/21 11:16:34 $
+ * $Revision: 1.6 $$Date: 2004/06/25 10:38:42 $
  */
 #ifndef _VSTOutput_H
 #define _VSTOutput_H
@@ -29,7 +29,7 @@
 
 #define SAMPLE_RATE_44k 44100
 #define SAMPLE_RATE_22k 22050
-#define SAMPLE_RATE_8k   8000
+#define SAMPLE_RATE_8k	 8000
 
 #include "libmoog/Scheduler.h"
 #include "libmoog/Control.h"
@@ -37,44 +37,44 @@
 
 class VSTOutput: public MoogObject
 {
-    double **inSig;
-    double **inAmp;
-    double panleft;
-    double panright;
-    int channels;
+	double **inSig;
+	double **inAmp;
+	double panleft;
+	double panright;
+	int channels;
 
-    void (*dataWrittenCallback)(void);
-    void setup();
+	void (*dataWrittenCallback)(void);
+	void setup();
 
-    float *out1;
-    float *out2;
+	float *out1;
+	float *out2;
 
 public:
-    VSTOutput(Control *jc, Scheduler *sched, ConnectionManager *conn);
-    ~VSTOutput();
+	VSTOutput(Control *jc, Scheduler *sched, ConnectionManager *conn);
+	~VSTOutput();
 
-    void connectTo(ConnectionInfo *info);
-    void disconnectTo(ConnectionInfo *info);
-    void setPanning(double data);
-    void setStereo(double data);
+	void connectTo(ConnectionInfo *info);
+	void disconnectTo(ConnectionInfo *info);
+	void setPanning(double data);
+	void setStereo(double data);
 
 //    void setDataWrittenCallback(void (*)(void));
-    void sampleGo();
+	void sampleGo();
 
-    void setOutput1(float *o1)
-    {
-        out1 = o1;
-    }
-    void setOutput2(float *o2)
-    {
-        out2 = o2;
-    }
+	void setOutput1(float *o1)
+	{
+		out1 = o1;
+	}
+	void setOutput2(float *o2)
+	{
+		out2 = o2;
+	}
 
-    /* RTTI */
-    const char *getClassName()
-    {
-        return "VSTOutput";
-    }
+	/* RTTI */
+	const char *getClassName()
+	{
+		return "VSTOutput";
+	}
 };
 
 #endif /* _VSTOutput_H */

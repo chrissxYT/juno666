@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.8 $$Date: 2004/04/20 15:01:35 $
+ * $Revision: 1.9 $$Date: 2004/06/25 10:38:42 $
  */
 #ifndef _OUTPUT_H
 #define _OUTPUT_H
@@ -79,7 +79,7 @@ public:
 				{
 					info->input->doCallback(data);
 				}
-			info = connections.getNextConnection();
+				info = connections.getNextConnection();
 			}
 		}
 	}

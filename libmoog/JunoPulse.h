@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/06/09 15:35:34 $
+ * $Revision: 1.6 $$Date: 2004/06/25 10:38:42 $
  */
 #ifndef JUNOPULSE_H
 #define JUNOPULSE_H
@@ -40,7 +40,7 @@ private:
 
 	/* input array optimization pointers */
 	double *inFrq;
-	
+
 	double *inWidth;
 	double *inSync;
 

@@ -31,21 +31,26 @@ class HPF: public IIR2
 
 	double frq;
 	double Q;
+	double newfrq;
+	double newQ;
 
 	void frqChanged(double data)
 	{
-		frq = data;
+		newfrq = data;
 		updateCoef();
 	}
 	void QChanged(double data)
 	{
-		Q = data;
+		newQ = data;
 		updateCoef();
 	};
 
 	void updateCoef();
 
+
+
 public:
+	void sampleGo();
 	HPF(Scheduler *sched);
 	const char *getClassName()
 	{

@@ -18,6 +18,7 @@
 #include <math.h>
 #include "Scheduler.h"
 #include "HPF.h"
+#include "../libmoogutil/valuehelper.h"
 
 void HPF_frqChanged(MoogObject *o, double data, long)
 {
@@ -37,6 +38,7 @@ HPF::HPF(Scheduler *sched): IIR2(sched)
 
 void HPF::updateCoef()
 {
+
 	/* omega is really 2 * PI * frequency / sample_rate,
 	 * but our frq is scaled already to 0->1 equals 0hz -> nyquist
 	 * so it all reduces out
@@ -52,4 +54,14 @@ void HPF::updateCoef()
 	cx[1] = ((1.0 + cs) / 2.0) / (1.0 + alpha);
 	cy[0] = (-2.0 * cs) / (1.0 + alpha);
 	cy[1] = (1.0 - alpha) / (1.0 + alpha);
+}
+
+void HPF::sampleGo()
+{
+	bool ch = false;
+	ch |= processParameter(&Q, newQ, 0.0001);
+	ch |= processParameter(&frq, newfrq, 0.0001);
+	if (ch)
+		updateCoef();
+	IIR2::sampleGo();
 }

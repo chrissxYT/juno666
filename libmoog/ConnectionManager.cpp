@@ -25,7 +25,7 @@ do {\
     if ((x)->contextTag != (y)->contextTag)\
     {\
     debug(DEBUG_APPERROR, \
-        "cannot do connect on objects from different contexts");\
+	"cannot do connect on objects from different contexts");\
     return z;\
     }\
 } while (0)
@@ -33,98 +33,98 @@ do {\
 
 ConnectionInfo *
 ConnectionManager::connect(MoogObject *from, const char *oname,
-    MoogObject *to, const char *iname)
+	MoogObject *to, const char *iname)
 {
-    ASSERT_CONTEXTS(from, to, NULL);
+	ASSERT_CONTEXTS(from, to, NULL);
 
-    return llConnect(from, oname, to, iname);
+	return llConnect(from, oname, to, iname);
 }
 
 ConnectionInfo *
 ConnectionManager::connect(MoogObject *from, int onum, MoogObject *to, int inum)
 {
-    ASSERT_CONTEXTS(from, to, NULL);
-    debug(DEBUG_STATUS, "ConnectionManager::connect from:%s::%s(%d) to:%s::%s(%d)",
-        from->getName(), from->getClassName(), onum, to->getName(), to->getClassName(), inum);
+	ASSERT_CONTEXTS(from, to, NULL);
+	debug(DEBUG_STATUS, "ConnectionManager::connect from:%s::%s(%d) to:%s::%s(%d)",
+		from->getName(), from->getClassName(), onum, to->getName(), to->getClassName(), inum);
 
-    return llConnect(from, onum, to, inum);
+	return llConnect(from, onum, to, inum);
 }
 
 ConnectionInfo *
 ConnectionManager::llConnect(MoogObject *from, const char *oname,
-    MoogObject *to, const char *iname)
+	MoogObject *to, const char *iname)
 {
-    /* if the to->inum is already connected, force a disconnect first
-     * set the reconnect flag in case someone needs to know...
-     */
+	/* if the to->inum is already connected, force a disconnect first
+	 * set the reconnect flag in case someone needs to know...
+	 */
 
-    Input *input = to->getInput(iname);
-    if (input != NULL)
-    {
+	Input *input = to->getInput(iname);
+	if (input != NULL)
+	{
 
-        if (input->getConnection())
-        {
+		if (input->getConnection())
+		{
 
-            reconnect = 1;
-            disconnect(to->getInput(iname)->getConnection());
-            reconnect = 0;
-        }
-
-
-        ConnectionInfo *retval = new ConnectionInfo(from,
-            from->getOutput(oname),
-            to,
-            to->getInput(iname));
-
-        from->connectFrom(retval);
+			reconnect = 1;
+			disconnect(to->getInput(iname)->getConnection());
+			reconnect = 0;
+		}
 
 
-        to->connectTo(retval);
+		ConnectionInfo *retval = new ConnectionInfo(from,
+			from->getOutput(oname),
+			to,
+			to->getInput(iname));
 
-        return retval;
-    }
+		from->connectFrom(retval);
 
-    return NULL;
+
+		to->connectTo(retval);
+
+		return retval;
+	}
+
+	return NULL;
 }
 
 ConnectionInfo *
 ConnectionManager::llConnect(MoogObject *from, int onum, MoogObject *to, int inum)
 {
-    /* if the to->inum is already connected, force a disconnect first
-     * set the reconnect flag in case someone needs to know...
-     */
-    if (to->getInput(inum)->getConnection())
-    {
-        reconnect = 1;
-        disconnect(to->getInput(inum)->getConnection());
-        reconnect = 0;
-    }
+	/* if the to->inum is already connected, force a disconnect first
+	 * set the reconnect flag in case someone needs to know...
+	 */
+	if (to->getInput(inum)->getConnection())
+	{
+		reconnect = 1;
+		disconnect(to->getInput(inum)->getConnection());
+		reconnect = 0;
+	}
 
-    ConnectionInfo *retval = new ConnectionInfo(from,
-        from->getOutput(onum),
-        to,
-        to->getInput(inum));
-    from->connectFrom(retval);
-    to->connectTo(retval);
+	ConnectionInfo *retval = new ConnectionInfo(from,
+		from->getOutput(onum),
+		to,
+		to->getInput(inum));
+	from->connectFrom(retval);
+	to->connectTo(retval);
 
-    return retval;
+	return retval;
 }
 
 void
 ConnectionManager::disconnect(ConnectionInfo *connection)
 {
-    ASSERT_CONTEXTS(connection->from, connection->to, FALSE);
+	ASSERT_CONTEXTS(connection->from, connection->to, FALSE);
 
-    debug(DEBUG_STATUS, "ConnectionManager::disconnect()");
+	debug(DEBUG_STATUS, "ConnectionManager::disconnect()");
 
-    llDisconnect(connection);
+	llDisconnect(connection);
 }
 
 void
 ConnectionManager::llDisconnect(ConnectionInfo *connection)
 {
-    connection->from->disconnectFrom(connection);
-    connection->to->disconnectTo(connection);
+	connection->from->disconnectFrom(connection);
+	connection->to->disconnectTo(connection);
 
-    delete connection;
+	delete connection;
 }

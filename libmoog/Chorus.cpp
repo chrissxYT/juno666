@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/18 22:25:13 $
+ * $Revision: 1.6 $$Date: 2004/06/25 10:38:42 $
  */
 #include "Chorus.h"
 #include "ConnectionManager.h"
@@ -26,54 +26,54 @@
 #include "Oscillator.h"
 #include "Scheduler.h"
 
-Chorus::Chorus(Scheduler *sched, ConnectionManager *conn) : MoogObject(sched, conn)
+Chorus::Chorus(Scheduler *sched, ConnectionManager *conn): MoogObject(sched, conn)
 {
-    // 30 ms delay
-    // FIXME, add a depth control
-    dly = new Delay(sched, (int)(schedule->sampleRate * .03));
-    inputs.appendElement(dly->getInput("sig"));
-    inputs.appendElement(dly->getInput("mix"));
+	// 30 ms delay
+	// FIXME, add a depth control
+	dly = new Delay(sched, (int)(schedule->sampleRate * .03));
+	inputs.appendElement(dly->getInput("sig"));
+	inputs.appendElement(dly->getInput("mix"));
 
-    osc = new Oscillator(sched, wg_tri((int)(schedule->sampleRate * .03)));
-    inputs.appendElement(osc->getInput("frq"));
-    inputs.appendElement(osc->getInput("amp"));
-    inputs.appendElement(osc->getInput("zro"));
+	osc = new Oscillator(sched, wg_tri((int)(schedule->sampleRate * .03)));
+	inputs.appendElement(osc->getInput("frq"));
+	inputs.appendElement(osc->getInput("amp"));
+	inputs.appendElement(osc->getInput("zro"));
 
-    outputs.appendElement(dly->getOutput("sig"));
+	outputs.appendElement(dly->getOutput("sig"));
 
 //    osc->set( "frq", schedule->sampleRate * .03 );
 
 //    osc->set( "amp", .05 );
 //    osc->set( "zro", .8333 );
 
-    PATCH(osc, "sig", dly, "time");
+	PATCH(osc, "sig", dly, "time");
 }
 
 void Chorus::connectTo(ConnectionInfo *info)
 {
-    if (info->input == &inputs[0] || info->input == &inputs[2])
-        dly->connectTo(info);
-    else
-        osc->connectTo(info);
+	if (info->input == &inputs[0] || info->input == &inputs[2])
+		dly->connectTo(info);
+	else
+		osc->connectTo(info);
 }
 
 void Chorus::disconnectTo(ConnectionInfo *info)
 {
-    if (info->input == &inputs[0] || info->input == &inputs[2])
-        dly->disconnectTo(info);
-    else
-        osc->disconnectTo(info);
+	if (info->input == &inputs[0] || info->input == &inputs[2])
+		dly->disconnectTo(info);
+	else
+		osc->disconnectTo(info);
 }
 
 Chorus::~Chorus()
 {
-    inputs.removeElement(4);
-    inputs.removeElement(3);
-    inputs.removeElement(2);
-    inputs.removeElement(1);
-    inputs.removeElement(0);
-    outputs.removeElement(0);
+	inputs.removeElement(4);
+	inputs.removeElement(3);
+	inputs.removeElement(2);
+	inputs.removeElement(1);
+	inputs.removeElement(0);
+	outputs.removeElement(0);
 
-    delete(dly);
-    delete(osc);
+	delete(dly);
+	delete(osc);
 }

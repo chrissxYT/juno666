@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/17 13:46:21 $
+ * $Revision: 1.5 $$Date: 2004/06/25 10:38:42 $
  */
 #ifndef _DSPOutput_H
 #define _DSPOutput_H
@@ -29,7 +29,7 @@
 
 #define SAMPLE_RATE_44k 44100
 #define SAMPLE_RATE_22k 22050
-#define SAMPLE_RATE_8k   8000
+#define SAMPLE_RATE_8k	 8000
 
 #include "DSPDevice.h"
 #include "Scheduler.h"
@@ -38,45 +38,45 @@
 
 class DSPOutput: public MoogObject
 {
-    Scheduler *scheduler;
+	Scheduler *scheduler;
 
-    DSPDevice *dsp;
-    int myDsp;
+	DSPDevice *dsp;
+	int myDsp;
 
-    double **inSig;
-    double **inAmp;
-    double panleft;
-    double panright;
+	double **inSig;
+	double **inAmp;
+	double panleft;
+	double panright;
 
-    void (*dataWrittenCallback)(void);
-    void setup();
+	void (*dataWrittenCallback)(void);
+	void setup();
 
 public:
-    DSPOutput(JunoControl *jc, Scheduler *sched, ConnectionManager *conn, DSPDevice *_dsp);
+	DSPOutput(JunoControl *jc, Scheduler *sched, ConnectionManager *conn, DSPDevice *_dsp);
 
-    DSPOutput(JunoControl *jc, Scheduler *sched, ConnectionManager *conn,
-    const char *device, int rate = SAMPLE_RATE_44k, int channels = 1, 
-    int numFrags =- 1, int fragSize =- 1);
+	DSPOutput(JunoControl *jc, Scheduler *sched, ConnectionManager *conn,
+		const char *device, int rate = SAMPLE_RATE_44k, int channels = 1,
+		int numFrags = -1, int fragSize = -1);
 
-    ~DSPOutput();
+	~DSPOutput();
 
-    void connectTo(ConnectionInfo *info);
-    void disconnectTo(ConnectionInfo *info);
-    void setPanning(double data);
+	void connectTo(ConnectionInfo *info);
+	void disconnectTo(ConnectionInfo *info);
+	void setPanning(double data);
 
-    void setDataWrittenCallback(void (*)(void));
-    void sampleGo();
+	void setDataWrittenCallback(void (*)(void));
+	void sampleGo();
 
-    bool isOpen()
-    {
-        return dsp->isOpen();
-    }
+	bool isOpen()
+	{
+		return dsp->isOpen();
+	}
 
-    /* RTTI */
-    const char *getClassName()
-    {
-        return "DSPOutput";
-    }
+	/* RTTI */
+	const char *getClassName()
+	{
+		return "DSPOutput";
+	}
 };
 
 #endif /* _DSPOutput_H */

@@ -17,138 +17,138 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/04/20 15:01:35 $
+ * $Revision: 1.7 $$Date: 2004/06/25 10:38:42 $
  */
 #include "JunoChorus.h"
 
 void JunoChorus_offChanged(MoogObject *o, double data, long)
 {
-    ((JunoChorus *)o)->offChanged(data);
+	((JunoChorus *)o)->offChanged(data);
 }
 
 void JunoChorus_IChanged(MoogObject *o, double data, long)
 {
-    ((JunoChorus *)o)->IChanged(data);
+	((JunoChorus *)o)->IChanged(data);
 }
 
 void JunoChorus_IIChanged(MoogObject *o, double data, long)
 {
-    ((JunoChorus *)o)->IIChanged(data);
+	((JunoChorus *)o)->IIChanged(data);
 }
 
 JunoChorus::JunoChorus(MoogObject *object, const char *outputName, int phase):
-m(object->schedule, object->getConnectionManager(), 3), 
-c1(object->schedule, object->getConnectionManager()), 
-c2(object->schedule, object->getConnectionManager()), 
-MoogObject(object->schedule, object->getConnectionManager())
+m(object->schedule, object->getConnectionManager(), 3),
+	c1(object->schedule, object->getConnectionManager()),
+	c2(object->schedule, object->getConnectionManager()),
+	MoogObject(object->schedule, object->getConnectionManager())
 {
-    addInput("off", JunoChorus_offChanged, 0, 1);
-    addInput("I", JunoChorus_IChanged, 0, 1);
-    addInput("II", JunoChorus_IIChanged, 0, 1);
+	addInput("off", JunoChorus_offChanged, 0, 1);
+	addInput("I", JunoChorus_IChanged, 0, 1);
+	addInput("II", JunoChorus_IIChanged, 0, 1);
 
-    outputs.appendElement(m.getOutput("sig"));
+	outputs.appendElement(m.getOutput("sig"));
 
-    PATCH(object, outputName, &c1, "sig");
-    PATCH(object, outputName, &c2, "sig");
+	PATCH(object, outputName, &c1, "sig");
+	PATCH(object, outputName, &c2, "sig");
 
-    PATCH(object, outputName, &m, "sig0");
-    PATCH(&c1, "sig", &m, "sig1");
-    PATCH(&c2, "sig", &m, "sig2");
+	PATCH(object, outputName, &m, "sig0");
+	PATCH(&c1, "sig", &m, "sig1");
+	PATCH(&c2, "sig", &m, "sig2");
 
-    c1.set("amp", phase ? -.025 : .025);
-    c1.set("zro", .5);
-    c1.set("mix", 1); // all wet
+	c1.set("amp", phase ? -.025 : .025);
+	c1.set("zro", .5);
+	c1.set("mix", 1); // all wet
 
-    c2.set("amp", phase ? -.025 : .025);
-    c2.set("zro", .45);
-    c2.set("mix", 1); // all wet
+	c2.set("amp", phase ? -.025 : .025);
+	c2.set("zro", .45);
+	c2.set("mix", 1); // all wet
 
-    m.set("amp0", 1);
+	m.set("amp0", 1);
 
-    offChanged(0);
+	offChanged(0);
 }
 
 JunoChorus::~JunoChorus()
 {
-    outputs.removeElement(0);
+	outputs.removeElement(0);
 }
 
 void JunoChorus::offChanged(double)
 {
-    oneOn = false;
-    twoOn = false;
+	oneOn = false;
+	twoOn = false;
 
-    m.set("amp1", 0);
-    m.set("amp2", 0);
+	m.set("amp1", 0);
+	m.set("amp2", 0);
 }
 
 //FIXME, need special case for I && II
 void JunoChorus::IChanged(double value)
 {
-    if (value > 0)
-    {
-        oneOn = true;
-        if (twoOn)
-        {
-            c1.set("frq", CPS(10));
-            c2.set("frq", CPS(10));
-        }
-        else
-        {
-            c1.set("frq", CPS(.55));
-            c2.set("frq", CPS(.55));
-            m.set("amp1", 1);
-            m.set("amp2", 1);
-        }
-    }
-    else
-    {
-        oneOn = false;
-        if (twoOn)
-        {
-            c1.set("frq", CPS(1.5));
-            c2.set("frq", CPS(1.5));
-        }
-        else
-        {
-            m.set("amp1", 0);
-            m.set("amp2", 0);
-        }
-    }
+	if (value > 0)
+	{
+		oneOn = true;
+		if (twoOn)
+		{
+			c1.set("frq", CPS(10));
+			c2.set("frq", CPS(10));
+		}
+		else
+		{
+			c1.set("frq", CPS(.55));
+			c2.set("frq", CPS(.55));
+			m.set("amp1", 1);
+			m.set("amp2", 1);
+		}
+	}
+	else
+	{
+		oneOn = false;
+		if (twoOn)
+		{
+			c1.set("frq", CPS(1.5));
+			c2.set("frq", CPS(1.5));
+		}
+		else
+		{
+			m.set("amp1", 0);
+			m.set("amp2", 0);
+		}
+	}
 }
 
 //FIXME, need special case for I && II
 void JunoChorus::IIChanged(double value)
 {
-    if (value > 0)
-    {
-        twoOn = true;
-        if (oneOn)
-        {
-            c1.set("frq", CPS(10));
-            c2.set("frq", CPS(10));
-        }
-        else
-        {
-            c1.set("frq", CPS(1.5));
-            c2.set("frq", CPS(1.5));
-            m.set("amp1", 1);
-            m.set("amp2", 1);
-        }
-    }
-    else
-    {
-        twoOn = false;
-        if (oneOn)
-        {
-            c1.set("frq", CPS(.55));
-            c2.set("frq", CPS(.55));
-        }
-        else
-        {
-            m.set("amp1", 0);
-            m.set("amp2", 0);
-        }
-    }
+	if (value > 0)
+	{
+		twoOn = true;
+		if (oneOn)
+		{
+			c1.set("frq", CPS(10));
+			c2.set("frq", CPS(10));
+		}
+		else
+		{
+			c1.set("frq", CPS(1.5));
+			c2.set("frq", CPS(1.5));
+			m.set("amp1", 1);
+			m.set("amp2", 1);
+		}
+	}
+	else
+	{
+		twoOn = false;
+		if (oneOn)
+		{
+			c1.set("frq", CPS(.55));
+			c2.set("frq", CPS(.55));
+		}
+		else
+		{
+			m.set("amp1", 0);
+			m.set("amp2", 0);
+		}
+	}
 }
 

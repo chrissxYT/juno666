@@ -23,14 +23,17 @@
 
 NamedObject::NamedObject()
 {
-	name = NULL;
+	name = new char[20];
+	name[0] = 0;
 	display = NULL;
 }
 
 NamedObject::NamedObject(const char *n, const char *display)
 {
-	name = NULL;
-	setName(n);
+	name = new char[20];
+	name[0] = 0;
+	if (n != NULL)
+		setName(n);
 	setDisplayName(display);
 }
 

@@ -59,5 +59,5 @@ void Attenuator::disconnectTo(ConnectionInfo *info)
 void Attenuator::sampleGo()
 {
 	output->setData(*inSig * *inAmp + *inZro);
-	MOOG_DEBUG("attenuator %f %f %f %f", *inSig, *inAmp, *inZro, output->data);
+	//MOOG_DEBUG("attenuator %f %f %f %f", *inSig, *inAmp, *inZro, output->data);
 }

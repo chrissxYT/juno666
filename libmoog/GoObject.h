@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/04/24 22:24:10 $
+ * $Revision: 1.7 $$Date: 2004/06/25 10:38:42 $
  */
 #ifndef _GOOBJECT_H
 #define _GOOBJECT_H
@@ -25,31 +25,31 @@
 #include <libmoogutil/list.h>
 #include <libmoogutil/SimpleArray.h>
 
-/* $Id: GoObject.h,v 1.6 2004/04/24 22:24:10 strepto Exp $ */
+/* $Id: GoObject.h,v 1.7 2004/06/25 10:38:42 brainslayer Exp $ */
 
 class GoObject
 {
-    friend class Scheduler;
+	friend class Scheduler;
 
-    int nextGoHandle;
+	int nextGoHandle;
 
-    list_head controlListNode;
-    list_head sampleListNode;
+	list_head controlListNode;
+	list_head sampleListNode;
 
 protected:
-    int goHandle;
+	int goHandle;
 
-    bool isControlScheduled();
-    bool isSampleScheduled();
+	bool isControlScheduled();
+	bool isSampleScheduled();
 
 public:
-    Scheduler *schedule;
-    GoObject(Scheduler *schedule);
-    virtual void controlGo();
-    virtual void sampleGo();
+	Scheduler *schedule;
+	GoObject(Scheduler *schedule);
+	virtual void controlGo();
+	virtual void sampleGo();
 
-    void on();
-    void off();
+	void on();
+	void off();
 };
 
 #endif /* _GOOBJECT_H */

@@ -29,340 +29,351 @@ extern void setScope(int voice);
 
 void JunoVoice_envChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->envChanged(data);
+	((JunoVoice *)o)->envChanged(data);
 }
 
 void JunoVoice_lfoChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->lfoChanged(data);
+	((JunoVoice *)o)->lfoChanged(data);
 }
 
 void JunoVoice_kbdChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->kbdChanged(data);
+	((JunoVoice *)o)->kbdChanged(data);
 }
 
 void JunoVoice_benderChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->benderChanged(data);
+	((JunoVoice *)o)->benderChanged(data);
 }
 
 void JunoVoice_benderdcoChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->benderdcoChanged(data);
+	((JunoVoice *)o)->benderdcoChanged(data);
 }
 
 void JunoVoice_bendervcfChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->bendervcfChanged(data);
+	((JunoVoice *)o)->bendervcfChanged(data);
 }
 
 void JunoVoice_subSwitchChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->subSwitchChanged(data);
+	((JunoVoice *)o)->subSwitchChanged(data);
 }
 
 void JunoVoice_dcolfoChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->dcolfoChanged(data);
+	((JunoVoice *)o)->dcolfoChanged(data);
 }
 
 void JunoVoice_pwmModeChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->pwmModeChanged(data);
+	((JunoVoice *)o)->pwmModeChanged(data);
 }
 
 void JunoVoice_vcffrqChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->vcffrqChanged(data);
+	((JunoVoice *)o)->vcffrqChanged(data);
 }
 
 void JunoVoice_vcfresChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->vcfresChanged(data);
+	((JunoVoice *)o)->vcfresChanged(data);
 }
 
 void JunoVoice_vcfenvinvertChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->vcfenvinvertChanged(data);
+	((JunoVoice *)o)->vcfenvinvertChanged(data);
 }
 
 void JunoVoice_vcfenvChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->vcfenvChanged(data);
+	((JunoVoice *)o)->vcfenvChanged(data);
 }
 
 void JunoVoice_vcflfoChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->vcflfoChanged(data);
+	((JunoVoice *)o)->vcflfoChanged(data);
 }
 
 void JunoVoice_vcfkbdChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->vcfkbdChanged(data);
+	((JunoVoice *)o)->vcfkbdChanged(data);
 }
 
 
-void JunoVoice_vcamodeChanged(MoogObject *o, double data, long )
+void JunoVoice_vcamodeChanged(MoogObject *o, double data, long)
 {
-    ((JunoVoice *)o)->vcamodeChanged(data);
+	((JunoVoice *)o)->vcamodeChanged(data);
 }
 
-JunoVoice::JunoVoice(Control *_jc, int _voiceNum, 
+JunoVoice::JunoVoice(Control *_jc, int _voiceNum,
 
-Rand *_noise,
-JunoLfo *_lfo,
-Attenuator *_pwmLfo,
+	Rand *_noise,
+	JunoLfo *_lfo,
+	Attenuator *_pwmLfo,
 
-Scheduler *sched, ConnectionManager *conn): 
+	Scheduler *sched, ConnectionManager *conn):
 MoogObject(sched, conn), voiceVol(sched), pwmAttenuator(sched), subMix(sched, conn, 4), pulse(sched), saw(sched), sub(sched), vcf(sched), balance(sched), adsr(sched), gateAdsr(sched),
-jc(_jc),
-voiceNum(_voiceNum),
-noise(_noise),
-junolfo(_lfo),
-pwmLfo(_pwmLfo)
+	jc(_jc),
+	voiceNum(_voiceNum),
+	noise(_noise),
+	junolfo(_lfo),
+	pwmLfo(_pwmLfo)
 {
-    init = 0;
-    vcamode = 0;
-    addInput("lfo", JunoVoice_lfoChanged, 0, JUNO_CONTROL_RATE);
-    addInput("env", JunoVoice_envChanged, 0, JUNO_CONTROL_RATE);
-    addInput("kbd", JunoVoice_kbdChanged, 0, 1);
-    addInput("bender", JunoVoice_benderChanged, 0, 1);
-    addInput("bender_dco", JunoVoice_benderdcoChanged, 0, 1);
-    addInput("bender_vcf", JunoVoice_bendervcfChanged, 0, 1);
-    addInput("dco_lfo", JunoVoice_dcolfoChanged, 0, 1);
-    addInput("dco_pwm_mod", JunoVoice_pwmModeChanged, 0, 1);
-    addInput("dco_sub_switch", JunoVoice_subSwitchChanged, 0, 1);
-    addInput("vcf_frq", JunoVoice_vcffrqChanged, 0, 1);
-    addInput("vcf_res", JunoVoice_vcfresChanged, 0, 1);
-    addInput("vcf_env_invert", JunoVoice_vcfenvinvertChanged, 0, 1);
-    addInput("vcf_env", JunoVoice_vcfenvChanged, 0, 1);
-    addInput("vcf_lfo", JunoVoice_vcflfoChanged, 0, 1);
-    addInput("vcf_kbd", JunoVoice_vcfkbdChanged, 0, 1);
-    addInput("vca_mode", JunoVoice_vcamodeChanged, 0, 1);
-    attachVoice(jc);
-    PATCH(jc, "bender", this, "bender");
-    PATCH(jc, "bender_dco", this, "bender_dco");
+	init = 0;
+	vcamode = 0;
+	addInput("lfo", JunoVoice_lfoChanged, 0, JUNO_CONTROL_RATE);
+	addInput("env", JunoVoice_envChanged, 0, JUNO_CONTROL_RATE);
+	addInput("kbd", JunoVoice_kbdChanged, 0, 1);
+	addInput("bender", JunoVoice_benderChanged, 0, 1);
+	addInput("bender_dco", JunoVoice_benderdcoChanged, 0, 1);
+	addInput("bender_vcf", JunoVoice_bendervcfChanged, 0, 1);
+	addInput("dco_lfo", JunoVoice_dcolfoChanged, 0, 1);
+	addInput("dco_pwm_mod", JunoVoice_pwmModeChanged, 0, 1);
+	addInput("dco_sub_switch", JunoVoice_subSwitchChanged, 0, 1);
+	addInput("vcf_frq", JunoVoice_vcffrqChanged, 0, 1);
+	addInput("vcf_res", JunoVoice_vcfresChanged, 0, 1);
+	addInput("vcf_env_invert", JunoVoice_vcfenvinvertChanged, 0, 1);
+	addInput("vcf_env", JunoVoice_vcfenvChanged, 0, 1);
+	addInput("vcf_lfo", JunoVoice_vcflfoChanged, 0, 1);
+	addInput("vcf_kbd", JunoVoice_vcfkbdChanged, 0, 1);
+	addInput("vca_mode", JunoVoice_vcamodeChanged, 0, 1);
+	attachVoice(jc);
+	PATCH(jc, "bender", this, "bender");
+	PATCH(jc, "bender_dco", this, "bender_dco");
 
-    PATCH(jc, "bender_vcf", this, "bender_vcf");
-    PATCH(jc, "dco_lfo", this, "dco_lfo");
-    PATCH(jc, "dco_pwm", &pwmAttenuator, "amp");
+	PATCH(jc, "bender_vcf", this, "bender_vcf");
+	PATCH(jc, "dco_lfo", this, "dco_lfo");
+	PATCH(jc, "dco_pwm", &pwmAttenuator, "amp");
 
-    PATCH(&pwmAttenuator, "sig", &pulse, "width");
+	PATCH(&pwmAttenuator, "sig", &pulse, "width");
 
-    PATCH(jc, "dco_pwm_mod", this, "dco_pwm_mod");
+	PATCH(jc, "dco_pwm_mod", this, "dco_pwm_mod");
 
-    PATCH(jc, "dco_pulse_switch", &pulse, "amp");
-    PATCH(jc, "dco_saw_switch", &saw, "amp");
+	PATCH(jc, "dco_pulse_switch", &pulse, "amp");
+	PATCH(jc, "dco_saw_switch", &saw, "amp");
 
 
-    pwmAttConnection = PATCH(pwmLfo, "sig", &pwmAttenuator, "sig");
-    pwmAttenuator.set("sig", 1.0);
+	pwmAttConnection = PATCH(pwmLfo, "sig", &pwmAttenuator, "sig");
+	pwmAttenuator.set("sig", 1.0);
 
-    sub.set("amp", 0);
+	sub.set("amp", 0);
 
-    /* we will listen for dco_sub_switch changes and handle them */
-    subOscConnection = NULL;
-    PATCH(jc, "dco_sub_switch", this, "dco_sub_switch");
+	/* we will listen for dco_sub_switch changes and handle them */
+	subOscConnection = NULL;
+	PATCH(jc, "dco_sub_switch", this, "dco_sub_switch");
 
-    /* hook all oscillators to internal mix */
-    PATCH(&pulse, "sig", &subMix, "sig0");
-    PATCH(&saw, "sig", &subMix, "sig1");
-    PATCH(&sub, "sig", &subMix, "sig2");
+	/* hook all oscillators to internal mix */
+	PATCH(&pulse, "sig", &subMix, "sig0");
+	PATCH(&saw, "sig", &subMix, "sig1");
+	PATCH(&sub, "sig", &subMix, "sig2");
 
-    /* keep the sub in sync with the other two */
-    PATCH(&sub, "sync", &pulse, "sync");
-    PATCH(&sub, "sync", &saw, "sync");
+	/* keep the sub in sync with the other two */
+	PATCH(&sub, "sync", &pulse, "sync");
+	PATCH(&sub, "sync", &saw, "sync");
 
-    /* patch the noice generator into the subMix */
-    PATCH(noise, "sig", &subMix, "sig3");
-    PATCH(jc, "dco_noise", &subMix, "amp3");
+	/* patch the noice generator into the subMix */
+	PATCH(noise, "sig", &subMix, "sig3");
+	PATCH(jc, "dco_noise", &subMix, "amp3");
 
-    /* the juno appears to have the pulse set with low starting, so -.25 */
-    subMix.set("amp0", -.5); //pulse
-    subMix.set("amp1", .5); //saw
-    subMix.set("amp2", -.67); //sub
-    /* connect the vcf */
-    PATCH(&subMix, "sig", &vcf, "sig");
-    PATCH(&subMix, "sig", &balance, "pow");
+	/* the juno appears to have the pulse set with low starting, so -.25 */
+	subMix.set("amp0", -.5); //pulse
+	subMix.set("amp1", .5); //saw
+	subMix.set("amp2", -.67); //sub
+	/* connect the vcf */
+	PATCH(&subMix, "sig", &vcf, "sig");
+	PATCH(&subMix, "sig", &balance, "pow");
 
-    /* we need to do a calculation for the input of the vcf using lots of
-     * data input... including:
-     */
-    PATCH(&adsr, "sig", this, "env");
-    PATCH(junolfo, "sig", this, "lfo");
-    //kbd is patched in attachVoice
+	/* we need to do a calculation for the input of the vcf using lots of
+	 * data input... including:
+	 */
+	PATCH(&adsr, "sig", this, "env");
+	PATCH(junolfo, "sig", this, "lfo");
+	//kbd is patched in attachVoice
 
-    PATCH(jc, "vcf_frq", this, "vcf_frq");
-    PATCH(jc, "vcf_res", this, "vcf_res");
+	PATCH(jc, "vcf_frq", this, "vcf_frq");
+	PATCH(jc, "vcf_res", this, "vcf_res");
 
-    PATCH(jc, "vcf_env_invert", this, "vcf_env_invert");
+	PATCH(jc, "vcf_env_invert", this, "vcf_env_invert");
 
-    PATCH(jc, "vcf_env", this, "vcf_env");
-    PATCH(jc, "vcf_lfo", this, "vcf_lfo");
-    PATCH(jc, "vcf_kbd", this, "vcf_kbd");
-    //FIXME what about the filter gain??? hardcode to .1...
-    vcf.set("gain", .1);
+	PATCH(jc, "vcf_env", this, "vcf_env");
+	PATCH(jc, "vcf_lfo", this, "vcf_lfo");
+	PATCH(jc, "vcf_kbd", this, "vcf_kbd");
+	//FIXME what about the filter gain??? hardcode to .1...
+	vcf.set("gain", .1);
 
-    /* connect the ADSR */
-    PATCH(jc, "env_attack", &adsr, "a");
-    PATCH(jc, "env_decay", &adsr, "d");
-    PATCH(jc, "env_sustain", &adsr, "s");
-    PATCH(jc, "env_release", &adsr, "r");
+	/* connect the ADSR */
+	PATCH(jc, "env_attack", &adsr, "a");
+	PATCH(jc, "env_decay", &adsr, "d");
+	PATCH(jc, "env_sustain", &adsr, "s");
+	PATCH(jc, "env_release", &adsr, "r");
 
-    /* set the gate ADSR */
-    gateAdsr.set("a", .000000001);
-    gateAdsr.set("d", 0.0);
-    gateAdsr.set("s", 1.0);
-    gateAdsr.set("r", .000000001);
+	/* set the gate ADSR */
+	gateAdsr.set("a", .000000001);
+	gateAdsr.set("d", 0.0);
+	gateAdsr.set("s", 1.0);
+	gateAdsr.set("r", .000000001);
 
-    /* send the vcf into the main volume control for voice */
-    PATCH(&vcf, "sig", &balance, "sig");
-    PATCH(&balance, "sig", &voiceVol, "sig");
-    /* amp of voice out is either gated or from ADSR, switched by vca_mode */
-    PATCH(jc, "vca_mode", this, "vca_mode");
+	/* send the vcf into the main volume control for voice */
+	PATCH(&vcf, "sig", &balance, "sig");
+	PATCH(&balance, "sig", &voiceVol, "sig");
+	/* amp of voice out is either gated or from ADSR, switched by vca_mode */
+	PATCH(jc, "vca_mode", this, "vca_mode");
 
-    /* the output of the voice is the sig output of the voiceVol */
-    outputs.appendElement(voiceVol.getOutput("sig"));
-    init = 1;
+	/* the output of the voice is the sig output of the voiceVol */
+	outputs.appendElement(voiceVol.getOutput("sig"));
+	init = 1;
 }
 
 JunoVoice::~JunoVoice()
 {
-    /* free the output borrowed from the voiceVol object */
-    outputs.removeElement(0);
+	/* free the output borrowed from the voiceVol object */
+	outputs.removeElement(0);
 }
 
 void JunoVoice::attachVoice(MoogObject *src)
 {
-    PATCH(src, (String)"voice" + voiceNum + "_gate", &adsr, "trig");
-    PATCH(src, (String)"voice" + voiceNum + "_gate", &gateAdsr, "trig");
-    PATCH(src, (String)"voice" + voiceNum + "_pitch", this, "kbd");
+	PATCH(src, (String)"voice" + voiceNum + "_gate", &adsr, "trig");
+	PATCH(src, (String)"voice" + voiceNum + "_gate", &gateAdsr, "trig");
+	PATCH(src, (String)"voice" + voiceNum + "_pitch", this, "kbd");
 }
 
 void JunoVoice::envChanged(double data)
 {
-    if (!init)return;
-    env = data;
-    updateVcf();
+	if (!init)
+		return;
+	env = data;
+	updateVcf();
 }
 
 void JunoVoice::lfoChanged(double data)
 {
-    if (!init)return;
-    lfo = data;
-    //printf("lfo is %f\n", lfo);
-    updateVcf();
-    updateFrq();
+	if (!init)
+		return;
+	lfo = data;
+	//printf("lfo is %f\n", lfo);
+	updateVcf();
+	updateFrq();
 }
 
 void JunoVoice::kbdChanged(double data)
 {
-    if (!init)return;
-    // this gets rid of a lot of clicks for me, KARL
+	if (!init)
+		return;
+	// this gets rid of a lot of clicks for me, KARL
 
-   // pulse.sync();
-  //  saw.sync();
-   // sub.sync();
+	// pulse.sync();
+	//  saw.sync();
+	// sub.sync();
 
-   // vcf.sync();
+	// vcf.sync();
 //	newkbd = data;
-    kbd = data;
-    updateVcf();
-    updateFrq();
+	kbd = data;
+	updateVcf();
+	updateFrq();
 
 #ifndef TARGET_VST
-    setScope(voiceNum);
+	setScope(voiceNum);
 #endif
 }
 
 void JunoVoice::benderChanged(double data)
 {
-    if (!init)return;
-	
-    //printf("bender changed to %f\n", data);
-    bender = data;
-    updateVcf();
-    updateFrq();
+	if (!init)
+		return;
+
+	//printf("bender changed to %f\n", data);
+	bender = data;
+	updateVcf();
+	updateFrq();
 }
 
 void JunoVoice::benderdcoChanged(double data)
 {
-    if (!init)return;
-	
-    //printf("benderdco changed to %f\n", data);
-    benderdco = data;
-    updateFrq();
+	if (!init)
+		return;
+
+	//printf("benderdco changed to %f\n", data);
+	benderdco = data;
+	updateFrq();
 }
 
 void JunoVoice::bendervcfChanged(double data)
 {
-    if (!init)return;
-    //printf("bendervcf changed to %f\n", data);
-    bendervcf = data;
-    updateVcf();
+	if (!init)
+		return;
+	//printf("bendervcf changed to %f\n", data);
+	bendervcf = data;
+	updateVcf();
 }
 
 void JunoVoice::subSwitchChanged(double data)
 {
-    if (!init)return;
-    if (data)
-    {
-        if (!subOscConnection)
-            subOscConnection = PATCH(jc, "dco_sub", &sub, "amp");
-    }
-    else
-    {
-        if (subOscConnection)
-            getConnectionManager()->disconnect(subOscConnection);
+	if (!init)
+		return;
+	if (data)
+	{
+		if (!subOscConnection)
+			subOscConnection = PATCH(jc, "dco_sub", &sub, "amp");
+	}
+	else
+	{
+		if (subOscConnection)
+			getConnectionManager()->disconnect(subOscConnection);
 
-        subOscConnection = NULL;
-    }
+		subOscConnection = NULL;
+	}
 }
 
 void JunoVoice::dcolfoChanged(double data)
 {
-    if (!init)return;
-    //printf("dcolfo changed to %f\n", data);
-    dcolfo = data;
-    updateFrq();
+	if (!init)
+		return;
+	//printf("dcolfo changed to %f\n", data);
+	dcolfo = data;
+	updateFrq();
 }
 
 void JunoVoice::vcffrqChanged(double data)
 {
-    if (!init)return;
-    vcffrq = data;
-    updateVcf();
+	if (!init)
+		return;
+	vcffrq = data;
+	updateVcf();
 }
 
 void JunoVoice::vcfresChanged(double data)
 {
-    if (!init)return;
-    vcf.set("resonance", pow(data / 2, 2.0));
-    updateVcf();
+	if (!init)
+		return;
+	vcf.set("resonance", pow(data / 2, 2.0));
+	updateVcf();
 }
 
 
 void JunoVoice::pwmModeChanged(double data)
 {
-    if (!init)return;
-    //printf("pwmMode changed to %f\n", data);
+	if (!init)
+		return;
+	//printf("pwmMode changed to %f\n", data);
 
-    if (data == 0.0)
-    {
-        if (pwmAttConnection)
-            getConnectionManager()->disconnect(pwmAttConnection);
+	if (data == 0.0)
+	{
+		if (pwmAttConnection)
+			getConnectionManager()->disconnect(pwmAttConnection);
 
-        pwmAttConnection = NULL;
-    }
-    else if (data == -1.0)
-    {
-        pwmAttConnection = PATCH(pwmLfo, "sig", &pwmAttenuator, "sig");
-    }
-    else
-    {
-        pwmAttConnection = PATCH(&adsr, "sig", &pwmAttenuator, "sig");
-    }
+		pwmAttConnection = NULL;
+	}
+	else if (data == -1.0)
+	{
+		pwmAttConnection = PATCH(pwmLfo, "sig", &pwmAttenuator, "sig");
+	}
+	else
+	{
+		pwmAttConnection = PATCH(&adsr, "sig", &pwmAttenuator, "sig");
+	}
 
 /*
     if (data == -1.0)
@@ -376,83 +387,90 @@ void JunoVoice::pwmModeChanged(double data)
 
 void JunoVoice::vcfenvinvertChanged(double data)
 {
-    if (!init)return;
-    if (!data)
-        vcfenvinvert = 1.0;
-    else
-        vcfenvinvert = -1.0;
+	if (!init)
+		return;
+	if (!data)
+		vcfenvinvert = 1.0;
+	else
+		vcfenvinvert = -1.0;
 }
 
 void JunoVoice::vcfenvChanged(double data)
 {
-    if (!init)return;
-    vcfenv = pow(data, 4.0);
-    updateVcf();
+	if (!init)
+		return;
+	vcfenv = pow(data, 4.0);
+	updateVcf();
 }
 
 void JunoVoice::vcflfoChanged(double data)
 {
-    if (!init)return;
-    vcflfo = pow(data, 4.0);
-    updateVcf();
+	if (!init)
+		return;
+	vcflfo = pow(data, 4.0);
+	updateVcf();
 }
 
 void JunoVoice::vcfkbdChanged(double data)
 {
-    if (!init)return;
-    vcfkbd = data;
-    updateVcf();
+	if (!init)
+		return;
+	vcfkbd = data;
+	updateVcf();
 }
 
 void JunoVoice::vcamodeChanged(double data)
 {
-    if (!init)return;
-    if (data)
-    {
-        PATCH(&gateAdsr, "sig", &voiceVol, "amp");
-        vcamode = 1;
-    }
-    else
-    {
-        PATCH(&adsr, "sig", &voiceVol, "amp");
-        vcamode = 0;
-    }
+	if (!init)
+		return;
+	if (data)
+	{
+		PATCH(&gateAdsr, "sig", &voiceVol, "amp");
+		vcamode = 1;
+	}
+	else
+	{
+		PATCH(&adsr, "sig", &voiceVol, "amp");
+		vcamode = 0;
+	}
 }
 
 void JunoVoice::updateVcf()
 {
-    if (!init)return;
-    double tmp = vcffrq;
+	if (!init)
+		return;
+	double tmp = vcffrq;
 
-    //printf("tmp is %f\n", tmp);
-    //printf("%f %f %f\n", kbd, CPS(33), CPS(12000));
-    tmp += (kbd - CPS(33)) / 0.093424 * vcfkbd;
-    //printf("tmp: %f lfo: %f vcflfo: %f\n", tmp, lfo, vcflfo);
-    tmp += lfo * vcflfo;
-    //printf("tmp is %f\n", tmp);
-    tmp += env * vcfenv * vcfenvinvert;
-    //printf("tmp is %f\n", tmp);
+	//printf("tmp is %f\n", tmp);
+	//printf("%f %f %f\n", kbd, CPS(33), CPS(12000));
+	tmp += (kbd - CPS(33)) / 0.093424 * vcfkbd;
+	//printf("tmp: %f lfo: %f vcflfo: %f\n", tmp, lfo, vcflfo);
+	tmp += lfo * vcflfo;
+	//printf("tmp is %f\n", tmp);
+	tmp += env * vcfenv * vcfenvinvert;
+	//printf("tmp is %f\n", tmp);
 
-    tmp *= pow((double)2, (double)(bender * bendervcf));
+	tmp *= pow((double)2, (double)(bender * bendervcf));
 
-    tmp = pow(tmp, 4.0);
+	tmp = pow(tmp, 4.0);
 
-    if (tmp >= .999)
-        tmp = .999;
+	if (tmp >= .999)
+		tmp = .999;
 
-    if (tmp <= CPS(20))
-        tmp = CPS(20);
+	if (tmp <= CPS(20))
+		tmp = CPS(20);
 
-    vcf.set("cutoff", tmp);
+	vcf.set("cutoff", tmp);
 }
 
 void JunoVoice::updateFrq()
 {
-    if (!init)return;
+	if (!init)
+		return;
 	double frq = kbd * pow(2.0, 2 * lfo * dcolfo / 12) * pow(2.0, bender * benderdco);
-   // double frq = kbd * pow((double)2, (double)(2 * lfo * dcolfo / 12) * pow((double)2, (double)(bender * benderdco)));
-	
-    pulse.set("frq", frq);
-    saw.set("frq", frq);
-    sub.set("frq", frq / 2);
+	// double frq = kbd * pow((double)2, (double)(2 * lfo * dcolfo / 12) * pow((double)2, (double)(bender * benderdco)));
+
+	pulse.set("frq", frq);
+	saw.set("frq", frq);
+	sub.set("frq", frq / 2);
 }

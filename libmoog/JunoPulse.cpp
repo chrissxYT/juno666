@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.10 $$Date: 2004/06/09 15:35:34 $
+ * $Revision: 1.11 $$Date: 2004/06/25 10:38:42 $
  */
 #include "JunoPulse.h"
 #include "Scheduler.h"
@@ -28,129 +28,129 @@
 
 void JunoPulse_horizBoundsChanged(MoogObject *o, double, long)
 {
-    ((JunoPulse *)o)->horizBoundsChanged();
+	((JunoPulse *)o)->horizBoundsChanged();
 }
 
 void JunoPulse_sync(MoogObject *o, double, long)
 {
-    ((JunoPulse *)o)->sync();
+	((JunoPulse *)o)->sync();
 }
 
 JunoPulse::JunoPulse(Scheduler *sched): MoogObject(sched, NULL)
 {
-    addPorts("frq", INPUT, JunoPulse_horizBoundsChanged, 0, schedule->sampleControlRatio,
-        "amp", INPUT, NULL,
-        "width", INPUT, NULL,
-        "sync", INPUT, JunoPulse_sync, 0, 1,
-        "sig", OUTPUT, true,
-        "sync", OUTPUT, false,
-        NULL);
+	addPorts("frq", INPUT, JunoPulse_horizBoundsChanged, 0, schedule->sampleControlRatio,
+		"amp", INPUT, NULL,
+		"width", INPUT, NULL,
+		"sync", INPUT, JunoPulse_sync, 0, 1,
+		"sig", OUTPUT, true,
+		"sync", OUTPUT, false,
+		NULL);
 
 
-    sigOutput = &outputs[0];
-    syncOutput = &outputs[1];
+	sigOutput = &outputs[0];
+	syncOutput = &outputs[1];
 
 	//sig_setData = sigOutput->setData;
 	//sync_setData = syncOutput->setData;
 
-    pos = 1.0;
-    sign = 1.0;
+	pos = 1.0;
+	sign = 1.0;
 
-    lastTrigger = 0;
+	lastTrigger = 0;
 
-    inFrq = inputs[0].data;
-    inAmp = inputs[1].data;
-    inWidth = inputs[2].data;
-    inSync = inputs[3].data;
+	inFrq = inputs[0].data;
+	inAmp = inputs[1].data;
+	inWidth = inputs[2].data;
+	inSync = inputs[3].data;
 }
 
 void JunoPulse::connectTo(ConnectionInfo *info)
 {
-    MoogObject::connectTo(info);
-    inFrq = inputs[0].data;
-    inAmp = inputs[1].data;
-    inWidth = inputs[2].data;
-    inSync = inputs[3].data;
+	MoogObject::connectTo(info);
+	inFrq = inputs[0].data;
+	inAmp = inputs[1].data;
+	inWidth = inputs[2].data;
+	inSync = inputs[3].data;
 }
 
 void JunoPulse::disconnectTo(ConnectionInfo *info)
 {
-    MoogObject::disconnectTo(info);
-    inFrq = inputs[0].data;
-    inAmp = inputs[1].data;
-    inWidth = inputs[2].data;
-    inSync = inputs[3].data;
+	MoogObject::disconnectTo(info);
+	inFrq = inputs[0].data;
+	inAmp = inputs[1].data;
+	inWidth = inputs[2].data;
+	inSync = inputs[3].data;
 }
 #define ASIMUL 128
 void JunoPulse::horizBoundsChanged()
 {
-    frq = *inFrq;
-	
+	frq = *inFrq;
 
-    if (frq < 0.0)
-        frq *= -1.0;
 
-    if (frq == 0.0)
+	if (frq < 0.0)
+		frq *= -1.0;
+
+	if (frq == 0.0)
 	{
-        schedule->scheduleSampleRate(this, false);
+		schedule->scheduleSampleRate(this, false);
 	}
-    else if (!isSampleScheduled())
-        schedule->scheduleSampleRate(this, true);
+	else if (!isSampleScheduled())
+		schedule->scheduleSampleRate(this, true);
 }
 
 void JunoPulse::sync()
 {
-    pos = 1.0;
-    sign = 1.0;
+	pos = 1.0;
+	sign = 1.0;
 }
 
 void JunoPulse::sampleGo()
 {
-    pos += frq;
-    if (pos >= .45 && sign < 0)
-    {
-        if (lastTrigger == 0)
-        {
-            lastTrigger = 1;
-			
-            syncOutput->setData(1);
-        }
+	pos += frq;
+	if (pos >= .45 && sign < 0)
+	{
+		if (lastTrigger == 0)
+		{
+			lastTrigger = 1;
 
-        else if (syncOutput->data == 1)
-        {
-			
-           syncOutput->setData(0);
-        }
-    }
+			syncOutput->setData(1);
+		}
 
-    if (pos >= 1.0)
-    {
-        lastTrigger = 0;
+		else if (syncOutput->data == 1)
+		{
 
-        // Juno Pulse width dever goes all the way to zero ( or one )
-        pos = pos - 1.0 + (sign * *inWidth * .94);
+			syncOutput->setData(0);
+		}
+	}
 
-        if (sign == 1)
-        {
-            sigOutput->data = sign * *inAmp;
-            power = -.008 * sign * *inAmp;
-        }
+	if (pos >= 1.0)
+	{
+		lastTrigger = 0;
 
-        else
-        {
-            sigOutput->data -= *inAmp;
-            power = .008 * sign * sigOutput->data;
-        }
+		// Juno Pulse width dever goes all the way to zero ( or one )
+		pos = pos - 1.0 + (sign * *inWidth * .94);
 
-        dampening = -power / 320.0;
-        sign = -sign;
-    }
-    sigOutput->setData(sigOutput->data + power);
-    power += dampening;
+		if (sign == 1)
+		{
+			sigOutput->data = sign * *inAmp;
+			power = -.008 * sign * *inAmp;
+		}
 
-    if ((sign < 0 && power > 0) || (sign > 0 && power < 0))
-    {
-        power = sign * -.0004 * *inAmp;
-        dampening = 0;
-    }
+		else
+		{
+			sigOutput->data -= *inAmp;
+			power = .008 * sign * sigOutput->data;
+		}
+
+		dampening = -power / 320.0;
+		sign = -sign;
+	}
+	sigOutput->setData(sigOutput->data + power);
+	power += dampening;
+
+	if ((sign < 0 && power > 0) || (sign > 0 && power < 0))
+	{
+		power = sign * -.0004 * *inAmp;
+		dampening = 0;
+	}
 }

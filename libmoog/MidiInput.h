@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.14 $$Date: 2004/06/21 11:16:34 $
+ * $Revision: 1.15 $$Date: 2004/06/25 10:38:42 $
  */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
@@ -45,9 +45,9 @@ also to think about portamento, glissando, unison, pitch bend, expression
 
 struct midi_voice
 {
-    int note;
-    Output *pitchOutput;
-    Output *gateOutput;
+	int note;
+	Output *pitchOutput;
+	Output *gateOutput;
 };
 
 class MidiInput: public MoogObject
@@ -55,39 +55,39 @@ class MidiInput: public MoogObject
 //    friend void *midi_input_run(void *);
 
 public:
-    int running;
-    int nvoices;
+	int running;
+	int nvoices;
 	bool isUniSono;
-    int lastNote;
-    int holdPressed;
-    struct midi_voice *voices;
-    int *savedGateInfo;
+	int lastNote;
+	int holdPressed;
+	struct midi_voice *voices;
+	int *savedGateInfo;
 
-    Control *control;
+	Control *control;
 
-    inline void *run();
-    inline void allNotesOff();
-    void doNoteOn(unsigned int c, unsigned int n, unsigned int v);
-    void doNoteOff(unsigned int c, unsigned int n, unsigned int v);
-    inline void doPitchBend(unsigned int amount);
-    inline void holdChanged(double data);
+	inline void *run();
+	inline void allNotesOff();
+	void doNoteOn(unsigned int c, unsigned int n, unsigned int v);
+	void doNoteOff(unsigned int c, unsigned int n, unsigned int v);
+	inline void doPitchBend(unsigned int amount);
+	inline void holdChanged(double data);
 	inline void doUniSono(double data);
 
-    MidiInput(Control *jc, int nv, Scheduler *sched);
-    ~MidiInput();
+	MidiInput(Control *jc, int nv, Scheduler *sched);
+	~MidiInput();
 
-    void start();
-    void stop();
-    bool isOpen();
+	void start();
+	void stop();
+	bool isOpen();
 
-    void proc(unsigned char cmd, unsigned char channel, unsigned char *data);
+	void proc(unsigned char cmd, unsigned char channel, unsigned char *data);
 
-    inline virtual const char *getClassName()
-    {
-        return "MidiInput";
-    }
+	inline virtual const char *getClassName()
+	{
+		return "MidiInput";
+	}
 
-    inline Output *getOutput(const char *n);
+	inline Output *getOutput(const char *n);
 };
 
 #endif /* MIDIINPUT_H */

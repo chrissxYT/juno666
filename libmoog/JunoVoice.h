@@ -35,157 +35,158 @@ class Control;
 
 class JunoVoice: public MoogObject
 {
-    friend void JunoVoice_envChanged(MoogObject *, double, long);
-    friend void JunoVoice_lfoChanged(MoogObject *, double, long);
-    friend void JunoVoice_kbdChanged(MoogObject *, double, long);
-    friend void JunoVoice_benderChanged(MoogObject *, double, long);
-    friend void JunoVoice_benderdcoChanged(MoogObject *, double, long);
-    friend void JunoVoice_bendervcfChanged(MoogObject *, double, long);
-    friend void JunoVoice_subSwitchChanged(MoogObject *, double, long);
-    friend void JunoVoice_dcolfoChanged(MoogObject *, double, long);
-    friend void JunoVoice_pwmModeChanged(MoogObject *, double, long);
-    friend void JunoVoice_vcfenvinvertChanged(MoogObject *, double, long);
-    friend void JunoVoice_vcffrqChanged(MoogObject *, double, long);
-    friend void JunoVoice_vcfresChanged(MoogObject *, double, long);
-    friend void JunoVoice_vcfkbdChanged(MoogObject *, double, long);
-    friend void JunoVoice_vcflfoChanged(MoogObject *, double, long);
-    friend void JunoVoice_vcfenvChanged(MoogObject *, double, long);
-    friend void JunoVoice_vcamodeChanged(MoogObject *, double, long);
+	friend void JunoVoice_envChanged(MoogObject *, double, long);
+	friend void JunoVoice_lfoChanged(MoogObject *, double, long);
+	friend void JunoVoice_kbdChanged(MoogObject *, double, long);
+	friend void JunoVoice_benderChanged(MoogObject *, double, long);
+	friend void JunoVoice_benderdcoChanged(MoogObject *, double, long);
+	friend void JunoVoice_bendervcfChanged(MoogObject *, double, long);
+	friend void JunoVoice_subSwitchChanged(MoogObject *, double, long);
+	friend void JunoVoice_dcolfoChanged(MoogObject *, double, long);
+	friend void JunoVoice_pwmModeChanged(MoogObject *, double, long);
+	friend void JunoVoice_vcfenvinvertChanged(MoogObject *, double, long);
+	friend void JunoVoice_vcffrqChanged(MoogObject *, double, long);
+	friend void JunoVoice_vcfresChanged(MoogObject *, double, long);
+	friend void JunoVoice_vcfkbdChanged(MoogObject *, double, long);
+	friend void JunoVoice_vcflfoChanged(MoogObject *, double, long);
+	friend void JunoVoice_vcfenvChanged(MoogObject *, double, long);
+	friend void JunoVoice_vcamodeChanged(MoogObject *, double, long);
 
-    Control *jc;
-    int voiceNum;
-    int init;
+	Control *jc;
+	int voiceNum;
+	int init;
 
-    /* basic elements */
-    //PulseWave pulse;
-    //SawWave saw;
-    JunoPulse pulse;
-    JunoSaw saw;
-	
+	/* basic elements */
+	//PulseWave pulse;
+	//SawWave saw;
+	JunoPulse pulse;
+	JunoSaw saw;
+
 public:
-    //PulseWave sub;
-    JunoPulse sub;
+	//PulseWave sub;
+	JunoPulse sub;
 private:
-    ResonantLowPass vcf;
-    ADSR adsr;
-    ADSR gateAdsr;
+	ResonantLowPass vcf;
+	ADSR adsr;
+	ADSR gateAdsr;
 
-    Balance balance;
+	Balance balance;
 
-    /* keep track of certain connections so they can be disconnected */
-    ConnectionInfo *subOscConnection;
-    ConnectionInfo *pwmAttConnection;
+	/* keep track of certain connections so they can be disconnected */
+	ConnectionInfo *subOscConnection;
+	ConnectionInfo *pwmAttConnection;
 
-    /* additional internals */
-    Attenuator voiceVol;
-    Mixer subMix;
-    Attenuator pwmAttenuator;
+	/* additional internals */
+	Attenuator voiceVol;
+	Mixer subMix;
+	Attenuator pwmAttenuator;
 
-    /* externals */
-    Rand       *noise;
-    JunoLfo    *junolfo;
-    Attenuator *pwmLfo;
+	/* externals */
+	Rand *noise;
+	JunoLfo *junolfo;
+	Attenuator *pwmLfo;
 
-    /* vcf calculation variables */
-    double env;
-    double lfo;
-    double kbd;
+	/* vcf calculation variables */
+	double env;
+	double lfo;
+	double kbd;
 	double newkbd;
-    double bender;
-    double benderdco;
-    double bendervcf;
-    double dcolfo;
-    double vcffrq;
-    double vcfenvinvert;
-    double vcfenv;
-    double vcflfo;
-    double vcfkbd;
+	double bender;
+	double benderdco;
+	double bendervcf;
+	double dcolfo;
+	double vcffrq;
+	double vcfenvinvert;
+	double vcfenv;
+	double vcflfo;
+	double vcfkbd;
 
-    int vcamode;
+	int vcamode;
 
-    void envChanged(double);
-    void lfoChanged(double);
-    void kbdChanged(double);
-    void benderChanged(double);
-    void benderdcoChanged(double);
-    void bendervcfChanged(double);
-    void subSwitchChanged(double);
-    void dcolfoChanged(double);
-    void pwmModeChanged(double);
-    void vcffrqChanged(double);
-    void vcfresChanged(double);
-    void vcfenvinvertChanged(double);
-    void vcfenvChanged(double);
-    void vcflfoChanged(double);
-    void vcfkbdChanged(double);
-    void vcamodeChanged(double);
+	void envChanged(double);
+	void lfoChanged(double);
+	void kbdChanged(double);
+	void benderChanged(double);
+	void benderdcoChanged(double);
+	void bendervcfChanged(double);
+	void subSwitchChanged(double);
+	void dcolfoChanged(double);
+	void pwmModeChanged(double);
+	void vcffrqChanged(double);
+	void vcfresChanged(double);
+	void vcfenvinvertChanged(double);
+	void vcfenvChanged(double);
+	void vcflfoChanged(double);
+	void vcfkbdChanged(double);
+	void vcamodeChanged(double);
 
-    void updateVcf();
-    void updateFrq();
+	void updateVcf();
+	void updateFrq();
 
 public:
-    JunoVoice(Control *, int, Rand *_noise, JunoLfo *_lfo, Attenuator *_pwmLfo, Scheduler *sched, ConnectionManager *conn);
-	
-    ~JunoVoice();
+	JunoVoice(Control *, int, Rand *_noise, JunoLfo *_lfo, Attenuator *_pwmLfo, Scheduler *sched, ConnectionManager *conn);
 
-    void attachVoice(MoogObject *);
+	~JunoVoice();
 
-    int isPlaying()
-    {
-        int playing;
+	void attachVoice(MoogObject *);
 
-        if (vcamode==1) 
-            playing = gateAdsr.isPlaying(); 
-        else 
-            playing = adsr.isPlaying();         
+	int isPlaying()
+	{
+		int playing;
 
-        if(playing)
-        {
-            pwmAttenuator.on();
-			
-			
-			pulse.on();
-			
-			saw.on();
-			
-			
-				sub.on();
-            subMix.on();
+		if (vcamode == 1)
+			playing = gateAdsr.isPlaying();
+		else
+			playing = adsr.isPlaying();
 
-            vcf.on();
-            balance.on();
-			
-				 gateAdsr.on();
-			
-				adsr.on();
-           
-
-            voiceVol.on();
-
-            
-        }else
+		if (playing)
 		{
-        pwmAttenuator.off();
-        pulse.off();
-        saw.off();
-        sub.off();
-        subMix.off();
+			pwmAttenuator.on();
 
-        vcf.off();
-        balance.off();
 
-        adsr.off();
-        gateAdsr.off();
+			pulse.on();
 
-        voiceVol.off();
+			saw.on();
+
+
+			sub.on();
+			subMix.on();
+
+			vcf.on();
+			balance.on();
+
+			gateAdsr.on();
+
+			adsr.on();
+
+
+			voiceVol.on();
+
+
 		}
-		return playing>0?true:false;
-    }
+		else
+		{
+			pwmAttenuator.off();
+			pulse.off();
+			saw.off();
+			sub.off();
+			subMix.off();
 
-    const char *getClassName()
-    {
-        return "JunoVoice";
-    }
+			vcf.off();
+			balance.off();
+
+			adsr.off();
+			gateAdsr.off();
+
+			voiceVol.off();
+		}
+		return playing > 0 ? true : false;
+	}
+
+	const char *getClassName()
+	{
+		return "JunoVoice";
+	}
 };
 
 #endif /* _JUNO_JUNO_VOICE_H */

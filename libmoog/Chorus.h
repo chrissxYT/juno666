@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/17 13:46:21 $
+ * $Revision: 1.5 $$Date: 2004/06/25 10:38:42 $
  */
 #ifndef CHORUS_H
 #define CHORUS_H
@@ -30,22 +30,22 @@ class Oscillator;
 class Chorus: public MoogObject
 {
 private:
-    Delay *dly;
-    Oscillator *osc;
-    double dtime;
-    double mod;
+	Delay *dly;
+	Oscillator *osc;
+	double dtime;
+	double mod;
 
 public:
-    Chorus(Scheduler *sched, ConnectionManager *conn);
-    ~Chorus();
+	Chorus(Scheduler *sched, ConnectionManager *conn);
+	~Chorus();
 
-    void connectTo(ConnectionInfo *info);
-    void disconnectTo(ConnectionInfo *info);
+	void connectTo(ConnectionInfo *info);
+	void disconnectTo(ConnectionInfo *info);
 
-    const char *getClassName()
-    {
-        return ("Chorus");
-    }
+	const char *getClassName()
+	{
+		return ("Chorus");
+	}
 };
 
 #endif /* CHORUS_H */

@@ -27,80 +27,83 @@
 #define SECTIONS 2
 struct BiQuad
 {
-    double a0, a1, a2;
-    double b0, b1, b2;
+	double a0, a1, a2;
+	double b0, b1, b2;
 };
 #endif
 
 
 class ResonantLowPass: public MoogObject
 {
-    friend void ResonantLowPass_gainChanged(MoogObject *, double, long);
-    friend void ResonantLowPass_cutoffChanged(MoogObject *, double, long);
-    friend void ResonantLowPass_resonanceChanged(MoogObject *, double, long);
 #ifndef MOOGVCF
-    double *hist;
-    double *coef;
-#endif
+	friend void ResonantLowPass_gainChanged(MoogObject *, double, long);
+	friend void ResonantLowPass_cutoffChanged(MoogObject *, double, long);
+	friend void ResonantLowPass_resonanceChanged(MoogObject *, double, long);
+
+	double *hist;
+	double *coef;
+
 	bool changed;
-	
+
+
 
 	//copied from filterprototype
-#ifndef MOOGVCF
-    BiQuad *pcoef;
+	BiQuad *pcoef;
 	void setSectionCoef(int, double, double, double, double, double, double);
 #endif
 
-    //FilterPrototype *proto;
+	//FilterPrototype *proto;
 
 #ifdef MOOGVCF
-double out1;
-double in1;
-double out2; 
-double in2;  
-double out3; 
-double in3;  
-double out4; 
-double in4;  
+	double out1;
+	double in1;
+	double out2;
+	double in2;
+	double out3;
+	double in3;
+	double out4;
+	double in4;
 #endif
-	
-	
+
+
 	double gain;
-    double resonance;
-    double cutoff;
+	double resonance;
+	double cutoff;
 
-    Output *output;
-    double *inSig;
-  //  double *inGain;
-   // double *inCutoff;
-   // double *inResonance;
+	Output *output;
+	double *inSig;
+	double *inGain;
+	double *inCutoff;
+	double *inResonance;
 
-    double fixedGain;
+	double fixedGain;
+	void init();
+#ifndef MOOGVCF
 
-    void init();
 
-    void gainChanged(double);
-    void cutoffChanged(double);
-    void resonanceChanged(double);
+	void gainChanged(double);
+	void cutoffChanged(double);
+	void resonanceChanged(double);
+#endif
 
 public:
 
-    ResonantLowPass(Scheduler *sched);
-    ~ResonantLowPass();
+	ResonantLowPass(Scheduler *sched);
+	~ResonantLowPass();
 
-    void connectTo(ConnectionInfo *info);
-    void disconnectTo(ConnectionInfo *info);
+	void connectTo(ConnectionInfo *info);
+	void disconnectTo(ConnectionInfo *info);
 #ifndef MOOGVCF
-    void recalcFilter();
+	void recalcFilter();
 #endif
-    void sampleGo();
+	void sampleGo();
 
-    void sync();
+	void sync();
 
-    const char *getClassName()
-    {
-        return "ResonantLowPass";
-    }
+	const char *getClassName()
+	{
+		return "ResonantLowPass";
+	}
 };
 
 

@@ -48,7 +48,7 @@ void IIR2::disconnectTo(ConnectionInfo *info)
 void IIR2::sampleGo()
 {
 	double out = gain * *in;
-	out = out + cx[0] * x[0] + cx[1] * x[1] - cy[0] * y[0] - cy[1] * y[1] ;//+ denormal_fix;
+	out = out + cx[0] * x[0] + cx[1] * x[1] - cy[0] * y[0] - cy[1] * y[1]; //+ denormal_fix;
 
 	x[1] = x[0];
 	x[0] = *in;

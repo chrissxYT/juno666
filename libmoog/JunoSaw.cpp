@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.9 $$Date: 2004/06/09 15:35:34 $
+ * $Revision: 1.10 $$Date: 2004/06/25 10:38:42 $
  */
 #include <math.h>
 #include "JunoSaw.h"
@@ -75,7 +75,7 @@ void JunoSaw::disconnectTo(ConnectionInfo *info)
 void JunoSaw::frqChanged()
 {
 	newFrq = *inFrq / 2;
-	
+
 
 	//newFrq = *inFrq / 2;
 
@@ -102,7 +102,7 @@ void JunoSaw::sync()
 
 void JunoSaw::sampleGo()
 {
-	
+
 	pos += frq;
 
 	if (pos >= 1.0)

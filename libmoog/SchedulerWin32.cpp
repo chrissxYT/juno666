@@ -36,226 +36,226 @@ typedef HANDLE pthread_mutex_t;
 
 typedef struct
 {
-    int waiters_count_;
-    // Number of waiting threads.
+	int waiters_count_;
+	// Number of waiting threads.
 
-    CRITICAL_SECTION waiters_count_lock_;
-    // Serialize access to <waiters_count_>.
+	CRITICAL_SECTION waiters_count_lock_;
+	// Serialize access to <waiters_count_>.
 
-    HANDLE sema_;
-    // Semaphore used to queue up threads waiting for the condition to
-    // become signaled.
+	HANDLE sema_;
+	// Semaphore used to queue up threads waiting for the condition to
+	// become signaled.
 
-    HANDLE waiters_done_;
-    // An auto-reset event used by the broadcast/signal thread to wait
-    // for all the waiting thread(s) to wake up and be released from the
-    // semaphore.
+	HANDLE waiters_done_;
+	// An auto-reset event used by the broadcast/signal thread to wait
+	// for all the waiting thread(s) to wake up and be released from the
+	// semaphore.
 
-    size_t was_broadcast_;
-    // Keeps track of whether we were broadcasting or signaling.  This
-    // allows us to optimize the code if we're just signaling.
+	size_t was_broadcast_;
+	// Keeps track of whether we were broadcasting or signaling.  This
+	// allows us to optimize the code if we're just signaling.
 } pthread_cond_t;
 
 int
 pthread_cond_init(pthread_cond_t *cv)
 {
-    cv->waiters_count_ = 0;
-    cv->was_broadcast_ = 0;
-    cv->sema_ = CreateSemaphore(NULL, // no security
-        0, // initially 0
-        0x7fffffff, // max count
-        NULL); // unnamed
-    InitializeCriticalSection(&cv->waiters_count_lock_);
-    cv->waiters_done_ = CreateEvent(NULL, // no security
-        FALSE, // auto-reset
-        FALSE, // non-signaled initially
-        NULL); // unnamed
-    return 0;
+	cv->waiters_count_ = 0;
+	cv->was_broadcast_ = 0;
+	cv->sema_ = CreateSemaphore(NULL, // no security
+		0, // initially 0
+		0x7fffffff, // max count
+		NULL); // unnamed
+	InitializeCriticalSection(&cv->waiters_count_lock_);
+	cv->waiters_done_ = CreateEvent(NULL, // no security
+		FALSE, // auto-reset
+		FALSE, // non-signaled initially
+		NULL); // unnamed
+	return 0;
 }
 
 int
 pthread_cond_wait(pthread_cond_t *cv, HANDLE *external_mutex)
 {
-    // Avoid race conditions.
-    EnterCriticalSection(&cv->waiters_count_lock_);
-    cv->waiters_count_++;
-    LeaveCriticalSection(&cv->waiters_count_lock_);
+	// Avoid race conditions.
+	EnterCriticalSection(&cv->waiters_count_lock_);
+	cv->waiters_count_++;
+	LeaveCriticalSection(&cv->waiters_count_lock_);
 
-    // This call atomically releases the mutex and waits on the
-    // semaphore until <pthread_cond_signal> or <pthread_cond_broadcast>
-    // are called by another thread.
-    SignalObjectAndWait(*external_mutex, cv->sema_, INFINITE, FALSE);
+	// This call atomically releases the mutex and waits on the
+	// semaphore until <pthread_cond_signal> or <pthread_cond_broadcast>
+	// are called by another thread.
+	SignalObjectAndWait(*external_mutex, cv->sema_, INFINITE, FALSE);
 
-    // Reacquire lock to avoid race conditions.
-    EnterCriticalSection(&cv->waiters_count_lock_);
+	// Reacquire lock to avoid race conditions.
+	EnterCriticalSection(&cv->waiters_count_lock_);
 
-    // We're no longer waiting...
-    cv->waiters_count_--;
+	// We're no longer waiting...
+	cv->waiters_count_--;
 
-    // Check to see if we're the last waiter after <pthread_cond_broadcast>.
-    int last_waiter = cv->was_broadcast_ && cv->waiters_count_ == 0;
+	// Check to see if we're the last waiter after <pthread_cond_broadcast>.
+	int last_waiter = cv->was_broadcast_ && cv->waiters_count_ == 0;
 
-    LeaveCriticalSection(&cv->waiters_count_lock_);
+	LeaveCriticalSection(&cv->waiters_count_lock_);
 
-    // If we're the last waiter thread during this particular broadcast
-    // then let all the other threads proceed.
-    if (last_waiter)
-        // This call atomically signals the <waiters_done_> event and waits until
-        // it can acquire the <external_mutex>.  This is required to ensure fairness.
-        SignalObjectAndWait(cv->waiters_done_, *external_mutex, INFINITE, FALSE);
-    else
-        // Always regain the external mutex since that's the guarantee we
-        // give to our callers.
-        WaitForSingleObject(*external_mutex, INFINITE);
-    return 0;
+	// If we're the last waiter thread during this particular broadcast
+	// then let all the other threads proceed.
+	if (last_waiter)
+		// This call atomically signals the <waiters_done_> event and waits until
+		// it can acquire the <external_mutex>.  This is required to ensure fairness.
+		SignalObjectAndWait(cv->waiters_done_, *external_mutex, INFINITE, FALSE);
+	else
+		// Always regain the external mutex since that's the guarantee we
+		// give to our callers.
+		WaitForSingleObject(*external_mutex, INFINITE);
+	return 0;
 }
 
 int
 pthread_cond_signal(pthread_cond_t *cv)
 {
-    EnterCriticalSection(&cv->waiters_count_lock_);
-    int have_waiters = cv->waiters_count_ > 0;
-    LeaveCriticalSection(&cv->waiters_count_lock_);
+	EnterCriticalSection(&cv->waiters_count_lock_);
+	int have_waiters = cv->waiters_count_ > 0;
+	LeaveCriticalSection(&cv->waiters_count_lock_);
 
-    // If there aren't any waiters, then this is a no-op.
-    if (have_waiters)
-        ReleaseSemaphore(cv->sema_, 1, 0);
-    return 0;
+	// If there aren't any waiters, then this is a no-op.
+	if (have_waiters)
+		ReleaseSemaphore(cv->sema_, 1, 0);
+	return 0;
 }
 
 static pthread_cond_t listOpCompleteCond;
 
 Scheduler::Scheduler()
 {
-    dsp = NULL;
+	dsp = NULL;
 
-    suspended = 0;
-    nextGoHandle = 0;
-    controlRate = 0;
-    sampleRate = 0;
-    sampleControlRatio = DEFAULT_SAMPLE_CONTROL_RATIO;
-    nyquistFreq = 44100 / 2;
-    controlRateList.prev = &controlRateList;
-    controlRateList.next = &controlRateList;
-    sampleRateList.prev = &sampleRateList;
-    sampleRateList.next = &sampleRateList;
+	suspended = 0;
+	nextGoHandle = 0;
+	controlRate = 0;
+	sampleRate = 0;
+	sampleControlRatio = DEFAULT_SAMPLE_CONTROL_RATIO;
+	nyquistFreq = 44100 / 2;
+	controlRateList.prev = &controlRateList;
+	controlRateList.next = &controlRateList;
+	sampleRateList.prev = &sampleRateList;
+	sampleRateList.next = &sampleRateList;
 
-    pthread_cond_init(&listOpCompleteCond);
-    InitializeCriticalSection(&beginListOpMutex);
+	pthread_cond_init(&listOpCompleteCond);
+	InitializeCriticalSection(&beginListOpMutex);
 }
 
 Scheduler::~Scheduler()
 {
-    stop();
+	stop();
 
-    DeleteCriticalSection(&beginListOpMutex);
+	DeleteCriticalSection(&beginListOpMutex);
 }
 
 void Scheduler::setSampleRate(int actual)
 {
-    sampleRate = actual;
-    controlRate = sampleRate / sampleControlRatio;
-    nyquistFreq = sampleRate / 2;
+	sampleRate = actual;
+	controlRate = sampleRate / sampleControlRatio;
+	nyquistFreq = sampleRate / 2;
 }
 
 void Scheduler::setSampleControlRatio(int r)
 {
-    sampleControlRatio = r;
+	sampleControlRatio = r;
 
-    /* force some recalculation done in setSampleRate */
-    setSampleRate(sampleRate);
+	/* force some recalculation done in setSampleRate */
+	setSampleRate(sampleRate);
 }
 
 void Scheduler::safeListOp(list_head *node, list_head *list, bool add)
 {
-    needListSync++;
-    EnterCriticalSection(&beginListOpMutex);
-    /* since the synth thread runs with the beginListOpMutex locked,
-     * getting here means that that thread is now waiting on the condition
-     * variable, so we are safe to proceed, or this IS the synth thread
-     * since the mutex is a recursive lock
-     */
+	needListSync++;
+	EnterCriticalSection(&beginListOpMutex);
+	/* since the synth thread runs with the beginListOpMutex locked,
+	 * getting here means that that thread is now waiting on the condition
+	 * variable, so we are safe to proceed, or this IS the synth thread
+	 * since the mutex is a recursive lock
+	 */
 
-    if (add)
-    {
-        if (node->next != NULL)
-        {
-            debug(DEBUG_APPERROR, "Warn: obj already on scheduling list");
-            goto out;
-        }
+	if (add)
+	{
+		if (node->next != NULL)
+		{
+			debug(DEBUG_APPERROR, "Warn: obj already on scheduling list");
+			goto out;
+		}
 
-        //debug( DEBUG_STATUS, "Adding %s to scheduling list",
-        //      ((MoogObject*)list_entry(node, GoObject, sampleListNode ))->getClassName() );
+		//debug( DEBUG_STATUS, "Adding %s to scheduling list",
+		//      ((MoogObject*)list_entry(node, GoObject, sampleListNode ))->getClassName() );
 
-        list_add(node, list);
-    }
-    else
-    {
-        if (node->next == NULL)
-        {
-            debug(DEBUG_APPERROR, "Warn: obj not on scheduling list");
-            goto out;
-        }
+		list_add(node, list);
+	}
+	else
+	{
+		if (node->next == NULL)
+		{
+			debug(DEBUG_APPERROR, "Warn: obj not on scheduling list");
+			goto out;
+		}
 
-        /*
-         * This is a bit of hack for the case where an object removes
-         * itself from the list during the tick() walk of the linked
-         * list.  If we clear the list_head that is the current iterator
-         * in tick() then segfault we go.  So we shift the iter previous
-         * here, then it jumps passed where we were in the next advance.
-         */
-        if (node == currentListIter)
-        {
-            currentListIter = currentListIter->prev;
-        }
+		/*
+		 * This is a bit of hack for the case where an object removes
+		 * itself from the list during the tick() walk of the linked
+		 * list.  If we clear the list_head that is the current iterator
+		 * in tick() then segfault we go.  So we shift the iter previous
+		 * here, then it jumps passed where we were in the next advance.
+		 */
+		if (node == currentListIter)
+		{
+			currentListIter = currentListIter->prev;
+		}
 
-        list_del(node);
-        CLEAR_LIST_NODE(node);
-    }
+		list_del(node);
+		CLEAR_LIST_NODE(node);
+	}
 
 out:
-    needListSync--;
-    pthread_cond_signal(&listOpCompleteCond);
+	needListSync--;
+	pthread_cond_signal(&listOpCompleteCond);
 
-    LeaveCriticalSection(&beginListOpMutex);
+	LeaveCriticalSection(&beginListOpMutex);
 
 
 }
 
 void Scheduler::scheduleControlRate(GoObject *obj, bool schedule)
 {
-    if (schedule != obj->isControlScheduled())
-        safeListOp(&obj->controlListNode, &controlRateList, schedule);
+	if (schedule != obj->isControlScheduled())
+		safeListOp(&obj->controlListNode, &controlRateList, schedule);
 }
 
 void Scheduler::scheduleSampleRate(GoObject *obj, bool schedule)
 {
-    if (schedule != obj->isSampleScheduled())
-        safeListOp(&obj->sampleListNode, &sampleRateList, schedule);
+	if (schedule != obj->isSampleScheduled())
+		safeListOp(&obj->sampleListNode, &sampleRateList, schedule);
 }
 
 int running = 0;
 static Scheduler *sched;
 void Scheduler::start(DSPOutput *_dsp)
 {
-    dsp = _dsp;
+	dsp = _dsp;
 
-    if (dsp && dsp->isOpen())
-        dsp->setDataWrittenCallback(dataWrittenCallback);
-    else
-        dsp = NULL;
-    running = 1;
+	if (dsp && dsp->isOpen())
+		dsp->setDataWrittenCallback(dataWrittenCallback);
+	else
+		dsp = NULL;
+	running = 1;
 
 
 	sched = this;
-    //tickThread = CreateThread(NULL, 0, runSynth, NULL, 0, &ThreadID);
+	//tickThread = CreateThread(NULL, 0, runSynth, NULL, 0, &ThreadID);
 
 //    pthread_create(&tickThread, NULL, (DWORD *()(void*)&runSynth, NULL);
 }
 
 void Scheduler::stop()
 {
-    running = 0;
+	running = 0;
 //    pthread_cancel(tickThread);
 //    pthread_join(tickThread, NULL);
 }
@@ -280,62 +280,62 @@ void Scheduler::resume()
 
 DWORD CALLBACK runSynth(void *)
 {
-   // sched->run();
-    /* not reached */
-    return 0;
+	// sched->run();
+	/* not reached */
+	return 0;
 }
 
 void Scheduler::run(int frames)
 {
-    int controlCount = 0;
-    GoObject *obj;
+	int controlCount = 0;
+	GoObject *obj;
 
 //EnterCriticalSection(&beginListOpMutex);
-    while (running)
-    {
+	while (running)
+	{
 
 
-        if (controlCount == 0)
-        {
-            currentListIter = controlRateList.next;
+		if (controlCount == 0)
+		{
+			currentListIter = controlRateList.next;
 
-            while (currentListIter != &controlRateList)
-            {
-                if (!currentListIter)
-                {
-                    break;
-                }
+			while (currentListIter != &controlRateList)
+			{
+				if (!currentListIter)
+				{
+					break;
+				}
 
-                obj = list_entry(currentListIter, GoObject, GoObject::controlListNode);
-                obj->controlGo();
-                currentListIter = currentListIter->next;
-            }
+				obj = list_entry(currentListIter, GoObject, GoObject::controlListNode);
+				obj->controlGo();
+				currentListIter = currentListIter->next;
+			}
 
-            controlCount = sampleControlRatio;
-        }
+			controlCount = sampleControlRatio;
+		}
 
-        controlCount--;
+		controlCount--;
 
-        currentListIter = sampleRateList.next;
+		currentListIter = sampleRateList.next;
 
-        while (currentListIter != &sampleRateList)
-        {
-            if (!currentListIter)
-            {
-                break;
-            }
+		while (currentListIter != &sampleRateList)
+		{
+			if (!currentListIter)
+			{
+				break;
+			}
 
-            obj = list_entry(currentListIter, GoObject, sampleListNode);
-            obj->sampleGo();
-            currentListIter = currentListIter->next;
-        }
+			obj = list_entry(currentListIter, GoObject, sampleListNode);
+			obj->sampleGo();
+			currentListIter = currentListIter->next;
+		}
 
-        /* this is so we can run even without a DSPOutput object */
-        if (!dsp && needListSync > 0)
-        {
-            pthread_cond_wait(&listOpCompleteCond, (HANDLE *)&beginListOpMutex);
-        }
-    }
+		/* this is so we can run even without a DSPOutput object */
+		if (!dsp && needListSync > 0)
+		{
+			pthread_cond_wait(&listOpCompleteCond, (HANDLE *)&beginListOpMutex);
+		}
+	}
 }
 
 /* NOTE: the dataWrittenCallback will be called from the runSynth thread
@@ -348,10 +348,10 @@ void Scheduler::run(int frames)
 
 void dataWrittenCallback()
 {
-    if (needListSync > 0)
-    {
-        pthread_cond_wait(&listOpCompleteCond, (HANDLE *)&beginListOpMutex);
-    }
+	if (needListSync > 0)
+	{
+		pthread_cond_wait(&listOpCompleteCond, (HANDLE *)&beginListOpMutex);
+	}
 }
 
 
@@ -367,5 +367,5 @@ int set_realtime_priority()
     if (sched_setparam(0,&schp) != 0)
     return -1;
 */
-    return 0;
+	return 0;
 }

@@ -21,124 +21,124 @@
 
 #include "DSPOutput.h"
 
-/* $Id: DSPOutput.cpp,v 1.5 2004/04/17 13:46:21 strepto Exp $ */
+/* $Id: DSPOutput.cpp,v 1.6 2004/06/25 10:38:42 brainslayer Exp $ */
 
 void setPanningValues(MoogObject *o, double data, long)
 {
-    ((DSPOutput *)o)->setPanning(data);
+	((DSPOutput *)o)->setPanning(data);
 }
 
 
 DSPOutput::DSPOutput(JunoControl *jc, Scheduler *sched, ConnectionManager *conn, DSPDevice *_dsp):
 MoogObject(sched, conn),
-dsp(_dsp)
+	dsp(_dsp)
 {
-    myDsp = 0;
-    addInput("panning", setPanningValues, 0, 1);
-    setup();
-    PATCH(jc, "panning", this, "panning");
-    setPanningValues(this, 0.5, 0);
+	myDsp = 0;
+	addInput("panning", setPanningValues, 0, 1);
+	setup();
+	PATCH(jc, "panning", this, "panning");
+	setPanningValues(this, 0.5, 0);
 }
 
 
 DSPOutput::DSPOutput(JunoControl *jc, Scheduler *sched, ConnectionManager *conn,
-    const char *device, int rate, int channels, int numFrags, int fragSize):
+	const char *device, int rate, int channels, int numFrags, int fragSize):
 MoogObject(sched, conn),
-scheduler(sched)
+	scheduler(sched)
 {
-    dsp = new DSPDevice(device, DSP_WRITE, rate, channels, numFrags, fragSize);
-    myDsp = 1;
-    addInput("panning", setPanningValues, 0, 1);
-    setup();
-    PATCH(jc, "panning", this, "panning");
-    setPanningValues(this, 0.5, 0);
+	dsp = new DSPDevice(device, DSP_WRITE, rate, channels, numFrags, fragSize);
+	myDsp = 1;
+	addInput("panning", setPanningValues, 0, 1);
+	setup();
+	PATCH(jc, "panning", this, "panning");
+	setPanningValues(this, 0.5, 0);
 }
 
 void DSPOutput::setup()
 {
-    char tmpname[16];
+	char tmpname[16];
 
-    inSig = new double *[dsp->channels];
-    inAmp = new double *[dsp->channels];
+	inSig = new double *[dsp->channels];
+	inAmp = new double *[dsp->channels];
 
-    for (int i = 0;i < dsp->channels;i++)
-    {
-        sprintf(tmpname, "sig%d", i);
-        inSig[i] = addInput(tmpname)->data;
-        sprintf(tmpname, "amp%d", i);
-        inAmp[i] = addInput(tmpname)->data;
-    }
+	for (int i = 0;i < dsp->channels;i++)
+	{
+		sprintf(tmpname, "sig%d", i);
+		inSig[i] = addInput(tmpname)->data;
+		sprintf(tmpname, "amp%d", i);
+		inAmp[i] = addInput(tmpname)->data;
+	}
 
-    dataWrittenCallback = NULL;
+	dataWrittenCallback = NULL;
 
-    scheduler->setSampleRate(dsp->getSampleRate());
+	scheduler->setSampleRate(dsp->getSampleRate());
 
-    if (dsp->isOpen())
-        scheduler->scheduleSampleRate(this, true);
+	if (dsp->isOpen())
+		scheduler->scheduleSampleRate(this, true);
 }
 
 DSPOutput::~DSPOutput()
 {
-    if (myDsp)
-        delete dsp;
+	if (myDsp)
+		delete dsp;
 
-    delete[]inSig;
-    delete[]inAmp;
+	delete[]inSig;
+	delete[]inAmp;
 }
 
 void DSPOutput::connectTo(ConnectionInfo *info)
 {
-    MoogObject::connectTo(info);
+	MoogObject::connectTo(info);
 
-    for (int i = 0;i < dsp->channels;i++)
-    {
-        inSig[i] = inputs[2 * i+1].data;
-        inAmp[i] = inputs[2 * i+2].data;
-    }
+	for (int i = 0;i < dsp->channels;i++)
+	{
+		inSig[i] = inputs[2 * i+1].data;
+		inAmp[i] = inputs[2 * i+2].data;
+	}
 }
 
 void DSPOutput::disconnectTo(ConnectionInfo *info)
 {
-    MoogObject::disconnectTo(info);
+	MoogObject::disconnectTo(info);
 
-    for (int i = 0;i < dsp->channels;i++)
-    {
-        inSig[i] = inputs[2 * i+1].data;
-        inAmp[i] = inputs[2 * i+2].data;
-    }
+	for (int i = 0;i < dsp->channels;i++)
+	{
+		inSig[i] = inputs[2 * i+1].data;
+		inAmp[i] = inputs[2 * i+2].data;
+	}
 }
 
 
 void DSPOutput::setPanning(double data)
 {
-    if (data < 0)
-        return;
-    if (data > 1)
-        return;
-    panright = sqrt(data);
-    panleft = sqrt(1 - data);
+	if (data < 0)
+		return;
+	if (data > 1)
+		return;
+	panright = sqrt(data);
+	panleft = sqrt(1 - data);
 }
 
 void DSPOutput::sampleGo()
 {
-    int moved;
-    if (dsp->channels == 1)
-    {
-        *dsp->writeDataPtr++ = (int)((*inSig[0] * *inAmp[0]) * 32768);
-    }
-    else
-    {
-        *dsp->writeDataPtr++ = (int)((*inSig[0] * *inAmp[0] * panright) * 32768);
-        *dsp->writeDataPtr++ = (int)((*inSig[1] * *inAmp[1] * panleft) * 32768);
-    }
+	int moved;
+	if (dsp->channels == 1)
+	{
+		*dsp->writeDataPtr++ = (int)((*inSig[0] * *inAmp[0]) * 32768);
+	}
+	else
+	{
+		*dsp->writeDataPtr++ = (int)((*inSig[0] * *inAmp[0] * panright) * 32768);
+		*dsp->writeDataPtr++ = (int)((*inSig[1] * *inAmp[1] * panleft) * 32768);
+	}
 
-    moved = dsp->checkFlushBuffers();
+	moved = dsp->checkFlushBuffers();
 
-    if ((moved & DSP_WRITE) && dataWrittenCallback)
-        dataWrittenCallback();
+	if ((moved & DSP_WRITE) && dataWrittenCallback)
+		dataWrittenCallback();
 }
 
 void DSPOutput::setDataWrittenCallback(void (*dwcb)(void))
 {
-    dataWrittenCallback = dwcb;
+	dataWrittenCallback = dwcb;
 }

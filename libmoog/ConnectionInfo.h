@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/03/31 12:01:18 $
+ * $Revision: 1.4 $$Date: 2004/06/25 10:38:42 $
  */
 #ifndef _CONNECTIONINFO_H
 #define _CONNECTIONINFO_H
@@ -46,7 +46,7 @@ public:
 	to(t),
 	input(i)
 {
-print();
+//print();
 }
 
 int operator ==(const ConnectionInfo &other)

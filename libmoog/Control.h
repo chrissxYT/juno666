@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/06/21 15:03:36 $
+ * $Revision: 1.2 $$Date: 2004/06/25 10:38:42 $
  */
 #ifndef CONTROL_H
 #define CONTROL_H
@@ -34,6 +34,12 @@
 class Control: public MoogObject
 {
 public:
+	friend void controlmap(MoogObject *, double, long);
+	friend void learn(MoogObject *, double, long);
+	bool learning;
+	void controlMapping(double, long);
+	void midilearn(double, long);
+
 	Control(Scheduler *sched);
 	const char *getClassName()
 	{

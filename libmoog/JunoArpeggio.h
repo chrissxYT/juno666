@@ -28,75 +28,75 @@
 #endif
 enum
 {
-    JUNO_ARPEGGIO_MODE_UP,
-    JUNO_ARPEGGIO_MODE_DOWN,
-    JUNO_ARPEGGIO_MODE_UP_DOWN
+	JUNO_ARPEGGIO_MODE_UP,
+	JUNO_ARPEGGIO_MODE_DOWN,
+	JUNO_ARPEGGIO_MODE_UP_DOWN
 };
 
 struct juno_arpeggio_note
 {
-    int deleted;
-    int voice;
-    struct list_head node;
+	int deleted;
+	int voice;
+	struct list_head node;
 };
 
 class Control;
 
 class JunoArpeggio: public MoogObject
 {
-    //friend void JunoArpeggio_Changed(MoogObject *, double, long);
-    friend void JunoArpeggio_gateChanged(MoogObject *, double, long);
-    friend void JunoArpeggio_onoffChanged(MoogObject *, double, long);
-    friend void JunoArpeggio_modeChanged(MoogObject *, double, long);
-    friend void JunoArpeggio_rangeChanged(MoogObject *, double, long);
-    friend void JunoArpeggio_rateChanged(MoogObject *, double, long);
+	//friend void JunoArpeggio_Changed(MoogObject *, double, long);
+	friend void JunoArpeggio_gateChanged(MoogObject *, double, long);
+	friend void JunoArpeggio_onoffChanged(MoogObject *, double, long);
+	friend void JunoArpeggio_modeChanged(MoogObject *, double, long);
+	friend void JunoArpeggio_rangeChanged(MoogObject *, double, long);
+	friend void JunoArpeggio_rateChanged(MoogObject *, double, long);
 
-    //void Changed(double);
-    void gateChanged(int, double);
-    void onoffChanged(double);
-    void modeChanged(double);
-    void rangeChanged(double);
-    void rateChanged(double);
+	//void Changed(double);
+	void gateChanged(int, double);
+	void onoffChanged(double);
+	void modeChanged(double);
+	void rangeChanged(double);
+	void rateChanged(double);
 
-    struct list_head notes;
+	struct list_head notes;
     #ifndef POSIX
-    CRITICAL_SECTION listMutex;
+	CRITICAL_SECTION listMutex;
     #else
-    pthread_mutex_t listMutex;
+	pthread_mutex_t listMutex;
     #endif
-    double velocity;
-    int mode;
-    int numOctaves;
-    int numVoices;
+	double velocity;
+	int mode;
+	int numOctaves;
+	int numVoices;
 
-    double pos;
-    struct juno_arpeggio_note *currentNote;
-    int currentOctave;
-    int currentDir;
+	double pos;
+	struct juno_arpeggio_note *currentNote;
+	int currentOctave;
+	int currentDir;
 
-    double **inPitches;
+	double **inPitches;
 
-    void startInternal();
-    void stopInternal();
-    void moveNextNote();
+	void startInternal();
+	void stopInternal();
+	void moveNextNote();
 
-    void turnOnArpeggio(bool on);
+	void turnOnArpeggio(bool on);
 
-    Control *control;
-    JunoVoice *voice[64];
+	Control *control;
+	JunoVoice *voice[64];
 
 public:
-    JunoArpeggio(Control *, int, JunoVoice *v[], Scheduler *sched, ConnectionManager *conn);
+	JunoArpeggio(Control *, int, JunoVoice *v[], Scheduler * sched, ConnectionManager * conn);
 
-    void connectTo(ConnectionInfo *info);
-    void disconnectTo(ConnectionInfo *info);
+	void connectTo(ConnectionInfo *info);
+	void disconnectTo(ConnectionInfo *info);
 
-    void controlGo();
+	void controlGo();
 
-    const char *getClassName()
-    {
-        return "JunoArpeggio";
-    }
+	const char *getClassName()
+	{
+		return "JunoArpeggio";
+	}
 };
 
 #endif /*  _JUNO6_JUNO_ARPEGGIO_H */

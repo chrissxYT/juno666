@@ -25,41 +25,41 @@ class Control;
 
 class JunoLfo: public MoogObject
 {
-    friend void JunoLfo_lforateChanged(MoogObject *, double, long);
-    friend void JunoLfo_lfodelayChanged(MoogObject *, double, long);
-    friend void JunoLfo_lfomodeChanged(MoogObject *, double, long);
-    friend void JunoLfo_lfotriggerChanged(MoogObject *, double, long);
-    friend void JunoLfo_voicegateChanged(MoogObject *, double, long);
+	friend void JunoLfo_lforateChanged(MoogObject *, double, long);
+	friend void JunoLfo_lfodelayChanged(MoogObject *, double, long);
+	friend void JunoLfo_lfomodeChanged(MoogObject *, double, long);
+	friend void JunoLfo_lfotriggerChanged(MoogObject *, double, long);
+	friend void JunoLfo_voicegateChanged(MoogObject *, double, long);
 
-    Oscillator osc;
+	Oscillator osc;
 
-    double lforate;
-    double lfodelay;
-    int lfomode;
-    int lfotrigger;
-    int voicegate;
+	double lforate;
+	double lfodelay;
+	int lfomode;
+	int lfotrigger;
+	int voicegate;
 
-    int trigger;
-    double lfoamp;
+	int trigger;
+	double lfoamp;
 
-    void lforateChanged(double);
-    void lfodelayChanged(double);
-    void lfomodeChanged(double);
-    void lfotriggerChanged(double);
-    void voicegateChanged(int, double);
+	void lforateChanged(double);
+	void lfodelayChanged(double);
+	void lfomodeChanged(double);
+	void lfotriggerChanged(double);
+	void voicegateChanged(int, double);
 
-    void checkTrigger();
+	void checkTrigger();
 
 public:
-    JunoLfo(Control *, int, Scheduler *sched, ConnectionManager *conn);
-    ~JunoLfo();
+	JunoLfo(Control *, int, Scheduler *sched, ConnectionManager *conn);
+	~JunoLfo();
 
-    void controlGo();
+	void controlGo();
 
-    const char *getClassName()
-    {
-        return "JunoLfo";
-    }
+	const char *getClassName()
+	{
+		return "JunoLfo";
+	}
 };
 
 #endif /* _JUNO6_JUNO6_LFO_H */

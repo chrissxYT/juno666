@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/19 14:16:46 $
+ * $Revision: 1.6 $$Date: 2004/06/25 10:38:42 $
  */
 #ifndef _OSCILLATOR_H
 #define _OSCILLATOR_H
@@ -36,42 +36,42 @@ class DataBlock;
 class Oscillator: public MoogObject
 {
 protected:
-    friend void oscillator_frq_changed(MoogObject *, double, long);
-    friend void oscillator_sync_changed(MoogObject *, double, long);
+	friend void oscillator_frq_changed(MoogObject *, double, long);
+	friend void oscillator_sync_changed(MoogObject *, double, long);
 
-    void frqChanged(double frq);
-    void syncChanged(double frq);
+	void frqChanged(double frq);
+	void syncChanged(double frq);
 
-    int lastTrigger;
+	int lastTrigger;
 
-    Output *output;
-    double *inFrq;
-    double *inAmp;
-    double *inZro;
-    double *inSync;
+	Output *output;
+	double *inFrq;
+	double *inAmp;
+	double *inZro;
+	double *inSync;
 
-    double *waveData;
+	double *waveData;
 	size_t waveDataLen;
-    double pos;
-    double scale;
-    double speed;
+	double pos;
+	double scale;
+	double speed;
 
-    void init(DataBlock *w);
+	void init(DataBlock *w);
 
 public:
-    Oscillator(Scheduler *sched, DataBlock * = NULL);
-    Oscillator(DataBlock *w, double frq, double amp, double zro, Scheduler *sched);
+	Oscillator(Scheduler *sched, DataBlock * = NULL);
+	Oscillator(DataBlock *w, double frq, double amp, double zro, Scheduler *sched);
 
-    /* virtual overrides */
-    void connectTo(ConnectionInfo *info);
-    void disconnectTo(ConnectionInfo *info);
+	/* virtual overrides */
+	void connectTo(ConnectionInfo *info);
+	void disconnectTo(ConnectionInfo *info);
 
-    void setWaveData(DataBlock *);
-    void sampleGo();
-    const char *getClassName()
-    {
-        return "Oscillator";
-    }
+	void setWaveData(DataBlock *);
+	void sampleGo();
+	const char *getClassName()
+	{
+		return "Oscillator";
+	}
 };
 
 #endif /* _OSCILLATOR_H */

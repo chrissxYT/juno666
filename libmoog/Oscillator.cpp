@@ -18,7 +18,7 @@
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
  *
- * $Revision: 1.6 $$Date: 2004/04/20 15:01:35 $
+ * $Revision: 1.7 $$Date: 2004/06/25 10:38:42 $
  */
 
 #include <stdio.h>
@@ -30,129 +30,129 @@
 #include "Scheduler.h"
 
 void
-oscillator_frq_changed(MoogObject *o, double data, long )
+oscillator_frq_changed(MoogObject *o, double data, long)
 {
-    ((Oscillator *)o)->frqChanged(data);
+	((Oscillator *)o)->frqChanged(data);
 }
 
 void
-oscillator_sync_changed(MoogObject *o, double data, long )
+oscillator_sync_changed(MoogObject *o, double data, long)
 {
-    ((Oscillator *)o)->syncChanged(data);
+	((Oscillator *)o)->syncChanged(data);
 }
 
-Oscillator::Oscillator(Scheduler *sched, DataBlock *w ):
+Oscillator::Oscillator(Scheduler *sched, DataBlock *w):
 MoogObject(sched, NULL)
 {
-    init(w);
+	init(w);
 }
 
 Oscillator::Oscillator(DataBlock *w, double frq, double amp = 1, double zro = 0, Scheduler *sched = NULL):
 MoogObject(sched, NULL)
 {
-    init(w);
-    set(I_OSC_FRQ, frq);
-    set(I_OSC_AMP, amp);
-    set(I_OSC_ZRO, zro);
+	init(w);
+	set(I_OSC_FRQ, frq);
+	set(I_OSC_AMP, amp);
+	set(I_OSC_ZRO, zro);
 }
 
 void
 Oscillator::init(DataBlock *w)
 {
-    addPorts("frq", INPUT, oscillator_frq_changed, 0, 1,
-        "amp", INPUT, NULL,
-        "zro", INPUT, NULL,
-        "sync", INPUT, oscillator_sync_changed, 0, 1,
-        "sig", OUTPUT, true,
-        "sync", OUTPUT, false,
-        NULL);
+	addPorts("frq", INPUT, oscillator_frq_changed, 0, 1,
+		"amp", INPUT, NULL,
+		"zro", INPUT, NULL,
+		"sync", INPUT, oscillator_sync_changed, 0, 1,
+		"sig", OUTPUT, true,
+		"sync", OUTPUT, false,
+		NULL);
 
-    output = &outputs[O_OSC_SIG];
-    inFrq = inputs[0].data;
-    inAmp = inputs[1].data;
-    inZro = inputs[2].data;
-    inSync = inputs[3].data;
+	output = &outputs[O_OSC_SIG];
+	inFrq = inputs[0].data;
+	inAmp = inputs[1].data;
+	inZro = inputs[2].data;
+	inSync = inputs[3].data;
 
-    lastTrigger = 0;
+	lastTrigger = 0;
 
-    if (w != NULL)
-    {
-        setWaveData(w);
-    }
+	if (w != NULL)
+	{
+		setWaveData(w);
+	}
 
-    schedule->scheduleSampleRate(this, true);
+	schedule->scheduleSampleRate(this, true);
 }
 
 void Oscillator::connectTo(ConnectionInfo *info)
 {
-    printf("Oscillator connectTo\n");
-    MoogObject::connectTo(info);
-    inFrq = inputs[0].data;
-    inAmp = inputs[1].data;
-    inZro = inputs[2].data;
-    inSync = inputs[3].data;
+	printf("Oscillator connectTo\n");
+	MoogObject::connectTo(info);
+	inFrq = inputs[0].data;
+	inAmp = inputs[1].data;
+	inZro = inputs[2].data;
+	inSync = inputs[3].data;
 }
 
 void Oscillator::disconnectTo(ConnectionInfo *info)
 {
-    printf("Oscillator disconnectTo\n");
-    MoogObject::disconnectTo(info);
-    inFrq = inputs[0].data;
-    inAmp = inputs[1].data;
-    inZro = inputs[2].data;
-    inSync = inputs[3].data;
+	printf("Oscillator disconnectTo\n");
+	MoogObject::disconnectTo(info);
+	inFrq = inputs[0].data;
+	inAmp = inputs[1].data;
+	inZro = inputs[2].data;
+	inSync = inputs[3].data;
 }
 
 void Oscillator::frqChanged(double frq)
 {
-    speed = scale * frq;
+	speed = scale * frq;
 
-    MOOG_DEBUG("speed %f, scale %f", speed, scale);
+	MOOG_DEBUG("speed %f, scale %f", speed, scale);
 }
 
 void Oscillator::syncChanged(double sync)
 {
-    if (sync > 0)
-        pos = 0;
+	if (sync > 0)
+		pos = 0;
 
-    MOOG_DEBUG("sync");
+	MOOG_DEBUG("sync");
 }
 
 void Oscillator::sampleGo()
 {
-    pos += speed;
+	pos += speed;
 
-    if (lastTrigger)
-    {
-        lastTrigger = 0;
-        outputs[O_OSC_SYNC].setData(0);
-    }
+	if (lastTrigger)
+	{
+		lastTrigger = 0;
+		outputs[O_OSC_SYNC].setData(0);
+	}
 
-    if (pos >= waveDataLen)
-    {
-        outputs[O_OSC_SYNC].setData(1);
-        lastTrigger = 1;
+	if (pos >= waveDataLen)
+	{
+		outputs[O_OSC_SYNC].setData(1);
+		lastTrigger = 1;
 
-        do
-        {
-            pos -= waveDataLen;
-        } while (pos >= waveDataLen);
-    }
+		do
+		{
+			pos -= waveDataLen;
+		} while (pos >= waveDataLen);
+	}
 
-    while (pos < 0)
-    {
-        pos += waveDataLen;
-    }
+	while (pos < 0)
+	{
+		pos += waveDataLen;
+	}
 
-    output->setData(waveData[(int)pos] * (*inAmp) + (*inZro));
+	output->setData(waveData[(int)pos] * (*inAmp) + (*inZro));
 
-    MOOG_DEBUG("output %f", output->data);
+	MOOG_DEBUG("output %f", output->data);
 }
 
 void Oscillator::setWaveData(DataBlock *w)
 {
-    pos = 0;
-    waveData = w->data;
-    waveDataLen = (w->length - 1);
-    scale = ((double)waveDataLen / (double)schedule->sampleRate) * schedule->nyquistFreq;
+	pos = 0;
+	waveData = w->data;
+	waveDataLen = (w->length - 1);
+	scale = ((double)waveDataLen / (double)schedule->sampleRate) * schedule->nyquistFreq;
 }
