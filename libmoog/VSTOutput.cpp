@@ -109,8 +109,8 @@ void VSTOutput::setPanning(double data)
 		return;
 	if (data > 1)
 		return;
-	panright = sqrt(data);
-	panleft = sqrt(1 - data);
+	panleft = sqrt(data);
+	panright = sqrt(1 - data);
 }
 
 void VSTOutput::sampleGo()
