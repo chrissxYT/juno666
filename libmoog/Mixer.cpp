@@ -20,7 +20,7 @@
 #include <string.h>
 #include <libmoogutil/debug.h>
 
-/* $Id: Mixer.cpp,v 1.5 2004/04/17 13:46:21 strepto Exp $ */
+/* $Id: Mixer.cpp,v 1.6 2004/04/30 07:00:36 brainslayer Exp $ */
 
 #include "Mixer.h"
 #include "Scheduler.h"
@@ -64,7 +64,7 @@ Mixer::init(int n)
     output = addOutput("sig", true);
     inputData = new double *[numChannels * 2];
 
-    for (int i = 0;i < numChannels * 2;i++)
+    for (i = 0;i < numChannels * 2;i++)
         inputData[i] = inputs[i].data;
 
     schedule->scheduleSampleRate(this, true);

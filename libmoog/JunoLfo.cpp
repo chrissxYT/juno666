@@ -51,13 +51,13 @@ JunoLfo::JunoLfo(JunoControl *jc, int voices, Scheduler *sched, ConnectionManage
 MoogObject(sched, conn), osc(sched)
 {
     osc.setWaveData(wg_tri(4096));
-
+	int i;
     addInput("lfo_rate", JunoLfo_lforateChanged, 0, 1);
     addInput("lfo_delay", JunoLfo_lfodelayChanged, 0, 1);
     addInput("lfo_mode", JunoLfo_lfomodeChanged, 0, 1);
     addInput("lfo_trigger", JunoLfo_lfotriggerChanged, 0, 1);
 
-    for (int i = 0;i < voices;i++)
+    for (i = 0;i < voices;i++)
     {
         char *tmpgate = new char[15];
         sprintf(tmpgate, "voice%d_gate", i);
@@ -74,7 +74,7 @@ MoogObject(sched, conn), osc(sched)
     PATCH(jc, "lfo_delay", this, "lfo_delay");
     PATCH(jc, "lfo_mode", this, "lfo_mode");
     PATCH(jc, "lfo_trigger", this, "lfo_trigger");
-    for (int i = 0;i < voices;i++)
+    for (i = 0;i < voices;i++)
     {
         char *tmpgate = new char[15];
         sprintf(tmpgate, "voice%d_gate", i);

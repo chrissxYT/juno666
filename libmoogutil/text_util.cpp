@@ -19,7 +19,7 @@
  * Copyright (c) 1998 Cobite, Inc. All Rights Reserved.
  * @author Karl LaRocca
  * @created Fri Nov  6 14:33:29 1998
- * @version $Revision: 1.4 $$Date: 2004/04/21 09:58:15 $
+ * @version $Revision: 1.5 $$Date: 2004/04/30 07:00:09 $
  */
 #include <ctype.h>
 #include <string.h>
@@ -28,7 +28,7 @@
 #include "text_util.h"
 #include "rcsid.h"
 
-//RCSID("$Id: text_util.cpp,v 1.4 2004/04/21 09:58:15 brainslayer Exp $");
+//RCSID("$Id: text_util.cpp,v 1.5 2004/04/30 07:00:09 brainslayer Exp $");
 
 char *
 chop(char *src)
@@ -88,7 +88,7 @@ lower_case(char *src)
 char *
 reverse(char *src)
 {
-	size_t i;
+	int i;
 	size_t len = strlen(src);
 	char tmp;
 

@@ -27,12 +27,13 @@
 #include "sio.h"
 #include "rcsid.h"
 
-//RCSID("$Id: sio.cpp,v 1.5 2004/03/31 12:01:19 brainslayer Exp $");
+//RCSID("$Id: sio.cpp,v 1.6 2004/04/30 07:00:09 brainslayer Exp $");
 
 ssize_t readn(int fd, void *buf, size_t len)
 {
 
-	size_t nleft, nread;
+	size_t nleft; 
+	int nread;
 
 	nleft = len;
 
@@ -65,7 +66,8 @@ ssize_t readn(int fd, void *buf, size_t len)
 ssize_t writen(int fd, const void *buf, size_t len)
 {
 
-	size_t nleft, nwritten;
+	size_t nleft;
+	int nwritten;
 
 	nleft = len;
 

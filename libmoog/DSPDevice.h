@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/07 09:30:43 $
+ * $Revision: 1.6 $$Date: 2004/04/30 07:00:35 $
  */
 #ifndef _DSPDEVICE_H
 #define _DSPDEVICE_H
@@ -26,7 +26,7 @@
 #include <unistd.h>
 #endif
 
-#include <libmoogutil/fastmemcpy.h>
+#include <memory.h>
 #define DSP_READ       1
 #define DSP_WRITE      2
 #define DSP_FULLDUPLEX 3

@@ -24,7 +24,6 @@
 #include <mmsystem.h>
 
 #include "afmt.h"
-#include <libmoogutil/fastmemcpy.h>
 
 #define OUTBURST 512
 #define SAMPLESIZE   1024

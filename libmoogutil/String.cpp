@@ -28,7 +28,7 @@
 #else
 #include <common/rcsid.h>
 #endif
-#include "fastmemcpy.h"
+#include <memory.h>
 
 #include "String.h"
 
@@ -43,7 +43,7 @@
 #define LEN    buffer->len
 #define BUFLEN buffer->buflen
 
-//RCSID("$Id: String.cpp,v 1.8 2004/04/25 11:10:46 strepto Exp $");
+//RCSID("$Id: String.cpp,v 1.9 2004/04/30 07:00:09 brainslayer Exp $");
 
 /* StringBuffer */
 StringBuffer::StringBuffer(const char *s, int initCapacity)

@@ -56,7 +56,8 @@ MoogObject(sched, conn),
 control(jc),
 numVoices(voices)
 {
-    for(int i=0; i<voices; i++)
+	int i;
+    for(i=0; i<voices; i++)
         voice[i] = v[i];
 
     printf("creating arpeggio for %d voices\n", voices);
@@ -79,37 +80,37 @@ numVoices(voices)
     mode = JUNO_ARPEGGIO_MODE_DOWN;
     numOctaves = 3;
     inPitches = new double *[NUM_VOICES];
-    for (int i = 0;i < NUM_VOICES;i++)
+    for (i = 0;i < NUM_VOICES;i++)
     {
         char *tmppitch = new char[15];
         sprintf(tmppitch, "voice%d_pitch", i);
         addInput(tmppitch);
     }
-    for (int i = 0;i < NUM_VOICES;i++)
+    for (i = 0;i < NUM_VOICES;i++)
     {
         char *tmppitch = new char[15];
         sprintf(tmppitch, "voice%d_pitch", i);
         PATCH(jc, tmppitch, this, tmppitch);
     }
-    for (int i = 0;i < NUM_VOICES;i++)
+    for (i = 0;i < NUM_VOICES;i++)
     {
         char *tmpgate = new char[14];
         sprintf(tmpgate, "voice%d_gate", i);
         addInput(tmpgate, JunoArpeggio_gateChanged, i, 1);
     }
-    for (int i = 0;i < NUM_VOICES;i++)
+    for (i = 0;i < NUM_VOICES;i++)
     {
         char *tmpgate = new char[14];
         sprintf(tmpgate, "voice%d_gate", i);
         PATCH(jc, tmpgate, this, tmpgate);
     }
-    for (int i = 0;i < NUM_VOICES;i++)
+    for (i = 0;i < NUM_VOICES;i++)
     {
         char *tmppitch = new char[15];
         sprintf(tmppitch, "voice%d_pitch", i);
         addOutput(tmppitch, false);
     }
-    for (int i = 0;i < NUM_VOICES;i++)
+    for (i = 0;i < NUM_VOICES;i++)
     {
         char *tmpgate = new char[14];
         sprintf(tmpgate, "voice%d_gate", i);
@@ -164,7 +165,7 @@ numVoices(voices)
     PATCH(jc, "arpeggio_range", this, "arpeggio_range");
     PATCH(jc, "arpeggio_rate", this, "arpeggio_rate");
 
-    for (int i = 0;i < NUM_VOICES;i++)
+    for (i = 0;i < NUM_VOICES;i++)
         inPitches[i] = inputs[i].data;
 }
 

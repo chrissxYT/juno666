@@ -20,7 +20,7 @@
 
 #include <string.h>
 #include <stdio.h>
-#include "fastmemcpy.h"
+#include <memory.h>
 #define ASSERT_LOC(x)/* {\
    if (loc >= size || loc < 0)\
    {\

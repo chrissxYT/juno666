@@ -47,13 +47,13 @@ DataBlock *
 wg_lines(int size, int nsegs, double initial, ...)
 {
     va_list ap;
-
+	int n;
     int *lengths = new int[nsegs];
     double *values = new double[nsegs];
 
     va_start(ap, initial);
 
-    for (int n = 0;n < nsegs;n++)
+    for (n = 0;n < nsegs;n++)
     {
         lengths[n] = va_arg(ap, int);
         values[n] = va_arg(ap, double);
@@ -63,7 +63,7 @@ wg_lines(int size, int nsegs, double initial, ...)
 
     DataBlock *retval = new DataBlock("", size);
     int index = 0;
-    for (int n = 0;n < nsegs;n++)
+    for (n = 0;n < nsegs;n++)
     {
         double rise = (values[n] - initial) / lengths[n];
 

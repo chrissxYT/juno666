@@ -20,7 +20,6 @@
 #include <libmoogutil/debug.h>
 #include <libmoogutil/sio.h>
 #include <math.h>
-#include <libmoogutil/fastmemcpy.h>
 #include "DataBlock.h"
 
 #define DATABLOCK_BIN_MAGIC	0xcdedcbab
@@ -86,6 +85,7 @@ DataBlock::getName()
 void
 DataBlock::normalize()
 {
+	int i;
 	double min = 0.0;
 	double max = 0.0;
 	double scale;
@@ -93,7 +93,7 @@ DataBlock::normalize()
 	double *ptr;
 
 	ptr = data;
-	for (int i = length;i-- != 0;ptr++)
+	for (i = length;i-- != 0;ptr++)
 	{
 		if (*ptr < min)
 		{
@@ -110,7 +110,7 @@ DataBlock::normalize()
 	shift = 1.0 - scale * max;
 
 	ptr = data;
-	for (int i = length;i-- != 0;ptr++)
+	for (i = length;i-- != 0;ptr++)
 	{
 		*ptr = *ptr * scale + shift;
 	}
