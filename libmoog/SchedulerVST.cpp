@@ -23,14 +23,13 @@
 #include "Scheduler.h"
 #include "GoObject.h"
 
-HANDLE timerMutex;
+
 
 Scheduler::Scheduler()
 {
     timerMutex = CreateMutex ( NULL, FALSE, NULL );
 
     nextGoHandle = 0;
-    tickThread;
     controlRate = 0;
     controlCount = 0;
     sampleRate = 0;

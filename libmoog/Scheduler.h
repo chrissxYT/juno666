@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.12 $$Date: 2004/04/20 15:01:35 $
+ * $Revision: 1.13 $$Date: 2004/05/10 07:26:01 $
  */
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
@@ -40,16 +40,11 @@ DWORD WINAPI runSynth(void *);
 class Scheduler
 {
     friend DWORD WINAPI runSynth(void *);
-
+	HANDLE timerMutex;
     list_head controlRateList;
     list_head sampleRateList;
 
     DSPOutput *dsp;
-//#ifdef POSIX
-//    static pthread_t tickThread;
-//#else
-    HANDLE tickThread;
-//#endif
 
     void safeListOp(list_head *node, list_head *list, bool add);
 
