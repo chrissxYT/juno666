@@ -20,7 +20,7 @@
  *
  * @author Karl LaRocca
  * @created Tue Sep 29 12:13:53 1998
- * @version $Revision: 1.2 $$Date: 2004/03/31 12:01:19 $
+ * @version $Revision: 1.3 $$Date: 2004/03/31 12:01:19 $
  */
 #ifndef _HASHTABLE_H
 #define _HASHTABLE_H

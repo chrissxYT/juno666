@@ -1,66 +1,69 @@
 /*
  * Copyright(c) 2000 UltraMaster Group
  *
- * License to use UltraMaster Juno-6 is provided free of charge subject to the 
+ * License to use UltraMaster Juno-6 is provided free of charge subject to the
  * following restrictions:
  *
  * 1.) This license is for your personal use only.
  *
- * 2.) No portion of this software may be redistributed by you to any other 
- *     person in any form. 
+ * 2.) No portion of this software may be redistributed by you to any other
+ *     person in any form.
  *
  * 3.) You may not sell UltraMaster Juno-6 to any person.
  *
- * 4.) UltraMaster Juno-6 is provided without any express or implied warranty. 
- *     In no event shall UltraMaster Group be held liable for any damages 
+ * 4.) UltraMaster Juno-6 is provided without any express or implied warranty.
+ *     In no event shall UltraMaster Group be held liable for any damages
  *     arising from the use of UltraMaster Juno-6.
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:45:33 $
+ * $Revision: 1.2 $$Date: 2004/03/31 12:01:19 $
  */
 #ifndef JUNOPULSE_H
 #define JUNOPULSE_H
 
 #include "MoogObject.h"
 
-class JunoPulse : public MoogObject
+class JunoPulse: public MoogObject
 {
- private:
-    friend void JunoPulse_horizBoundsChanged(MoogObject *, double, long);
-    friend void JunoPulse_sync(MoogObject *, double, long);
+private:
+	friend void JunoPulse_horizBoundsChanged(MoogObject *, double, long);
+	friend void JunoPulse_sync(MoogObject *, double, long);
 
-    void horizBoundsChanged();
+	void horizBoundsChanged();
 
-    Output* sigOutput;
-    Output* syncOutput;
+	Output *sigOutput;
+	Output *syncOutput;
 
-    /* input array optimization pointers */
-    double *inFrq;
-    double *inAmp;
-    double *inWidth;
-    double *inSync;
+	/* input array optimization pointers */
+	double *inFrq;
+	double *inAmp;
+	double *inWidth;
+	double *inSync;
 
-    double pos;
-    double frq;
+	double pos;
+	double frq;
 
-    double power;
-    double dampening;
-    double sign;
+	double power;
+	double dampening;
+	double sign;
 
-    int lastTrigger;
+	int lastTrigger;
 
- public:
-    JunoPulse();
+public:
+	JunoPulse();
 
-    /* virtual overrides to maintain input pointers */
-    void connectTo(ConnectionInfo *info);
-    void disconnectTo(ConnectionInfo *info);
+	/* virtual overrides to maintain input pointers */
+	void connectTo(ConnectionInfo *info);
+	void disconnectTo(ConnectionInfo *info);
 
-    void sync();
-    void sampleGo();
+	void sync();
+	void sampleGo();
 
-    const char* getClassName(){ return( "JunoPulse" ); }
+	const char *getClassName()
+	{
+		return ("JunoPulse");
+	}
 };
 
 #endif /* JUNOPULSE_H */

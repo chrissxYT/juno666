@@ -3,13 +3,13 @@
 
 typedef struct ao_data_s
 {
-  int samplerate;
-  int channels;
-  int format;
-  int bps;
-  int outburst; 	  
-  int buffersize;         
-  int pts;
+	int samplerate;
+	int channels;
+	int format;
+	int bps;
+	int outburst;
+	int buffersize;
+	int pts;
 } ao_data_t;
 
 
@@ -40,8 +40,8 @@ extern ao_data_t ao_data;
 
 /* 32 bit formats (MSB aligned) formats */
 #ifndef AFMT_S32_LE
-# define AFMT_S32_LE              0x00001000
-# define AFMT_S32_BE              0x00002000
+# define AFMT_S32_LE		  0x00001000
+# define AFMT_S32_BE		  0x00002000
 #endif
 
 
@@ -57,42 +57,43 @@ extern ao_data_t ao_data;
 #endif
 
 #ifndef AFMT_FLOAT
-# define AFMT_FLOAT               0x00004000
+# define AFMT_FLOAT		  0x00004000
 #endif
-int audio_out_format_bits(int format){
-    switch (format)
-    {
-	case AFMT_S16_LE:
-	case AFMT_S16_BE:
-	case AFMT_U16_LE:
-	case AFMT_U16_BE: 
-	return 16;//16 bits
+int audio_out_format_bits(int format)
+{
+	switch (format)
+	{
+		case AFMT_S16_LE:
+		case AFMT_S16_BE:
+		case AFMT_U16_LE:
+		case AFMT_U16_BE:
+			return 16; //16 bits
 
 /*
   the following two formats are not available with old linux kernel
   headers (e.g. in 2.2.16)
 */
 #ifdef AFMT_S32_LE
-	case AFMT_S32_LE:
-	return 32;
+		case AFMT_S32_LE:
+			return 32;
 #endif
 #ifdef AFMT_S32_BE
-	case AFMT_S32_BE:
-	return 32;
+		case AFMT_S32_BE:
+			return 32;
 #endif
-	case AFMT_FLOAT:
-	return 32;
-	
-	case AFMT_MU_LAW:
-	case AFMT_A_LAW:
-	case AFMT_IMA_ADPCM:
-	case AFMT_S8:
-	case AFMT_U8:
-	case AFMT_MPEG:
-	case AFMT_AC3:
-	default:
-	    return 8;//default 1 byte
-	
-    }
-    return 8;
+		case AFMT_FLOAT:
+			return 32;
+
+		case AFMT_MU_LAW:
+		case AFMT_A_LAW:
+		case AFMT_IMA_ADPCM:
+		case AFMT_S8:
+		case AFMT_U8:
+		case AFMT_MPEG:
+		case AFMT_AC3:
+		default:
+			return 8; //default 1 byte
+
+	}
+	return 8;
 }

@@ -23,7 +23,7 @@
 #include "text_util.h"
 #include "rcsid.h"
 
-//RCSID("$Id: ini.c,v 1.2 2004/03/31 12:01:19 brainslayer Exp $");
+//RCSID("$Id: ini.c,v 1.3 2004/03/31 12:01:19 brainslayer Exp $");
 
 /* these are passed to the destroy_hash_table function */
 static void destroy_ini_section(void *);

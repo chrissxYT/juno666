@@ -27,7 +27,7 @@
 #include "sio.h"
 #include "rcsid.h"
 
-//RCSID("$Id: sio.cpp,v 1.4 2004/03/31 12:01:19 brainslayer Exp $");
+//RCSID("$Id: sio.cpp,v 1.5 2004/03/31 12:01:19 brainslayer Exp $");
 
 ssize_t readn(int fd, void *buf, size_t len)
 {

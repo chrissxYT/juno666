@@ -19,7 +19,7 @@
  * Copyright (c) 1998 Cobite, Inc. All Rights Reserved.
  * @author Karl LaRocca
  * @created Fri Nov  6 14:33:29 1998
- * @version $Revision: 1.2 $$Date: 2004/03/31 12:01:19 $
+ * @version $Revision: 1.3 $$Date: 2004/03/31 12:01:19 $
  */
 #include <ctype.h>
 #include <string.h>
@@ -28,7 +28,7 @@
 #include "text_util.h"
 #include "rcsid.h"
 
-//RCSID("$Id: text_util.cpp,v 1.2 2004/03/31 12:01:19 brainslayer Exp $");
+//RCSID("$Id: text_util.cpp,v 1.3 2004/03/31 12:01:19 brainslayer Exp $");
 
 char *
 chop(char *src)

@@ -1,23 +1,23 @@
 /*
  * Copyright(c) 2000 UltraMaster Group
  *
- * License to use UltraMaster Juno-6 is provided free of charge subject to the 
+ * License to use UltraMaster Juno-6 is provided free of charge subject to the
  * following restrictions:
  *
  * 1.) This license is for your personal use only.
  *
- * 2.) No portion of this software may be redistributed by you to any other 
- *     person in any form. 
+ * 2.) No portion of this software may be redistributed by you to any other
+ *     person in any form.
  *
  * 3.) You may not sell UltraMaster Juno-6 to any person.
  *
- * 4.) UltraMaster Juno-6 is provided without any express or implied warranty. 
- *     In no event shall UltraMaster Group be held liable for any damages 
+ * 4.) UltraMaster Juno-6 is provided without any express or implied warranty.
+ *     In no event shall UltraMaster Group be held liable for any damages
  *     arising from the use of UltraMaster Juno-6.
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/30 10:31:38 $
+ * $Revision: 1.3 $$Date: 2004/03/31 12:01:19 $
  */
 #ifndef _INPUT_H
 #define _INPUT_H
@@ -28,49 +28,52 @@ class MoogObject;
 #include <libmoogutil/SimpleArray.h>
 #include "NamedObject.h"
 
-typedef void (*moog_callback_t)(MoogObject*, double, long);
+typedef void (*moog_callback_t)(MoogObject *, double, long);
 
-class Input : public NamedObject
+class Input: public NamedObject
 {
-    friend class MoogObject;
-    friend class Output;
+	friend class MoogObject;
+	friend class Output;
 
-    ConnectionInfo *connection;
-    double          staticValue;
-    moog_callback_t callback;
-    MoogObject*     registrant;
-    long            userData;
-    int             timescale;
-    int             currentTimeout;
+	ConnectionInfo *connection;
+	double staticValue;
+	moog_callback_t callback;
+	MoogObject *registrant;
+	long userData;
+	int timescale;
+	int currentTimeout;
 
-    void doCallback( double data )
-    {
-	if ( callback != NULL )
+	void doCallback(double data)
 	{
-	    callback( registrant, data, userData );
-	    currentTimeout = 0;
+		if (callback != NULL)
+		{
+			callback(registrant, data, userData);
+			currentTimeout = 0;
+		}
 	}
-    }
 
- public:
-    double         *data;
+public:
+	double *data;
 
-    Input(const char *, moog_callback_t, MoogObject*, long, int );
+	Input(const char *, moog_callback_t, MoogObject *, long, int);
 
-    void            setStaticValue(double);
+	void setStaticValue(double);
 
-    void            connect(ConnectionInfo *);
-    void            disconnect(ConnectionInfo *);
+	void connect(ConnectionInfo *);
+	void disconnect(ConnectionInfo *);
 
-    ConnectionInfo *getConnection() { return connection; } 
+	ConnectionInfo *getConnection()
+	{
+		return connection;
+	}
 
-    
+
 #ifdef DEBUG
-    void print();
+	void print();
 #endif
 
 };
 
-typedef SimpleArray<Input> InputArray;
+typedef SimpleArray <Input >InputArray;
 
 #endif /* _INPUT_H */

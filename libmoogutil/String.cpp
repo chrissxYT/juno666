@@ -43,7 +43,7 @@
 #define LEN    buffer->len
 #define BUFLEN buffer->buflen
 
-//RCSID("$Id: String.cpp,v 1.4 2004/03/31 12:01:19 brainslayer Exp $");
+//RCSID("$Id: String.cpp,v 1.5 2004/03/31 12:01:19 brainslayer Exp $");
 
 /* StringBuffer */
 StringBuffer::StringBuffer(const char *s, int initCapacity)

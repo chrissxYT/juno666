@@ -31,134 +31,136 @@
 #define BUFFER_SIZE  4096
 #define BUFFER_COUNT 2
 
-ao_data_t ao_data={0,0,0,0,OUTBURST,-1,0};
+ao_data_t ao_data = {0, 0, 0, 0, OUTBURST, -1, 0};
 
-static WAVEHDR*     waveBlocks;         //pointer to our ringbuffer memory
-static HWAVEOUT     hWaveOut;           //handle to the waveout device
-static DWORD        restoredvolume;     //saves the volume to restore after playing
-static unsigned int buf_write=0;
-static unsigned int buf_write_pos=0;
-static int          full_buffers=0;
-static int          buffered_bytes=0;
+static WAVEHDR *waveBlocks; //pointer to our ringbuffer memory
+static HWAVEOUT hWaveOut; //handle to the waveout device
+static DWORD restoredvolume; //saves the volume to restore after playing
+static unsigned int buf_write = 0;
+static unsigned int buf_write_pos = 0;
+static int full_buffers = 0;
+static int buffered_bytes = 0;
 
 
-static void CALLBACK waveOutProc(HWAVEOUT hWaveOut,UINT uMsg,DWORD dwInstance,  
-    DWORD dwParam1,DWORD dwParam2)
+static void CALLBACK waveOutProc(HWAVEOUT hWaveOut, UINT uMsg, DWORD dwInstance,
+	DWORD dwParam1, DWORD dwParam2)
 {
-	if(uMsg != WOM_DONE)
+	if (uMsg != WOM_DONE)
 	{
-        return;
+		return;
 	}
-    if(full_buffers==0){
-return;    //no more data buffered!
-}
-    buffered_bytes-=BUFFER_SIZE;
-    --full_buffers;
+	if (full_buffers == 0)
+	{
+		return; //no more data buffered!
+	}
+	buffered_bytes -= BUFFER_SIZE;
+	--full_buffers;
 }
 
 
 // open & setup audio device
 // return: 1=success 0=fail
-int init(int rate,int channels,int format,int flags)
+int init(int rate, int channels, int format, int flags)
 {
-	WAVEFORMATEX wformat;      
+	WAVEFORMATEX wformat;
 	DWORD totalBufferSize = (BUFFER_SIZE + sizeof(WAVEHDR)) * BUFFER_COUNT;
 	MMRESULT result;
-	unsigned char* buffer;
+	unsigned char *buffer;
 	int i;
-   printf("opening with %d %d %d\n",rate,channels,format);
-	//fill global ao_data 
-	ao_data.channels=channels;
-	ao_data.samplerate=rate;
-	ao_data.format=format;
-	ao_data.bps=channels*rate;
-	if(format != AFMT_U8 && format != AFMT_S8)
-	  ao_data.bps*=2;
-	if(ao_data.buffersize==-1)
+	printf("opening with %d %d %d\n", rate, channels, format);
+	//fill global ao_data
+	ao_data.channels = channels;
+	ao_data.samplerate = rate;
+	ao_data.format = format;
+	ao_data.bps = channels * rate;
+	if (format != AFMT_U8 && format != AFMT_S8)
+		ao_data.bps *= 2;
+	if (ao_data.buffersize == -1)
 	{
-		ao_data.buffersize=audio_out_format_bits(format)/8;
-        ao_data.buffersize*= channels;
-		ao_data.buffersize*= SAMPLESIZE;
+		ao_data.buffersize = audio_out_format_bits(format) / 8;
+		ao_data.buffersize *= channels;
+		ao_data.buffersize *= SAMPLESIZE;
 	}
 	//printf("ao_win32: Samplerate:%iHz Channels:%i Format:%s\n",rate, channels, audio_out_format_name(format));
-    printf("ao_win32: Buffersize:%d\n",ao_data.buffersize);
-	
+	printf("ao_win32: Buffersize:%d\n", ao_data.buffersize);
+
 	//fill waveformatex
-    ZeroMemory( &wformat, sizeof(WAVEFORMATEX));
-    wformat.cbSize          = 0; /* size of _extra_ info */
-	wformat.wFormatTag      = WAVE_FORMAT_PCM;  
-    wformat.nChannels       = channels;                
-    wformat.nSamplesPerSec  = rate;            
-    wformat.wBitsPerSample  = audio_out_format_bits(format); 
-    wformat.nBlockAlign     = wformat.nChannels * (wformat.wBitsPerSample >> 3);
-    wformat.nAvgBytesPerSec = wformat.nSamplesPerSec * wformat.nBlockAlign;
- 	
-    //open sound device
-    //WAVE_MAPPER always points to the default wave device on the system
-    result = waveOutOpen(&hWaveOut,WAVE_MAPPER,&wformat,(DWORD_PTR)waveOutProc,0,CALLBACK_FUNCTION);
-	if(result == WAVERR_BADFORMAT)
+	ZeroMemory(&wformat, sizeof(WAVEFORMATEX));
+	wformat.cbSize = 0; /* size of _extra_ info */
+	wformat.wFormatTag = WAVE_FORMAT_PCM;
+	wformat.nChannels = channels;
+	wformat.nSamplesPerSec = rate;
+	wformat.wBitsPerSample = audio_out_format_bits(format);
+	wformat.nBlockAlign = wformat.nChannels * (wformat.wBitsPerSample >> 3);
+	wformat.nAvgBytesPerSec = wformat.nSamplesPerSec * wformat.nBlockAlign;
+
+	//open sound device
+	//WAVE_MAPPER always points to the default wave device on the system
+	result = waveOutOpen(&hWaveOut, WAVE_MAPPER, &wformat, (DWORD_PTR)waveOutProc, 0, CALLBACK_FUNCTION);
+	if (result == WAVERR_BADFORMAT)
 	{
 		printf("ao_win32: format not supported switching to default\n");
-        ao_data.channels = wformat.nChannels = 2;
-	    ao_data.samplerate = wformat.nSamplesPerSec = 44100;
-	    ao_data.format = AFMT_S16_LE;
-	    ao_data.bps=ao_data.channels * ao_data.samplerate*2;
-	    ao_data.buffersize=wformat.wBitsPerSample=16;
-        wformat.nBlockAlign     = wformat.nChannels * (wformat.wBitsPerSample >> 3);
-        wformat.nAvgBytesPerSec = wformat.nSamplesPerSec * wformat.nBlockAlign;
-		ao_data.buffersize/=8;
-		ao_data.buffersize*= ao_data.channels;
-		ao_data.buffersize*= SAMPLESIZE;
-        result = waveOutOpen(&hWaveOut,WAVE_MAPPER,&wformat,(DWORD_PTR)waveOutProc,0,CALLBACK_FUNCTION);
+		ao_data.channels = wformat.nChannels = 2;
+		ao_data.samplerate = wformat.nSamplesPerSec = 44100;
+		ao_data.format = AFMT_S16_LE;
+		ao_data.bps = ao_data.channels * ao_data.samplerate * 2;
+		ao_data.buffersize = wformat.wBitsPerSample = 16;
+		wformat.nBlockAlign = wformat.nChannels * (wformat.wBitsPerSample >> 3);
+		wformat.nAvgBytesPerSec = wformat.nSamplesPerSec * wformat.nBlockAlign;
+		ao_data.buffersize /= 8;
+		ao_data.buffersize *= ao_data.channels;
+		ao_data.buffersize *= SAMPLESIZE;
+		result = waveOutOpen(&hWaveOut, WAVE_MAPPER, &wformat, (DWORD_PTR)waveOutProc, 0, CALLBACK_FUNCTION);
 	}
-	if(result != MMSYSERR_NOERROR)
+	if (result != MMSYSERR_NOERROR)
 	{
 		printf("ao_win32: unable to open wave mapper device\n");
 		return 0;
-    }
-    //save volume
-	waveOutGetVolume(hWaveOut,&restoredvolume); 
+	}
+	//save volume
+	waveOutGetVolume(hWaveOut, &restoredvolume);
 	//allocate buffer memory as one big block
 	buffer = malloc(totalBufferSize);
-	memset(buffer,0x0,totalBufferSize);
-    //and setup pointers to each buffer 
-    waveBlocks = (WAVEHDR*)buffer;
-    buffer += sizeof(WAVEHDR) * BUFFER_COUNT;
-    for(i = 0; i < BUFFER_COUNT; i++) {
-        waveBlocks[i].dwBufferLength = BUFFER_SIZE;
-        waveBlocks[i].lpData = buffer;
-        buffer += BUFFER_SIZE;
-    }
+	memset(buffer, 0x0, totalBufferSize);
+	//and setup pointers to each buffer
+	waveBlocks = (WAVEHDR *)buffer;
+	buffer += sizeof(WAVEHDR) * BUFFER_COUNT;
+	for (i = 0;i < BUFFER_COUNT;i++)
+	{
+		waveBlocks[i].dwBufferLength = BUFFER_SIZE;
+		waveBlocks[i].lpData = buffer;
+		buffer += BUFFER_SIZE;
+	}
 
-    return 1;
+	return 1;
 }
 
 // close audio device
 void uninit()
 {
-    waveOutSetVolume(hWaveOut,restoredvolume);  //restore volume
+	waveOutSetVolume(hWaveOut, restoredvolume); //restore volume
 	waveOutReset(hWaveOut);
 	waveOutClose(hWaveOut);
 //	mp_msg(MSGT_AO, MSGL_V,"waveOut device closed\n");
-	full_buffers=0;
-    free(waveBlocks);
+	full_buffers = 0;
+	free(waveBlocks);
 //	mp_msg(MSGT_AO, MSGL_V,"buffer memory freed\n");
 }
 
 // stop playing and empty buffers (for seeking/pause)
 void reset()
 {
-   	waveOutReset(hWaveOut);
-	buf_write=0;
-    buf_write_pos=0;
-	full_buffers=0;
-	buffered_bytes=0;
+	waveOutReset(hWaveOut);
+	buf_write = 0;
+	buf_write_pos = 0;
+	full_buffers = 0;
+	buffered_bytes = 0;
 }
 
 // stop playing, keep buffers (for pause)
 void audio_pause()
 {
-    waveOutPause(hWaveOut);
+	waveOutPause(hWaveOut);
 }
 
 // resume playing, after audio_pause()
@@ -170,49 +172,56 @@ void audio_resume()
 // return: how many bytes can be played without blocking
 int get_space()
 {
-    return (BUFFER_COUNT-full_buffers)*BUFFER_SIZE - buf_write_pos;
+	return (BUFFER_COUNT - full_buffers) * BUFFER_SIZE - buf_write_pos;
 }
 
 //writes data into buffer, based on ringbuffer code in ao_sdl.c
-static int write_waveOutBuffer(unsigned char* data,int len){
-  WAVEHDR* current;
-  int len2=0;
-  int x;
-  while(len>0){                       
-    current = &waveBlocks[buf_write];
-	if(full_buffers==BUFFER_COUNT) break;  
-    //unprepare the header if it is prepared
-	if(current->dwFlags & WHDR_PREPARED) 
-           waveOutUnprepareHeader(hWaveOut, current, sizeof(WAVEHDR));
-	x=BUFFER_SIZE-buf_write_pos;          
-    if(x>len) x=len;                   
-    memcpy(current->lpData+buf_write_pos,data+len2,x); 
-    len2+=x; len-=x;                 
-	buffered_bytes+=x; buf_write_pos+=x; 
-	//prepare header and write data to device
-	waveOutPrepareHeader(hWaveOut, current, sizeof(WAVEHDR));
-	waveOutWrite(hWaveOut, current, sizeof(WAVEHDR));
-    
-	if(buf_write_pos>=BUFFER_SIZE){        //buffer is full find next
-       // block is full, find next!
-       buf_write=(buf_write+1)%BUFFER_COUNT;  
-       ++full_buffers;                
-	   buf_write_pos=0;                 
-    }                                 
-  }
-  return len2;
+static int write_waveOutBuffer(unsigned char *data, int len)
+{
+	WAVEHDR *current;
+	int len2 = 0;
+	int x;
+	while (len > 0)
+	{
+		current = &waveBlocks[buf_write];
+		if (full_buffers == BUFFER_COUNT)
+			break;
+		//unprepare the header if it is prepared
+		if (current->dwFlags & WHDR_PREPARED)
+			waveOutUnprepareHeader(hWaveOut, current, sizeof(WAVEHDR));
+		x = BUFFER_SIZE - buf_write_pos;
+		if (x > len)
+			x = len;
+		memcpy(current->lpData + buf_write_pos, data + len2, x);
+		len2 += x;
+		len -= x;
+		buffered_bytes += x;
+		buf_write_pos += x;
+		//prepare header and write data to device
+		waveOutPrepareHeader(hWaveOut, current, sizeof(WAVEHDR));
+		waveOutWrite(hWaveOut, current, sizeof(WAVEHDR));
+
+		if (buf_write_pos >= BUFFER_SIZE)
+		{ //buffer is full find next
+			// block is full, find next!
+			buf_write = (buf_write + 1) % BUFFER_COUNT;
+			++full_buffers;
+			buf_write_pos = 0;
+		}
+	}
+	return len2;
 }
 
 // plays 'len' bytes of 'data'
 // it should round it down to outburst*n
 // return: number of bytes played
-int play(void* data,int len,int flags)
+int play(void *data, int len, int flags)
 {
-	return write_waveOutBuffer(data,len);
+	return write_waveOutBuffer(data, len);
 }
 
 // return: delay in seconds between first and last sample in buffer
 float get_delay()
 {
-	return (float)(buffered_bytes + ao_data.buffersize)/(float)ao_data.bps;
+	return (float)(buffered_bytes + ao_data.buffersize) / (float)ao_data.bps;
 }

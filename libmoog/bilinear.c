@@ -1,23 +1,23 @@
 #include <stdio.h>
 #include <math.h>
 #ifndef M_PI
-#define M_PI		3.14159265358979323846 
+#define M_PI		3.14159265358979323846
 #endif
 
 
 static inline void prewarp(
-    double *a0, 
-    double *a1, 
-    double *a2, 
-    double fc, 
-    double fs);
+	double *a0,
+	double *a1,
+	double *a2,
+	double fc,
+	double fs);
 
 static inline void bilinear(
-    double a0, double a1, double a2, /* numerator coef. */
-    double b0, double b1, double b2, /* denominator coef.  */
-    double *k,                       /* overall gain factor */
-    double fs,                       /* sampling rate */
-    double *coef);                   /* ptr. to 4 iir coef. */
+	double a0, double a1, double a2, /* numerator coef. */
+	double b0, double b1, double b2, /* denominator coef.  */
+	double *k, /* overall gain factor */
+	double fs, /* sampling rate */
+	double *coef); /* ptr. to 4 iir coef. */
 
 
 /*
@@ -29,15 +29,15 @@ static inline void bilinear(
  */
 void prewarp(double *a0, double *a1, double *a2, double fc, double fs)
 {
-    double wp;
+	double wp;
 
-    if (fc <= 0)
-	fc = .00001;
+	if (fc <= 0)
+		fc = .00001;
 
-    wp = 2.0 * fs * tan(M_PI * fc / fs);
+	wp = 2.0 * fs * tan(M_PI * fc / fs);
 
-    *a2 = (*a2) / (wp * wp);
-    *a1 = (*a1) / wp;
+	*a2 = (*a2) / (wp * wp);
+	*a1 = (*a1) / wp;
 }
 
 
@@ -71,34 +71,34 @@ void prewarp(double *a0, double *a1, double *a2, double fc, double fs)
  * ----------------------------------------------------------
  */
 void bilinear(
-    double a0, double a1, double a2,    /* numerator coefficients */
-    double b0, double b1, double b2,    /* denominator coefficients */
-    double *k,                          /* overall gain factor */
-    double fs,                          /* sampling rate */
-    double *coef                        /* pointer to 4 iir coefficients */
-)
+	double a0, double a1, double a2, /* numerator coefficients */
+	double b0, double b1, double b2, /* denominator coefficients */
+	double *k, /* overall gain factor */
+	double fs, /* sampling rate */
+	double *coef /* pointer to 4 iir coefficients */
+	)
 {
-    double ad, bd;
+	double ad, bd;
 
-                 /* alpha (Numerator in s-domain) */
-    ad = 4. * a2 * fs * fs + 2. * a1 * fs + a0;
-                 /* beta (Denominator in s-domain) */
-    bd = 4. * b2 * fs * fs + 2. * b1* fs + b0;
+	/* alpha (Numerator in s-domain) */
+	ad = 4. * a2 * fs * fs + 2. * a1 * fs + a0;
+	/* beta (Denominator in s-domain) */
+	bd = 4. * b2 * fs * fs + 2. * b1 * fs + b0;
 
-                 /* update gain constant for this section */
-    *k *= ad/bd;
+	/* update gain constant for this section */
+	*k *= ad / bd;
 
-                 /* Denominator */
-    *coef++ = (2. * b0 - 8. * b2 * fs * fs)
-                           / bd;         /* beta1 */
-    *coef++ = (4. * b2 * fs * fs - 2. * b1 * fs + b0)
-                           / bd; /* beta2 */
+	/* Denominator */
+	*coef++ = (2. * b0 - 8. * b2 * fs * fs)
+		/ bd; /* beta1 */
+	*coef++ = (4. * b2 * fs * fs - 2. * b1 * fs + b0)
+		/ bd; /* beta2 */
 
-                 /* Nominator */
-    *coef++ = (2. * a0 - 8. * a2 * fs * fs)
-                           / ad;         /* alpha1 */
-    *coef = (4. * a2 * fs * fs - 2. * a1 * fs + a0)
-                           / ad;   /* alpha2 */
+	/* Nominator */
+	*coef++ = (2. * a0 - 8. * a2 * fs * fs)
+		/ ad; /* alpha1 */
+	*coef = (4. * a2 * fs * fs - 2. * a1 * fs + a0)
+		/ ad; /* alpha2 */
 }
 
 
@@ -118,23 +118,23 @@ void bilinear(
  * ----------------------------------------------------------
  */
 void szxform(
-    double a0, double a1, double a2, /* numerator coefficients */
-    double b0, double b1, double b2, /* denominator coefficients */
-    double fc,                          /* Filter cutoff frequency */
-    double fs,                          /* sampling rate */
-    double *k,                          /* overall gain factor */
-    double *coef                        /* pointer to 4 iir coefficients */)
+	double a0, double a1, double a2, /* numerator coefficients */
+	double b0, double b1, double b2, /* denominator coefficients */
+	double fc, /* Filter cutoff frequency */
+	double fs, /* sampling rate */
+	double *k, /* overall gain factor */
+	double *coef                        /* pointer to 4 iir coefficients */)
 {
-                 /* Calculate a1 and a2 and overwrite the original values */
+	/* Calculate a1 and a2 and overwrite the original values */
 
-    //printf("p1: %f %f %f %f %f %f\n", a0, a1, a2, b0, b1, b2);
-    prewarp(&a0, &a1, &a2, fc, fs);
-    //printf("p2: %f %f %f %f %f %f\n", a0, a1, a2, b0, b1, b2);
-    prewarp(&b0, &b1, &b2, fc, fs);
-    //printf("p3: %f %f %f %f %f %f\n", a0, a1, a2, b0, b1, b2);
-    
-    //printf("1: %f %f %f %f\n",coef[0], coef[1], coef[2], coef[3]);
-    bilinear(a0, a1, a2, b0, b1, b2, k, fs, coef);
-    //printf("2: %f %f %f %f\n",coef[0], coef[1], coef[2], coef[3]);
+	//printf("p1: %f %f %f %f %f %f\n", a0, a1, a2, b0, b1, b2);
+	prewarp(&a0, &a1, &a2, fc, fs);
+	//printf("p2: %f %f %f %f %f %f\n", a0, a1, a2, b0, b1, b2);
+	prewarp(&b0, &b1, &b2, fc, fs);
+	//printf("p3: %f %f %f %f %f %f\n", a0, a1, a2, b0, b1, b2);
+
+	//printf("1: %f %f %f %f\n",coef[0], coef[1], coef[2], coef[3]);
+	bilinear(a0, a1, a2, b0, b1, b2, k, fs, coef);
+	//printf("2: %f %f %f %f\n",coef[0], coef[1], coef[2], coef[3]);
 }
 

@@ -1,23 +1,23 @@
 /*
  * Copyright(c) 2000 UltraMaster Group
  *
- * License to use UltraMaster Juno-6 is provided free of charge subject to the 
+ * License to use UltraMaster Juno-6 is provided free of charge subject to the
  * following restrictions:
  *
  * 1.) This license is for your personal use only.
  *
- * 2.) No portion of this software may be redistributed by you to any other 
- *     person in any form. 
+ * 2.) No portion of this software may be redistributed by you to any other
+ *     person in any form.
  *
  * 3.) You may not sell UltraMaster Juno-6 to any person.
  *
- * 4.) UltraMaster Juno-6 is provided without any express or implied warranty. 
- *     In no event shall UltraMaster Group be held liable for any damages 
+ * 4.) UltraMaster Juno-6 is provided without any express or implied warranty.
+ *     In no event shall UltraMaster Group be held liable for any damages
  *     arising from the use of UltraMaster Juno-6.
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/30 10:31:38 $
+ * $Revision: 1.3 $$Date: 2004/03/31 12:01:19 $
  */
 #ifndef RMS_H
 #define RMS_H
@@ -25,7 +25,7 @@
 #include "MoogObject.h"
 
 #ifndef M_PI
-#define M_PI		3.14159265358979323846 
+#define M_PI		3.14159265358979323846
 #endif
 
 
@@ -35,26 +35,29 @@
 /* use one of these two methods for calculating the rms power of a signal */
 #define RMS_LOWPASS
 
-class Rms : public MoogObject 
+class Rms: public MoogObject
 {
-    Output  *output;
+	Output *output;
 
-    double    c1;
-    double    c2;
-    double    q;
+	double c1;
+	double c2;
+	double q;
 
-    double   *inSig;
+	double *inSig;
 
- public:
-    Rms();
+public:
+	Rms();
 
-    void connectTo(ConnectionInfo *info);
-    void disconnectTo(ConnectionInfo *info);
+	void connectTo(ConnectionInfo *info);
+	void disconnectTo(ConnectionInfo *info);
 
-    void sampleGo();
+	void sampleGo();
 
-    /* RTTI */
-    const char *getClassName() { return "Rms"; }
+	/* RTTI */
+	const char *getClassName()
+	{
+		return "Rms";
+	}
 };
 
 #endif /* RMS_H */
