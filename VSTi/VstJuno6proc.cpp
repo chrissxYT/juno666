@@ -62,21 +62,35 @@ void VstJuno6::initSynth(int numVoices)
 	hpf->set("Q", 0.0);
 
 	chorus = new JunoChorus(hpf, "sig", 0);
-
 	PATCH(control, "chorus_off_switch", chorus, "off");
 	PATCH(control, "chorus_I_switch", chorus, "I");
 	PATCH(control, "chorus_II_switch", chorus, "II");
+	
+	phaser = new Phaser(chorus,"sig");
+	PATCH(control,"phaser_minrange",phaser,"minrange");
+	PATCH(control,"phaser_maxrange",phaser,"maxrange");
+	PATCH(control,"phaser_rate",phaser,"rate");
+	PATCH(control,"phaser_feedback",phaser,"feedback");
+	PATCH(control,"phaser_depth",phaser,"depth");
 
-	PATCH(chorus, "sig", dsp, "sig0");
+	PATCH(phaser, "sig", dsp, "sig0");
 	PATCH(control, "volume", dsp, "amp0");
 
 	// for stereo
 	chorus2 = new JunoChorus(hpf, "sig", 1);
+
 	PATCH(control, "chorus_off_switch", chorus2, "off");
 	PATCH(control, "chorus_I_switch", chorus2, "I");
 	PATCH(control, "chorus_II_switch", chorus2, "II");
 
-	PATCH(chorus2, "sig", dsp, "sig1");
+	phaser2 = new Phaser(chorus2,"sig");
+	//PATCH(control,"phaser_minrange",phaser2,"minrange");
+	//PATCH(control,"phaser_maxrange",phaser2,"maxrange");
+	PATCH(control,"phaser_rate",phaser2,"rate");
+	PATCH(control,"phaser_feedback",phaser2,"feedback");
+	//PATCH(control,"phaser_depth",phaser2,"depth");
+
+	PATCH(phaser2, "sig", dsp, "sig1");
 	PATCH(control, "volume", dsp, "amp1");
 
 	for (i = 0;i < numVoices;i++)
