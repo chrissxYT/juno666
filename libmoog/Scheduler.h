@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/14 12:28:55 $
+ * $Revision: 1.6 $$Date: 2004/04/14 13:48:25 $
  */
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
@@ -26,27 +26,35 @@
 #define DEFAULT_SAMPLE_CONTROL_RATIO 32
 #endif
 
+#include <libmoogutil/list.h>
 #include <windows.h>
-#include <libmoogutil/SimpleArray.h>
-#include "GoObject.h"
+//#include <pthread.h>
 
+class GoObject;
 class DSPOutput;
 
 DWORD WINAPI runSynth(void *);
 
 #define CPS(x) (double)(x)/Scheduler::nyquistFreq
 
-typedef SimpleArray <GoObject> GoObjectArray; 
-
-
-
 class Scheduler
 {
     friend DWORD WINAPI runSynth(void *);
+
+    static list_head controlRateList;
+    static list_head sampleRateList;
+
     static DSPOutput *dsp;
+//#ifdef POSIX
+//    static pthread_t tickThread;
+//#else
     static HANDLE tickThread;
+//#endif
+
+    static void safeListOp(list_head *node, list_head *list, bool add);
 
 public:
+
     static void run();
 
     static void Init();

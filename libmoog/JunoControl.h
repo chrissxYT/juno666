@@ -17,13 +17,17 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/07 11:26:32 $
+ * $Revision: 1.4 $$Date: 2004/04/14 13:48:25 $
  */
 #ifndef JUNO_CONTROL_H
 #define JUNO_CONTROL_H
 
 #include "MoogObject.h"
 //#include <libmoogutil/String.h>
+#define SLIDER 0
+#define FULLSLIDER 1
+#define WAY2 2
+#define WAY3 3
 
 class JunoControl: public MoogObject
 {

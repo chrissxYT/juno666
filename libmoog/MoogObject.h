@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/14 12:28:55 $
+ * $Revision: 1.6 $$Date: 2004/04/14 13:48:25 $
  */
 #ifndef _MOOGOBJECT_H
 #define _MOOGOBJECT_H
@@ -78,6 +78,7 @@ protected:
 	void addPorts(char *,...);
 	Output *addOutput(const char *, bool);
 	Output *addOutput(const char *,const char *, bool);
+	Output *addOutput(const char *,const char *,int , bool);
 /*    Input*           addInput(const char *name, int isCtrl){
     puts("should never be called");
     printf("from %s\n",getClassName());

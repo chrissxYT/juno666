@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/14 12:28:55 $
+ * $Revision: 1.6 $$Date: 2004/04/14 13:48:25 $
  */
 #ifndef _OUTPUT_H
 #define _OUTPUT_H
@@ -34,13 +34,20 @@ class Output: public NamedObject
 	ConnectionList connections;
 	bool hasEventInputs;
 	bool continuousOutput;
+	int type; //just normal
 
 public:
+	Output(const char *name,const char *displayname,int type, bool);
 	Output(const char *name,const char *displayname, bool);
 	Output(const char *name, bool);
 
 	void connect(ConnectionInfo *);
 	void disconnect(ConnectionInfo *);
+
+	int getType()
+	{
+	 return  type;
+	}
 
 	double *getData()
 	{

@@ -85,12 +85,16 @@ Output *MoogObject::addOutput(const char *name, bool continuousOutput)
 {
 	return addOutput(name,NULL,continuousOutput);
 }
-Output *MoogObject::addOutput(const char *name, const char *displayname,bool continuousOutput)
+Output *MoogObject::addOutput(const char *name,const char *displayname, bool continuousOutput)
+{
+	return addOutput(name,displayname,0,continuousOutput);
+}
+Output *MoogObject::addOutput(const char *name, const char *displayname,int type,bool continuousOutput)
 {
 	//printf("add output %s to %s %s\n",name,getName(),getClassName());
 
 	debug(DEBUG_STATUS, "addOutput: '%s' to %s::%s.", name, getName(), getClassName());
-	Output *retval = new Output(name,displayname, continuousOutput);
+	Output *retval = new Output(name,displayname,type, continuousOutput);
 	outputs.appendElement(retval);
 	return (retval);
 }

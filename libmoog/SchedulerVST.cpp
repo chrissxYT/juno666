@@ -35,6 +35,13 @@ double Scheduler::nyquistFreq = 0;
 LIST_HEAD(Scheduler::controlRateList);
 LIST_HEAD(Scheduler::sampleRateList);
 
+void Scheduler::Init()
+{
+}
+void Scheduler::DeInit()
+{
+}
+
 void Scheduler::setSampleRate(int actual)
 {
     sampleRate = actual;
