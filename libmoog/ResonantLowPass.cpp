@@ -15,14 +15,17 @@
  *     In no event shall UltraMaster Group be held liable for any damages
  *     arising from the use of UltraMaster Juno-6.
  */
+#include <math.h>
 #include <libmoogutil/debug.h>
 #include "ResonantLowPass.h"
 #include "ConnectionInfo.h"
 #include "Scheduler.h"
 #include "bilinear.h"
+//#include <libmoogutil/valuehelper.h>
 
 
 
+#ifndef MOOGVCF
 void ResonantLowPass::setSectionCoef(int section,
     double a0,
     double a1,
@@ -44,6 +47,7 @@ void ResonantLowPass::setSectionCoef(int section,
     pcoef[section].b1 = b1;
     pcoef[section].b2 = b2;
 }
+#endif
 
 /* ************************ */
 
@@ -65,95 +69,118 @@ void ResonantLowPass_resonanceChanged(MoogObject *o, double data, long )
 ResonantLowPass::ResonantLowPass(Scheduler *sched): MoogObject(sched, NULL)
 {
     changed = true;
+#ifndef MOOGVCF
     pcoef = new BiQuad[SECTIONS];
     setSectionCoef(0, 1.0, 0, 0, 1.0, 0.765367, 1.0);
     setSectionCoef(1, 1.0, 0, 0, 1.0, 1.847759, 1.0);
+#endif
     init();
 }
 
 void ResonantLowPass::init()
 {
-    
-
+#ifdef MOOGVCF
+	in1 = 0.0;
+	in2 = 0.0;
+	in3 = 0.0;
+	in4 = 0.0;
+	out1 = 0.0;
+	out2 = 0.0;
+	out3 = 0.0;
+	out4 = 0.0;
+	resonance = 0.0;
+	cutoff = 0.0;
+	gain = 0.0;
+#endif
+#ifndef MOOGVCF
     hist = new double[2 * SECTIONS];
     coef = new double[4 * SECTIONS];
 
     memset(hist, 0, sizeof(double) * 2 * SECTIONS);
     memset(coef, 0, sizeof(double) * 4 * SECTIONS);
-
+#endif
     addPorts("sig", INPUT, NULL,
              "gain", INPUT, ResonantLowPass_gainChanged, 0, 1,
              "cutoff", INPUT, ResonantLowPass_cutoffChanged, 0, 1,
              "resonance", INPUT, ResonantLowPass_resonanceChanged, 0, 1,
-             "sig", OUTPUT, true,
-        NULL);
+             "sig", OUTPUT, true,NULL);
 
     output = &outputs[0];
     inSig = inputs[0].data;
-    inGain = inputs[1].data;
-    inCutoff = inputs[2].data;
-    inResonance = inputs[3].data;
+  //  inGain = inputs[1].data;
+ //   inCutoff = inputs[2].data;
+ //   inResonance = inputs[3].data;
 
     schedule->scheduleSampleRate(this, true);
 }
 
 ResonantLowPass::~ResonantLowPass()
 {
+#ifndef MOOGVCF
     delete[]hist;
     delete[]coef;
+#endif
 }
 
 void ResonantLowPass::connectTo(ConnectionInfo *info)
 {
     MoogObject::connectTo(info);
     inSig = inputs[0].data;
-    inGain = inputs[1].data;
-    inCutoff = inputs[2].data;
-    inResonance = inputs[3].data;
+    //inGain = inputs[1].data;
+    //inCutoff = inputs[2].data;
+    //inResonance = inputs[3].data;
 }
 
 void ResonantLowPass::disconnectTo(ConnectionInfo *info)
 {
     MoogObject::disconnectTo(info);
     inSig = inputs[0].data;
-    inGain = inputs[1].data;
-    inCutoff = inputs[2].data;
-    inResonance = inputs[3].data;
+  //  inGain = inputs[1].data;
+  //  inCutoff = inputs[2].data;
+  //  inResonance = inputs[3].data;
 }
 
 void ResonantLowPass::gainChanged(double data)
 {
 	if (data>1)data = 1;
 	if (data<0)data = 0;
+	//diffgain = abs((double)(data - newgain));
     gain = data;
 	changed = true;
-   // recalcFilter();
+   
 }
 
 void ResonantLowPass::cutoffChanged(double data)
 {
 	if (data>1)data = 1;
 	if (data<0)data = 0;
+	if (data==0)data = 0.001;
+	if (data==1)data = 0.999;
+	//diffcutoff = abs((double)(data - newcutoff));
     cutoff = data;
+
 	changed = true;
-   // recalcFilter();
+   
 }
 
 void ResonantLowPass::resonanceChanged(double data)
 {
 	if (data>1)data = 1;
 	if (data<0)data = 0;
+	if (data==0)data = 0.001;
+	if (data==1)data = 0.999;
+	//diffresonance = abs((double)(data - newresonance));
     resonance = data;
 	changed = true;
-    //recalcFilter();
+   
 }
-
+#ifndef MOOGVCF
 void ResonantLowPass::recalcFilter()
 {
-	
-    double *coefptr = coef;
-    fixedGain = gain;
 
+    double *coefptr = coef;
+	changed = true;
+	fixedGain = gain;
     for (int i = 0;i < SECTIONS;i++)
     {
         szxform(pcoef[i].a0,
@@ -166,7 +193,7 @@ void ResonantLowPass::recalcFilter()
             // is a two section filter, and we use the same Q for each
             // section, the max Q should be sqrt(1000) or 30.6227
             // FIXME: resonance should probably not be linear
-            pcoef[i].b1 / (resonance * 30.6227 + 1),
+            pcoef[i].b1 / (sqrt(resonance) * 30.6227 + 1),
             pcoef[i].b2,
             cutoff * schedule->nyquistFreq,
             schedule->sampleRate,
@@ -175,10 +202,14 @@ void ResonantLowPass::recalcFilter()
 
         coefptr += 4;
     }
-	changed = false;
+
+	
 	
 }
+#endif
 #define denormal_fix  0.00000001
+
+#ifndef MOOGVCF
 void ResonantLowPass::sampleGo()
 {
 	if (changed)
@@ -215,9 +246,31 @@ void ResonantLowPass::sampleGo()
     output->setData(tmpOutput);
 	
 }
+#else
+void ResonantLowPass::sampleGo()
+{
+double i = *inSig * gain;
+double f = cutoff * 1.16;
+double fb = resonance * (30.6227/2) * (1.0 - 0.15 * f * f);
+i -= out4 * fb;
+i *= 0.35013 * (f*f)*(f*f);
+out1 = i + 0.3 * in1 + (1 - f) * out1; // Pole 1
+in1  = i;
+out2 = out1 + 0.3 * in2 + (1 - f) * out2;  // Pole 2
+in2  = out1;
+out3 = out2 + 0.3 * in3 + (1 - f) * out3;  // Pole 3
+in3  = out2;
+out4 = out3 + 0.3 * in4 + (1 - f) * out4;  // Pole 4
+in4  = out3;
+output->setData(out4);
+}
+
+#endif
 
 void ResonantLowPass::sync()
 {
-    memset(hist, 0, sizeof(double) * 2 * SECTIONS);
+#ifndef MOOGVCF
+   memset(hist, 0, sizeof(double) * 2 * SECTIONS);
     memset(coef, 0, sizeof(double) * 4 * SECTIONS);
+#endif
 }

@@ -21,13 +21,16 @@
 #include "MoogObject.h"
 #include <windows.h>
 
+#define MOOGVCF
 
+#ifndef MOOGVCF
 #define SECTIONS 2
 struct BiQuad
 {
     double a0, a1, a2;
     double b0, b1, b2;
 };
+#endif
 
 
 class ResonantLowPass: public MoogObject
@@ -35,27 +38,42 @@ class ResonantLowPass: public MoogObject
     friend void ResonantLowPass_gainChanged(MoogObject *, double, long);
     friend void ResonantLowPass_cutoffChanged(MoogObject *, double, long);
     friend void ResonantLowPass_resonanceChanged(MoogObject *, double, long);
-
+#ifndef MOOGVCF
     double *hist;
     double *coef;
+#endif
 	bool changed;
 	
 
 	//copied from filterprototype
+#ifndef MOOGVCF
     BiQuad *pcoef;
 	void setSectionCoef(int, double, double, double, double, double, double);
+#endif
 
     //FilterPrototype *proto;
 
-    double gain;
+#ifdef MOOGVCF
+double out1;
+double in1;
+double out2; 
+double in2;  
+double out3; 
+double in3;  
+double out4; 
+double in4;  
+#endif
+	
+	
+	double gain;
     double resonance;
     double cutoff;
 
     Output *output;
     double *inSig;
-    double *inGain;
-    double *inCutoff;
-    double *inResonance;
+  //  double *inGain;
+   // double *inCutoff;
+   // double *inResonance;
 
     double fixedGain;
 
@@ -72,8 +90,9 @@ public:
 
     void connectTo(ConnectionInfo *info);
     void disconnectTo(ConnectionInfo *info);
-
+#ifndef MOOGVCF
     void recalcFilter();
+#endif
     void sampleGo();
 
     void sync();
