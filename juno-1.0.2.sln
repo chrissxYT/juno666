@@ -1,0 +1,51 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "juno6", "juno6\juno6.vcproj", "{6435D44B-C794-43EC-828C-D9BB3D70975A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libmoogutil", "libmoogutil\libmoogutil.vcproj", "{C6B4AEFD-F334-49CA-AA5F-3438664B6B69}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libgmoog", "libgmoog\libgmoog.vcproj", "{C45EDC03-8DE3-45D4-8E79-743071D6BCF3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libmoog", "libmoog\libmoog.vcproj", "{265CD8EC-7381-4105-B74C-C2ACB477C005}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vstjuno6", "VSTi\vstjuno6.vcproj", "{0BE38C13-3D1F-4DB2-8D5E-AC1248551703}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+		{6435D44B-C794-43EC-828C-D9BB3D70975A}.0 = {C6B4AEFD-F334-49CA-AA5F-3438664B6B69}
+		{6435D44B-C794-43EC-828C-D9BB3D70975A}.1 = {265CD8EC-7381-4105-B74C-C2ACB477C005}
+		{6435D44B-C794-43EC-828C-D9BB3D70975A}.2 = {C45EDC03-8DE3-45D4-8E79-743071D6BCF3}
+		{C45EDC03-8DE3-45D4-8E79-743071D6BCF3}.0 = {C6B4AEFD-F334-49CA-AA5F-3438664B6B69}
+		{265CD8EC-7381-4105-B74C-C2ACB477C005}.0 = {C6B4AEFD-F334-49CA-AA5F-3438664B6B69}
+		{265CD8EC-7381-4105-B74C-C2ACB477C005}.1 = {C45EDC03-8DE3-45D4-8E79-743071D6BCF3}
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{6435D44B-C794-43EC-828C-D9BB3D70975A}.Debug.ActiveCfg = Release|Win32
+		{6435D44B-C794-43EC-828C-D9BB3D70975A}.Debug.Build.0 = Release|Win32
+		{6435D44B-C794-43EC-828C-D9BB3D70975A}.Release.ActiveCfg = Release|Win32
+		{6435D44B-C794-43EC-828C-D9BB3D70975A}.Release.Build.0 = Release|Win32
+		{C6B4AEFD-F334-49CA-AA5F-3438664B6B69}.Debug.ActiveCfg = Release|Win32
+		{C6B4AEFD-F334-49CA-AA5F-3438664B6B69}.Debug.Build.0 = Release|Win32
+		{C6B4AEFD-F334-49CA-AA5F-3438664B6B69}.Release.ActiveCfg = Release|Win32
+		{C6B4AEFD-F334-49CA-AA5F-3438664B6B69}.Release.Build.0 = Release|Win32
+		{C45EDC03-8DE3-45D4-8E79-743071D6BCF3}.Debug.ActiveCfg = Release|Win32
+		{C45EDC03-8DE3-45D4-8E79-743071D6BCF3}.Debug.Build.0 = Release|Win32
+		{C45EDC03-8DE3-45D4-8E79-743071D6BCF3}.Release.ActiveCfg = Release|Win32
+		{C45EDC03-8DE3-45D4-8E79-743071D6BCF3}.Release.Build.0 = Release|Win32
+		{265CD8EC-7381-4105-B74C-C2ACB477C005}.Debug.ActiveCfg = Release|Win32
+		{265CD8EC-7381-4105-B74C-C2ACB477C005}.Debug.Build.0 = Release|Win32
+		{265CD8EC-7381-4105-B74C-C2ACB477C005}.Release.ActiveCfg = Release|Win32
+		{265CD8EC-7381-4105-B74C-C2ACB477C005}.Release.Build.0 = Release|Win32
+		{0BE38C13-3D1F-4DB2-8D5E-AC1248551703}.Debug.ActiveCfg = Debug|Win32
+		{0BE38C13-3D1F-4DB2-8D5E-AC1248551703}.Debug.Build.0 = Debug|Win32
+		{0BE38C13-3D1F-4DB2-8D5E-AC1248551703}.Release.ActiveCfg = Release|Win32
+		{0BE38C13-3D1F-4DB2-8D5E-AC1248551703}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
