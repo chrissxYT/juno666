@@ -222,7 +222,37 @@
 				RelativePath="..\resource\3switch.bmp">
 			</File>
 			<File
+				RelativePath="..\resource\A.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\B.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\C.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\D.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\E.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\F.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\G.bmp">
+			</File>
+			<File
 				RelativePath="..\resource\background.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\half.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\knob.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\last.bmp">
 			</File>
 			<File
 				RelativePath="..\resource\resource.h">
