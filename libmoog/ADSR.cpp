@@ -97,6 +97,8 @@ void ADSR::attackChanged(double attack)
     }
     else
     {
+		if (attack < 0.05)
+			attack = 0.05;
         this->attack = -log(attack * .94) * ADSR_SCALE;
     }
 }
