@@ -125,7 +125,6 @@ void ADSR::triggerChanged(double trigger)
 {
     if (trigger > 0)
         state = ATTACK;
-
     else
         state = RELEASE;
 
@@ -163,16 +162,6 @@ void ADSR::sampleGo()
             }
             break;
 
-        case RELEASE:
-            tmpData += release;
-
-            if (tmpData <= 0.0)
-            {
-                tmpData = 0.0;
-                state = FINISHED;
-            }
-            break;
-
         case SUSTAIN:
             if (tmpData < sustain)
             {
@@ -188,8 +177,19 @@ void ADSR::sampleGo()
             }
             break;
 
+        case RELEASE:
+
+            tmpData += release;
+
+            if (tmpData <= 0.0)
+            {
+                tmpData = 0.0;
+                state = FINISHED;
+            }
+            break;
 
         case FINISHED:
+
             MOOG_DEBUG("finished");
             schedule->scheduleSampleRate(this, false);
             break;

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/04/21 09:57:56 $
+ * $Revision: 1.7 $$Date: 2004/04/22 22:59:08 $
  */
 #include <stdlib.h>
 #include <libmoog/JunoSynth.h>
@@ -45,15 +45,15 @@ HPF *hpf;
 
 extern Settings *settings;
 extern String patchFileName;
-
+extern ConnectionManager *connection;
 
 
 bool stereo;
-static ConnectionManager *conn;
+
 ConnectionManager* 
 getConnectionManager()
 {
-    return conn;
+    return connection;
 }
 
 void
@@ -67,11 +67,10 @@ void
 initSynth(JunoControl *junoControl,
     Settings *settings,
     MidiInput *midiInput,
-	ConnectionManager *connection,
-	Scheduler *schedule,
+    Scheduler *schedule,
     int numVoices)
 {
-	conn = connection;
+//    conn = connection;
     stereo = strcmp("yes",
         settings->getString("devices", "stereo_output")) == 0;
 
@@ -86,10 +85,6 @@ initSynth(JunoControl *junoControl,
     p = settings->getString("devices", "FragSize");
     if (strlen(p))
         fragSize = atoi(p);
-
-    //FIXME: we have to hold on to the junoControl pointer... sloppy
-    puts("copy control");
-//    junoControl = _junoControl;
 
     puts("new dsp");
     dsp = new DSPOutput(junoControl, schedule, connection, settings->getString("devices", "dsp-output"),
@@ -150,7 +145,6 @@ initSynth(JunoControl *junoControl,
 
     if (stereo)
     {
-
         chorus2 = new JunoChorus(hpf, "sig", 1);
         PATCH(junoControl, "chorus_off_switch", chorus2, "off");
         PATCH(junoControl, "chorus_I_switch", chorus2, "I");

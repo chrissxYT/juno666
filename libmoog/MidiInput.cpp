@@ -100,7 +100,7 @@ void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwP
 
 void midi_holdChanged(MoogObject *obj,double data,long)
 {
-((MidiInput*)obj)->holdChanged(data);
+    ((MidiInput*)obj)->holdChanged(data);
 }
 
 MidiInput::MidiInput(JunoControl *jc, int nv, Scheduler *sched): 
@@ -110,16 +110,13 @@ nvoices(nv)
 {
     char tmpname[16];
 
-//    this->control = jc;
-//    this->nvoices = nv;
-
 #ifndef TARGET_VST
     input = this;
 #endif
 
     voices = new midi_voice[nvoices];
-	savedGateInfo = new int[nvoices];
-	memset(savedGateInfo, 0, nvoices * sizeof(int));
+    savedGateInfo = new int[nvoices];
+    memset(savedGateInfo, 0, nvoices * sizeof(int));
 
     running = 0;
     lastNote = -1;
@@ -129,26 +126,20 @@ nvoices(nv)
     for (int i = 0;i < nvoices;i++)
     {
         voices[i].note = -1;
-        
-#ifdef TARGET_VST
-		sprintf(tmpname, "voice%d_pitch", i);
-		voices[i].pitchOutput = jc->getOutput(tmpname);
-#else
-		sprintf(tmpname, "sig%d", i);
-		voices[i].pitchOutput = addOutput(tmpname, false);
-#endif
-        
-#ifdef TARGET_VST       
-		sprintf(tmpname, "voice%d_gate", i);
-		voices[i].gateOutput = jc->getOutput(tmpname);
-#else
-		sprintf(tmpname, "amp%d", i);
-		voices[i].gateOutput = addOutput(tmpname, false);
-#endif
+
+        sprintf(tmpname, "sig%d", i);
+        addOutput(tmpname, false);
+        sprintf(tmpname, "amp%d", i);
+        addOutput(tmpname, false);
+
+        sprintf(tmpname, "voice%d_pitch", i);
+        voices[i].pitchOutput = jc->getOutput(tmpname);
+        sprintf(tmpname, "voice%d_gate", i);
+        voices[i].gateOutput = jc->getOutput(tmpname);
     }
 
-	addInput("hold_switch", midi_holdChanged, 0, 1);
-	PATCH(control, "hold_switch", this, "hold_switch");
+    addInput("hold_switch", midi_holdChanged, 0, 1);
+    PATCH(control, "hold_switch", this, "hold_switch");
 
 #ifndef TARGET_VST
 
@@ -361,7 +352,7 @@ MidiInput::doNoteOn(unsigned int c, unsigned int n, unsigned int v)
             voices[i].pitchOutput->setData(CPS(midi_notes[n]));
 
             voices[i].gateOutput->setData(v / 127.0);
-			savedGateInfo[i] = 1;
+            savedGateInfo[i] = 1;
             lastNote = i;
             break;
         }
@@ -380,10 +371,9 @@ MidiInput::allNotesOff()
 
         // important to keep outputting the pitch signal though
         voices[i].gateOutput->setData(0);
-		savedGateInfo[i] = 0;
+        savedGateInfo[i] = 0;
 
     }
-
 }
 
 void
@@ -393,18 +383,18 @@ MidiInput::doNoteOff(unsigned int c, unsigned int n, unsigned int v)
 
     // stop all voices playing this note ( because of race condition? )
     if (!holdPressed)
-	{
-	for (int i = 0;i < nvoices;i++)
     {
-        if (voices[i].note == (int)n)
+        for (int i = 0;i < nvoices;i++)
         {
-            voices[i].note = -1;
-            // important to keep outputting the pitch signal though
-            voices[i].gateOutput->setData(0);
-			savedGateInfo[i] = 0;
+            if (voices[i].note == (int)n)
+            {
+                voices[i].note = -1;
+                // important to keep outputting the pitch signal though
+                voices[i].gateOutput->setData(0);
+                savedGateInfo[i] = 0;
+            }
         }
     }
-	}
 }
 
 void
@@ -428,7 +418,8 @@ MidiInput::doPitchBend(unsigned int amount)
 #endif
 }
 
-void MidiInput::holdChanged(double data)
+void
+MidiInput::holdChanged(double data)
 {
     if (!(holdPressed = (data) ? 1 : 0))
     {

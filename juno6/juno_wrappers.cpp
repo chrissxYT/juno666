@@ -143,7 +143,7 @@ numVoices(_numVoices)
         tmp1.sprintf("sig%d", i);
         tmp2.sprintf("voice%d_pitch", i);
         //puts("add input");
-       if (midiInput)
+        if (midiInput)
         {
             //puts("add really");
             addInput(tmp2, NULL, 0, 0);

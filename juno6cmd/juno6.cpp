@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.10 $$Date: 2004/04/21 09:57:52 $
+ * $Revision: 1.11 $$Date: 2004/04/22 22:59:08 $
  */
 
 #include <stdio.h>
@@ -33,6 +33,8 @@
 
 String patchFileName;
 juno_patch *patches;
+
+ConnectionManager *connection;
 
 #ifdef DOMAIN
 int main(int argc, char **argv)
@@ -63,11 +65,11 @@ int Juno666(int argc, char **argv)
 
     Scheduler *schedule = new Scheduler();
 
-    ConnectionManager *connection = new ConnectionManager();
+    connection = new ConnectionManager();
 
     JunoControl *junoControl = new JunoControl(numVoices, schedule);
 
-	MidiInput *midiInput = new MidiInput(junoControl, numVoices, schedule);
+    MidiInput *midiInput = new MidiInput(junoControl, numVoices, schedule);
 
     if (settings.getInt("devices", "use-midi"))
     {
@@ -82,12 +84,14 @@ int Juno666(int argc, char **argv)
         }
     }
 
-    initSynth(junoControl, &settings, midiInput,connection,schedule, numVoices);
+    initSynth(junoControl, &settings, midiInput, schedule, numVoices);
 
     patches = juno_patchset_new();
+
     load_patches(patchFileName, patches);
 
-	JunoKeyboard *keyboard = new JunoKeyboard(numVoices,junoControl, midiInput,schedule, connection);
+    JunoKeyboard *keyboard = new JunoKeyboard(numVoices, junoControl, midiInput, schedule, connection);
+
     junoControl->MoogObject::getOutput("patch_change")->setData(0);
 
     puts("press any key to abort");

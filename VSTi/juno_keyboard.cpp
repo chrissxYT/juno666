@@ -70,7 +70,7 @@ numVoices(_numVoices)
 
     memset(savedGateInfo, 0, numVoices * sizeof(int));
 
-   /* for (int i = 0;i < numVoices;i++)
+    for (int i = 0;i < numVoices;i++)
     {
         String tmp1, tmp2;
         tmp1.sprintf("sig%d", i);
@@ -84,7 +84,7 @@ numVoices(_numVoices)
         addInput(tmp2, JunoKeyboard_midiGateChanged, i, 1);
         PATCH(midiInput, tmp1, this, tmp2);
         gateOutputs[i] = control->getOutput(tmp2);
-    }*/
+    }
 
     masterTune = 0;
     //addInput("octave_transpose", JunoKeyboard_octaveTransposeChanged, 0, 1);
@@ -114,12 +114,12 @@ void JunoKeyboard::midiGateChanged(int voiceNum, double data)
     //printf("%f\n",inputs[voiceNum * 2].data);
     if (data > 0)
     {
-        JunoKeyboard::gtkKeyPressed(voiceNum, pitch_to_note(schedule->nyquistFreq * *inputs[voiceNum * 2].data) - 36);
+        gtkKeyPressed(voiceNum, pitch_to_note(schedule->nyquistFreq * *inputs[voiceNum * 2].data) - 36);
 
     }
     else
     {
-        JunoKeyboard::gtkKeyReleased(voiceNum);
+        gtkKeyReleased(voiceNum);
     }
 
 }
@@ -179,7 +179,6 @@ void JunoKeyboard::keyTransposeChanged(double data)
     keyTransposePressed = (data) ? 1 : 0;
 }
 
-
 void JunoKeyboard::masterTuneChanged(double data)
 {
     if (!initz)
@@ -190,19 +189,6 @@ void JunoKeyboard::masterTuneChanged(double data)
 
     //printf("master tune changed to %f adjustment=%f\n", data, adjustment);
     transposeVoices(adjustment);
-}
-
-void JunoKeyboard::holdChanged(double data)
-{
-    if (!initz)
-        return;
-    //printf("hold changed to %f\n", data);
-    if (!(holdPressed = (data) ? 1 : 0))
-    {
-        for (int i = 0;i < numVoices;i++)
-            if (!savedGateInfo[i])
-                gateOutputs[i]->setData(0.0);
-    }
 }
 
 void JunoKeyboard::transposeVoices(double tune)
@@ -226,9 +212,9 @@ void JunoKeyboard::changePatch()
         printf("can't change. highest patch number is %d\n", NUM_PATCHES);
         return;
     }
-	if (control==NULL)return;
+    if (control==NULL)return;
     juno_patch *patch = &patches[patchId];
-	if (patch==NULL)return;
+    if (patch==NULL)return;
     control->MoogObject::getOutput("bender_dco")->setData(patch->bender_dco);
     control->MoogObject::getOutput("bender_vcf")->setData(patch->bender_vcf);
     control->MoogObject::getOutput("lfo_trigger")->setData(patch->lfo_trigger);

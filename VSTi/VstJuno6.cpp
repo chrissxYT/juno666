@@ -17,17 +17,15 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 
     midiInput = new MidiInput(control, numVoices, schedule);
 
-	patches = juno_patchset_new();
-
-	keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
-
     initSynth(numVoices);
+
+    patches = juno_patchset_new();
 
     String patchFileName = "juno6.patches";
 
     load_patches(patchFileName, patches);
 
-    
+    keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
 
     setProgram(0);
 
