@@ -22,7 +22,7 @@
 #include "hash.h"
 #include "rcsid.h"
 
-//RCSID("$Id: hash.c,v 1.1 2004/03/26 18:33:41 brainslayer Exp $");
+//RCSID("$Id: hash.c,v 1.1 2004/03/29 12:08:41 brainslayer Exp $");
 
 #define HASH_CONST 37
 

@@ -19,7 +19,7 @@
  * Copyright (c) 1998 Cobite, Inc. All Rights Reserved.
  * @author Karl LaRocca
  * @created Fri Nov  6 14:48:04 1998
- * @version $Revision: 1.1 $$Date: 2004/03/26 18:33:41 $
+ * @version $Revision: 1.1 $$Date: 2004/03/29 12:08:41 $
  */
 #ifndef _TEXT_UTIL_H
 #define _TEXT_UTIL_H
