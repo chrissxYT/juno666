@@ -17,12 +17,14 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/06/25 10:38:42 $
+ * $Revision: 1.7 $$Date: 2004/09/08 16:57:52 $
  */
 #ifndef JUNOSAW_H
 #define JUNOSAW_H
 
 #include "MoogObject.h"
+
+#include "Blit.h"
 
 class JunoSaw: public MoogObject
 {
@@ -33,6 +35,7 @@ private:
 	friend void JunoSaw_sync(MoogObject *, double, long);
 
 	void frqChanged();
+	blit_t b;
 
 	Output *output;
 	double *inFrq;
