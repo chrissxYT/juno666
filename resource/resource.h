@@ -3,3 +3,7 @@
 #define IDB_SLIDER_PICK                 202
 #define IDB_3_SWITCH                    203
 #define IDB_2_SWITCH                    204
+#define IDB_WHITE_BUTTON                205
+#define IDB_YELLOW_BUTTON               206
+#define IDB_ORANGE_BUTTON               207
+#define IDB_LED                         208

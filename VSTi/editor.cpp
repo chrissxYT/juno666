@@ -41,29 +41,57 @@ Editor::open (void* ptr)
 
     addSlider(22, 127, "bender_dco");
     addSlider(41, 127, "bender_vcf");
+    addThreeSwitch(70, 140, "octave_transpose");
 
+    addButton(125, 43, IDB_WHITE_BUTTON, "transpose_switch");
+    addButton(152, 43, IDB_YELLOW_BUTTON, "hold_switch");
+
+    /* Arpeggio */
+    addButton(184, 43, IDB_ORANGE_BUTTON, "arpeggio_switch");
+    addThreeSwitch(205, 48, "arpeggio_mode");
+    addThreeSwitch(242, 48, "arpeggio_range");
     addSlider(260, 33, "arpeggio_rate");
 
+    /* LFO */
     addSlider(281, 33, "lfo_rate");
     addSlider(299, 33, "lfo_delay");
+    addTwoSwitch(314, 56, "lfo_mode");
 
+    /* DCO */
     addSlider(346, 33, "dco_lfo");
     addSlider(364, 33, "dco_pwm");
+    addThreeSwitch(379, 48, "dco_pwm_mod");
+    addButton(407, 43, IDB_WHITE_BUTTON, "dco_pulse_switch");
+    addButton(423, 43, IDB_YELLOW_BUTTON, "dco_saw_switch");
+    addButton(439, 43, IDB_ORANGE_BUTTON, "dco_sub_switch");
     addSlider(460, 33, "dco_sub");
     addSlider(478, 33, "dco_noise");
 
+    /* HPF */
     addSlider(502, 33, "hpf_frq");
 
+    /* VCF */
     addSlider(526, 33, "vcf_frq");
     addSlider(543, 33, "vcf_res");
+    addTwoSwitch(565, 56, "vcf_env_invert");
     addSlider(581, 33, "vcf_env");
     addSlider(600, 33, "vcf_lfo");
     addSlider(618, 33, "vcf_kbd");
 
+    /* VCA */
+    addTwoSwitch(640, 56, "vca_mode");
+    addSlider(668, 33, "volume");
+
+    /* ENV */
     addSlider(689, 33, "env_attack");
     addSlider(707, 33, "env_decay");
     addSlider(726, 33, "env_sustain");
     addSlider(743, 33, "env_release");
+
+    /* Chorus */
+    addButton(765, 43, IDB_WHITE_BUTTON, "chorus_off_switch");
+    addButton(781, 43, IDB_YELLOW_BUTTON, "chorus_I_switch");
+    addButton(797, 43, IDB_ORANGE_BUTTON, "chorus_II_switch");
 
     for(int i=0; i<control->getNumOutputs(); i++)
     {
@@ -90,23 +118,21 @@ Editor::setParameter (long index, float value)
 void
 Editor::valueChanged (CDrawContext* canvas, CControl* ccontrol)
 {   
-    long ctlid = ccontrol->getTag();
-    
-    effect->setParameterAutomated (ctlid, ccontrol->getValue());
+    long tag = ccontrol->getTag();
+
+    effect->setParameterAutomated (tag, ccontrol->getValue());
     ccontrol->update(canvas);
 }
 
 void
 Editor::addSlider (int x, int y, char *outputName)
 {   
-    CBitmap *sliderBg = new CBitmap (IDB_SLIDER_BG);
-    CBitmap *sliderPick = new CBitmap (IDB_SLIDER_PICK);
+    CBitmap *sliderBg = new CBitmap(IDB_SLIDER_BG);
+    CBitmap *sliderPick = new CBitmap(IDB_SLIDER_PICK);
 
     int tag = control->getOutputNum(outputName);
 
-    CRect size( 0, 0, sliderBg->getWidth(), sliderBg->getHeight() );
-
-    size.offset(x, y);
+    CRect size( x, y, x + sliderBg->getWidth(), y + sliderBg->getHeight() );
 
     CPoint point(0, 0);
 
@@ -124,4 +150,56 @@ Editor::addSlider (int x, int y, char *outputName)
 
     sliderBg->forget();
     sliderPick->forget();
+}
+
+void
+Editor::addButton (int x, int y, int bmp, char *outputName)
+{   
+    CBitmap *bitmap = new CBitmap(bmp);
+
+    int tag = control->getOutputNum(outputName);
+
+    CRect size(x, y, x + bitmap->getWidth(), y + bitmap->getHeight() / 2);
+
+    guiControl[tag] = new COnOffButton(size, this, tag, bitmap);
+
+    frame->addView(guiControl[tag]);
+
+    bitmap->forget();
+}
+
+void
+Editor::addTwoSwitch (int x, int y, char *outputName)
+{   
+    CBitmap *bitmap = new CBitmap(IDB_2_SWITCH);
+
+    int tag = control->getOutputNum(outputName);
+
+    CRect size(x, y, x + bitmap->getWidth(), y + bitmap->getHeight() / 2);
+
+    CPoint point(0, 0);
+
+    guiControl[tag] = new CVerticalSwitch(size, this, tag, 2, bitmap->getHeight() / 2, 2, bitmap, point);
+
+    frame->addView(guiControl[tag]);
+
+    bitmap->forget();
+}
+
+void
+Editor::addThreeSwitch (int x, int y, char *outputName)
+{   
+    CBitmap *bitmap = new CBitmap(IDB_3_SWITCH);
+
+    int tag = control->getOutputNum(outputName);
+
+    CRect size(x, y, x + bitmap->getWidth(), y + bitmap->getHeight() / 3);
+
+    CPoint point(0, 0);
+
+    guiControl[tag] = new CVerticalSwitch(size, this, tag, 3, bitmap->getHeight() / 3, 3, bitmap, point);
+
+    frame->addView(guiControl[tag]);
+
+    bitmap->forget();
 }

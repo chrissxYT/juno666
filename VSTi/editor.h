@@ -12,6 +12,9 @@ class Editor : public AEffGUIEditor, public CControlListener
         ~Editor ();
 
         void addSlider (int x, int y, char *outputName);
+        void addButton (int x, int y, int bmp, char *outputName);
+        void addTwoSwitch (int x, int y, char *outputName);
+        void addThreeSwitch (int x, int y, char *outputName);
 
     protected:
 

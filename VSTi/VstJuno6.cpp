@@ -112,6 +112,9 @@ void VstJuno6::getParameterName(long index, char *label)
 
 void VstJuno6::setParameter(long index, float value)
 {
+    if (editor)
+        ((AEffGUIEditor*)editor)->setParameter (index, value);
+
     if (control)
     {
         switch (control->getOutput(index)->getType())
@@ -138,9 +141,6 @@ void VstJuno6::setParameter(long index, float value)
                 control->getOutput(index)->setData(value);
         }
     }
-
-    if (editor)
-        ((AEffGUIEditor*)editor)->setParameter (index, value);
 }
 
 float VstJuno6::getParameter(long index)
@@ -164,10 +164,8 @@ float VstJuno6::getParameter(long index)
         }
         return value;
     }
-    else
-    {
-        return 0;
-    }
+
+    return 0;
 }
 
 bool VstJuno6::getProgramNameIndexed(long category, long index, char *text)
