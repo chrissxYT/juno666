@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/06 13:41:59 $
+ * $Revision: 1.5 $$Date: 2004/04/06 14:53:51 $
  */
 
 #include <stdio.h>
@@ -89,12 +89,13 @@ int Juno666(int argc, char **argv)
 	}
 
 	initSynth(junoControl, &settings, midiInput, numVoices);
-	initGui(junoControl, &settings, midiInput, numVoices);
 	patches = juno_patchset_new();
 	load_patches(patchFileName, patches);
-
+	initGui(junoControl, &settings, midiInput, numVoices);
+	
+	
 	junoControl->MoogObject::getOutput("patch_change")->setData(0);
-
+	
 	gdk_threads_enter();
 
 	gtk_main();
