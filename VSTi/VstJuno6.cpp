@@ -2,6 +2,8 @@
 
 #include "VstJuno6.h"
 
+#include "editor.h"
+
 VstJuno6::VstJuno6(audioMasterCallback audioMaster):
 AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 {
@@ -25,7 +27,9 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 
     load_patches(patchFileName, patches);
 
-	keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
+    keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
+
+    setEditor( new Editor( this, control ) );
 
     setProgram(0);
 
@@ -59,6 +63,14 @@ void VstJuno6::setProgram(long program)
     curProgram = program;
 
     control->MoogObject::getOutput("patch_change")->setData(program);
+
+    if (editor)
+    {   
+        for(int i=0; i<control->getNumOutputs(); i++)
+        {
+            ((AEffGUIEditor*)editor)->setParameter(i, (float) * control->getOutput(i)->getData());
+        }
+    }
 }
 
 void VstJuno6::setProgramName(char *name)
@@ -126,6 +138,9 @@ void VstJuno6::setParameter(long index, float value)
                 control->getOutput(index)->setData(value);
         }
     }
+
+    if (editor)
+        ((AEffGUIEditor*)editor)->setParameter (index, value);
 }
 
 float VstJuno6::getParameter(long index)

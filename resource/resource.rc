@@ -1,0 +1,7 @@
+#include "resource.h"
+
+IDB_BACKGROUND    BITMAP DISCARDABLE "background.bmp"
+IDB_SLIDER_BG     BITMAP DISCARDABLE "sliderbg.bmp"
+IDB_SLIDER_PICK   BITMAP DISCARDABLE "sliderpick.bmp"
+IDB_3_SWITCH      BITMAP DISCARDABLE "3switch.bmp"
+IDB_2_SWITCH      BITMAP DISCARDABLE "2switch.bmp"

@@ -150,6 +150,9 @@
 				RelativePath="VstJuno6proc.cpp">
 			</File>
 			<File
+				RelativePath="editor.cpp">
+			</File>
+			<File
 				RelativePath="juno_keyboard.cpp">
 			</File>
 		</Filter>
@@ -160,12 +163,18 @@
 				RelativePath="VstJuno6.h">
 			</File>
 			<File
+				RelativePath="editor.h">
+			</File>
+			<File
 				RelativePath="juno_keyboard.h">
 			</File>
 		</Filter>
 		<Filter
 			Name="VST Files"
 			Filter="">
+			<File
+				RelativePath="common\AEffEditor.hpp">
+			</File>
 			<File
 				RelativePath="common\AEffect.h">
 			</File>
@@ -179,10 +188,53 @@
 				RelativePath="common\aeffectx.h">
 			</File>
 			<File
+				RelativePath="common\aeffguieditor.cpp">
+			</File>
+			<File
+				RelativePath="common\aeffguieditor.h">
+			</File>
+			<File
 				RelativePath="common\audioeffectx.cpp">
 			</File>
 			<File
 				RelativePath="common\audioeffectx.h">
+			</File>
+			<File
+				RelativePath="common\vstcontrols.cpp">
+			</File>
+			<File
+				RelativePath="common\vstcontrols.h">
+			</File>
+			<File
+				RelativePath="common\vstgui.cpp">
+			</File>
+			<File
+				RelativePath="common\vstgui.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="">
+			<File
+				RelativePath="..\resource\2switch.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\3switch.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\background.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\resource.h">
+			</File>
+			<File
+				RelativePath="..\resource\resource.rc">
+			</File>
+			<File
+				RelativePath="..\resource\sliderbg.bmp">
+			</File>
+			<File
+				RelativePath="..\resource\sliderpick.bmp">
 			</File>
 		</Filter>
 		<File
