@@ -133,7 +133,7 @@ private:
 	juno_patch *patches;
 
 	JunoArpeggio *arpeggio;
-	JunoControl *control;
+	Control *control;
 	Attenuator *pwmLfo;
 	JunoLfo *lfo;
 	Rand *noise;

@@ -17,15 +17,16 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.14 $$Date: 2004/06/11 11:34:29 $
+ * $Revision: 1.15 $$Date: 2004/06/21 11:16:34 $
  */
 
 #include <libmoogutil/String.h>
 #include "JunoControl.h"
 
+
 //types
 
-JunoControl::JunoControl(int voices, Scheduler *sched): MoogObject(sched, NULL)
+JunoControl::JunoControl(int voices, Scheduler *sched): Control(sched)
 {
     addOutput("bender", "Pitch Bender", false);
     addOutput("bender_dco", "DCO", false);

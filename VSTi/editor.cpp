@@ -7,7 +7,7 @@
 
 #define KEY_CONTROL_TAG_OFFSET 1024
 
-Editor::Editor(Scheduler *sched, ConnectionManager *conn,AudioEffect *fx, JunoControl *cntrl, MidiInput *midiinput): 
+Editor::Editor(Scheduler *sched, ConnectionManager *conn,AudioEffect *fx, Control *cntrl, MidiInput *midiinput): 
     MoogObject(sched,conn),
     AEffGUIEditor(fx),
 	control(cntrl),

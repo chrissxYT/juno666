@@ -18,7 +18,7 @@
 #include <stdlib.h>
 
 #include "JunoArpeggio.h"
-#include "JunoControl.h"
+#include "Control.h"
 #include "MoogObject.h"
 #include "ConnectionManager.h"
 #include "Scheduler.h"
@@ -51,7 +51,7 @@ void JunoArpeggio_rateChanged(MoogObject *o, double data, long)
     ((JunoArpeggio *)o)->rateChanged(data);
 }
 
-JunoArpeggio::JunoArpeggio(JunoControl *jc, int voices, JunoVoice *v[], Scheduler *sched, ConnectionManager *conn): 
+JunoArpeggio::JunoArpeggio(Control *jc, int voices, JunoVoice *v[], Scheduler *sched, ConnectionManager *conn): 
 MoogObject(sched, conn),
 control(jc),
 numVoices(voices)

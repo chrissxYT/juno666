@@ -31,7 +31,7 @@
 #include "JunoLfo.h"
 #include "Scheduler.h"
 
-class JunoControl;
+class Control;
 
 class JunoVoice: public MoogObject
 {
@@ -52,7 +52,7 @@ class JunoVoice: public MoogObject
     friend void JunoVoice_vcfenvChanged(MoogObject *, double, long);
     friend void JunoVoice_vcamodeChanged(MoogObject *, double, long);
 
-    JunoControl *jc;
+    Control *jc;
     int voiceNum;
     int init;
 
@@ -124,7 +124,7 @@ private:
     void updateFrq();
 
 public:
-    JunoVoice(JunoControl *, int, Rand *_noise, JunoLfo *_lfo, Attenuator *_pwmLfo, Scheduler *sched, ConnectionManager *conn);
+    JunoVoice(Control *, int, Rand *_noise, JunoLfo *_lfo, Attenuator *_pwmLfo, Scheduler *sched, ConnectionManager *conn);
 	
     ~JunoVoice();
 

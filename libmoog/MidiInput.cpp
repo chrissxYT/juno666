@@ -108,7 +108,7 @@ void midi_doUniSono(MoogObject *obj,double data,long)
     ((MidiInput*)obj)->doUniSono(data);
 }
 
-MidiInput::MidiInput(JunoControl *jc, int nv, Scheduler *sched): 
+MidiInput::MidiInput(Control *jc, int nv, Scheduler *sched): 
 MoogObject(sched, NULL),
 control(jc),
 nvoices(nv)

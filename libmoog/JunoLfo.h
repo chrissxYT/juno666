@@ -21,7 +21,7 @@
 #include <libmoog/MoogObject.h>
 #include <libmoog/Oscillator.h>
 
-class JunoControl;
+class Control;
 
 class JunoLfo: public MoogObject
 {
@@ -51,7 +51,7 @@ class JunoLfo: public MoogObject
     void checkTrigger();
 
 public:
-    JunoLfo(JunoControl *, int, Scheduler *sched, ConnectionManager *conn);
+    JunoLfo(Control *, int, Scheduler *sched, ConnectionManager *conn);
     ~JunoLfo();
 
     void controlGo();

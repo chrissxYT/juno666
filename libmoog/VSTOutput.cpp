@@ -29,7 +29,7 @@ void setStereoValue(MoogObject *o, double data, long)
     ((VSTOutput *)o)->VSTOutput::setStereo(data);
 }
 
-VSTOutput::VSTOutput(JunoControl *jc, Scheduler *sched, ConnectionManager *conn): MoogObject(sched, conn)
+VSTOutput::VSTOutput(Control *jc, Scheduler *sched, ConnectionManager *conn): MoogObject(sched, conn)
 {
     addInput("panning", setPanningValues, 0, 1);
     addInput("stereo_switch", setStereoValue, 0, 1);

@@ -42,7 +42,7 @@ void JunoBender_midiValueChanged(MoogObject *o, double data, long userdata)
 }
 
 JunoKeyboard::JunoKeyboard(
-	JunoControl *_control,
+	Control *_control,
 	MidiInput *_midiInput,
 	juno_patch *_patches,
 	int _numVoices, Scheduler *sched, ConnectionManager *conn):

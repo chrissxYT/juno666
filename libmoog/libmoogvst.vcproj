@@ -140,6 +140,9 @@
 				RelativePath="ConnectionManager.cpp">
 			</File>
 			<File
+				RelativePath=".\Control.cpp">
+			</File>
+			<File
 				RelativePath="DataBlock.cpp">
 			</File>
 			<File
@@ -180,6 +183,15 @@
 			</File>
 			<File
 				RelativePath="JunoVoice.cpp">
+			</File>
+			<File
+				RelativePath=".\JupiterControl.cpp">
+			</File>
+			<File
+				RelativePath=".\JupiterSaw2.cpp">
+			</File>
+			<File
+				RelativePath=".\JupiterVoice.cpp">
 			</File>
 			<File
 				RelativePath="MidiInput.cpp">
@@ -255,6 +267,9 @@
 				RelativePath="ConnectionManager.h">
 			</File>
 			<File
+				RelativePath=".\Control.h">
+			</File>
+			<File
 				RelativePath="DataBlock.h">
 			</File>
 			<File
@@ -295,6 +310,15 @@
 			</File>
 			<File
 				RelativePath="JunoVoice.h">
+			</File>
+			<File
+				RelativePath=".\JupiterControl.h">
+			</File>
+			<File
+				RelativePath=".\JupiterSaw2.h">
+			</File>
+			<File
+				RelativePath=".\JupiterVoice.h">
 			</File>
 			<File
 				RelativePath="MidiInput.h">

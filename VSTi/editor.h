@@ -8,7 +8,7 @@
 class Editor: public AEffGUIEditor, public CControlListener, public MoogObject
 {
 public:
-	Editor(Scheduler *sched,ConnectionManager *conn,AudioEffect *effect, JunoControl *cntrl, MidiInput *midiinput);
+	Editor(Scheduler *sched,ConnectionManager *conn,AudioEffect *effect, Control *cntrl, MidiInput *midiinput);
 	~Editor();
 
 	const char *getClassName()
@@ -42,7 +42,7 @@ private:
 
 	MidiInput *midiInput;
 	CBitmap *bmpBackground;
-	JunoControl *control;
+	Control *control;
 
 	CControl **guiControl;
 

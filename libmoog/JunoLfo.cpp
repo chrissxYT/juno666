@@ -17,7 +17,7 @@
  */
 #include <math.h>
 #include "JunoLfo.h"
-#include "JunoControl.h"
+#include "Control.h"
 #include "ConnectionManager.h"
 #include "WaveGen.h"
 #include "Scheduler.h"
@@ -47,7 +47,7 @@ void JunoLfo_voicegateChanged(MoogObject *o, double data, long userData)
     ((JunoLfo *)o)->voicegateChanged(userData, data);
 }
 
-JunoLfo::JunoLfo(JunoControl *jc, int voices, Scheduler *sched, ConnectionManager *conn): 
+JunoLfo::JunoLfo(Control *jc, int voices, Scheduler *sched, ConnectionManager *conn): 
 MoogObject(sched, conn), osc(sched)
 {
     osc.setWaveData(wg_tri(4096));

@@ -40,7 +40,7 @@ struct juno_arpeggio_note
     struct list_head node;
 };
 
-class JunoControl;
+class Control;
 
 class JunoArpeggio: public MoogObject
 {
@@ -82,11 +82,11 @@ class JunoArpeggio: public MoogObject
 
     void turnOnArpeggio(bool on);
 
-    JunoControl *control;
+    Control *control;
     JunoVoice *voice[64];
 
 public:
-    JunoArpeggio(JunoControl *, int, JunoVoice *v[], Scheduler *sched, ConnectionManager *conn);
+    JunoArpeggio(Control *, int, JunoVoice *v[], Scheduler *sched, ConnectionManager *conn);
 
     void connectTo(ConnectionInfo *info);
     void disconnectTo(ConnectionInfo *info);

@@ -151,7 +151,10 @@ void ADSR::ampChanged(double _amp)
 void ADSR::triggerChanged(double trigger)
 {
     if (trigger > 0)
+	{
+		output->data = 0;
         state = ATTACK;
+	}
     else
         state = RELEASE;
 

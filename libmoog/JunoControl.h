@@ -17,19 +17,16 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/16 14:39:00 $
+ * $Revision: 1.6 $$Date: 2004/06/21 11:16:34 $
  */
 #ifndef JUNO_CONTROL_H
 #define JUNO_CONTROL_H
 
 #include "MoogObject.h"
+#include "Control.h"
 //#include <libmoogutil/String.h>
-#define SLIDER 0
-#define FULLSLIDER 1
-#define WAY2 2
-#define WAY3 3
 
-class JunoControl: public MoogObject
+class JunoControl: public Control
 {
 public:
 	JunoControl(int, Scheduler *sched);

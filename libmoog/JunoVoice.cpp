@@ -18,7 +18,7 @@
 #include <libmoogutil/String.h>
 
 #include "JunoVoice.h"
-#include "JunoControl.h"
+#include "Control.h"
 #include <math.h>
 
 #ifndef TARGET_VST
@@ -108,7 +108,7 @@ void JunoVoice_vcamodeChanged(MoogObject *o, double data, long )
     ((JunoVoice *)o)->vcamodeChanged(data);
 }
 
-JunoVoice::JunoVoice(JunoControl *_jc, int _voiceNum, 
+JunoVoice::JunoVoice(Control *_jc, int _voiceNum, 
 
 Rand *_noise,
 JunoLfo *_lfo,
@@ -450,7 +450,8 @@ void JunoVoice::updateFrq()
 {
     if (!init)return;
 	double frq = kbd * pow(2.0, 2 * lfo * dcolfo / 12) * pow(2.0, bender * benderdco);
- 	
+   // double frq = kbd * pow((double)2, (double)(2 * lfo * dcolfo / 12) * pow((double)2, (double)(bender * benderdco)));
+	
     pulse.set("frq", frq);
     saw.set("frq", frq);
     sub.set("frq", frq / 2);

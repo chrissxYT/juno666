@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.13 $$Date: 2004/05/24 11:31:57 $
+ * $Revision: 1.14 $$Date: 2004/06/21 11:16:34 $
  */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
@@ -25,7 +25,7 @@
 #include "MoogObject.h"
 #include <windows.h>
 #include <mmsystem.h>
-#include "JunoControl.h"
+#include "Control.h"
 
 
 /* Note, there should be various modes ( there are more than these )
@@ -63,7 +63,7 @@ public:
     struct midi_voice *voices;
     int *savedGateInfo;
 
-    JunoControl *control;
+    Control *control;
 
     inline void *run();
     inline void allNotesOff();
@@ -73,7 +73,7 @@ public:
     inline void holdChanged(double data);
 	inline void doUniSono(double data);
 
-    MidiInput(JunoControl *jc, int nv, Scheduler *sched);
+    MidiInput(Control *jc, int nv, Scheduler *sched);
     ~MidiInput();
 
     void start();

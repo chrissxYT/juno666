@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/17 13:46:21 $
+ * $Revision: 1.5 $$Date: 2004/06/21 11:16:34 $
  */
 #ifndef _VSTOutput_H
 #define _VSTOutput_H
@@ -32,7 +32,7 @@
 #define SAMPLE_RATE_8k   8000
 
 #include "libmoog/Scheduler.h"
-#include "libmoog/JunoControl.h"
+#include "libmoog/Control.h"
 #include "libmoog/ConnectionManager.h"
 
 class VSTOutput: public MoogObject
@@ -50,7 +50,7 @@ class VSTOutput: public MoogObject
     float *out2;
 
 public:
-    VSTOutput(JunoControl *jc, Scheduler *sched, ConnectionManager *conn);
+    VSTOutput(Control *jc, Scheduler *sched, ConnectionManager *conn);
     ~VSTOutput();
 
     void connectTo(ConnectionInfo *info);

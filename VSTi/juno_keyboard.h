@@ -43,7 +43,7 @@ class JunoKeyboard: public MoogObject
 
 	void transposeVoices(double);
 
-	JunoControl *control;
+	Control *control;
 	MidiInput *midiInput;
 	juno_patch *patches;
 
@@ -51,7 +51,7 @@ public:
 
 	JunoKeyboard(
 
-		JunoControl *_control,
+		Control *_control,
 		MidiInput *_midiInput,
 		juno_patch *_patches,
 
