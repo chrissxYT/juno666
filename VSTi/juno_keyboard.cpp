@@ -97,6 +97,7 @@ void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
 	control->MoogObject::getOutput("env_release")->setData(patch->env_release);
 	control->MoogObject::getOutput("chorus_I_switch")->setData(patch->chorus_I_switch);
 	control->MoogObject::getOutput("chorus_II_switch")->setData(patch->chorus_II_switch);
+	control->MoogObject::getOutput("panning")->setData(patch->panning);
 }
 
 

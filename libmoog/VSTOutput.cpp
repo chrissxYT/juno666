@@ -25,79 +25,106 @@
 
 void setPanningValues(MoogObject *o, double data, long)
 {
-    ((VSTOutput *)o)->setPanning(data);
+	((VSTOutput *)o)->setPanning(data);
+}
+
+void setStereoValue(MoogObject *o, double data, long)
+{
+	((VSTOutput *)o)->VSTOutput::setStereo(data);
 }
 
 VSTOutput::VSTOutput(JunoControl *jc)
 {
-    addInput("panning", setPanningValues, 0, 1);
-    setup();
-    PATCH(jc, "panning", this, "panning");
-    setPanningValues(this, 0.5, 0);
+	addInput("panning", setPanningValues, 0, 1);
+	addInput("stereo_switch", setStereoValue, 0, 1);
+	setup();
+	PATCH(jc, "panning", this, "panning");
+	PATCH(jc, "stereo_switch", this, "stereo_switch");
+	setPanningValues(this, 0.5, 0);
+	setStereoValue(this, 1.0, 0);
 }
 
 void VSTOutput::setup()
 {
-    char tmpname[16];
+	char tmpname[16];
 
-    inSig = new double *[2];
-    inAmp = new double *[2];
+	inSig = new double *[2];
+	inAmp = new double *[2];
 
-    for (int i = 0;i < 2;i++)
-    {
-        sprintf(tmpname, "sig%d", i);
-        inSig[i] = addInput(tmpname)->data;
-        sprintf(tmpname, "amp%d", i);
-        inAmp[i] = addInput(tmpname)->data;
-    }
+	for (int i = 0;i < 2;i++)
+	{
+		sprintf(tmpname, "sig%d", i);
+		inSig[i] = addInput(tmpname)->data;
+		sprintf(tmpname, "amp%d", i);
+		inAmp[i] = addInput(tmpname)->data;
+	}
 
-    dataWrittenCallback = NULL;
+	dataWrittenCallback = NULL;
 
-    Scheduler::setSampleRate(SAMPLE_RATE_44k);
+	Scheduler::setSampleRate(SAMPLE_RATE_44k);
 
-    Scheduler::scheduleSampleRate(this, true);
+	Scheduler::scheduleSampleRate(this, true);
 }
 
 VSTOutput::~VSTOutput()
 {
-    delete[]inSig;
-    delete[]inAmp;
+	delete[]inSig;
+	delete[]inAmp;
 }
 
 void VSTOutput::connectTo(ConnectionInfo *info)
 {
-    MoogObject::connectTo(info);
+	MoogObject::connectTo(info);
 
-    for (int i = 0;i < 2;i++)
-    {
-        inSig[i] = inputs[2 * i+1].data;
-        inAmp[i] = inputs[2 * i+2].data;
-    }
+	for (int i = 0;i < 2;i++)
+	{
+		inSig[i] = inputs[2 * i+2].data;
+		inAmp[i] = inputs[2 * i+3].data;
+	}
 }
 
 void VSTOutput::disconnectTo(ConnectionInfo *info)
 {
-    MoogObject::disconnectTo(info);
+	MoogObject::disconnectTo(info);
 
-    for (int i = 0;i < 2;i++)
-    {
-        inSig[i] = inputs[2 * i+1].data;
-        inAmp[i] = inputs[2 * i+2].data;
-    }
+	for (int i = 0;i < 2;i++)
+	{
+		inSig[i] = inputs[2 * i+2].data;
+		inAmp[i] = inputs[2 * i+3].data;
+	}
+}
+
+void VSTOutput::setStereo(double data)
+{
+	if (data == 0)
+		channels = 1;
+	else
+		channels = 2;
+
 }
 
 void VSTOutput::setPanning(double data)
 {
-    if (data < 0)
-        return;
-    if (data > 1)
-        return;
-    panright = sqrt(data);
-    panleft = sqrt(1 - data);
+	if (data < 0)
+		return;
+	if (data > 1)
+		return;
+	panright = sqrt(data);
+	panleft = sqrt(1 - data);
 }
 
 void VSTOutput::sampleGo()
 {
-    (*out1++) = (float)(*inSig[0] * *inAmp[0] * panright);
-    (*out2++) = (float)(*inSig[1] * *inAmp[1] * panleft);
+	double right = (*inSig[0] * *inAmp[0]);
+	double left = (*inSig[1] * *inAmp[1]);
+	if (channels == 2)
+	{
+		(*out1++) = (float)(right * panright);
+		(*out2++) = (float)(left * panleft);
+	}
+	else
+	{
+		(*out1++) = (float)(right * panright);
+		(*out2++) = (float)(right * panleft);
+	}
 }

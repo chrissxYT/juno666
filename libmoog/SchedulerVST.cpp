@@ -44,92 +44,92 @@ void Scheduler::DeInit()
 
 void Scheduler::setSampleRate(int actual)
 {
-    sampleRate = actual;
-    controlRate = sampleRate / sampleControlRatio;
-    nyquistFreq = sampleRate / 2;
+	sampleRate = actual;
+	controlRate = sampleRate / sampleControlRatio;
+	nyquistFreq = sampleRate / 2;
 }
 
 void Scheduler::safeListOp(list_head *node, list_head *list, bool add)
 {
-    if (add)
-    {
-        if (node->next != NULL)
-        {
-            debug(DEBUG_APPERROR, "Warn: obj already on scheduling list");
-            return;
-        }
+	if (add)
+	{
+		if (node->next != NULL)
+		{
+			debug(DEBUG_APPERROR, "Warn: obj already on scheduling list");
+			return;
+		}
 
-        list_add(node, list);
-    }
-    else
-    {
-        if (node->next == NULL)
-        {
-            debug(DEBUG_APPERROR, "Warn: obj not on scheduling list");
-            return;
-        }
+		list_add(node, list);
+	}
+	else
+	{
+		if (node->next == NULL)
+		{
+			debug(DEBUG_APPERROR, "Warn: obj not on scheduling list");
+			return;
+		}
 
-        /*
-         * This is a bit of hack for the case where an object removes
-         * itself from the list during the tick() walk of the linked
-         * list.  If we clear the list_head that is the current iterator
-         * in tick() then segfault we go.  So we shift the iter previous
-         * here, then it jumps passed where we were in the next advance.
-         */
-        if (node == currentListIter)
-        {
-            currentListIter = currentListIter->prev;
-        }
+		/*
+		 * This is a bit of hack for the case where an object removes
+		 * itself from the list during the tick() walk of the linked
+		 * list.  If we clear the list_head that is the current iterator
+		 * in tick() then segfault we go.  So we shift the iter previous
+		 * here, then it jumps passed where we were in the next advance.
+		 */
+		if (node == currentListIter)
+		{
+			currentListIter = currentListIter->prev;
+		}
 
-        list_del(node);
-        CLEAR_LIST_NODE(node);
-    }
+		list_del(node);
+		CLEAR_LIST_NODE(node);
+	}
 }
 
 void Scheduler::scheduleControlRate(GoObject *obj, bool schedule)
 {
-    if (schedule != obj->isControlScheduled())
-        safeListOp(&obj->controlListNode, &controlRateList, schedule);
+	if (schedule != obj->isControlScheduled())
+		safeListOp(&obj->controlListNode, &controlRateList, schedule);
 }
 
 void Scheduler::scheduleSampleRate(GoObject *obj, bool schedule)
 {
-    if (schedule != obj->isSampleScheduled())
-        safeListOp(&obj->sampleListNode, &sampleRateList, schedule);
+	if (schedule != obj->isSampleScheduled())
+		safeListOp(&obj->sampleListNode, &sampleRateList, schedule);
 }
 int controlCount = 0;
 void Scheduler::run()
 {
-    
-    GoObject *obj;
 
-    if (controlCount == 0)
-    {
-        currentListIter = controlRateList.next;
+	GoObject *obj;
 
-        while (currentListIter != &controlRateList)
-        {
-            obj = list_entry(currentListIter, GoObject, GoObject::controlListNode);
-            obj->controlGo();
-            currentListIter = currentListIter->next;
-        }
+	if (controlCount == 0)
+	{
+		currentListIter = controlRateList.next;
 
-        controlCount = sampleControlRatio;
-    }
+		while (currentListIter != &controlRateList)
+		{
+			obj = list_entry(currentListIter, GoObject, GoObject::controlListNode);
+			obj->controlGo();
+			currentListIter = currentListIter->next;
+		}
 
-    controlCount--;
+		controlCount = sampleControlRatio;
+	}
 
-    currentListIter = sampleRateList.next;
+	controlCount--;
 
-    while (currentListIter != &sampleRateList)
-    {
-        if (currentListIter != NULL)
-        {
-            obj = list_entry(currentListIter, GoObject, sampleListNode);
-            obj->sampleGo();
-            currentListIter = currentListIter->next;
-        }
-        else
-            break;
-    }
+	currentListIter = sampleRateList.next;
+
+	while (currentListIter != &sampleRateList)
+	{
+		if (currentListIter != NULL)
+		{
+			obj = list_entry(currentListIter, GoObject, sampleListNode);
+			obj->sampleGo();
+			currentListIter = currentListIter->next;
+		}
+		else
+			break;
+	}
 }

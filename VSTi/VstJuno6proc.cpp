@@ -3,7 +3,7 @@
 JunoVoice *voice[64];
 
 juno_patch *patches;
-
+int numvoices;
 JunoKeyboard *keyboard;
 MidiInput *midiInput;
 JunoArpeggio *arpeggio;
@@ -19,7 +19,7 @@ void setScope(int v)
 void turnOnArpeggio(bool on)
 {
 	MoogObject *target = (MoogObject *)((on) ? (MoogObject *)arpeggio : (MoogObject *)control);
-	for (int i = 0;i < 6 /* FIXME: 6 = numvoices*/;i++)
+	for (int i = 0;i < numvoices;i++)
 	{
 		if (voice[i])
 		{
@@ -45,6 +45,7 @@ void VstJuno6::resume()
 
 void VstJuno6::initSynth(int numVoices)
 {
+	numvoices = numVoices;
 	dsp = new VSTOutput(control);
 
 	lfo = new JunoLfo(control, numVoices);
@@ -98,7 +99,7 @@ void VstJuno6::initSynth(int numVoices)
 	PATCH(chorus, "sig", dsp, "sig0");
 	PATCH(control, "volume", dsp, "amp0");
 
-	if (1) // stereo
+
 	{
 		chorus2 = new JunoChorus(hpf, "sig", 1);
 		PATCH(control, "chorus_off_switch", chorus2, "off");
@@ -134,6 +135,7 @@ void VstJuno6::initProcess()
 	keyboard = new JunoKeyboard(numVoices);
 
 	control->MoogObject::getOutput("patch_change")->setData(0);
+
 }
 
 void VstJuno6::process(float **inputs, float **outputs, long sampleFrames)

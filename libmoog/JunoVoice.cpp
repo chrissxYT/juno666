@@ -137,7 +137,7 @@ JunoVoice::JunoVoice(JunoControl *_jc, int _voiceNum)
 	attachVoice(jc);
 	PATCH(jc, "bender", this, "bender");
 	PATCH(jc, "bender_dco", this, "bender_dco");
-        
+
 	PATCH(jc, "bender_vcf", this, "bender_vcf");
 	PATCH(jc, "dco_lfo", this, "dco_lfo");
 	PATCH(jc, "dco_pwm", &pwmAttenuator, "amp");
@@ -397,7 +397,7 @@ void JunoVoice::updateVcf()
 	tmp += env * vcfenv * vcfenvinvert;
 	//printf("tmp is %f\n", tmp);
 
-	tmp = tmp * pow((double)2,(double)(bender * bendervcf));
+	tmp = tmp * pow((double)2, (double)(bender * bendervcf));
 
 	tmp = pow(tmp, 4.0);
 	if (tmp >= .999)

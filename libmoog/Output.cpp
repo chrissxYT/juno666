@@ -20,21 +20,21 @@
 #include "Output.h"
 #include "ConnectionInfo.h"
 
-Output::Output(const char *n,const char *displayname,int t, bool _continuousOutput): NamedObject(n,displayname)
+Output::Output(const char *n, const char *displayname, int t, bool _continuousOutput): NamedObject(n, displayname)
 {
 	data = 0;
 	hasEventInputs = false;
 	continuousOutput = _continuousOutput;
 	type = t;
 }
-Output::Output(const char *n,const char *displayname, bool _continuousOutput): NamedObject(n,displayname)
+Output::Output(const char *n, const char *displayname, bool _continuousOutput): NamedObject(n, displayname)
 {
 	data = 0;
 	hasEventInputs = false;
 	continuousOutput = _continuousOutput;
 	type = 0;
 }
-Output::Output(const char *n,bool _continuousOutput): NamedObject(n,NULL)
+Output::Output(const char *n, bool _continuousOutput): NamedObject(n, NULL)
 {
 	data = 0;
 	hasEventInputs = false;

@@ -27,7 +27,7 @@ NamedObject::NamedObject()
 	display = NULL;
 }
 
-NamedObject::NamedObject(const char *n,const char *display)
+NamedObject::NamedObject(const char *n, const char *display)
 {
 	name = NULL;
 	setName(n);

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/04/14 13:48:25 $
+ * $Revision: 1.7 $$Date: 2004/04/15 12:58:08 $
  */
 #ifndef _MOOGOBJECT_H
 #define _MOOGOBJECT_H
@@ -77,8 +77,8 @@ protected:
 	/* allow runtime configuration of objects */
 	void addPorts(char *,...);
 	Output *addOutput(const char *, bool);
-	Output *addOutput(const char *,const char *, bool);
-	Output *addOutput(const char *,const char *,int , bool);
+	Output *addOutput(const char *, const char *, bool);
+	Output *addOutput(const char *, const char *, int, bool);
 /*    Input*           addInput(const char *name, int isCtrl){
     puts("should never be called");
     printf("from %s\n",getClassName());

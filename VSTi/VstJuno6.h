@@ -63,7 +63,8 @@ enum
 	kChorus_off_switch,
 	kChorus_I_switch,
 	kChorus_II_switch,
-
+	kPanningSlider,
+	kStereoSwitch,
 	kNumParams
 };
 

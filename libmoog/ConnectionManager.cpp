@@ -128,11 +128,11 @@ ConnectionManager::disconnect(ConnectionInfo *connection)
 	ASSERT_CONTEXTS(connection->from, connection->to, FALSE);
 
 	debug(DEBUG_STATUS, "ConnectionManager::disconnect()");
-
 	if (connection->to->contextTag)
 		connection->to->contextTag->disconnectImpl(connection);
 	else
 		llDisconnect(connection);
+
 }
 
 void

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/04/09 07:19:07 $
+ * $Revision: 1.2 $$Date: 2004/04/15 12:58:08 $
  */
 #ifndef _VSTOutput_H
 #define _VSTOutput_H
@@ -29,43 +29,51 @@
 
 #define SAMPLE_RATE_44k 44100
 #define SAMPLE_RATE_22k 22050
-#define SAMPLE_RATE_8k   8000
+#define SAMPLE_RATE_8k	 8000
 
 #include "libmoog/JunoControl.h"
 #include "libmoog/ConnectionManager.h"
 
 class VSTOutput: public MoogObject
 {
-    double **inSig;
-    double **inAmp;
-    double panleft;
-    double panright;
+	double **inSig;
+	double **inAmp;
+	double panleft;
+	double panright;
+	int channels;
 
-    void (*dataWrittenCallback)(void);
-    void setup();
+	void (*dataWrittenCallback)(void);
+	void setup();
 
-    float *out1;
-    float *out2;
+	float *out1;
+	float *out2;
 
 public:
-    VSTOutput(JunoControl *jc);
-    ~VSTOutput();
+	VSTOutput(JunoControl *jc);
+	~VSTOutput();
 
-    void connectTo(ConnectionInfo *info);
-    void disconnectTo(ConnectionInfo *info);
-    void setPanning(double data);
+	void connectTo(ConnectionInfo *info);
+	void disconnectTo(ConnectionInfo *info);
+	void setPanning(double data);
+	void setStereo(double data);
 
 //    void setDataWrittenCallback(void (*)(void));
-    void sampleGo();
+	void sampleGo();
 
-    void setOutput1(float *o1){out1 = o1;}
-    void setOutput2(float *o2){out2 = o2;}
+	void setOutput1(float *o1)
+	{
+		out1 = o1;
+	}
+	void setOutput2(float *o2)
+	{
+		out2 = o2;
+	}
 
-    /* RTTI */
-    const char *getClassName()
-    {
-        return "VSTOutput";
-    }
+	/* RTTI */
+	const char *getClassName()
+	{
+		return "VSTOutput";
+	}
 };
 
 #endif /* _VSTOutput_H */
