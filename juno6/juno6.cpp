@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/06 09:54:07 $
+ * $Revision: 1.4 $$Date: 2004/04/06 13:41:59 $
  */
 
 #include <stdio.h>
@@ -73,7 +73,7 @@ int Juno666(int argc, char **argv)
 
 	if (settings.getInt("devices", "use-midi"))
 	{
-		midiInput = new MidiInput(junoControl,settings.getString("devices",
+		midiInput = new MidiInput(junoControl, settings.getString("devices",
 			"midi-input"),
 			numVoices);
 
@@ -87,19 +87,18 @@ int Juno666(int argc, char **argv)
 			midiInput = NULL;
 		}
 	}
-	
+
 	initSynth(junoControl, &settings, midiInput, numVoices);
 	initGui(junoControl, &settings, midiInput, numVoices);
-
 	patches = juno_patchset_new();
-
 	load_patches(patchFileName, patches);
 
-	midiInput->loadPatch(&patches[0]);
+	junoControl->MoogObject::getOutput("patch_change")->setData(0);
 
 	gdk_threads_enter();
 
 	gtk_main();
+
 	gdk_threads_leave();
 	Scheduler::DeInit();
 	exit(1);

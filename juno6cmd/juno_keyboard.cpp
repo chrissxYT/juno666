@@ -13,6 +13,7 @@ extern Settings *settings;
 extern JunoControl *junoControl;
 extern MidiInput *midiInput;
 extern JunoKeyboard *keyboard;
+extern juno_patch *patches;
 
 
 void JunoKeyboard_midiGateChanged(MoogObject *o, double data, long userData)
@@ -50,6 +51,50 @@ void JunoKeyboard_holdChanged(MoogObject *o, double data, long)
 	((JunoKeyboard *)o)->holdChanged(data);
 }
 
+
+void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
+{
+	juno_patch *patch =&patches[userdata];
+	junoControl->MoogObject::getOutput("bender_dco")->setData(patch->bender_dco);
+	junoControl->MoogObject::getOutput("bender_vcf")->setData(patch->bender_vcf);
+	junoControl->MoogObject::getOutput("lfo_trigger")->setData(patch->lfo_trigger);
+	junoControl->MoogObject::getOutput("volume")->setData(patch->volume);
+	junoControl->MoogObject::getOutput("octave_transpose")->setData(patch->octave_transpose);
+	junoControl->MoogObject::getOutput("master_tune");
+	junoControl->MoogObject::getOutput("transpose_switch");
+	junoControl->MoogObject::getOutput("hold_switch");
+	junoControl->MoogObject::getOutput("arpeggio_switch")->setData(patch->arpeggio_switch);
+	junoControl->MoogObject::getOutput("arpeggio_mode")->setData(patch->arpeggio_mode);
+	junoControl->MoogObject::getOutput("arpeggio_range")->setData(patch->arpeggio_range);
+	junoControl->MoogObject::getOutput("arpeggio_rate")->setData(patch->arpeggio_rate);
+	junoControl->MoogObject::getOutput("lfo_rate")->setData(patch->lfo_rate);
+	junoControl->MoogObject::getOutput("lfo_delay")->setData(patch->lfo_delay);
+	junoControl->MoogObject::getOutput("lfo_mode")->setData(patch->lfo_mode);
+	junoControl->MoogObject::getOutput("dco_lfo")->setData(patch->dco_lfo);
+	junoControl->MoogObject::getOutput("dco_pwm")->setData(patch->dco_pwm);
+	junoControl->MoogObject::getOutput("dco_pwm_mod")->setData(patch->dco_pwm_mod);
+	junoControl->MoogObject::getOutput("dco_pulse_switch")->setData(patch->dco_pulse_switch);
+	junoControl->MoogObject::getOutput("dco_saw_switch")->setData(patch->dco_saw_switch);
+	junoControl->MoogObject::getOutput("dco_sub_switch")->setData(patch->dco_sub_switch);
+	junoControl->MoogObject::getOutput("dco_sub")->setData(patch->dco_sub);
+	junoControl->MoogObject::getOutput("dco_noise")->setData(patch->dco_noise);
+	junoControl->MoogObject::getOutput("hpf_frq")->setData(patch->hpf_frq);
+	junoControl->MoogObject::getOutput("vcf_frq")->setData(patch->vcf_frq);
+	junoControl->MoogObject::getOutput("vcf_res")->setData(patch->vcf_res);
+	junoControl->MoogObject::getOutput("vcf_env_invert")->setData(patch->vcf_env_invert);
+	junoControl->MoogObject::getOutput("vcf_env")->setData(patch->vcf_env);
+	junoControl->MoogObject::getOutput("vcf_lfo")->setData(patch->vcf_lfo);
+	junoControl->MoogObject::getOutput("vcf_kbd")->setData(patch->vcf_kbd);
+	junoControl->MoogObject::getOutput("vca_mode")->setData(patch->vca_mode);
+	junoControl->MoogObject::getOutput("env_attack")->setData(patch->env_attack);
+	junoControl->MoogObject::getOutput("env_decay")->setData(patch->env_decay);
+	junoControl->MoogObject::getOutput("env_sustain")->setData(patch->env_sustain);
+	junoControl->MoogObject::getOutput("env_release")->setData(patch->env_release);
+	junoControl->MoogObject::getOutput("chorus_I_switch")->setData(patch->chorus_I_switch);
+	junoControl->MoogObject::getOutput("chorus_II_switch")->setData(patch->chorus_II_switch);
+}
+
+
 int initz=0;
 JunoKeyboard::JunoKeyboard(int _numVoices)
 {
@@ -86,11 +131,13 @@ JunoKeyboard::JunoKeyboard(int _numVoices)
 	addInput("transpose_switch", JunoKeyboard_keyTransposeChanged, 0, 1);
 	addInput("master_tune", JunoKeyboard_masterTuneChanged, 0, 1);
 	addInput("hold_switch", JunoKeyboard_holdChanged, 0, 1);
+	addInput("patch_change", Junokeyboard_changePatch, 0, 1);
 
 	PATCH(junoControl, "octave_transpose", this, "octave_transpose");
 	PATCH(junoControl, "transpose_switch", this, "transpose_switch");
 	PATCH(junoControl, "master_tune", this, "master_tune");
 	PATCH(junoControl, "hold_switch", this, "hold_switch");
+	PATCH(junoControl, "patch_change", this, "patch_change");
 	initz=1;
 }
 

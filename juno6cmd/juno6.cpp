@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/04/06 09:57:01 $
+ * $Revision: 1.2 $$Date: 2004/04/06 13:42:00 $
  */
 
 #include <stdio.h>
@@ -87,9 +87,8 @@ int Juno666(int argc, char **argv)
 
 	patches = juno_patchset_new();
 	load_patches(patchFileName, patches);
-	midiInput->loadPatch(&patches[0]);
 	JunoKeyboard *keyboard = new JunoKeyboard(numVoices);
-
+	junoControl->MoogObject::getOutput("patch_change")->setData(0);
 	puts("press any key to abort");
 	getch();
 	Scheduler::DeInit();

@@ -30,177 +30,177 @@
 DataBlock *
 wg_line(int size, double start, double end)
 {
-    return (wg_lines(size, 1, start, size, end));
+	return (wg_lines(size, 1, start, size, end));
 }
 
 DataBlock *
 wg_saw(int size)
 {
-    return (wg_lines(size, 1, -1.0, size, 1.0));
+	return (wg_lines(size, 1, -1.0, size, 1.0));
 }
 
 DataBlock *
 wg_tri(int size)
 {
-    return (wg_lines(size, 2, -1.0, size / 2, 1.0, size / 2, -1.0));
+	return (wg_lines(size, 2, -1.0, size / 2, 1.0, size / 2, -1.0));
 }
 
 // connected line segments
 DataBlock *
 wg_lines(int size, int nsegs, double initial, ...)
 {
-    va_list ap;
-    int lengths[MAX_NSEGS];
-    double values[MAX_NSEGS];
+	va_list ap;
+	int lengths[MAX_NSEGS];
+	double values[MAX_NSEGS];
 
-    if(nsegs > MAX_NSEGS)
-    {
-        nsegs = MAX_NSEGS;
-    }
+	if (nsegs > MAX_NSEGS)
+	{
+		nsegs = MAX_NSEGS;
+	}
 
-    va_start(ap, initial);
+	va_start(ap, initial);
 
-    for (int n = 0;n < nsegs;n++)
-    {
-        lengths[n] = va_arg(ap, int);
-        values[n] = va_arg(ap, double);
-    }
+	for (int n = 0;n < nsegs;n++)
+	{
+		lengths[n] = va_arg(ap, int);
+		values[n] = va_arg(ap, double);
+	}
 
-    va_end(ap);
+	va_end(ap);
 
-    DataBlock *retval = new DataBlock("", size);
-    int index = 0;
-    for (int n = 0;n < nsegs;n++)
-    {
-        double rise = (values[n] - initial) / lengths[n];
+	DataBlock *retval = new DataBlock("", size);
+	int index = 0;
+	for (int n = 0;n < nsegs;n++)
+	{
+		double rise = (values[n] - initial) / lengths[n];
 
-        for (int i = 0;i < lengths[n];i++)
-        {
-            retval->data[index++] = initial + (i * rise);
-        }
+		for (int i = 0;i < lengths[n];i++)
+		{
+			retval->data[index++] = initial + (i * rise);
+		}
 
-        initial = values[n];
-    }
+		initial = values[n];
+	}
 
-    return (retval);
+	return (retval);
 }
 
 // weighted sine partials
 DataBlock *
 wg_sin(int size, int ncoefs, ...)
 {
-    va_list ap;
-    int a[MAX_NCOEFS];
-    int total_weight = 0;
+	va_list ap;
+	int a[MAX_NCOEFS];
+	int total_weight = 0;
 
-    if(ncoefs > MAX_NCOEFS)
-    {
-        ncoefs = MAX_NCOEFS;
-    }
+	if (ncoefs > MAX_NCOEFS)
+	{
+		ncoefs = MAX_NCOEFS;
+	}
 
-    va_start(ap, ncoefs);
+	va_start(ap, ncoefs);
 
-    for (int n = 0;n < ncoefs;n++)
-    {
-        a[n] = va_arg(ap, int);
-        total_weight += a[n];
-    }
+	for (int n = 0;n < ncoefs;n++)
+	{
+		a[n] = va_arg(ap, int);
+		total_weight += a[n];
+	}
 
-    va_end(ap);
-    double x, y;
-    DataBlock *retval = new DataBlock("", size);
+	va_end(ap);
+	double x, y;
+	DataBlock *retval = new DataBlock("", size);
 
-    double size_2 = size / 2;
-    for (int i = 0;i < size;i++)
-    {
-        x = (i / size_2) * M_PI;
-        y = 0;
+	double size_2 = size / 2;
+	for (int i = 0;i < size;i++)
+	{
+		x = (i / size_2) * M_PI;
+		y = 0;
 
-        for (int n = 0;n < ncoefs;n++)
-        {
-            y += a[n] * sin((n + 1) * x);
-        }
+		for (int n = 0;n < ncoefs;n++)
+		{
+			y += a[n] * sin((n + 1) * x);
+		}
 
-        retval->data[i] = y / total_weight;
-    }
+		retval->data[i] = y / total_weight;
+	}
 
-    return (retval);
+	return (retval);
 }
 
 // weighted cosine partials
 DataBlock *
 wg_cos(int size, int ncoefs, ...)
 {
-    va_list ap;
-    int a[MAX_NCOEFS];
-    int total_weight = 0;
+	va_list ap;
+	int a[MAX_NCOEFS];
+	int total_weight = 0;
 
-    if(ncoefs > MAX_NCOEFS)
-    {
-        ncoefs = MAX_NCOEFS;
-    }
+	if (ncoefs > MAX_NCOEFS)
+	{
+		ncoefs = MAX_NCOEFS;
+	}
 
-    va_start(ap, ncoefs);
+	va_start(ap, ncoefs);
 
-    for (int n = 0;n < ncoefs;n++)
-    {
-        a[n] = va_arg(ap, int);
-        total_weight += a[n];
-    }
-    va_end(ap);
-    double x, y;
+	for (int n = 0;n < ncoefs;n++)
+	{
+		a[n] = va_arg(ap, int);
+		total_weight += a[n];
+	}
+	va_end(ap);
+	double x, y;
 
-    DataBlock *retval = new DataBlock("", size);
+	DataBlock *retval = new DataBlock("", size);
 
-    for (int i = 0;i < size;i++)
-    {
-        x = (i / size) * 2 * M_PI;
-        y = 0;
+	for (int i = 0;i < size;i++)
+	{
+		x = (i / size) * 2 * M_PI;
+		y = 0;
 
-        for (int n = 0;n < ncoefs;n++)
-        {
-            y += a[n] * cos((n + 1) * x);
-        }
+		for (int n = 0;n < ncoefs;n++)
+		{
+			y += a[n] * cos((n + 1) * x);
+		}
 
-        retval->data[i] = y / total_weight;
-    }
+		retval->data[i] = y / total_weight;
+	}
 
-    return (retval);
+	return (retval);
 }
 
 // white noise
 DataBlock *
 wg_noise(int size)
 {
-    DataBlock *retval = new DataBlock("", size);
-    for (int i = 0;i < size;i++)
-    {
-        retval->data[i] = (2.0 * rand() / RAND_MAX) - 1.0;
-    }
-    return (retval);
+	DataBlock *retval = new DataBlock("", size);
+	for (int i = 0;i < size;i++)
+	{
+		retval->data[i] = (2.0 * rand() / RAND_MAX) - 1.0;
+	}
+	return (retval);
 }
 
 DataBlock *
 wg_pow(int size, double min, double max)
 {
-    DataBlock *retval = new DataBlock("", size);
-    for (int i = 0;i < size;i++)
-    {
-        retval->data[i] = pow((double)i / size, 2) * (max - min) + min;
-    }
-    return (retval);
+	DataBlock *retval = new DataBlock("", size);
+	for (int i = 0;i < size;i++)
+	{
+		retval->data[i] = pow((double)i / size, 2) * (max - min) + min;
+	}
+	return (retval);
 }
 
 DataBlock *
 wg_bell(int size, double sharpness)
 {
-    DataBlock *retval = new DataBlock("", size);
-    double x;
-    for (int i = 0;i < size;i++)
-    {
-        x = ((double)i / size * sharpness * 2) - sharpness;
-        retval->data[i] = 1 / (1 + x * x);
-    }
-    return (retval);
+	DataBlock *retval = new DataBlock("", size);
+	double x;
+	for (int i = 0;i < size;i++)
+	{
+		x = ((double)i / size * sharpness * 2) - sharpness;
+		retval->data[i] = 1 / (1 + x * x);
+	}
+	return (retval);
 }
 

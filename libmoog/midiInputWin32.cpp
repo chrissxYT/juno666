@@ -72,58 +72,9 @@ JunoControl *control;
 void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
 extern juno_patch *patches;
 
-/*
-BrainSlayer
 
-Patch wrapper to set the internal juno parameters
-this is used by the PGM change midi command.
-*/
 
-void MidiInput::loadPatch(juno_patch *patch)
-{
-puts("load patches");
-if (control==NULL)puts("error");
-control->MoogObject::getOutput("bender_dco")->setData(patch->bender_dco);
-control->MoogObject::getOutput("bender_vcf")->setData(patch->bender_vcf);
-control->MoogObject::getOutput("lfo_trigger")->setData(patch->lfo_trigger);
-control->MoogObject::getOutput("volume")->setData(patch->volume);
-control->MoogObject::getOutput("octave_transpose")->setData(patch->octave_transpose);
-control->MoogObject::getOutput("master_tune");
-control->MoogObject::getOutput("transpose_switch");
-control->MoogObject::getOutput("hold_switch");
-control->MoogObject::getOutput("arpeggio_switch")->setData(patch->arpeggio_switch);
-control->MoogObject::getOutput("arpeggio_mode")->setData(patch->arpeggio_mode);
-control->MoogObject::getOutput("arpeggio_range")->setData(patch->arpeggio_range);
-control->MoogObject::getOutput("arpeggio_rate")->setData(patch->arpeggio_rate);
-control->MoogObject::getOutput("lfo_rate")->setData(patch->lfo_rate);
-control->MoogObject::getOutput("lfo_delay")->setData(patch->lfo_delay);
-control->MoogObject::getOutput("lfo_mode")->setData(patch->lfo_mode);
-control->MoogObject::getOutput("dco_lfo")->setData(patch->dco_lfo);
-control->MoogObject::getOutput("dco_pwm")->setData(patch->dco_pwm);
-control->MoogObject::getOutput("dco_pwm_mod")->setData(patch->dco_pwm_mod);
-control->MoogObject::getOutput("dco_pulse_switch")->setData(patch->dco_pulse_switch);
-control->MoogObject::getOutput("dco_saw_switch")->setData(patch->dco_saw_switch);
-control->MoogObject::getOutput("dco_sub_switch")->setData(patch->dco_sub_switch);
-control->MoogObject::getOutput("dco_sub")->setData(patch->dco_sub);
-control->MoogObject::getOutput("dco_noise")->setData(patch->dco_noise);
-control->MoogObject::getOutput("hpf_frq")->setData(patch->hpf_frq);
-control->MoogObject::getOutput("vcf_frq")->setData(patch->vcf_frq);
-control->MoogObject::getOutput("vcf_res")->setData(patch->vcf_res);
-control->MoogObject::getOutput("vcf_env_invert")->setData(patch->vcf_env_invert);
-control->MoogObject::getOutput("vcf_env")->setData(patch->vcf_env);
-control->MoogObject::getOutput("vcf_lfo")->setData(patch->vcf_lfo);
-control->MoogObject::getOutput("vcf_kbd")->setData(patch->vcf_kbd);
-control->MoogObject::getOutput("vca_mode")->setData(patch->vca_mode);
-control->MoogObject::getOutput("env_attack")->setData(patch->env_attack);
-control->MoogObject::getOutput("env_decay")->setData(patch->env_decay);
-control->MoogObject::getOutput("env_sustain")->setData(patch->env_sustain);
-control->MoogObject::getOutput("env_release")->setData(patch->env_release);
-control->MoogObject::getOutput("chorus_I_switch")->setData(patch->chorus_I_switch);
-control->MoogObject::getOutput("chorus_II_switch")->setData(patch->chorus_II_switch);
-puts("ready");
-}
-
-MidiInput::MidiInput(JunoControl *jc,const char *device, int nvoices)
+MidiInput::MidiInput(JunoControl *jc, const char *device, int nvoices)
 {
 	input = this;
 	control = jc;
@@ -165,9 +116,9 @@ MidiInput::MidiInput(JunoControl *jc,const char *device, int nvoices)
 	{
 		voices[i].note = -1;
 		sprintf(tmpname, "sig%d", i);
-		voices[i].pitchOutput = addOutput(tmpname,false);
+		voices[i].pitchOutput = addOutput(tmpname, false);
 		sprintf(tmpname, "amp%d", i);
-		voices[i].gateOutput = addOutput(tmpname,false);	
+		voices[i].gateOutput = addOutput(tmpname, false);
 	}
 
 }
@@ -184,7 +135,7 @@ MidiInput::~MidiInput()
 Output *
 MidiInput::getOutput(const char *n)
 {
-	
+
 	Output *retval = MoogObject::getOutput(n);
 	if (retval == NULL && strlen(n) > 3 && strncmp("ctl", n, 3) == 0)
 	{
@@ -271,14 +222,37 @@ void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwP
 			case MIDI_CTL_CHANGE: //0xB0
 
 				debug(DEBUG_STATUS, "CTL_CHANGE %d %d %d\n", channel, data[0], data[1]);
+				switch (data[0])
+				{
+					case 1: // modulation
+						printf("modulation to %d\n", data[1]);
+						break;
+					case 7: //main volume
+						printf("set main volume to %d\n", data[1]);
+						control->MoogObject::getOutput("volume")->setData(data[1] / 127);
+						break;
+					case 10: //panning
+						printf("panning not supported %d\n", data[1]);
+						break;
+					case 64: //sustain
+						printf("sustain not supported %d\n", data[1]);
+						break;
+					case 123: //all notes off
+						input->allNotesOff();
+						break;
+					default:
+						printf("unsupported command %d\n", data[0]);
+						break;
 
-				sprintf(ctlName, "ctl%d-%d", channel, data[0]);
+				}
+
+				/*sprintf(ctlName, "ctl%d-%d", channel, data[0]);
 				{
 					Output *out;
 					out = input->MoogObject::getOutput(ctlName);
 					if (out != NULL)
 						out->setData(data[1] / 127.0);
-				}
+				}*/
 
 				break;
 
@@ -291,7 +265,8 @@ void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwP
 					printf("can't change. highes patch number is %d\n", NUM_PATCHES);
 					return;
 				}
-				input->loadPatch(&patches[data[0]]);
+				control->MoogObject::getOutput("patch_change")->setData(data[0]);
+				//input->loadPatch(&patches[data[0]]);
 				break;
 
 			case MIDI_CHN_PRESSURE: //0xD0
@@ -346,6 +321,17 @@ MidiInput::doNoteOn(unsigned int c, unsigned int n, unsigned int v)
 
 		i = (i + 1) % nvoices;
 	} while (i != start);
+}
+void MidiInput::allNotesOff()
+{
+	for (int i = 0;i < nvoices;i++)
+	{
+
+		voices[i].note = -1;
+		// important to keep outputting the pitch signal though
+		voices[i].gateOutput->setData(0);
+	}
+
 }
 
 void
