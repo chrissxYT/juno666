@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
+ * $Revision: 1.4 $$Date: 2004/06/09 15:35:35 $
  */
 #ifndef RAND_H
 #define RAND_H
@@ -43,7 +43,7 @@ class Rand: public MoogObject
 protected:
 	Output *output;
 	double *inFrq;
-	double *inAmp;
+	
 	double *inZro;
 
 	int type;
@@ -59,7 +59,7 @@ public:
 
 	void connectTo(ConnectionInfo *info);
 	void disconnectTo(ConnectionInfo *info);
-
+double *inAmp;
 	void sampleGo();
 	const char *getClassName()
 	{

@@ -123,8 +123,6 @@ private:
     void updateVcf();
     void updateFrq();
 
-	bool hasStopped;
-
 public:
     JunoVoice(JunoControl *, int, Rand *_noise, JunoLfo *_lfo, Attenuator *_pwmLfo, Scheduler *sched, ConnectionManager *conn);
 	
@@ -141,41 +139,35 @@ public:
         else 
             playing = adsr.isPlaying();         
 
-        if(playing && hasStopped==true)
+        if(playing)
         {
             pwmAttenuator.on();
-			junolfo->on();
-			pwmLfo->on();
 			
-
-            pulse.on();
-            saw.on();
 			
-			noise->on();
-            sub.on();
+			pulse.on();
+			
+			saw.on();
+			
+			
+				sub.on();
             subMix.on();
 
             vcf.on();
             balance.on();
-
-            adsr.on();
-            gateAdsr.on();
+			
+				 gateAdsr.on();
+			
+				adsr.on();
+           
 
             voiceVol.on();
 
             
-        }
-		if (playing == 0 && hasStopped==false)
+        }else
 		{
-		hasStopped=true;
         pwmAttenuator.off();
-		junolfo->off();
-		pwmLfo->off();
-
         pulse.off();
         saw.off();
-		
-		noise->off();
         sub.off();
         subMix.off();
 

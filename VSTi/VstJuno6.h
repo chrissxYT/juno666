@@ -65,6 +65,7 @@ enum
     kChorus_II_switch,
     kPanningSlider,
     kStereoSwitch,
+	kUniSono,
     kNumParams
 };
 

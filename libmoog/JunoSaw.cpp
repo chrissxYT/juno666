@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.8 $$Date: 2004/06/04 09:49:44 $
+ * $Revision: 1.9 $$Date: 2004/06/09 15:35:34 $
  */
 #include <math.h>
 #include "JunoSaw.h"
@@ -47,8 +47,8 @@ JunoSaw::JunoSaw(Scheduler *sched): MoogObject(sched, NULL)
 		NULL);
 
 	output = &outputs[0];
-	inFrq = inputs[0].data;
-	inAmp = inputs[1].data;
+	inFrq = inputs[FRQ].data;
+	inAmp = inputs[AMP].data;
 	inSync = inputs[2].data;
 
 	frq = 0;
@@ -59,8 +59,8 @@ JunoSaw::JunoSaw(Scheduler *sched): MoogObject(sched, NULL)
 void JunoSaw::connectTo(ConnectionInfo *info)
 {
 	MoogObject::connectTo(info);
-	inFrq = inputs[0].data;
-	inAmp = inputs[1].data;
+	inFrq = inputs[FRQ].data;
+	inAmp = inputs[AMP].data;
 	inSync = inputs[2].data;
 }
 
@@ -92,6 +92,7 @@ void JunoSaw::frqChanged()
 	else if (!isSampleScheduled())
 		schedule->scheduleSampleRate(this, true);
 	//newfrq = abs((double)((newfrq - newFrq) / (double)ASIMUL));
+
 }
 
 void JunoSaw::sync()
@@ -103,8 +104,6 @@ void JunoSaw::sampleGo()
 {
 	
 	pos += frq;
-
-	MOOG_DEBUG("pos=%f, frq=%f", pos, frq);
 
 	if (pos >= 1.0)
 	{
@@ -134,5 +133,4 @@ void JunoSaw::sampleGo()
 		dampening = 0;
 	}
 
-	MOOG_DEBUG("output=%f", output->data);
 }

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/05/24 19:55:40 $
+ * $Revision: 1.7 $$Date: 2004/06/09 15:35:34 $
  */
 #ifndef ADSR_H
 #define ADSR_H
@@ -66,6 +66,10 @@ public:
 
     int isPlaying()
     {
+		if (state==SUSTAIN)
+		{
+		if (output->data<=0.0)return false;
+		}
         return (state!=FINISHED);
     }
 

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/06/04 09:49:44 $
+ * $Revision: 1.5 $$Date: 2004/06/09 15:35:34 $
  */
 #ifndef JUNOSAW_H
 #define JUNOSAW_H
@@ -26,6 +26,8 @@
 
 class JunoSaw: public MoogObject
 {
+public:
+	double *inAmp;
 private:
 	friend void JunoSaw_frqChanged(MoogObject *, double, long);
 	friend void JunoSaw_sync(MoogObject *, double, long);
@@ -34,7 +36,7 @@ private:
 
 	Output *output;
 	double *inFrq;
-	double *inAmp;
+	
 	double *inSync;
 
 	double pos;

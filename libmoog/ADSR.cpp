@@ -219,5 +219,5 @@ void ADSR::sampleGo()
     }
 
     output->setData(tmpData);
-    MOOG_DEBUG("output=%f", output->data);
+   // MOOG_DEBUG("output=%f", output->data);
 }

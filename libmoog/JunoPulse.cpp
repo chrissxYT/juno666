@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.9 $$Date: 2004/06/04 09:49:44 $
+ * $Revision: 1.10 $$Date: 2004/06/09 15:35:34 $
  */
 #include "JunoPulse.h"
 #include "Scheduler.h"
@@ -46,8 +46,12 @@ JunoPulse::JunoPulse(Scheduler *sched): MoogObject(sched, NULL)
         "sync", OUTPUT, false,
         NULL);
 
+
     sigOutput = &outputs[0];
     syncOutput = &outputs[1];
+
+	//sig_setData = sigOutput->setData;
+	//sync_setData = syncOutput->setData;
 
     pos = 1.0;
     sign = 1.0;
@@ -108,12 +112,14 @@ void JunoPulse::sampleGo()
         if (lastTrigger == 0)
         {
             lastTrigger = 1;
+			
             syncOutput->setData(1);
         }
 
         else if (syncOutput->data == 1)
         {
-            syncOutput->setData(0);
+			
+           syncOutput->setData(0);
         }
     }
 
@@ -139,7 +145,6 @@ void JunoPulse::sampleGo()
         dampening = -power / 320.0;
         sign = -sign;
     }
-
     sigOutput->setData(sigOutput->data + power);
     power += dampening;
 

@@ -147,10 +147,15 @@ pwmLfo(_pwmLfo)
     PATCH(jc, "bender_vcf", this, "bender_vcf");
     PATCH(jc, "dco_lfo", this, "dco_lfo");
     PATCH(jc, "dco_pwm", &pwmAttenuator, "amp");
+
     PATCH(&pwmAttenuator, "sig", &pulse, "width");
+
     PATCH(jc, "dco_pwm_mod", this, "dco_pwm_mod");
+
     PATCH(jc, "dco_pulse_switch", &pulse, "amp");
     PATCH(jc, "dco_saw_switch", &saw, "amp");
+
+
     pwmAttConnection = PATCH(pwmLfo, "sig", &pwmAttenuator, "sig");
     pwmAttenuator.set("sig", 1.0);
 
@@ -164,6 +169,7 @@ pwmLfo(_pwmLfo)
     PATCH(&pulse, "sig", &subMix, "sig0");
     PATCH(&saw, "sig", &subMix, "sig1");
     PATCH(&sub, "sig", &subMix, "sig2");
+
     /* keep the sub in sync with the other two */
     PATCH(&sub, "sync", &pulse, "sync");
     PATCH(&sub, "sync", &saw, "sync");

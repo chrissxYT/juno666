@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.13 $$Date: 2004/05/10 07:26:01 $
+ * $Revision: 1.14 $$Date: 2004/06/09 15:35:35 $
  */
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
@@ -54,7 +54,7 @@ class Scheduler
 
 public:
     int nextGoHandle;
-    void run();
+    void run(int sampleFrames);
 
     Scheduler();
     ~Scheduler();

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.11 $$Date: 2004/05/24 11:32:11 $
+ * $Revision: 1.12 $$Date: 2004/06/09 15:35:34 $
  */
 
 #include <libmoogutil/String.h>
@@ -78,9 +78,10 @@ JunoControl::JunoControl(int voices, Scheduler *sched): MoogObject(sched, NULL)
     addOutput("chorus_II_switch", "Chorus II", WAY2, false);
     addOutput("panning", "Panning", false); //new and works only in stereo mode
     addOutput("stereo_switch", "Stereo Mode", WAY2, false);
+	addOutput("unisono","UniSono",WAY2,false);
 
     addOutput("patch_change", false);
-	addOutput("unisono",false);
+	
 
     for (int i = 0;i < voices;i++)
     {

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/06/04 09:49:44 $
+ * $Revision: 1.5 $$Date: 2004/06/09 15:35:34 $
  */
 #ifndef JUNOPULSE_H
 #define JUNOPULSE_H
@@ -26,18 +26,21 @@
 
 class JunoPulse: public MoogObject
 {
+public:
+	double *inAmp;
 private:
 	friend void JunoPulse_horizBoundsChanged(MoogObject *, double, long);
 	friend void JunoPulse_sync(MoogObject *, double, long);
 
 	void horizBoundsChanged();
 
+	double *sig_data;
 	Output *sigOutput;
 	Output *syncOutput;
 
 	/* input array optimization pointers */
 	double *inFrq;
-	double *inAmp;
+	
 	double *inWidth;
 	double *inSync;
 

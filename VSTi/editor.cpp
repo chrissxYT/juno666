@@ -360,7 +360,7 @@ Editor::addKey (int x, int y, int key, int bmp)
 
     CBitmap *bitmap = new CBitmap(bmp);
 
-    bitmap->setTransparentColor(kWhiteCColor);
+   // bitmap->setTransparentColor(kWhiteCColor);
 
     CRect size(x, y, x + bitmap->getWidth(), y + bitmap->getHeight() / 2);
 

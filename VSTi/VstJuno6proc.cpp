@@ -123,10 +123,8 @@ void VstJuno6::processReplacing(float **inputs, float **outputs, long sampleFram
     {
         dsp->setOutput1(out1);
         dsp->setOutput2(out2);
-
-        while (--sampleFrames >= 0)
         {
-            schedule->run();
+            schedule->run(sampleFrames);
         }
     }
     else

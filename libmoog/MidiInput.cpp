@@ -219,7 +219,7 @@ MidiInput::start()
 
     if (running == 1)
     {
-        debug(DEBUG_APPERROR, "MidiInput already started!");
+        //debug(DEBUG_APPERROR, "MidiInput already started!");
     }
     else
     {
@@ -287,28 +287,28 @@ MidiInput::proc(unsigned char cmd, unsigned char channel, unsigned char *data)
 
         case MIDI_CTL_CHANGE: //0xB0
 
-            debug(DEBUG_STATUS, "CTL_CHANGE %d %d %d\n", channel, data[0], data[1]);
+           // debug(DEBUG_STATUS, "CTL_CHANGE %d %d %d\n", channel, data[0], data[1]);
             switch (data[0])
             {
                 case 1: // modulation
-                    printf("modulation to %d\n", data[1]);
+                  //  printf("modulation to %d\n", data[1]);
                     break;
                 case 7: //main volume
-                    printf("set main volume to %d\n", data[1]);
+                //    printf("set main volume to %d\n", data[1]);
                     control->MoogObject::getOutput("volume")->setData(data[1] / 127);
                     break;
                 case 10: //panning
-                    printf("set panning %d\n", data[1]);
+                //    printf("set panning %d\n", data[1]);
                     control->MoogObject::getOutput("panning")->setData(data[1] / 127);
                     break;
                 case 64: //sustain
-                    printf("sustain not supported %d\n", data[1]);
+                 //   printf("sustain not supported %d\n", data[1]);
                     break;
                 case 123: //all notes off
                     allNotesOff();
                     break;
                 default:
-                    printf("unsupported command %d\n", data[0]);
+              //      printf("unsupported command %d\n", data[0]);
                     break;
             }
 
@@ -316,15 +316,15 @@ MidiInput::proc(unsigned char cmd, unsigned char channel, unsigned char *data)
 
         case MIDI_PGM_CHANGE: //0xC0
 
-            debug(DEBUG_STATUS, "PGM_CHANGE %d %d\n", channel, data[0]);
-            printf("change program to %d\n", data[0]);
+           // debug(DEBUG_STATUS, "PGM_CHANGE %d %d\n", channel, data[0]);
+           // printf("change program to %d\n", data[0]);
             control->MoogObject::getOutput("patch_change")->setData(data[0]);
 
             break;
 
         case MIDI_CHN_PRESSURE: //0xD0
 
-            debug(DEBUG_STATUS, "CHN_PRESSURE %d %d\n", channel, data[0]);
+         //   debug(DEBUG_STATUS, "CHN_PRESSURE %d %d\n", channel, data[0]);
             break;
 
         case MIDI_PITCH_BEND: //0xE0
@@ -341,7 +341,8 @@ MidiInput::proc(unsigned char cmd, unsigned char channel, unsigned char *data)
             break;
 
         default:
-            debug(DEBUG_STATUS, "[%d]\n", cmd);
+         //   debug(DEBUG_STATUS, "[%d]\n", cmd);
+		break;
     }
 
 }

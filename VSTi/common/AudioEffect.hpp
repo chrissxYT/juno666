@@ -19,21 +19,21 @@ class AudioEffect;
 // called to create the audio effect object instance.
 AudioEffect* createEffectInstance (audioMasterCallback audioMaster);
 
-long dispatchEffectClass (AEffect *e, long opCode, long index, long value, void *ptr, float opt);
-float getParameterClass (long index);
-void setParameterClass (long index, float value);
-void processClass (AEffect *e, float **inputs, float **outputs, long sampleFrames);
-void processClassReplacing (AEffect *e, float **inputs, float **outputs, long sampleFrames);
+long __cdecl dispatchEffectClass (AEffect *e, long opCode, long index, long value, void *ptr, float opt);
+float __cdecl getParameterClass (long index);
+void __cdecl setParameterClass (long index, float value);
+void __cdecl processClass (AEffect *e, float **inputs, float **outputs, long sampleFrames);
+void __cdecl processClassReplacing (AEffect *e, float **inputs, float **outputs, long sampleFrames);
 
 //-------------------------------------------------------------------------------------------------------
 class AudioEffect
 {
 friend class AEffEditor;
-friend long dispatchEffectClass (AEffect *e, long opCode, long index, long value, void *ptr, float opt);
-friend float getParameterClass (AEffect *e, long index);
-friend void setParameterClass (AEffect *e, long index, float value);
-friend void processClass (AEffect *e, float **inputs, float **outputs, long sampleFrames);
-friend void processClassReplacing (AEffect *e, float **inputs, float **outputs, long sampleFrames);
+friend long __cdecl dispatchEffectClass (AEffect *e, long opCode, long index, long value, void *ptr, float opt);
+friend float __cdecl getParameterClass (AEffect *e, long index);
+friend void __cdecl setParameterClass (AEffect *e, long index, float value);
+friend void __cdecl processClass (AEffect *e, float **inputs, float **outputs, long sampleFrames);
+friend void __cdecl processClassReplacing (AEffect *e, float **inputs, float **outputs, long sampleFrames);
 
 public:
 	AudioEffect (audioMasterCallback audioMaster, long numPrograms, long numParams);

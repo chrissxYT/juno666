@@ -5,6 +5,7 @@
 #include "editor.h"
 #include "patches.h"
 
+
 VstJuno6::VstJuno6(audioMasterCallback audioMaster):
 AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 {

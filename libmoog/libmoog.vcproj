@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding = "windows-1250"?>
+<?xml version="1.0" encoding="windows-1250"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.00"
+	Version="7.10"
 	Name="libmoog"
 	ProjectGUID="{265CD8EC-7381-4105-B74C-C2ACB477C005}"
 	Keyword="Win32Proj">
@@ -45,6 +45,12 @@
 				Name="VCResourceCompilerTool"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -84,8 +90,16 @@
 				Name="VCResourceCompilerTool"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
 		<Filter
 			Name="Source Files"
@@ -94,10 +108,16 @@
 				RelativePath="ADSR.cpp">
 			</File>
 			<File
+				RelativePath="ao_win32.c">
+			</File>
+			<File
 				RelativePath="Attenuator.cpp">
 			</File>
 			<File
 				RelativePath="Balance.cpp">
+			</File>
+			<File
+				RelativePath="bilinear.c">
 			</File>
 			<File
 				RelativePath="Chorus.cpp">
@@ -112,16 +132,16 @@
 				RelativePath="ConnectionManager.cpp">
 			</File>
 			<File
-				RelativePath="DSPDeviceWin32.cpp">
-			</File>
-			<File
-				RelativePath="DSPOutput.cpp">
-			</File>
-			<File
 				RelativePath="DataBlock.cpp">
 			</File>
 			<File
 				RelativePath="Delay.cpp">
+			</File>
+			<File
+				RelativePath="DSPDeviceWin32.cpp">
+			</File>
+			<File
+				RelativePath="DSPOutput.cpp">
 			</File>
 			<File
 				RelativePath="GoObject.cpp">
@@ -178,6 +198,9 @@
 				RelativePath="Output.cpp">
 			</File>
 			<File
+				RelativePath="pitch.cpp">
+			</File>
+			<File
 				RelativePath="Rand.cpp">
 			</File>
 			<File
@@ -195,15 +218,6 @@
 			<File
 				RelativePath="WaveGen.cpp">
 			</File>
-			<File
-				RelativePath="ao_win32.c">
-			</File>
-			<File
-				RelativePath="bilinear.c">
-			</File>
-			<File
-				RelativePath="pitch.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -218,6 +232,9 @@
 				RelativePath="Balance.h">
 			</File>
 			<File
+				RelativePath="bilinear.h">
+			</File>
+			<File
 				RelativePath="Chorus.h">
 			</File>
 			<File
@@ -230,16 +247,16 @@
 				RelativePath="ConnectionManager.h">
 			</File>
 			<File
-				RelativePath="DSPDevice.h">
-			</File>
-			<File
-				RelativePath="DSPOutput.h">
-			</File>
-			<File
 				RelativePath="DataBlock.h">
 			</File>
 			<File
 				RelativePath="Delay.h">
+			</File>
+			<File
+				RelativePath="DSPDevice.h">
+			</File>
+			<File
+				RelativePath="DSPOutput.h">
 			</File>
 			<File
 				RelativePath="GoObject.h">
@@ -299,6 +316,9 @@
 				RelativePath="Output.h">
 			</File>
 			<File
+				RelativePath="pitch.h">
+			</File>
+			<File
 				RelativePath="Rand.h">
 			</File>
 			<File
@@ -315,12 +335,6 @@
 			</File>
 			<File
 				RelativePath="WaveGen.h">
-			</File>
-			<File
-				RelativePath="bilinear.h">
-			</File>
-			<File
-				RelativePath="pitch.h">
 			</File>
 		</Filter>
 	</Files>

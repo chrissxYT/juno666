@@ -59,8 +59,6 @@ numVoices(voices)
 	int i;
     for(i=0; i<voices; i++)
         voice[i] = v[i];
-
-    printf("creating arpeggio for %d voices\n", voices);
     NUM_VOICES = voices;
     //addInput("", JunoArpeggio_Changed, 0, 1);
     //PATCH(jc, "", this, "");
@@ -370,19 +368,19 @@ void JunoArpeggio::startInternal()
 {
     if (list_empty(&notes))
     {
-        printf("start called, but nothing to do\n");
+       //printf("start called, but nothing to do\n");
         return;
     }
 
     if (isControlScheduled())
     {
-        printf("start called, already running!\n");
+       // printf("start called, already running!\n");
         return;
     }
 
     if (currentNote)
     {
-        printf("start called, currentNote != NULL!\n");
+        //printf("start called, currentNote != NULL!\n");
         return;
     }
 

@@ -115,9 +115,11 @@ void Scheduler::scheduleSampleRate(GoObject *obj, bool schedule)
         safeListOp(&obj->sampleListNode, &sampleRateList, schedule);
 }
 
-void Scheduler::run()
+void Scheduler::run(int sampleFrames)
 {
     GoObject *obj;
+	while(sampleFrames-->0)
+	{
     if (controlCount == 0)
     {
         currentListIter = controlRateList.next;
@@ -153,4 +155,5 @@ void Scheduler::run()
 
         currentListIter = currentListIter->next;
     }
+	}
 }

@@ -41,11 +41,8 @@ extern "C"
 {
 #endif
 
-#ifdef NODEBUG
-#define debug(a,b,...)
-#else
+
 void debug(int dtype, const char *fmt, ...);
-#endif
 void hexdump(const char *ptr, int size, const char *fmt, ...);
 void vdebug(int dtype, const char *fmt, va_list);
 void to_hex(char *dest, const char *src, size_t n);
