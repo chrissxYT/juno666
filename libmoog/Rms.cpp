@@ -16,49 +16,45 @@
  *     arising from the use of UltraMaster Juno-6.
  */
 #include <math.h>
-#include "IIR2.h"
+#include "Rms.h"
 #include "Scheduler.h"
 
-IIR2::IIR2()
+Rms::Rms()
 {
-    gain = 0;
-    cx[0] = cx[1] = cy[0] = cy[1] = 0;
-    x[0] = x[1] = y[0] = y[1] = 0;
+    addPorts( "sig", INPUT,  NULL, 
+	      "pow", OUTPUT, true,
+	      NULL);
 
-    addInput("sig", NULL,0,0);
-    addOutput("sig", true);
+    output = &outputs[ O_RMS_POWER ];
+    
+    double   b;
+    double twoPiDivSampleRate = 2 * M_PI / Scheduler::sampleRate;
+    double halfPower = 10; 
+    
+    b = 2.0 - cos( halfPower * twoPiDivSampleRate );
+    c2 = b - sqrt( b * b - 1.0 );
+    c1 = 1.0 - c2;
 
-    output = getOutput(0);
+    inSig = inputs[0].data;
 
-    Scheduler::scheduleSampleRate(this, true);
+    Scheduler::scheduleSampleRate( this, true );
 }
 
-void IIR2::connectTo(ConnectionInfo *info)
+void Rms::connectTo(ConnectionInfo *info)
 {
     MoogObject::connectTo(info);
-    in = inputs[0].data;
+    inSig = inputs[0].data;
 }
-void IIR2::disconnectTo(ConnectionInfo *info)
+
+void Rms::disconnectTo(ConnectionInfo *info)
 {
     MoogObject::disconnectTo(info);
-    in = inputs[0].data;
+    inSig = inputs[0].data;
 }
 
 
-void IIR2::sampleGo()
+void Rms::sampleGo()
 {
-    double out = gain * *in;
-    out = out + cx[0] * x[0] + cx[1] * x[1] - cy[0] * y[0] - cy[1] * y[1];
-
-    if (isnan(out))
-	out = 0;
-
-    x[1] = x[0];
-    x[0] = *in;
-
-    y[1] = y[0];
-    y[0] = out;
-
-    output->setData(out);
-    MOOG_DEBUG("in %f out %f", *in, out);
+    q = c1 * *inSig * *inSig + c2 * q;
+    output->setData(sqrt( q ));
 }

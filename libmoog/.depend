@@ -1,0 +1,1058 @@
+# DO NOT DELETE
+
+ADSR.o: /usr/include/math.h /usr/include/sys/reent.h /usr/include/_ansi.h
+ADSR.o: /usr/include/newlib.h /usr/include/sys/config.h
+ADSR.o: /usr/include/machine/ieeefp.h /usr/include/sys/_types.h
+ADSR.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h ADSR.h
+ADSR.o: MoogObject.h GoObject.h ../util/list.h Input.h ../util/SimpleArray.h
+ADSR.o: /usr/include/string.h /usr/include/stdio.h
+ADSR.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+ADSR.o: /usr/include/sys/types.h /usr/include/machine/types.h
+ADSR.o: /usr/include/sys/stdio.h ../util/fastmemcpy.h NamedObject.h Output.h
+ADSR.o: ConnectionList.h ConnectionInfo.h ../util/debug.h Scheduler.h
+ADSR.o: /usr/include/w32api/windows.h /usr/include/w32api/windef.h
+ADSR.o: /usr/include/w32api/winnt.h /usr/include/w32api/winerror.h
+ADSR.o: /usr/include/w32api/basetsd.h /usr/include/w32api/pshpack4.h
+ADSR.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+ADSR.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+ADSR.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+ADSR.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+ADSR.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+ADSR.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+ADSR.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+ADSR.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+ADSR.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+ADSR.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+ADSR.o: /usr/include/w32api/basetyps.h /usr/include/w32api/rpcdcep.h
+ADSR.o: /usr/include/w32api/rpcnsi.h /usr/include/w32api/rpcnterr.h
+ADSR.o: /usr/include/w32api/shellapi.h /usr/include/w32api/pshpack2.h
+ADSR.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+ADSR.o: /usr/include/w32api/winspool.h /usr/include/w32api/winsock2.h
+ADSR.o: /usr/include/w32api/ole2.h /usr/include/w32api/objbase.h
+ADSR.o: /usr/include/w32api/rpcndr.h /usr/include/w32api/rpcnsip.h
+ADSR.o: /usr/include/w32api/objfwd.h /usr/include/stdlib.h
+ADSR.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+ADSR.o: /usr/include/w32api/wtypes.h /usr/include/w32api/unknwn.h
+ADSR.o: /usr/include/w32api/objidl.h /usr/include/w32api/cguid.h
+ADSR.o: /usr/include/w32api/olectlid.h /usr/include/w32api/oleauto.h
+ADSR.o: /usr/include/w32api/oaidl.h /usr/include/w32api/oleidl.h
+Attenuator.o: ../util/debug.h /usr/include/stdio.h /usr/include/_ansi.h
+Attenuator.o: /usr/include/newlib.h /usr/include/sys/config.h
+Attenuator.o: /usr/include/machine/ieeefp.h
+Attenuator.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+Attenuator.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+Attenuator.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+Attenuator.o: /usr/include/sys/types.h /usr/include/machine/types.h
+Attenuator.o: /usr/include/sys/stdio.h Attenuator.h MoogObject.h GoObject.h
+Attenuator.o: ../util/list.h Input.h ../util/SimpleArray.h
+Attenuator.o: /usr/include/string.h ../util/fastmemcpy.h NamedObject.h
+Attenuator.o: Output.h ConnectionList.h ConnectionInfo.h Scheduler.h
+Attenuator.o: /usr/include/w32api/windows.h /usr/include/w32api/windef.h
+Attenuator.o: /usr/include/w32api/winnt.h /usr/include/w32api/winerror.h
+Attenuator.o: /usr/include/w32api/basetsd.h /usr/include/w32api/pshpack4.h
+Attenuator.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+Attenuator.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+Attenuator.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+Attenuator.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+Attenuator.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+Attenuator.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+Attenuator.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+Attenuator.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+Attenuator.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+Attenuator.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+Attenuator.o: /usr/include/w32api/basetyps.h /usr/include/w32api/rpcdcep.h
+Attenuator.o: /usr/include/w32api/rpcnsi.h /usr/include/w32api/rpcnterr.h
+Attenuator.o: /usr/include/w32api/shellapi.h /usr/include/w32api/pshpack2.h
+Attenuator.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+Attenuator.o: /usr/include/w32api/winspool.h /usr/include/w32api/winsock2.h
+Attenuator.o: /usr/include/w32api/ole2.h /usr/include/w32api/objbase.h
+Attenuator.o: /usr/include/w32api/rpcndr.h /usr/include/w32api/rpcnsip.h
+Attenuator.o: /usr/include/w32api/objfwd.h /usr/include/stdlib.h
+Attenuator.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+Attenuator.o: /usr/include/w32api/wtypes.h /usr/include/w32api/unknwn.h
+Attenuator.o: /usr/include/w32api/objidl.h /usr/include/w32api/cguid.h
+Attenuator.o: /usr/include/w32api/olectlid.h /usr/include/w32api/oleauto.h
+Attenuator.o: /usr/include/w32api/oaidl.h /usr/include/w32api/oleidl.h
+Balance.o: Balance.h MoogObject.h GoObject.h ../util/list.h Input.h
+Balance.o: ../util/SimpleArray.h /usr/include/string.h /usr/include/_ansi.h
+Balance.o: /usr/include/newlib.h /usr/include/sys/config.h
+Balance.o: /usr/include/machine/ieeefp.h /usr/include/sys/reent.h
+Balance.o: /usr/include/sys/_types.h
+Balance.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+Balance.o: /usr/include/stdio.h
+Balance.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+Balance.o: /usr/include/sys/types.h /usr/include/machine/types.h
+Balance.o: /usr/include/sys/stdio.h ../util/fastmemcpy.h NamedObject.h
+Balance.o: Output.h ConnectionList.h ConnectionInfo.h ../util/debug.h Rms.h
+Balance.o: Scheduler.h /usr/include/w32api/windows.h
+Balance.o: /usr/include/w32api/windef.h /usr/include/w32api/winnt.h
+Balance.o: /usr/include/w32api/winerror.h /usr/include/w32api/basetsd.h
+Balance.o: /usr/include/w32api/pshpack4.h /usr/include/w32api/poppack.h
+Balance.o: /usr/include/w32api/wincon.h /usr/include/w32api/winbase.h
+Balance.o: /usr/include/w32api/wingdi.h /usr/include/w32api/winuser.h
+Balance.o: /usr/include/w32api/winnls.h /usr/include/w32api/winver.h
+Balance.o: /usr/include/w32api/winnetwk.h /usr/include/w32api/winreg.h
+Balance.o: /usr/include/w32api/winsvc.h /usr/include/w32api/cderr.h
+Balance.o: /usr/include/w32api/dde.h /usr/include/w32api/ddeml.h
+Balance.o: /usr/include/w32api/dlgs.h /usr/include/w32api/imm.h
+Balance.o: /usr/include/w32api/lzexpand.h /usr/include/w32api/mmsystem.h
+Balance.o: /usr/include/w32api/nb30.h /usr/include/w32api/rpc.h
+Balance.o: /usr/include/w32api/rpcdce.h /usr/include/w32api/basetyps.h
+Balance.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+Balance.o: /usr/include/w32api/rpcnterr.h /usr/include/w32api/shellapi.h
+Balance.o: /usr/include/w32api/pshpack2.h /usr/include/w32api/winperf.h
+Balance.o: /usr/include/w32api/commdlg.h /usr/include/w32api/winspool.h
+Balance.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+Balance.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+Balance.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+Balance.o: /usr/include/stdlib.h /usr/include/machine/stdlib.h
+Balance.o: /usr/include/alloca.h /usr/include/w32api/wtypes.h
+Balance.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+Balance.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+Balance.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+Balance.o: /usr/include/w32api/oleidl.h
+Chorus.o: Chorus.h MoogObject.h GoObject.h ../util/list.h Input.h
+Chorus.o: ../util/SimpleArray.h /usr/include/string.h /usr/include/_ansi.h
+Chorus.o: /usr/include/newlib.h /usr/include/sys/config.h
+Chorus.o: /usr/include/machine/ieeefp.h /usr/include/sys/reent.h
+Chorus.o: /usr/include/sys/_types.h
+Chorus.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+Chorus.o: /usr/include/stdio.h
+Chorus.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+Chorus.o: /usr/include/sys/types.h /usr/include/machine/types.h
+Chorus.o: /usr/include/sys/stdio.h ../util/fastmemcpy.h NamedObject.h
+Chorus.o: Output.h ConnectionList.h ConnectionInfo.h ../util/debug.h
+Chorus.o: ConnectionManager.h WaveGen.h DataBlock.h Delay.h Oscillator.h
+Chorus.o: Scheduler.h /usr/include/w32api/windows.h
+Chorus.o: /usr/include/w32api/windef.h /usr/include/w32api/winnt.h
+Chorus.o: /usr/include/w32api/winerror.h /usr/include/w32api/basetsd.h
+Chorus.o: /usr/include/w32api/pshpack4.h /usr/include/w32api/poppack.h
+Chorus.o: /usr/include/w32api/wincon.h /usr/include/w32api/winbase.h
+Chorus.o: /usr/include/w32api/wingdi.h /usr/include/w32api/winuser.h
+Chorus.o: /usr/include/w32api/winnls.h /usr/include/w32api/winver.h
+Chorus.o: /usr/include/w32api/winnetwk.h /usr/include/w32api/winreg.h
+Chorus.o: /usr/include/w32api/winsvc.h /usr/include/w32api/cderr.h
+Chorus.o: /usr/include/w32api/dde.h /usr/include/w32api/ddeml.h
+Chorus.o: /usr/include/w32api/dlgs.h /usr/include/w32api/imm.h
+Chorus.o: /usr/include/w32api/lzexpand.h /usr/include/w32api/mmsystem.h
+Chorus.o: /usr/include/w32api/nb30.h /usr/include/w32api/rpc.h
+Chorus.o: /usr/include/w32api/rpcdce.h /usr/include/w32api/basetyps.h
+Chorus.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+Chorus.o: /usr/include/w32api/rpcnterr.h /usr/include/w32api/shellapi.h
+Chorus.o: /usr/include/w32api/pshpack2.h /usr/include/w32api/winperf.h
+Chorus.o: /usr/include/w32api/commdlg.h /usr/include/w32api/winspool.h
+Chorus.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+Chorus.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+Chorus.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+Chorus.o: /usr/include/stdlib.h /usr/include/machine/stdlib.h
+Chorus.o: /usr/include/alloca.h /usr/include/w32api/wtypes.h
+Chorus.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+Chorus.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+Chorus.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+Chorus.o: /usr/include/w32api/oleidl.h
+ConnectionInfo.o: ConnectionInfo.h /usr/include/stdio.h /usr/include/_ansi.h
+ConnectionInfo.o: /usr/include/newlib.h /usr/include/sys/config.h
+ConnectionInfo.o: /usr/include/machine/ieeefp.h
+ConnectionInfo.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+ConnectionInfo.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+ConnectionInfo.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+ConnectionInfo.o: /usr/include/sys/types.h /usr/include/machine/types.h
+ConnectionInfo.o: /usr/include/sys/stdio.h ../util/debug.h MoogObject.h
+ConnectionInfo.o: GoObject.h ../util/list.h Input.h ../util/SimpleArray.h
+ConnectionInfo.o: /usr/include/string.h ../util/fastmemcpy.h NamedObject.h
+ConnectionInfo.o: Output.h ConnectionList.h
+ConnectionList.o: /usr/include/stdio.h /usr/include/_ansi.h
+ConnectionList.o: /usr/include/newlib.h /usr/include/sys/config.h
+ConnectionList.o: /usr/include/machine/ieeefp.h
+ConnectionList.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+ConnectionList.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+ConnectionList.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+ConnectionList.o: /usr/include/sys/types.h /usr/include/machine/types.h
+ConnectionList.o: /usr/include/sys/stdio.h ConnectionList.h ConnectionInfo.h
+ConnectionList.o: ../util/debug.h
+ConnectionManager.o: ConnectionManager.h MoogObject.h GoObject.h
+ConnectionManager.o: ../util/list.h Input.h ../util/SimpleArray.h
+ConnectionManager.o: /usr/include/string.h /usr/include/_ansi.h
+ConnectionManager.o: /usr/include/newlib.h /usr/include/sys/config.h
+ConnectionManager.o: /usr/include/machine/ieeefp.h /usr/include/sys/reent.h
+ConnectionManager.o: /usr/include/sys/_types.h
+ConnectionManager.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+ConnectionManager.o: /usr/include/stdio.h
+ConnectionManager.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+ConnectionManager.o: /usr/include/sys/types.h /usr/include/machine/types.h
+ConnectionManager.o: /usr/include/sys/stdio.h ../util/fastmemcpy.h
+ConnectionManager.o: NamedObject.h Output.h ConnectionList.h ConnectionInfo.h
+ConnectionManager.o: ../util/debug.h
+DSPDevice.o: /usr/include/sys/types.h /usr/include/_ansi.h
+DSPDevice.o: /usr/include/newlib.h /usr/include/sys/config.h
+DSPDevice.o: /usr/include/machine/ieeefp.h /usr/include/sys/_types.h
+DSPDevice.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+DSPDevice.o: /usr/include/machine/types.h /usr/include/sys/soundcard.h
+DSPDevice.o: /usr/include/sys/ioctl.h /usr/include/sys/cdefs.h
+DSPDevice.o: /usr/include/sys/stat.h /usr/include/time.h
+DSPDevice.o: /usr/include/sys/reent.h /usr/include/machine/time.h
+DSPDevice.o: /usr/include/sys/features.h /usr/include/fcntl.h
+DSPDevice.o: /usr/include/sys/fcntl.h /usr/include/unistd.h
+DSPDevice.o: /usr/include/sys/unistd.h /usr/include/sys/mman.h
+DSPDevice.o: ../util/debug.h /usr/include/stdio.h
+DSPDevice.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+DSPDevice.o: /usr/include/sys/stdio.h DSPDevice.h ../util/fastmemcpy.h
+DSPDevice.o: Scheduler.h ../util/list.h /usr/include/w32api/windows.h
+DSPDevice.o: /usr/include/w32api/windef.h /usr/include/w32api/winnt.h
+DSPDevice.o: /usr/include/w32api/winerror.h /usr/include/string.h
+DSPDevice.o: /usr/include/w32api/basetsd.h /usr/include/w32api/pshpack4.h
+DSPDevice.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+DSPDevice.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+DSPDevice.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+DSPDevice.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+DSPDevice.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+DSPDevice.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+DSPDevice.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+DSPDevice.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+DSPDevice.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+DSPDevice.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+DSPDevice.o: /usr/include/w32api/basetyps.h /usr/include/w32api/rpcdcep.h
+DSPDevice.o: /usr/include/w32api/rpcnsi.h /usr/include/w32api/rpcnterr.h
+DSPDevice.o: /usr/include/w32api/shellapi.h /usr/include/w32api/pshpack2.h
+DSPDevice.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+DSPDevice.o: /usr/include/w32api/winspool.h /usr/include/w32api/winsock2.h
+DSPDevice.o: /usr/include/w32api/ole2.h /usr/include/w32api/objbase.h
+DSPDevice.o: /usr/include/w32api/rpcndr.h /usr/include/w32api/rpcnsip.h
+DSPDevice.o: /usr/include/w32api/objfwd.h /usr/include/stdlib.h
+DSPDevice.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+DSPDevice.o: /usr/include/w32api/wtypes.h /usr/include/w32api/unknwn.h
+DSPDevice.o: /usr/include/w32api/objidl.h /usr/include/w32api/cguid.h
+DSPDevice.o: /usr/include/w32api/olectlid.h /usr/include/w32api/oleauto.h
+DSPDevice.o: /usr/include/w32api/oaidl.h /usr/include/w32api/oleidl.h
+DSPDeviceWin32.o: ../util/debug.h /usr/include/stdio.h /usr/include/_ansi.h
+DSPDeviceWin32.o: /usr/include/newlib.h /usr/include/sys/config.h
+DSPDeviceWin32.o: /usr/include/machine/ieeefp.h
+DSPDeviceWin32.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+DSPDeviceWin32.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+DSPDeviceWin32.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+DSPDeviceWin32.o: /usr/include/sys/types.h /usr/include/machine/types.h
+DSPDeviceWin32.o: /usr/include/sys/stdio.h DSPDevice.h /usr/include/unistd.h
+DSPDeviceWin32.o: /usr/include/sys/unistd.h /usr/include/sys/features.h
+DSPDeviceWin32.o: ../util/fastmemcpy.h Scheduler.h ../util/list.h
+DSPDeviceWin32.o: /usr/include/w32api/windows.h /usr/include/w32api/windef.h
+DSPDeviceWin32.o: /usr/include/w32api/winnt.h /usr/include/w32api/winerror.h
+DSPDeviceWin32.o: /usr/include/string.h /usr/include/w32api/basetsd.h
+DSPDeviceWin32.o: /usr/include/w32api/pshpack4.h
+DSPDeviceWin32.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+DSPDeviceWin32.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+DSPDeviceWin32.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+DSPDeviceWin32.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+DSPDeviceWin32.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+DSPDeviceWin32.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+DSPDeviceWin32.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+DSPDeviceWin32.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+DSPDeviceWin32.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+DSPDeviceWin32.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+DSPDeviceWin32.o: /usr/include/w32api/basetyps.h
+DSPDeviceWin32.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+DSPDeviceWin32.o: /usr/include/w32api/rpcnterr.h
+DSPDeviceWin32.o: /usr/include/w32api/shellapi.h
+DSPDeviceWin32.o: /usr/include/w32api/pshpack2.h
+DSPDeviceWin32.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+DSPDeviceWin32.o: /usr/include/w32api/winspool.h
+DSPDeviceWin32.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+DSPDeviceWin32.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+DSPDeviceWin32.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+DSPDeviceWin32.o: /usr/include/stdlib.h /usr/include/machine/stdlib.h
+DSPDeviceWin32.o: /usr/include/alloca.h /usr/include/w32api/wtypes.h
+DSPDeviceWin32.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+DSPDeviceWin32.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+DSPDeviceWin32.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+DSPDeviceWin32.o: /usr/include/w32api/oleidl.h afmt.h
+DSPInput.o: /usr/include/sys/types.h /usr/include/_ansi.h
+DSPInput.o: /usr/include/newlib.h /usr/include/sys/config.h
+DSPInput.o: /usr/include/machine/ieeefp.h /usr/include/sys/_types.h
+DSPInput.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+DSPInput.o: /usr/include/machine/types.h /usr/include/sys/stat.h
+DSPInput.o: /usr/include/time.h /usr/include/sys/reent.h
+DSPInput.o: /usr/include/machine/time.h /usr/include/sys/features.h
+DSPInput.o: /usr/include/fcntl.h /usr/include/sys/fcntl.h
+DSPInput.o: /usr/include/unistd.h /usr/include/sys/unistd.h ../util/debug.h
+DSPInput.o: /usr/include/stdio.h
+DSPInput.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+DSPInput.o: /usr/include/sys/stdio.h /usr/include/netinet/in.h
+DSPInput.o: /usr/include/cygwin/in.h /usr/include/stdint.h
+DSPInput.o: /usr/include/asm/byteorder.h DSPInput.h MoogObject.h GoObject.h
+DSPInput.o: ../util/list.h Input.h ../util/SimpleArray.h
+DSPInput.o: /usr/include/string.h ../util/fastmemcpy.h NamedObject.h Output.h
+DSPInput.o: ConnectionList.h ConnectionInfo.h DSPDevice.h
+DSPInput.o: ../util/fastmemcpy.h Scheduler.h /usr/include/w32api/windows.h
+DSPInput.o: /usr/include/w32api/windef.h /usr/include/w32api/winnt.h
+DSPInput.o: /usr/include/w32api/winerror.h /usr/include/w32api/basetsd.h
+DSPInput.o: /usr/include/w32api/pshpack4.h /usr/include/w32api/poppack.h
+DSPInput.o: /usr/include/w32api/wincon.h /usr/include/w32api/winbase.h
+DSPInput.o: /usr/include/w32api/wingdi.h /usr/include/w32api/winuser.h
+DSPInput.o: /usr/include/w32api/winnls.h /usr/include/w32api/winver.h
+DSPInput.o: /usr/include/w32api/winnetwk.h /usr/include/w32api/winreg.h
+DSPInput.o: /usr/include/w32api/winsvc.h /usr/include/w32api/cderr.h
+DSPInput.o: /usr/include/w32api/dde.h /usr/include/w32api/ddeml.h
+DSPInput.o: /usr/include/w32api/dlgs.h /usr/include/w32api/imm.h
+DSPInput.o: /usr/include/w32api/lzexpand.h /usr/include/w32api/mmsystem.h
+DSPInput.o: /usr/include/w32api/nb30.h /usr/include/w32api/rpc.h
+DSPInput.o: /usr/include/w32api/rpcdce.h /usr/include/w32api/basetyps.h
+DSPInput.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+DSPInput.o: /usr/include/w32api/rpcnterr.h /usr/include/w32api/shellapi.h
+DSPInput.o: /usr/include/w32api/pshpack2.h /usr/include/w32api/winperf.h
+DSPInput.o: /usr/include/w32api/commdlg.h /usr/include/w32api/winspool.h
+DSPInput.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+DSPInput.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+DSPInput.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+DSPInput.o: /usr/include/stdlib.h /usr/include/machine/stdlib.h
+DSPInput.o: /usr/include/alloca.h /usr/include/w32api/wtypes.h
+DSPInput.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+DSPInput.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+DSPInput.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+DSPInput.o: /usr/include/w32api/oleidl.h
+DSPOutput.o: ../util/debug.h /usr/include/stdio.h /usr/include/_ansi.h
+DSPOutput.o: /usr/include/newlib.h /usr/include/sys/config.h
+DSPOutput.o: /usr/include/machine/ieeefp.h
+DSPOutput.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+DSPOutput.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+DSPOutput.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+DSPOutput.o: /usr/include/sys/types.h /usr/include/machine/types.h
+DSPOutput.o: /usr/include/sys/stdio.h ../util/sio.h /usr/include/unistd.h
+DSPOutput.o: /usr/include/sys/unistd.h /usr/include/sys/features.h
+DSPOutput.o: DSPOutput.h MoogObject.h GoObject.h ../util/list.h Input.h
+DSPOutput.o: ../util/SimpleArray.h /usr/include/string.h ../util/fastmemcpy.h
+DSPOutput.o: NamedObject.h Output.h ConnectionList.h ConnectionInfo.h
+DSPOutput.o: DSPDevice.h ../util/fastmemcpy.h Scheduler.h
+DSPOutput.o: /usr/include/w32api/windows.h /usr/include/w32api/windef.h
+DSPOutput.o: /usr/include/w32api/winnt.h /usr/include/w32api/winerror.h
+DSPOutput.o: /usr/include/w32api/basetsd.h /usr/include/w32api/pshpack4.h
+DSPOutput.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+DSPOutput.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+DSPOutput.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+DSPOutput.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+DSPOutput.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+DSPOutput.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+DSPOutput.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+DSPOutput.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+DSPOutput.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+DSPOutput.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+DSPOutput.o: /usr/include/w32api/basetyps.h /usr/include/w32api/rpcdcep.h
+DSPOutput.o: /usr/include/w32api/rpcnsi.h /usr/include/w32api/rpcnterr.h
+DSPOutput.o: /usr/include/w32api/shellapi.h /usr/include/w32api/pshpack2.h
+DSPOutput.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+DSPOutput.o: /usr/include/w32api/winspool.h /usr/include/w32api/winsock2.h
+DSPOutput.o: /usr/include/w32api/ole2.h /usr/include/w32api/objbase.h
+DSPOutput.o: /usr/include/w32api/rpcndr.h /usr/include/w32api/rpcnsip.h
+DSPOutput.o: /usr/include/w32api/objfwd.h /usr/include/stdlib.h
+DSPOutput.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+DSPOutput.o: /usr/include/w32api/wtypes.h /usr/include/w32api/unknwn.h
+DSPOutput.o: /usr/include/w32api/objidl.h /usr/include/w32api/cguid.h
+DSPOutput.o: /usr/include/w32api/olectlid.h /usr/include/w32api/oleauto.h
+DSPOutput.o: /usr/include/w32api/oaidl.h /usr/include/w32api/oleidl.h
+DataBlock.o: /usr/include/stdlib.h /usr/include/_ansi.h /usr/include/newlib.h
+DataBlock.o: /usr/include/sys/config.h /usr/include/machine/ieeefp.h
+DataBlock.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+DataBlock.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+DataBlock.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+DataBlock.o: /usr/include/string.h ../util/debug.h /usr/include/stdio.h
+DataBlock.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+DataBlock.o: /usr/include/sys/types.h /usr/include/machine/types.h
+DataBlock.o: /usr/include/sys/stdio.h ../util/sio.h /usr/include/unistd.h
+DataBlock.o: /usr/include/sys/unistd.h /usr/include/sys/features.h
+DataBlock.o: /usr/include/math.h ../util/fastmemcpy.h DataBlock.h
+Delay.o: /usr/include/math.h /usr/include/sys/reent.h /usr/include/_ansi.h
+Delay.o: /usr/include/newlib.h /usr/include/sys/config.h
+Delay.o: /usr/include/machine/ieeefp.h /usr/include/sys/_types.h
+Delay.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+Delay.o: ../util/debug.h /usr/include/stdio.h
+Delay.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+Delay.o: /usr/include/sys/types.h /usr/include/machine/types.h
+Delay.o: /usr/include/sys/stdio.h Delay.h MoogObject.h GoObject.h
+Delay.o: ../util/list.h Input.h ../util/SimpleArray.h /usr/include/string.h
+Delay.o: ../util/fastmemcpy.h NamedObject.h Output.h ConnectionList.h
+Delay.o: ConnectionInfo.h Scheduler.h /usr/include/w32api/windows.h
+Delay.o: /usr/include/w32api/windef.h /usr/include/w32api/winnt.h
+Delay.o: /usr/include/w32api/winerror.h /usr/include/w32api/basetsd.h
+Delay.o: /usr/include/w32api/pshpack4.h /usr/include/w32api/poppack.h
+Delay.o: /usr/include/w32api/wincon.h /usr/include/w32api/winbase.h
+Delay.o: /usr/include/w32api/wingdi.h /usr/include/w32api/winuser.h
+Delay.o: /usr/include/w32api/winnls.h /usr/include/w32api/winver.h
+Delay.o: /usr/include/w32api/winnetwk.h /usr/include/w32api/winreg.h
+Delay.o: /usr/include/w32api/winsvc.h /usr/include/w32api/cderr.h
+Delay.o: /usr/include/w32api/dde.h /usr/include/w32api/ddeml.h
+Delay.o: /usr/include/w32api/dlgs.h /usr/include/w32api/imm.h
+Delay.o: /usr/include/w32api/lzexpand.h /usr/include/w32api/mmsystem.h
+Delay.o: /usr/include/w32api/nb30.h /usr/include/w32api/rpc.h
+Delay.o: /usr/include/w32api/rpcdce.h /usr/include/w32api/basetyps.h
+Delay.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+Delay.o: /usr/include/w32api/rpcnterr.h /usr/include/w32api/shellapi.h
+Delay.o: /usr/include/w32api/pshpack2.h /usr/include/w32api/winperf.h
+Delay.o: /usr/include/w32api/commdlg.h /usr/include/w32api/winspool.h
+Delay.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+Delay.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+Delay.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+Delay.o: /usr/include/stdlib.h /usr/include/machine/stdlib.h
+Delay.o: /usr/include/alloca.h /usr/include/w32api/wtypes.h
+Delay.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+Delay.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+Delay.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+Delay.o: /usr/include/w32api/oleidl.h
+GoObject.o: /usr/include/stdio.h /usr/include/_ansi.h /usr/include/newlib.h
+GoObject.o: /usr/include/sys/config.h /usr/include/machine/ieeefp.h
+GoObject.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+GoObject.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+GoObject.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+GoObject.o: /usr/include/sys/types.h /usr/include/machine/types.h
+GoObject.o: /usr/include/sys/stdio.h /usr/include/stdlib.h
+GoObject.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+GoObject.o: ../util/debug.h ../util/rcsid.h GoObject.h ../util/list.h
+GoObject.o: MoogObject.h Input.h ../util/SimpleArray.h /usr/include/string.h
+GoObject.o: ../util/fastmemcpy.h NamedObject.h Output.h ConnectionList.h
+GoObject.o: ConnectionInfo.h
+HPF.o: /usr/include/math.h /usr/include/sys/reent.h /usr/include/_ansi.h
+HPF.o: /usr/include/newlib.h /usr/include/sys/config.h
+HPF.o: /usr/include/machine/ieeefp.h /usr/include/sys/_types.h
+HPF.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h Scheduler.h
+HPF.o: ../util/list.h /usr/include/w32api/windows.h
+HPF.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+HPF.o: /usr/include/w32api/windef.h /usr/include/w32api/winnt.h
+HPF.o: /usr/include/w32api/winerror.h /usr/include/string.h
+HPF.o: /usr/include/w32api/basetsd.h /usr/include/w32api/pshpack4.h
+HPF.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+HPF.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+HPF.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+HPF.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+HPF.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+HPF.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+HPF.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+HPF.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+HPF.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+HPF.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+HPF.o: /usr/include/w32api/basetyps.h /usr/include/w32api/rpcdcep.h
+HPF.o: /usr/include/w32api/rpcnsi.h /usr/include/w32api/rpcnterr.h
+HPF.o: /usr/include/w32api/shellapi.h /usr/include/w32api/pshpack2.h
+HPF.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+HPF.o: /usr/include/w32api/winspool.h /usr/include/w32api/winsock2.h
+HPF.o: /usr/include/w32api/ole2.h /usr/include/w32api/objbase.h
+HPF.o: /usr/include/w32api/rpcndr.h /usr/include/w32api/rpcnsip.h
+HPF.o: /usr/include/w32api/objfwd.h /usr/include/stdlib.h
+HPF.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+HPF.o: /usr/include/w32api/wtypes.h /usr/include/w32api/unknwn.h
+HPF.o: /usr/include/w32api/objidl.h /usr/include/w32api/cguid.h
+HPF.o: /usr/include/w32api/olectlid.h /usr/include/w32api/oleauto.h
+HPF.o: /usr/include/w32api/oaidl.h /usr/include/w32api/oleidl.h HPF.h IIR2.h
+HPF.o: MoogObject.h GoObject.h Input.h ../util/SimpleArray.h
+HPF.o: /usr/include/stdio.h /usr/include/sys/types.h
+HPF.o: /usr/include/machine/types.h /usr/include/sys/stdio.h
+HPF.o: ../util/fastmemcpy.h NamedObject.h Output.h ConnectionList.h
+HPF.o: ConnectionInfo.h ../util/debug.h
+IIR2.o: /usr/include/math.h /usr/include/sys/reent.h /usr/include/_ansi.h
+IIR2.o: /usr/include/newlib.h /usr/include/sys/config.h
+IIR2.o: /usr/include/machine/ieeefp.h /usr/include/sys/_types.h
+IIR2.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h IIR2.h
+IIR2.o: MoogObject.h GoObject.h ../util/list.h Input.h ../util/SimpleArray.h
+IIR2.o: /usr/include/string.h /usr/include/stdio.h
+IIR2.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+IIR2.o: /usr/include/sys/types.h /usr/include/machine/types.h
+IIR2.o: /usr/include/sys/stdio.h ../util/fastmemcpy.h NamedObject.h Output.h
+IIR2.o: ConnectionList.h ConnectionInfo.h ../util/debug.h Scheduler.h
+IIR2.o: /usr/include/w32api/windows.h /usr/include/w32api/windef.h
+IIR2.o: /usr/include/w32api/winnt.h /usr/include/w32api/winerror.h
+IIR2.o: /usr/include/w32api/basetsd.h /usr/include/w32api/pshpack4.h
+IIR2.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+IIR2.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+IIR2.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+IIR2.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+IIR2.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+IIR2.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+IIR2.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+IIR2.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+IIR2.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+IIR2.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+IIR2.o: /usr/include/w32api/basetyps.h /usr/include/w32api/rpcdcep.h
+IIR2.o: /usr/include/w32api/rpcnsi.h /usr/include/w32api/rpcnterr.h
+IIR2.o: /usr/include/w32api/shellapi.h /usr/include/w32api/pshpack2.h
+IIR2.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+IIR2.o: /usr/include/w32api/winspool.h /usr/include/w32api/winsock2.h
+IIR2.o: /usr/include/w32api/ole2.h /usr/include/w32api/objbase.h
+IIR2.o: /usr/include/w32api/rpcndr.h /usr/include/w32api/rpcnsip.h
+IIR2.o: /usr/include/w32api/objfwd.h /usr/include/stdlib.h
+IIR2.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+IIR2.o: /usr/include/w32api/wtypes.h /usr/include/w32api/unknwn.h
+IIR2.o: /usr/include/w32api/objidl.h /usr/include/w32api/cguid.h
+IIR2.o: /usr/include/w32api/olectlid.h /usr/include/w32api/oleauto.h
+IIR2.o: /usr/include/w32api/oaidl.h /usr/include/w32api/oleidl.h
+Input.o: /usr/include/stdlib.h /usr/include/_ansi.h /usr/include/newlib.h
+Input.o: /usr/include/sys/config.h /usr/include/machine/ieeefp.h
+Input.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+Input.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+Input.o: /usr/include/machine/stdlib.h /usr/include/alloca.h Input.h
+Input.o: ../util/SimpleArray.h /usr/include/string.h /usr/include/stdio.h
+Input.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+Input.o: /usr/include/sys/types.h /usr/include/machine/types.h
+Input.o: /usr/include/sys/stdio.h ../util/fastmemcpy.h NamedObject.h
+Input.o: ConnectionInfo.h ../util/debug.h Output.h ConnectionList.h
+JunoPulse.o: JunoPulse.h MoogObject.h GoObject.h ../util/list.h Input.h
+JunoPulse.o: ../util/SimpleArray.h /usr/include/string.h /usr/include/_ansi.h
+JunoPulse.o: /usr/include/newlib.h /usr/include/sys/config.h
+JunoPulse.o: /usr/include/machine/ieeefp.h /usr/include/sys/reent.h
+JunoPulse.o: /usr/include/sys/_types.h
+JunoPulse.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+JunoPulse.o: /usr/include/stdio.h
+JunoPulse.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+JunoPulse.o: /usr/include/sys/types.h /usr/include/machine/types.h
+JunoPulse.o: /usr/include/sys/stdio.h ../util/fastmemcpy.h NamedObject.h
+JunoPulse.o: Output.h ConnectionList.h ConnectionInfo.h ../util/debug.h
+JunoPulse.o: Scheduler.h /usr/include/w32api/windows.h
+JunoPulse.o: /usr/include/w32api/windef.h /usr/include/w32api/winnt.h
+JunoPulse.o: /usr/include/w32api/winerror.h /usr/include/w32api/basetsd.h
+JunoPulse.o: /usr/include/w32api/pshpack4.h /usr/include/w32api/poppack.h
+JunoPulse.o: /usr/include/w32api/wincon.h /usr/include/w32api/winbase.h
+JunoPulse.o: /usr/include/w32api/wingdi.h /usr/include/w32api/winuser.h
+JunoPulse.o: /usr/include/w32api/winnls.h /usr/include/w32api/winver.h
+JunoPulse.o: /usr/include/w32api/winnetwk.h /usr/include/w32api/winreg.h
+JunoPulse.o: /usr/include/w32api/winsvc.h /usr/include/w32api/cderr.h
+JunoPulse.o: /usr/include/w32api/dde.h /usr/include/w32api/ddeml.h
+JunoPulse.o: /usr/include/w32api/dlgs.h /usr/include/w32api/imm.h
+JunoPulse.o: /usr/include/w32api/lzexpand.h /usr/include/w32api/mmsystem.h
+JunoPulse.o: /usr/include/w32api/nb30.h /usr/include/w32api/rpc.h
+JunoPulse.o: /usr/include/w32api/rpcdce.h /usr/include/w32api/basetyps.h
+JunoPulse.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+JunoPulse.o: /usr/include/w32api/rpcnterr.h /usr/include/w32api/shellapi.h
+JunoPulse.o: /usr/include/w32api/pshpack2.h /usr/include/w32api/winperf.h
+JunoPulse.o: /usr/include/w32api/commdlg.h /usr/include/w32api/winspool.h
+JunoPulse.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+JunoPulse.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+JunoPulse.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+JunoPulse.o: /usr/include/stdlib.h /usr/include/machine/stdlib.h
+JunoPulse.o: /usr/include/alloca.h /usr/include/w32api/wtypes.h
+JunoPulse.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+JunoPulse.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+JunoPulse.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+JunoPulse.o: /usr/include/w32api/oleidl.h
+JunoSaw.o: /usr/include/math.h /usr/include/sys/reent.h /usr/include/_ansi.h
+JunoSaw.o: /usr/include/newlib.h /usr/include/sys/config.h
+JunoSaw.o: /usr/include/machine/ieeefp.h /usr/include/sys/_types.h
+JunoSaw.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h JunoSaw.h
+JunoSaw.o: MoogObject.h GoObject.h ../util/list.h Input.h
+JunoSaw.o: ../util/SimpleArray.h /usr/include/string.h /usr/include/stdio.h
+JunoSaw.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+JunoSaw.o: /usr/include/sys/types.h /usr/include/machine/types.h
+JunoSaw.o: /usr/include/sys/stdio.h ../util/fastmemcpy.h NamedObject.h
+JunoSaw.o: Output.h ConnectionList.h ConnectionInfo.h ../util/debug.h
+JunoSaw.o: Scheduler.h /usr/include/w32api/windows.h
+JunoSaw.o: /usr/include/w32api/windef.h /usr/include/w32api/winnt.h
+JunoSaw.o: /usr/include/w32api/winerror.h /usr/include/w32api/basetsd.h
+JunoSaw.o: /usr/include/w32api/pshpack4.h /usr/include/w32api/poppack.h
+JunoSaw.o: /usr/include/w32api/wincon.h /usr/include/w32api/winbase.h
+JunoSaw.o: /usr/include/w32api/wingdi.h /usr/include/w32api/winuser.h
+JunoSaw.o: /usr/include/w32api/winnls.h /usr/include/w32api/winver.h
+JunoSaw.o: /usr/include/w32api/winnetwk.h /usr/include/w32api/winreg.h
+JunoSaw.o: /usr/include/w32api/winsvc.h /usr/include/w32api/cderr.h
+JunoSaw.o: /usr/include/w32api/dde.h /usr/include/w32api/ddeml.h
+JunoSaw.o: /usr/include/w32api/dlgs.h /usr/include/w32api/imm.h
+JunoSaw.o: /usr/include/w32api/lzexpand.h /usr/include/w32api/mmsystem.h
+JunoSaw.o: /usr/include/w32api/nb30.h /usr/include/w32api/rpc.h
+JunoSaw.o: /usr/include/w32api/rpcdce.h /usr/include/w32api/basetyps.h
+JunoSaw.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+JunoSaw.o: /usr/include/w32api/rpcnterr.h /usr/include/w32api/shellapi.h
+JunoSaw.o: /usr/include/w32api/pshpack2.h /usr/include/w32api/winperf.h
+JunoSaw.o: /usr/include/w32api/commdlg.h /usr/include/w32api/winspool.h
+JunoSaw.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+JunoSaw.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+JunoSaw.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+JunoSaw.o: /usr/include/stdlib.h /usr/include/machine/stdlib.h
+JunoSaw.o: /usr/include/alloca.h /usr/include/w32api/wtypes.h
+JunoSaw.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+JunoSaw.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+JunoSaw.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+JunoSaw.o: /usr/include/w32api/oleidl.h
+MidiDevice.o: ../util/debug.h /usr/include/stdio.h /usr/include/_ansi.h
+MidiDevice.o: /usr/include/newlib.h /usr/include/sys/config.h
+MidiDevice.o: /usr/include/machine/ieeefp.h
+MidiDevice.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+MidiDevice.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+MidiDevice.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+MidiDevice.o: /usr/include/sys/types.h /usr/include/machine/types.h
+MidiDevice.o: /usr/include/sys/stdio.h /usr/include/sys/stat.h
+MidiDevice.o: /usr/include/time.h /usr/include/machine/time.h
+MidiDevice.o: /usr/include/sys/features.h /usr/include/fcntl.h
+MidiDevice.o: /usr/include/sys/fcntl.h /usr/include/unistd.h
+MidiDevice.o: /usr/include/sys/unistd.h /usr/include/termios.h
+MidiDevice.o: /usr/include/sys/termios.h MidiDevice.h MoogObject.h GoObject.h
+MidiDevice.o: ../util/list.h Input.h ../util/SimpleArray.h
+MidiDevice.o: /usr/include/string.h ../util/fastmemcpy.h NamedObject.h
+MidiDevice.o: Output.h ConnectionList.h ConnectionInfo.h
+MidiInputLinux.o: /usr/include/sys/time.h /usr/include/_ansi.h
+MidiInputLinux.o: /usr/include/newlib.h /usr/include/sys/config.h
+MidiInputLinux.o: /usr/include/machine/ieeefp.h /usr/include/sys/types.h
+MidiInputLinux.o: /usr/include/sys/_types.h
+MidiInputLinux.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+MidiInputLinux.o: /usr/include/machine/types.h /usr/include/unistd.h
+MidiInputLinux.o: /usr/include/sys/unistd.h /usr/include/sys/features.h
+MidiInputLinux.o: /usr/include/sys/soundcard.h ../util/debug.h
+MidiInputLinux.o: /usr/include/stdio.h
+MidiInputLinux.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+MidiInputLinux.o: /usr/include/sys/reent.h /usr/include/sys/stdio.h
+MidiInputLinux.o: MidiInput.h /usr/include/pthread.h /usr/include/signal.h
+MidiInputLinux.o: /usr/include/sys/signal.h /usr/include/sched.h
+MidiInputLinux.o: /usr/include/time.h /usr/include/machine/time.h
+MidiInputLinux.o: /usr/include/w32api/windows.h /usr/include/w32api/windef.h
+MidiInputLinux.o: /usr/include/w32api/winnt.h /usr/include/w32api/winerror.h
+MidiInputLinux.o: /usr/include/string.h /usr/include/w32api/basetsd.h
+MidiInputLinux.o: /usr/include/w32api/pshpack4.h
+MidiInputLinux.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+MidiInputLinux.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+MidiInputLinux.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+MidiInputLinux.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+MidiInputLinux.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+MidiInputLinux.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+MidiInputLinux.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+MidiInputLinux.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+MidiInputLinux.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+MidiInputLinux.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+MidiInputLinux.o: /usr/include/w32api/basetyps.h
+MidiInputLinux.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+MidiInputLinux.o: /usr/include/w32api/rpcnterr.h
+MidiInputLinux.o: /usr/include/w32api/shellapi.h
+MidiInputLinux.o: /usr/include/w32api/pshpack2.h
+MidiInputLinux.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+MidiInputLinux.o: /usr/include/w32api/winspool.h
+MidiInputLinux.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+MidiInputLinux.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+MidiInputLinux.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+MidiInputLinux.o: /usr/include/stdlib.h /usr/include/machine/stdlib.h
+MidiInputLinux.o: /usr/include/alloca.h /usr/include/w32api/wtypes.h
+MidiInputLinux.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+MidiInputLinux.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+MidiInputLinux.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+MidiInputLinux.o: /usr/include/w32api/oleidl.h MidiDevice.h MoogObject.h
+MidiInputLinux.o: GoObject.h ../util/list.h Input.h ../util/SimpleArray.h
+MidiInputLinux.o: ../util/fastmemcpy.h NamedObject.h Output.h
+MidiInputLinux.o: ConnectionList.h ConnectionInfo.h Scheduler.h pitch.h
+MidiInputLinux.o: /usr/include/math.h
+Mixer.o: /usr/include/stdio.h /usr/include/_ansi.h /usr/include/newlib.h
+Mixer.o: /usr/include/sys/config.h /usr/include/machine/ieeefp.h
+Mixer.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+Mixer.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+Mixer.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+Mixer.o: /usr/include/sys/types.h /usr/include/machine/types.h
+Mixer.o: /usr/include/sys/stdio.h /usr/include/stdlib.h
+Mixer.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+Mixer.o: /usr/include/string.h ../util/debug.h Mixer.h MoogObject.h
+Mixer.o: GoObject.h ../util/list.h Input.h ../util/SimpleArray.h
+Mixer.o: ../util/fastmemcpy.h NamedObject.h Output.h ConnectionList.h
+Mixer.o: ConnectionInfo.h Scheduler.h /usr/include/w32api/windows.h
+Mixer.o: /usr/include/w32api/windef.h /usr/include/w32api/winnt.h
+Mixer.o: /usr/include/w32api/winerror.h /usr/include/w32api/basetsd.h
+Mixer.o: /usr/include/w32api/pshpack4.h /usr/include/w32api/poppack.h
+Mixer.o: /usr/include/w32api/wincon.h /usr/include/w32api/winbase.h
+Mixer.o: /usr/include/w32api/wingdi.h /usr/include/w32api/winuser.h
+Mixer.o: /usr/include/w32api/winnls.h /usr/include/w32api/winver.h
+Mixer.o: /usr/include/w32api/winnetwk.h /usr/include/w32api/winreg.h
+Mixer.o: /usr/include/w32api/winsvc.h /usr/include/w32api/cderr.h
+Mixer.o: /usr/include/w32api/dde.h /usr/include/w32api/ddeml.h
+Mixer.o: /usr/include/w32api/dlgs.h /usr/include/w32api/imm.h
+Mixer.o: /usr/include/w32api/lzexpand.h /usr/include/w32api/mmsystem.h
+Mixer.o: /usr/include/w32api/nb30.h /usr/include/w32api/rpc.h
+Mixer.o: /usr/include/w32api/rpcdce.h /usr/include/w32api/basetyps.h
+Mixer.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+Mixer.o: /usr/include/w32api/rpcnterr.h /usr/include/w32api/shellapi.h
+Mixer.o: /usr/include/w32api/pshpack2.h /usr/include/w32api/winperf.h
+Mixer.o: /usr/include/w32api/commdlg.h /usr/include/w32api/winspool.h
+Mixer.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+Mixer.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+Mixer.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+Mixer.o: /usr/include/w32api/wtypes.h /usr/include/w32api/unknwn.h
+Mixer.o: /usr/include/w32api/objidl.h /usr/include/w32api/cguid.h
+Mixer.o: /usr/include/w32api/olectlid.h /usr/include/w32api/oleauto.h
+Mixer.o: /usr/include/w32api/oaidl.h /usr/include/w32api/oleidl.h
+Mixer.o: ConnectionManager.h
+MoogObject.o: /usr/include/stdio.h /usr/include/_ansi.h /usr/include/newlib.h
+MoogObject.o: /usr/include/sys/config.h /usr/include/machine/ieeefp.h
+MoogObject.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+MoogObject.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+MoogObject.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+MoogObject.o: /usr/include/sys/types.h /usr/include/machine/types.h
+MoogObject.o: /usr/include/sys/stdio.h /usr/include/string.h ../util/debug.h
+MoogObject.o: MoogObject.h GoObject.h ../util/list.h Input.h
+MoogObject.o: ../util/SimpleArray.h ../util/fastmemcpy.h NamedObject.h
+MoogObject.o: Output.h ConnectionList.h ConnectionInfo.h ConnectionManager.h
+NamedObject.o: /usr/include/stdlib.h /usr/include/_ansi.h
+NamedObject.o: /usr/include/newlib.h /usr/include/sys/config.h
+NamedObject.o: /usr/include/machine/ieeefp.h
+NamedObject.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+NamedObject.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+NamedObject.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+NamedObject.o: /usr/include/string.h NamedObject.h
+Oscillator.o: /usr/include/stdio.h /usr/include/_ansi.h /usr/include/newlib.h
+Oscillator.o: /usr/include/sys/config.h /usr/include/machine/ieeefp.h
+Oscillator.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+Oscillator.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+Oscillator.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+Oscillator.o: /usr/include/sys/types.h /usr/include/machine/types.h
+Oscillator.o: /usr/include/sys/stdio.h /usr/include/math.h ../util/debug.h
+Oscillator.o: DataBlock.h Oscillator.h MoogObject.h GoObject.h ../util/list.h
+Oscillator.o: Input.h ../util/SimpleArray.h /usr/include/string.h
+Oscillator.o: ../util/fastmemcpy.h NamedObject.h Output.h ConnectionList.h
+Oscillator.o: ConnectionInfo.h Scheduler.h /usr/include/w32api/windows.h
+Oscillator.o: /usr/include/w32api/windef.h /usr/include/w32api/winnt.h
+Oscillator.o: /usr/include/w32api/winerror.h /usr/include/w32api/basetsd.h
+Oscillator.o: /usr/include/w32api/pshpack4.h /usr/include/w32api/poppack.h
+Oscillator.o: /usr/include/w32api/wincon.h /usr/include/w32api/winbase.h
+Oscillator.o: /usr/include/w32api/wingdi.h /usr/include/w32api/winuser.h
+Oscillator.o: /usr/include/w32api/winnls.h /usr/include/w32api/winver.h
+Oscillator.o: /usr/include/w32api/winnetwk.h /usr/include/w32api/winreg.h
+Oscillator.o: /usr/include/w32api/winsvc.h /usr/include/w32api/cderr.h
+Oscillator.o: /usr/include/w32api/dde.h /usr/include/w32api/ddeml.h
+Oscillator.o: /usr/include/w32api/dlgs.h /usr/include/w32api/imm.h
+Oscillator.o: /usr/include/w32api/lzexpand.h /usr/include/w32api/mmsystem.h
+Oscillator.o: /usr/include/w32api/nb30.h /usr/include/w32api/rpc.h
+Oscillator.o: /usr/include/w32api/rpcdce.h /usr/include/w32api/basetyps.h
+Oscillator.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+Oscillator.o: /usr/include/w32api/rpcnterr.h /usr/include/w32api/shellapi.h
+Oscillator.o: /usr/include/w32api/pshpack2.h /usr/include/w32api/winperf.h
+Oscillator.o: /usr/include/w32api/commdlg.h /usr/include/w32api/winspool.h
+Oscillator.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+Oscillator.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+Oscillator.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+Oscillator.o: /usr/include/stdlib.h /usr/include/machine/stdlib.h
+Oscillator.o: /usr/include/alloca.h /usr/include/w32api/wtypes.h
+Oscillator.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+Oscillator.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+Oscillator.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+Oscillator.o: /usr/include/w32api/oleidl.h
+Output.o: /usr/include/stdlib.h /usr/include/_ansi.h /usr/include/newlib.h
+Output.o: /usr/include/sys/config.h /usr/include/machine/ieeefp.h
+Output.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+Output.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+Output.o: /usr/include/machine/stdlib.h /usr/include/alloca.h Output.h
+Output.o: ../util/SimpleArray.h /usr/include/string.h /usr/include/stdio.h
+Output.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+Output.o: /usr/include/sys/types.h /usr/include/machine/types.h
+Output.o: /usr/include/sys/stdio.h ../util/fastmemcpy.h ConnectionList.h
+Output.o: NamedObject.h Input.h ConnectionInfo.h ../util/debug.h
+Rand.o: /usr/include/stdlib.h /usr/include/_ansi.h /usr/include/newlib.h
+Rand.o: /usr/include/sys/config.h /usr/include/machine/ieeefp.h
+Rand.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+Rand.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+Rand.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+Rand.o: /usr/include/math.h Rand.h MoogObject.h GoObject.h ../util/list.h
+Rand.o: Input.h ../util/SimpleArray.h /usr/include/string.h
+Rand.o: /usr/include/stdio.h
+Rand.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+Rand.o: /usr/include/sys/types.h /usr/include/machine/types.h
+Rand.o: /usr/include/sys/stdio.h ../util/fastmemcpy.h NamedObject.h Output.h
+Rand.o: ConnectionList.h ConnectionInfo.h ../util/debug.h Scheduler.h
+Rand.o: /usr/include/w32api/windows.h /usr/include/w32api/windef.h
+Rand.o: /usr/include/w32api/winnt.h /usr/include/w32api/winerror.h
+Rand.o: /usr/include/w32api/basetsd.h /usr/include/w32api/pshpack4.h
+Rand.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+Rand.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+Rand.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+Rand.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+Rand.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+Rand.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+Rand.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+Rand.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+Rand.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+Rand.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+Rand.o: /usr/include/w32api/basetyps.h /usr/include/w32api/rpcdcep.h
+Rand.o: /usr/include/w32api/rpcnsi.h /usr/include/w32api/rpcnterr.h
+Rand.o: /usr/include/w32api/shellapi.h /usr/include/w32api/pshpack2.h
+Rand.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+Rand.o: /usr/include/w32api/winspool.h /usr/include/w32api/winsock2.h
+Rand.o: /usr/include/w32api/ole2.h /usr/include/w32api/objbase.h
+Rand.o: /usr/include/w32api/rpcndr.h /usr/include/w32api/rpcnsip.h
+Rand.o: /usr/include/w32api/objfwd.h /usr/include/w32api/wtypes.h
+Rand.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+Rand.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+Rand.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+Rand.o: /usr/include/w32api/oleidl.h
+ResonantLowPass.o: ../util/debug.h /usr/include/stdio.h /usr/include/_ansi.h
+ResonantLowPass.o: /usr/include/newlib.h /usr/include/sys/config.h
+ResonantLowPass.o: /usr/include/machine/ieeefp.h
+ResonantLowPass.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+ResonantLowPass.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+ResonantLowPass.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+ResonantLowPass.o: /usr/include/sys/types.h /usr/include/machine/types.h
+ResonantLowPass.o: /usr/include/sys/stdio.h ResonantLowPass.h MoogObject.h
+ResonantLowPass.o: GoObject.h ../util/list.h Input.h ../util/SimpleArray.h
+ResonantLowPass.o: /usr/include/string.h ../util/fastmemcpy.h NamedObject.h
+ResonantLowPass.o: Output.h ConnectionList.h ConnectionInfo.h Scheduler.h
+ResonantLowPass.o: /usr/include/w32api/windows.h /usr/include/w32api/windef.h
+ResonantLowPass.o: /usr/include/w32api/winnt.h /usr/include/w32api/winerror.h
+ResonantLowPass.o: /usr/include/w32api/basetsd.h
+ResonantLowPass.o: /usr/include/w32api/pshpack4.h
+ResonantLowPass.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+ResonantLowPass.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+ResonantLowPass.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+ResonantLowPass.o: /usr/include/w32api/winver.h
+ResonantLowPass.o: /usr/include/w32api/winnetwk.h
+ResonantLowPass.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+ResonantLowPass.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+ResonantLowPass.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+ResonantLowPass.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+ResonantLowPass.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+ResonantLowPass.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+ResonantLowPass.o: /usr/include/w32api/basetyps.h
+ResonantLowPass.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+ResonantLowPass.o: /usr/include/w32api/rpcnterr.h
+ResonantLowPass.o: /usr/include/w32api/shellapi.h
+ResonantLowPass.o: /usr/include/w32api/pshpack2.h
+ResonantLowPass.o: /usr/include/w32api/winperf.h
+ResonantLowPass.o: /usr/include/w32api/commdlg.h
+ResonantLowPass.o: /usr/include/w32api/winspool.h
+ResonantLowPass.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+ResonantLowPass.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+ResonantLowPass.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+ResonantLowPass.o: /usr/include/stdlib.h /usr/include/machine/stdlib.h
+ResonantLowPass.o: /usr/include/alloca.h /usr/include/w32api/wtypes.h
+ResonantLowPass.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+ResonantLowPass.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+ResonantLowPass.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+ResonantLowPass.o: /usr/include/w32api/oleidl.h bilinear.h
+Rms.o: /usr/include/math.h /usr/include/sys/reent.h /usr/include/_ansi.h
+Rms.o: /usr/include/newlib.h /usr/include/sys/config.h
+Rms.o: /usr/include/machine/ieeefp.h /usr/include/sys/_types.h
+Rms.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h Rms.h
+Rms.o: MoogObject.h GoObject.h ../util/list.h Input.h ../util/SimpleArray.h
+Rms.o: /usr/include/string.h /usr/include/stdio.h
+Rms.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+Rms.o: /usr/include/sys/types.h /usr/include/machine/types.h
+Rms.o: /usr/include/sys/stdio.h ../util/fastmemcpy.h NamedObject.h Output.h
+Rms.o: ConnectionList.h ConnectionInfo.h ../util/debug.h Scheduler.h
+Rms.o: /usr/include/w32api/windows.h /usr/include/w32api/windef.h
+Rms.o: /usr/include/w32api/winnt.h /usr/include/w32api/winerror.h
+Rms.o: /usr/include/w32api/basetsd.h /usr/include/w32api/pshpack4.h
+Rms.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+Rms.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+Rms.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+Rms.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+Rms.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+Rms.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+Rms.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+Rms.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+Rms.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+Rms.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+Rms.o: /usr/include/w32api/basetyps.h /usr/include/w32api/rpcdcep.h
+Rms.o: /usr/include/w32api/rpcnsi.h /usr/include/w32api/rpcnterr.h
+Rms.o: /usr/include/w32api/shellapi.h /usr/include/w32api/pshpack2.h
+Rms.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+Rms.o: /usr/include/w32api/winspool.h /usr/include/w32api/winsock2.h
+Rms.o: /usr/include/w32api/ole2.h /usr/include/w32api/objbase.h
+Rms.o: /usr/include/w32api/rpcndr.h /usr/include/w32api/rpcnsip.h
+Rms.o: /usr/include/w32api/objfwd.h /usr/include/stdlib.h
+Rms.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+Rms.o: /usr/include/w32api/wtypes.h /usr/include/w32api/unknwn.h
+Rms.o: /usr/include/w32api/objidl.h /usr/include/w32api/cguid.h
+Rms.o: /usr/include/w32api/olectlid.h /usr/include/w32api/oleauto.h
+Rms.o: /usr/include/w32api/oaidl.h /usr/include/w32api/oleidl.h
+Scheduler.o: /usr/include/pthread.h /usr/include/sys/types.h
+Scheduler.o: /usr/include/_ansi.h /usr/include/newlib.h
+Scheduler.o: /usr/include/sys/config.h /usr/include/machine/ieeefp.h
+Scheduler.o: /usr/include/sys/_types.h
+Scheduler.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+Scheduler.o: /usr/include/machine/types.h /usr/include/signal.h
+Scheduler.o: /usr/include/sys/signal.h /usr/include/sys/features.h
+Scheduler.o: /usr/include/sched.h /usr/include/time.h
+Scheduler.o: /usr/include/sys/reent.h /usr/include/machine/time.h
+Scheduler.o: /usr/include/stdio.h
+Scheduler.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+Scheduler.o: /usr/include/sys/stdio.h ../util/debug.h Scheduler.h
+Scheduler.o: ../util/list.h /usr/include/w32api/windows.h
+Scheduler.o: /usr/include/w32api/windef.h /usr/include/w32api/winnt.h
+Scheduler.o: /usr/include/w32api/winerror.h /usr/include/string.h
+Scheduler.o: /usr/include/w32api/basetsd.h /usr/include/w32api/pshpack4.h
+Scheduler.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+Scheduler.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+Scheduler.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+Scheduler.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+Scheduler.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+Scheduler.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+Scheduler.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+Scheduler.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+Scheduler.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+Scheduler.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+Scheduler.o: /usr/include/w32api/basetyps.h /usr/include/w32api/rpcdcep.h
+Scheduler.o: /usr/include/w32api/rpcnsi.h /usr/include/w32api/rpcnterr.h
+Scheduler.o: /usr/include/w32api/shellapi.h /usr/include/w32api/pshpack2.h
+Scheduler.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+Scheduler.o: /usr/include/w32api/winspool.h /usr/include/w32api/winsock2.h
+Scheduler.o: /usr/include/w32api/ole2.h /usr/include/w32api/objbase.h
+Scheduler.o: /usr/include/w32api/rpcndr.h /usr/include/w32api/rpcnsip.h
+Scheduler.o: /usr/include/w32api/objfwd.h /usr/include/stdlib.h
+Scheduler.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+Scheduler.o: /usr/include/w32api/wtypes.h /usr/include/w32api/unknwn.h
+Scheduler.o: /usr/include/w32api/objidl.h /usr/include/w32api/cguid.h
+Scheduler.o: /usr/include/w32api/olectlid.h /usr/include/w32api/oleauto.h
+Scheduler.o: /usr/include/w32api/oaidl.h /usr/include/w32api/oleidl.h
+Scheduler.o: GoObject.h DSPOutput.h MoogObject.h Input.h
+Scheduler.o: ../util/SimpleArray.h ../util/fastmemcpy.h NamedObject.h
+Scheduler.o: Output.h ConnectionList.h ConnectionInfo.h DSPDevice.h
+Scheduler.o: /usr/include/unistd.h /usr/include/sys/unistd.h
+Scheduler.o: ../util/fastmemcpy.h
+SchedulerWin32.o: /usr/include/stdio.h /usr/include/_ansi.h
+SchedulerWin32.o: /usr/include/newlib.h /usr/include/sys/config.h
+SchedulerWin32.o: /usr/include/machine/ieeefp.h
+SchedulerWin32.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+SchedulerWin32.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+SchedulerWin32.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+SchedulerWin32.o: /usr/include/sys/types.h /usr/include/machine/types.h
+SchedulerWin32.o: /usr/include/sys/stdio.h ../util/debug.h
+SchedulerWin32.o: /usr/include/w32api/windows.h /usr/include/w32api/windef.h
+SchedulerWin32.o: /usr/include/w32api/winnt.h /usr/include/w32api/winerror.h
+SchedulerWin32.o: /usr/include/string.h /usr/include/w32api/basetsd.h
+SchedulerWin32.o: /usr/include/w32api/pshpack4.h
+SchedulerWin32.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+SchedulerWin32.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+SchedulerWin32.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+SchedulerWin32.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+SchedulerWin32.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+SchedulerWin32.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+SchedulerWin32.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+SchedulerWin32.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+SchedulerWin32.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+SchedulerWin32.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+SchedulerWin32.o: /usr/include/w32api/basetyps.h
+SchedulerWin32.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+SchedulerWin32.o: /usr/include/w32api/rpcnterr.h
+SchedulerWin32.o: /usr/include/w32api/shellapi.h
+SchedulerWin32.o: /usr/include/w32api/pshpack2.h
+SchedulerWin32.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+SchedulerWin32.o: /usr/include/w32api/winspool.h
+SchedulerWin32.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+SchedulerWin32.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+SchedulerWin32.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+SchedulerWin32.o: /usr/include/stdlib.h /usr/include/machine/stdlib.h
+SchedulerWin32.o: /usr/include/alloca.h /usr/include/w32api/wtypes.h
+SchedulerWin32.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+SchedulerWin32.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+SchedulerWin32.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+SchedulerWin32.o: /usr/include/w32api/oleidl.h Scheduler.h ../util/list.h
+SchedulerWin32.o: GoObject.h DSPOutput.h MoogObject.h Input.h
+SchedulerWin32.o: ../util/SimpleArray.h ../util/fastmemcpy.h NamedObject.h
+SchedulerWin32.o: Output.h ConnectionList.h ConnectionInfo.h DSPDevice.h
+SchedulerWin32.o: /usr/include/unistd.h /usr/include/sys/unistd.h
+SchedulerWin32.o: /usr/include/sys/features.h ../util/fastmemcpy.h
+Settings.o: Settings.h ../util/ini.h ../util/hash.h ../util/list.h
+Settings.o: ../util/String.h /usr/include/stdio.h /usr/include/_ansi.h
+Settings.o: /usr/include/newlib.h /usr/include/sys/config.h
+Settings.o: /usr/include/machine/ieeefp.h
+Settings.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+Settings.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+Settings.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+Settings.o: /usr/include/sys/types.h /usr/include/machine/types.h
+Settings.o: /usr/include/sys/stdio.h
+WaveGen.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+WaveGen.o: /usr/include/math.h /usr/include/sys/reent.h /usr/include/_ansi.h
+WaveGen.o: /usr/include/newlib.h /usr/include/sys/config.h
+WaveGen.o: /usr/include/machine/ieeefp.h /usr/include/sys/_types.h
+WaveGen.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+WaveGen.o: /usr/include/string.h /usr/include/stdlib.h
+WaveGen.o: /usr/include/machine/stdlib.h /usr/include/alloca.h WaveGen.h
+WaveGen.o: DataBlock.h /usr/include/stdio.h /usr/include/sys/types.h
+WaveGen.o: /usr/include/machine/types.h /usr/include/sys/stdio.h
+midiInputWin32.o: /usr/include/sys/time.h /usr/include/_ansi.h
+midiInputWin32.o: /usr/include/newlib.h /usr/include/sys/config.h
+midiInputWin32.o: /usr/include/machine/ieeefp.h /usr/include/sys/types.h
+midiInputWin32.o: /usr/include/sys/_types.h
+midiInputWin32.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+midiInputWin32.o: /usr/include/machine/types.h /usr/include/unistd.h
+midiInputWin32.o: /usr/include/sys/unistd.h /usr/include/sys/features.h
+midiInputWin32.o: ../util/debug.h /usr/include/stdio.h
+midiInputWin32.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+midiInputWin32.o: /usr/include/sys/reent.h /usr/include/sys/stdio.h
+midiInputWin32.o: ../juno6/juno_gui.h ../moog/moog.h ../moog/ADSR.h
+midiInputWin32.o: MoogObject.h GoObject.h ../util/list.h Input.h
+midiInputWin32.o: ../util/SimpleArray.h /usr/include/string.h
+midiInputWin32.o: ../util/fastmemcpy.h NamedObject.h Output.h
+midiInputWin32.o: ConnectionList.h ConnectionInfo.h ../moog/Attenuator.h
+midiInputWin32.o: ../moog/Balance.h Rms.h ../moog/Chorus.h
+midiInputWin32.o: ../moog/ConnectionInfo.h ../moog/ConnectionList.h
+midiInputWin32.o: ../moog/ConnectionManager.h ../moog/DSPDevice.h
+midiInputWin32.o: ../util/fastmemcpy.h ../moog/DSPOutput.h DSPDevice.h
+midiInputWin32.o: ../moog/DataBlock.h ../moog/Delay.h ../moog/GoObject.h
+midiInputWin32.o: ../moog/HPF.h IIR2.h ../moog/IIR2.h ../moog/Input.h
+midiInputWin32.o: ../moog/JunoPulse.h ../moog/JunoSaw.h
+midiInputWin32.o: ../moog/MidiInputWin32.h /usr/include/w32api/windows.h
+midiInputWin32.o: /usr/include/w32api/windef.h /usr/include/w32api/winnt.h
+midiInputWin32.o: /usr/include/w32api/winerror.h
+midiInputWin32.o: /usr/include/w32api/basetsd.h
+midiInputWin32.o: /usr/include/w32api/pshpack4.h
+midiInputWin32.o: /usr/include/w32api/poppack.h /usr/include/w32api/wincon.h
+midiInputWin32.o: /usr/include/w32api/winbase.h /usr/include/w32api/wingdi.h
+midiInputWin32.o: /usr/include/w32api/winuser.h /usr/include/w32api/winnls.h
+midiInputWin32.o: /usr/include/w32api/winver.h /usr/include/w32api/winnetwk.h
+midiInputWin32.o: /usr/include/w32api/winreg.h /usr/include/w32api/winsvc.h
+midiInputWin32.o: /usr/include/w32api/cderr.h /usr/include/w32api/dde.h
+midiInputWin32.o: /usr/include/w32api/ddeml.h /usr/include/w32api/dlgs.h
+midiInputWin32.o: /usr/include/w32api/imm.h /usr/include/w32api/lzexpand.h
+midiInputWin32.o: /usr/include/w32api/mmsystem.h /usr/include/w32api/nb30.h
+midiInputWin32.o: /usr/include/w32api/rpc.h /usr/include/w32api/rpcdce.h
+midiInputWin32.o: /usr/include/w32api/basetyps.h
+midiInputWin32.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+midiInputWin32.o: /usr/include/w32api/rpcnterr.h
+midiInputWin32.o: /usr/include/w32api/shellapi.h
+midiInputWin32.o: /usr/include/w32api/pshpack2.h
+midiInputWin32.o: /usr/include/w32api/winperf.h /usr/include/w32api/commdlg.h
+midiInputWin32.o: /usr/include/w32api/winspool.h
+midiInputWin32.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+midiInputWin32.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+midiInputWin32.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+midiInputWin32.o: /usr/include/stdlib.h /usr/include/machine/stdlib.h
+midiInputWin32.o: /usr/include/alloca.h /usr/include/w32api/wtypes.h
+midiInputWin32.o: /usr/include/w32api/unknwn.h /usr/include/w32api/objidl.h
+midiInputWin32.o: /usr/include/w32api/cguid.h /usr/include/w32api/olectlid.h
+midiInputWin32.o: /usr/include/w32api/oleauto.h /usr/include/w32api/oaidl.h
+midiInputWin32.o: /usr/include/w32api/oleidl.h ../moog/Mixer.h
+midiInputWin32.o: ../moog/MoogObject.h ../moog/Oscillator.h ../moog/Output.h
+midiInputWin32.o: ../moog/Rand.h ../moog/ResonantLowPass.h ../moog/Rms.h
+midiInputWin32.o: ../moog/Scheduler.h ../moog/Settings.h ../util/ini.h
+midiInputWin32.o: ../util/hash.h ../util/list.h ../util/String.h
+midiInputWin32.o: ../moog/WaveGen.h DataBlock.h ../moog/pitch.h
+midiInputWin32.o: /usr/include/math.h ../juno6/juno_control.h
+midiInputWin32.o: ../juno6/juno_patch.h MidiInputWin32.h Scheduler.h pitch.h
+pitch.o: pitch.h /usr/include/math.h /usr/include/sys/reent.h
+pitch.o: /usr/include/_ansi.h /usr/include/newlib.h /usr/include/sys/config.h
+pitch.o: /usr/include/machine/ieeefp.h /usr/include/sys/_types.h
+pitch.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+ao_win32.o: /usr/include/stdio.h /usr/include/_ansi.h /usr/include/newlib.h
+ao_win32.o: /usr/include/sys/config.h /usr/include/machine/ieeefp.h
+ao_win32.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+ao_win32.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+ao_win32.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+ao_win32.o: /usr/include/sys/types.h /usr/include/machine/types.h
+ao_win32.o: /usr/include/sys/stdio.h /usr/include/stdlib.h
+ao_win32.o: /usr/include/machine/stdlib.h /usr/include/alloca.h
+ao_win32.o: /usr/include/w32api/windows.h /usr/include/w32api/windef.h
+ao_win32.o: /usr/include/w32api/winnt.h /usr/include/w32api/winerror.h
+ao_win32.o: /usr/include/string.h /usr/include/w32api/basetsd.h
+ao_win32.o: /usr/include/w32api/pshpack4.h /usr/include/w32api/poppack.h
+ao_win32.o: /usr/include/w32api/wincon.h /usr/include/w32api/winbase.h
+ao_win32.o: /usr/include/w32api/wingdi.h /usr/include/w32api/winuser.h
+ao_win32.o: /usr/include/w32api/winnls.h /usr/include/w32api/winver.h
+ao_win32.o: /usr/include/w32api/winnetwk.h /usr/include/w32api/winreg.h
+ao_win32.o: /usr/include/w32api/winsvc.h /usr/include/w32api/cderr.h
+ao_win32.o: /usr/include/w32api/dde.h /usr/include/w32api/ddeml.h
+ao_win32.o: /usr/include/w32api/dlgs.h /usr/include/w32api/imm.h
+ao_win32.o: /usr/include/w32api/lzexpand.h /usr/include/w32api/mmsystem.h
+ao_win32.o: /usr/include/w32api/nb30.h /usr/include/w32api/rpc.h
+ao_win32.o: /usr/include/w32api/rpcdce.h /usr/include/w32api/basetyps.h
+ao_win32.o: /usr/include/w32api/rpcdcep.h /usr/include/w32api/rpcnsi.h
+ao_win32.o: /usr/include/w32api/rpcnterr.h /usr/include/w32api/shellapi.h
+ao_win32.o: /usr/include/w32api/pshpack2.h /usr/include/w32api/winperf.h
+ao_win32.o: /usr/include/w32api/commdlg.h /usr/include/w32api/winspool.h
+ao_win32.o: /usr/include/w32api/winsock2.h /usr/include/w32api/ole2.h
+ao_win32.o: /usr/include/w32api/objbase.h /usr/include/w32api/rpcndr.h
+ao_win32.o: /usr/include/w32api/rpcnsip.h /usr/include/w32api/objfwd.h
+ao_win32.o: /usr/include/w32api/wtypes.h /usr/include/w32api/unknwn.h
+ao_win32.o: /usr/include/w32api/objidl.h /usr/include/w32api/cguid.h
+ao_win32.o: /usr/include/w32api/olectlid.h /usr/include/w32api/oleauto.h
+ao_win32.o: /usr/include/w32api/oaidl.h /usr/include/w32api/oleidl.h afmt.h
+ao_win32.o: ../util/fastmemcpy.h
+bilinear.o: /usr/include/stdio.h /usr/include/_ansi.h /usr/include/newlib.h
+bilinear.o: /usr/include/sys/config.h /usr/include/machine/ieeefp.h
+bilinear.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stddef.h
+bilinear.o: /usr/lib/gcc-lib/i686-pc-cygwin/3.3.1/include/stdarg.h
+bilinear.o: /usr/include/sys/reent.h /usr/include/sys/_types.h
+bilinear.o: /usr/include/sys/types.h /usr/include/machine/types.h
+bilinear.o: /usr/include/sys/stdio.h /usr/include/math.h

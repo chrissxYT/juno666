@@ -17,10 +17,10 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:44:22 $
+ * $Revision: 1.1 $$Date: 2004/03/30 10:07:31 $
  */
 #include "Scope.h"
-#include <moog/Scheduler.h>
+#include <libmoog/Scheduler.h>
 #include <gtk/gtk.h>
 
 gint delete_event_handler( GtkWidget *widget,

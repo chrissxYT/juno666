@@ -24,7 +24,7 @@
 #include "debug.h"
 #include "rcsid.h"
 
-//RCSID("$Id: debug.C,v 1.1 2004/03/29 12:08:40 brainslayer Exp $");
+//RCSID("$Id: debug.cpp,v 1.1 2004/03/30 10:08:52 brainslayer Exp $");
 
 int debuglvl = ~0;
 static FILE *debug_error = NULL;

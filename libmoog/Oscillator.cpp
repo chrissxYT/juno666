@@ -18,12 +18,12 @@
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
  *
- * $Revision: 1.1 $$Date: 2004/03/26 18:45:33 $
+ * $Revision: 1.1 $$Date: 2004/03/30 10:05:29 $
  */
 
 #include <stdio.h>
 #include <math.h>
-#include <util/debug.h>
+#include <libmoogutil/debug.h>
 
 #include "DataBlock.h"
 #include "Oscillator.h"

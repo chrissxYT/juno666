@@ -15,7 +15,7 @@
  *     In no event shall UltraMaster Group be held liable for any damages 
  *     arising from the use of UltraMaster Juno-6.
  */
- #include <util/debug.h>
+ #include <libmoogutil/debug.h>
 
 #include "DSPDevice.h"
 #include "Scheduler.h"

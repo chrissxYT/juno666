@@ -17,10 +17,10 @@
  */
 #include <stdlib.h>
 #include <string.h>
-#include <util/debug.h>
-#include <util/sio.h>
+#include <libmoogutil/debug.h>
+#include <libmoogutil/sio.h>
 #include <math.h>
-#include <util/fastmemcpy.h>
+#include <libmoogutil/fastmemcpy.h>
 #include "DataBlock.h"
 
 #define DATABLOCK_BIN_MAGIC     0xcdedcbab

@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-#include <util/debug.h>
+#include <libmoogutil/debug.h>
 
 #include "MoogObject.h"
 #include "ConnectionInfo.h"

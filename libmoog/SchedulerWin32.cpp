@@ -16,7 +16,7 @@
  *     arising from the use of UltraMaster Juno-6.
  */
 #include <stdio.h>
-#include <util/debug.h>
+#include <libmoogutil/debug.h>
 #include <windows.h>
 #include "Scheduler.h"
 #include "GoObject.h"

@@ -16,7 +16,7 @@
  *     arising from the use of UltraMaster Juno-6.
  */
 #include <math.h>
-#include <util/debug.h>
+#include <libmoogutil/debug.h>
 
 #include "Delay.h"
 #include "Scheduler.h"

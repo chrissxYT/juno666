@@ -18,9 +18,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <util/debug.h>
+#include <libmoogutil/debug.h>
 
-/* $Id: Mixer.C,v 1.1 2004/03/26 18:45:33 brainslayer Exp $ */
+/* $Id: Mixer.cpp,v 1.1 2004/03/30 10:05:29 brainslayer Exp $ */
 
 #include "Mixer.h"
 #include "Scheduler.h"

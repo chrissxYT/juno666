@@ -18,7 +18,7 @@
 #include "ConnectionManager.h"
 #include "MoogObject.h"
 #include "ConnectionInfo.h"
-#include <util/debug.h>
+#include <libmoogutil/debug.h>
 
 int ConnectionManager::reconnect  = 0;
 

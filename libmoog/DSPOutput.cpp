@@ -15,13 +15,13 @@
  *     In no event shall UltraMaster Group be held liable for any damages 
  *     arising from the use of UltraMaster Juno-6.
  */
-#include <util/debug.h>
-#include <util/sio.h>
+#include <libmoogutil/debug.h>
+#include <libmoogutil/sio.h>
 
 #include "DSPOutput.h"
 #include "Scheduler.h"
 
-/* $Id: DSPOutput.C,v 1.1 2004/03/26 18:45:33 brainslayer Exp $ */
+/* $Id: DSPOutput.cpp,v 1.1 2004/03/30 10:05:29 brainslayer Exp $ */
 
 DSPOutput::DSPOutput(DSPDevice *_dsp)
 {

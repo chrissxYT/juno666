@@ -23,7 +23,7 @@
 #include <unistd.h>
 #include <sys/mman.h>
  
-#include <util/debug.h>
+#include <libmoogutil/debug.h>
 
 #include "DSPDevice.h"
 #include "Scheduler.h"

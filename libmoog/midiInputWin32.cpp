@@ -6,7 +6,7 @@ Win32 MIDI Implementation for Juno 666 project. (c) 2003 - 2004 Sebastian Gottsc
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <util/debug.h>
+#include <libmoogutil/debug.h>
 #include <juno6/juno_gui.h>
 #include "MidiInputWin32.h"
 #include "Scheduler.h"
