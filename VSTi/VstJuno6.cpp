@@ -3,6 +3,7 @@
 #include "VstJuno6.h"
 
 #include "editor.h"
+#include "patches.h"
 
 VstJuno6::VstJuno6(audioMasterCallback audioMaster):
 AudioEffectX(audioMaster, kNumPrograms, kNumParams)
@@ -21,11 +22,11 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
  
     initSynth(numVoices);
 
-    patches = juno_patchset_new();
+    patches = (juno_patch*)&junofactory;
 
-    String patchFileName = "juno6.patches";
+    //String patchFileName = "juno6.patches";
 
-    load_patches(patchFileName, patches);
+    //load_patches(patchFileName, patches);
 
     keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
 
