@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/06 08:10:29 $
+ * $Revision: 1.4 $$Date: 2004/04/06 09:54:07 $
  */
 
 #include <stdio.h>
@@ -71,7 +71,7 @@ void layoutPatchSection(GtkFixed *f);
 
 //FIXME: these should either be global or not... decide
 Settings *settings;
-JunoControl *junoControl;
+extern JunoControl *junoControl;
 MidiInput *midiInput;
 JunoKeyboard *keyboard;
 

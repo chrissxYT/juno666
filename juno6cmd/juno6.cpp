@@ -17,25 +17,24 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/06 09:54:07 $
+ * $Revision: 1.1 $$Date: 2004/04/06 09:57:01 $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <glib.h>
-#include <gtk/gtk.h>
+#include <conio.h>
 #include <libmoog/moog.h>
 #include <libmoogutil/String.h>
 #include <sys/types.h>
 #include <libmoogutil/debug.h>
-//#include <util/cpudetect.h>
 #include "juno_patch.h"
-#include "juno_gui.h"
 #include "juno_synth.h"
+#include "juno_keyboard.h"
 
 String patchFileName;
 juno_patch *patches;
-
+MidiInput *midiInput = NULL;
+int threadcount=0;
 #ifdef DOMAIN
 int main(int argc, char **argv)
 #else
@@ -43,11 +42,7 @@ int Juno666(int argc, char **argv)
 #endif
 {
 	debuglvl = DEBUG_SYSERROR | DEBUG_APPERROR | DEBUG_APPMSG1;
-	puts("init gthread");
-	g_thread_init(NULL);
-	puts("init gtk");
-	gtk_init(&argc, &argv);
-
+	
 	if (argc > 1)
 	{
 		patchFileName = argv[1];
@@ -59,7 +54,7 @@ int Juno666(int argc, char **argv)
 		patchFileName = "juno6.patches";
 	}
 
-	MidiInput *midiInput = NULL;
+	
 
 	Settings settings;
 	puts("get settings");
@@ -70,7 +65,6 @@ int Juno666(int argc, char **argv)
 		numVoices = atoi(numVoicesStr);
 	Scheduler::Init();
 	JunoControl *junoControl = new JunoControl(numVoices);
-
 	if (settings.getInt("devices", "use-midi"))
 	{
 		midiInput = new MidiInput(junoControl,settings.getString("devices",
@@ -89,18 +83,15 @@ int Juno666(int argc, char **argv)
 	}
 	
 	initSynth(junoControl, &settings, midiInput, numVoices);
-	initGui(junoControl, &settings, midiInput, numVoices);
+
 
 	patches = juno_patchset_new();
-
 	load_patches(patchFileName, patches);
-
 	midiInput->loadPatch(&patches[0]);
+	JunoKeyboard *keyboard = new JunoKeyboard(numVoices);
 
-	gdk_threads_enter();
-
-	gtk_main();
-	gdk_threads_leave();
+	puts("press any key to abort");
+	getch();
 	Scheduler::DeInit();
 	exit(1);
 	return (0);

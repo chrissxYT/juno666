@@ -28,7 +28,7 @@ extern Attenuator *pwmLfo;
 #define JUNO_CONTROL_RATE 32
 
 extern Settings *settings;
-extern void setScope(int voice);
+//extern void setScope(int voice);
 
 void JunoVoice_envChanged(MoogObject *o, double data, long userData)
 {
@@ -137,7 +137,6 @@ JunoVoice::JunoVoice(JunoControl *_jc, int _voiceNum)
 	attachVoice(jc);
 	PATCH(jc, "bender", this, "bender");
 	PATCH(jc, "bender_dco", this, "bender_dco");
-        
 	PATCH(jc, "bender_vcf", this, "bender_vcf");
 	PATCH(jc, "dco_lfo", this, "dco_lfo");
 	PATCH(jc, "dco_pwm", &pwmAttenuator, "amp");
@@ -253,7 +252,7 @@ void JunoVoice::kbdChanged(double data)
 	updateVcf();
 	updateFrq();
 
-	setScope(voiceNum);
+	//setScope(voiceNum);
 }
 
 void JunoVoice::benderChanged(double data)
@@ -388,18 +387,11 @@ void JunoVoice::updateVcf()
 {
 	double tmp = vcffrq;
 
-	//printf("tmp is %f\n", tmp);
-	//printf("%f %f %f\n", kbd, CPS(33), CPS(12000));
-	tmp += (kbd - CPS(33)) / 0.093424 * vcfkbd;
-	//printf("tmp: %f lfo: %f vcflfo: %f\n", tmp, lfo, vcflfo);
-	tmp += lfo * vcflfo;
-	//printf("tmp is %f\n", tmp);
-	tmp += env * vcfenv * vcfenvinvert;
-	//printf("tmp is %f\n", tmp);
-
-	tmp = tmp * pow(2, bender * bendervcf);
-
-	tmp = pow(tmp, 4.0);
+	tmp += pow((((kbd - CPS(33)) / 0.093424 * vcfkbd) + (lfo * vcflfo)+ (env * vcfenv * vcfenvinvert))*pow(2, bender * bendervcf),4.0);
+	//tmp += lfo * vcflfo;
+	//tmp += env * vcfenv * vcfenvinvert;
+	//tmp = tmp * pow(2, bender * bendervcf);
+	//tmp = pow(tmp, 4.0);
 	if (tmp >= .999)
 		tmp = .999;
 

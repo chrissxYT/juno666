@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/06 09:54:22 $
+ * $Revision: 1.1 $$Date: 2004/04/06 09:57:01 $
  */
 #include <stdlib.h>
 #include "juno_synth.h"
@@ -25,7 +25,6 @@
 #include "juno_lfo.h"
 #include "juno_arpeggio.h"
 #include "juno_chorus.h"
-#include <libgmoog/Scope.h>
 #include "juno_patch.h"
 
 //FIXME: this is grosser than gross
@@ -34,13 +33,7 @@ JunoControl *junoControl;
 DSPOutput *dsp;
 int numV;
 JunoVoice *voice[64];
-/*
-JunoVoice    *voice1;
-JunoVoice    *voice2;
-JunoVoice    *voice3;
-JunoVoice    *voice4;
-JunoVoice    *voice5;
-*/
+
 Mixer *voiceMix;
 Rand *noise;
 JunoLfo *lfo;
@@ -53,11 +46,10 @@ HPF *hpf;
 extern Settings *settings;
 extern String patchFileName;
 
-Scope *scope = NULL;
 
 bool stereo;
 
-void
+/*void
 setScope(int v)
 {
 	if (scope == NULL || scope->showing == 0)
@@ -65,33 +57,7 @@ setScope(int v)
 
 	PATCH(&voice[v]->sub, "sync", scope, "sync");
 
-	/*  switch( voice )
-	  {
-	  case 0:
-	      PATCH( &voice0->sub, "sync", scope, "sync" );
-	      break;
-
-	  case 1:
-	      PATCH( &voice1->sub, "sync", scope, "sync" );
-	      break;
-
-	  case 2:
-	      PATCH( &voice2->sub, "sync", scope, "sync" );
-	      break;
-
-	  case 3:
-	      PATCH( &voice3->sub, "sync", scope, "sync" );
-	      break;
-
-	  case 4:
-	      PATCH( &voice4->sub, "sync", scope, "sync" );
-	      break;
-
-	  case 5:
-	      PATCH( &voice5->sub, "sync", scope, "sync" );
-	      break;
-	  }*/
-}
+}*/
 
 void
 initSynth(JunoControl *_junoControl,
@@ -160,6 +126,7 @@ initSynth(JunoControl *_junoControl,
 		sprintf(tmp, "sig%d", i);
 		//debug(DEBUG_APPMSG1, "patching voice",i);
 		PATCH(voice[i], "sig", voiceMix, tmp);
+		//voice[i]->attachVoice(midiInput);
 	}
 
 	/*switch(numVoices)
@@ -218,13 +185,13 @@ initSynth(JunoControl *_junoControl,
 	PATCH(junoControl, "volume", dsp, "amp0");
 
 	// all cool dave, scope does nothing until you pop it up.
-	scope = new Scope();
-	PATCH(chorus, "sig", scope, "sig");
+	//scope = new Scope();
+	//PATCH(chorus, "sig", scope, "sig");
 
-	if (stereo)
+	/*if (stereo)
 	{
 		PATCH(chorus2, "sig", scope, "sig2");
-	}
+	}*/
 
 	/* the Balance in the voices needs signal to calibrate, so start
 	 * the oscillators with an arbitrary frequency - they run forever
@@ -233,11 +200,6 @@ initSynth(JunoControl *_junoControl,
 	{
 		junoControl->getOutput((String)"voice" + i + (String)"_pitch")->setData(CPS(666));
 	}
-	/*junoControl->getOutput("voice1_pitch")->setData(CPS(666));
-	junoControl->getOutput("voice2_pitch")->setData(CPS(666));
-	junoControl->getOutput("voice3_pitch")->setData(CPS(666));
-	junoControl->getOutput("voice4_pitch")->setData(CPS(666));
-	junoControl->getOutput("voice5_pitch")->setData(CPS(666));*/
 
 	PATCH(junoControl, "volume", dsp, "amp0");
 

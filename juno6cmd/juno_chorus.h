@@ -17,25 +17,37 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/06 09:54:07 $
+ * $Revision: 1.1 $$Date: 2004/04/06 09:57:01 $
  */
-#ifndef JUNO_CONTROL_H
-#define JUNO_CONTROL_H
+#ifndef JUNO_CHORUS_H
+#define JUNO_CHORUS_H
 
-#include <libmoog/MoogObject.h>
-#include <libmoogutil/String.h>
+#include <libmoog/moog.h>
 
-class JunoControl: public MoogObject
+class JunoChorus: public MoogObject
 {
+private:
+	friend void JunoChorus_offChanged(MoogObject *, double, long);
+	friend void JunoChorus_IChanged(MoogObject *, double, long);
+	friend void JunoChorus_IIChanged(MoogObject *, double, long);
+
+	void offChanged(double value);
+	void IChanged(double value);
+	void IIChanged(double value);
+
+	Chorus c1;
+	Chorus c2;
+	Mixer m;
+
+	bool oneOn, twoOn;
+
 public:
-	JunoControl(int);
+	JunoChorus(MoogObject *src, const char *outputName, int phase);
+	~JunoChorus();
 	const char *getClassName()
 	{
-		return "JunoControl";
+		return ("JunoChorus");
 	}
 };
 
-#endif /* JUNO_CONTROL_H */
-
-
-
+#endif /* JUNO_CHORUS_H */

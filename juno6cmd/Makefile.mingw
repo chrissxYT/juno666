@@ -1,27 +1,35 @@
 include ../Makefile.mingwinc
+
 GTK_CFLAGS=
 INCLUDE_PATH=-Iumg/base/include -I../include -I../lib/glib-2.0/include -I../lib/gtk+/include -I../include/glib-2.0 -I../
 CPPFLAGS=$(INCLUDE_PATH) $(GTK_CFLAGS) -Wall $(OPTIMIZE) $(DEBUG) $(PROFILE)
 LDFLAGS= -L./ -L./libmoog -L./libmoogutil -L./libgmoog -lgmoog -lmoog -lmoogutil -lgthread
+
 PROGS=juno6 list_patches copy_patch
 
-OBJS=juno6.o\
-    juno_gui.o\
-    juno_synth.o\
-    juno_control.o\
-    juno_voice.o\
-    juno_wrappers.o\
-    juno_lfo.o\
-    juno_arpeggio.o\
-    juno_chorus.o\
-    juno_patch.o\
-    about.o\
+OBJS=   juno6.o\
+	juno_synth.o \
+	juno_control.o \
+	juno_voice.o \
+	juno_lfo.o \
+	juno_arpeggio.o\
+	juno_chorus.o\
+	juno_patch.o\
+	juno_keyboard.o\
 
 all: $(PROGS)
 
 objs: $(OBJS)
 
 juno6: $(OBJS)
+
+test:
+	./juno6
+
+clean:
+	rm -f *.o core .depend $(PROGS)
+
+list_patches copy_patch: juno_patch.o
 
 .PHONY: test objs
 

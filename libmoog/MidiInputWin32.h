@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.4 $$Date: 2004/04/06 09:54:22 $
  */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
@@ -25,6 +25,9 @@
 #include "MoogObject.h"
 #include <windows.h>
 #include <mmsystem.h>
+#include <juno6/Juno_Control.h>
+#include <juno6/juno_patch.h>
+
 
 /* Note, there should be various modes ( there are more than these )
 1. monophonic, after key pressed other keys are ignored
@@ -61,9 +64,10 @@ public:
 	inline void doNoteOn(unsigned int c, unsigned int n, unsigned int v);
 	inline void doNoteOff(unsigned int c, unsigned int n, unsigned int v);
 	inline void doPitchBend(unsigned int amount);
+	void loadPatch(juno_patch *patch);
 
 public:
-	MidiInput(const char *device, int polyphony = 1);
+	MidiInput(JunoControl *jc,const char *device, int polyphony = 1);
 	~MidiInput();
 	void start();
 	void stop();

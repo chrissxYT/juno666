@@ -17,25 +17,11 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/06 09:54:07 $
+ * $Revision: 1.1 $$Date: 2004/04/06 09:57:01 $
  */
-#ifndef JUNO_CONTROL_H
-#define JUNO_CONTROL_H
+#ifndef VERSION_H
+#define VERSION_H
 
-#include <libmoog/MoogObject.h>
-#include <libmoogutil/String.h>
+#define VERSION "1.0b1"
 
-class JunoControl: public MoogObject
-{
-public:
-	JunoControl(int);
-	const char *getClassName()
-	{
-		return "JunoControl";
-	}
-};
-
-#endif /* JUNO_CONTROL_H */
-
-
-
+#endif /* VERSION_H */

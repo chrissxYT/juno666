@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.4 $$Date: 2004/04/06 09:54:22 $
  */
 #ifndef _OUTPUT_H
 #define _OUTPUT_H
@@ -27,6 +27,7 @@
 #include "NamedObject.h"
 #include "Input.h"
 #include "ConnectionInfo.h"
+
 
 class Output: public NamedObject
 {

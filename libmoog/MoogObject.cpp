@@ -184,7 +184,10 @@ Output *MoogObject::getOutput(const char *name)
 {
 	int num = getOutputNum(name);
 	if (num == -1)
+		{
+		printf("can't find output for %s\n",name);
 		return (NULL);
+		}
 
 	return (&outputs[num]);
 }

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.3 $$Date: 2004/04/06 09:54:22 $
  */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
@@ -25,7 +25,7 @@
 #include <pthread.h>
 #include <windows.h>
 #include <mmsystem.h>
-
+#include <juno6/Juno_Control.h>
 #include "MidiDevice.h"
 
 /* Note, there should be various modes ( there are more than these )
@@ -67,7 +67,7 @@ public:
 	inline void doPitchBend(unsigned int amount);
 
 public:
-	MidiInput(const char *device, int polyphony = 1);
+	MidiInput(JunoControl *jc,const char *device, int polyphony = 1);
 	~MidiInput();
 	inline void start();
 	inline void stop();
