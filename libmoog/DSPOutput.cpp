@@ -15,7 +15,7 @@
  *     In no event shall UltraMaster Group be held liable for any damages
  *     arising from the use of UltraMaster Juno-6.
  */
-#include <math.h>		 d
+#include <math.h>
 #include <libmoogutil/debug.h>
 #include <libmoogutil/sio.h>
 
@@ -23,7 +23,7 @@
 #include "Scheduler.h"
 #include "JunoControl.h"
 
-/* $Id: DSPOutput.cpp,v 1.3 2004/04/07 09:30:43 brainslayer Exp $ */
+/* $Id: DSPOutput.cpp,v 1.4 2004/04/13 22:21:10 strepto Exp $ */
 
 
 void setPanningValues(MoogObject *o, double data, long)

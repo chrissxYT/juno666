@@ -17,52 +17,55 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/04/07 11:26:32 $
+ * $Revision: 1.2 $$Date: 2004/04/13 22:21:10 $
  */
 #ifndef JUNO_PATCH_H
 #define JUNO_PATCH_H
 
+#define PATCH_NAME_LEN 40
+
 typedef struct
 {
-	int version;
-	int used;
-	double bender_dco;
-	double bender_vcf;
-	double lfo_trigger;
-	double volume;
-	double octave_transpose;
-	double arpeggio_switch;
-	double arpeggio_mode;
-	double arpeggio_range;
-	double arpeggio_rate;
-	double lfo_rate;
-	double lfo_delay;
-	double lfo_mode;
-	double dco_lfo;
-	double dco_pwm;
-	double dco_pwm_mod;
-	double dco_pulse_switch;
-	double dco_saw_switch;
-	double dco_sub_switch;
-	double dco_sub;
-	double dco_noise;
-	double hpf_frq;
-	double vcf_frq;
-	double vcf_res;
-	double vcf_env_invert;
-	double vcf_env;
-	double vcf_lfo;
-	double vcf_kbd;
-	double vca_mode;
-	double env_attack;
-	double env_decay;
-	double env_sustain;
-	double env_release;
-	double chorus_I_switch;
-	double chorus_II_switch;
+    int version;
+    int used;
+    double bender_dco;
+    double bender_vcf;
+    double lfo_trigger;
+    double volume;
+    double octave_transpose;
+    double arpeggio_switch;
+    double arpeggio_mode;
+    double arpeggio_range;
+    double arpeggio_rate;
+    double lfo_rate;
+    double lfo_delay;
+    double lfo_mode;
+    double dco_lfo;
+    double dco_pwm;
+    double dco_pwm_mod;
+    double dco_pulse_switch;
+    double dco_saw_switch;
+    double dco_sub_switch;
+    double dco_sub;
+    double dco_noise;
+    double hpf_frq;
+    double vcf_frq;
+    double vcf_res;
+    double vcf_env_invert;
+    double vcf_env;
+    double vcf_lfo;
+    double vcf_kbd;
+    double vca_mode;
+    double env_attack;
+    double env_decay;
+    double env_sustain;
+    double env_release;
+    double chorus_I_switch;
+    double chorus_II_switch;
+    char name[PATCH_NAME_LEN];
 } juno_patch;
 
-#define NUM_PATCHES 100
+#define NUM_PATCHES 128
 #ifdef __cplusplus
 extern "C"
 {

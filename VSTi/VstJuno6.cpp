@@ -41,18 +41,12 @@ void VstJuno6::setProgram (long program)
 
 void VstJuno6::setProgramName (char *name)
 {
-/*
-    strcpy (currentProgram->name, name);
-*/
+    strncpy (patches[curProgram].name, name, PATCH_NAME_LEN);
 }
 
 void VstJuno6::getProgramName (char *name)
 {
-    strcpy (name, "faszom");
-
-/*
-    strcpy (name, currentProgram->name);
-*/
+    strcpy (name, patches[curProgram].name);
 }
 
 void VstJuno6::getParameterLabel (long index, char *label)
@@ -104,7 +98,7 @@ bool VstJuno6::getProgramNameIndexed (long category, long index, char* text)
     {
 //        sprintf(text,"%4.4f",(float)*control->getOutput(0)->getData());
 
-        strcpy (text, "wazze");
+        strcpy (text, patches[index].name);
         return true;
     }
     return false;

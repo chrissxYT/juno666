@@ -23,8 +23,7 @@ unsigned char get3hex(FILE *in)
 int loadPatFile(char *name, juno_patch *patch)
 {
     FILE *in;
-
-
+    int i;
 
     unsigned char lfo_rate;
     unsigned char lfo_delay;
@@ -36,26 +35,24 @@ int loadPatFile(char *name, juno_patch *patch)
     unsigned char vcf_env;
     unsigned char vcf_lfo;
     unsigned char vcf_kbd;
-    int i;
-
     unsigned char vca_level; //what?
-
     unsigned char env_attack;
     unsigned char env_decay;
     unsigned char env_sustain;
     unsigned char env_release;
     unsigned char dco_sub;
-
     unsigned char sw1;
     unsigned char sw2;
-
-
 
     in = fopen(name, "rb");
     if (in == NULL)
         return -1;
-    for (i = 0;i < NUM_PATCHES;i++)
+
+    for (i = 0; i < NUM_PATCHES; i++)
     {
+        char *name = patch[i].name;
+        char c = 0;
+        int len = 0;
 
         patch[i].version = 1;
         patch[i].used = 1;
@@ -135,31 +132,30 @@ int loadPatFile(char *name, juno_patch *patch)
         if (dco_sub)
             patch[i].dco_sub_switch = 1;
 
+        c = getc(in);
 
-//skip line
-        char *tmp = patch[i].name;
-        char c = getc(in);
-
+//read the name of the patch till the end of the line
         while ( c != 0xa )
         {
-            *tmp++ = c;
+            if ( len < PATCH_NAME_LEN )
+            {
+                *name++ = c;
+            }
             c = getc(in);
+            len++;
         }
-
     }
-
 }
 
 int
 main(int argc, char **argv)
 {
-    int i;
     juno_patch *patches;
 
     if (argc < 3)
     {
         fprintf(stderr, "Usage: %s 'patfile' 'patchfile'\n", argv[0]);
-        exit(1);
+        return 1;
     }
 
     patches = juno_patchset_new();
@@ -167,4 +163,6 @@ main(int argc, char **argv)
 
     save_patches(argv[2], patches);
     juno_patchset_delete(patches);
+
+    return 0;
 }

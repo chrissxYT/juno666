@@ -17,54 +17,38 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/07 11:26:28 $
+ * $Revision: 1.1 $$Date: 2004/04/13 22:21:10 $
  */
 #include <libmoog/JunoPatch.h>
 #include <stdio.h>
 #include <errno.h>
-#include <stdlib.h>
 
 int
 main(int argc, char **argv)
 {
-	char *srcFile;
-	int srcNo;
-	char *destFile;
-	int destNo;
+	int i;
+	juno_patch *patches;
 
-	juno_patch *srcPatches;
-	juno_patch *destPatches;
-
-	if (argc < 4)
+	if (argc < 2)
 	{
-		fprintf(stderr, "Usage: %s srcFile srcNo destFile destNo\n", argv[0]);
+		fprintf(stderr, "Usage: %s patchfile\n", argv[0]);
 		exit(1);
 	}
 
-	srcFile = argv[1];
-	srcNo = atoi(argv[2]);
-	destFile = argv[3];
-	destNo = atoi(argv[4]);
-
-	srcPatches = juno_patchset_new();
-	destPatches = juno_patchset_new();
-
-	if (load_patches(srcFile, srcPatches) < 0)
+	patches = juno_patchset_new();
+	if (load_patches(argv[1], patches) < 0)
 	{
 		exit(1);
 	}
 
-	if (load_patches(destFile, destPatches) < 0)
+	for (i = 0;i < NUM_PATCHES;i++)
 	{
-		exit(1);
+		printf("%02d %s\t", i, patches[i].used ? "used" : "free");
+		if (i % 10 == 10)
+			printf("\n");
 	}
 
-	destPatches[destNo] = srcPatches[srcNo];
-
-	save_patches(destFile, destPatches);
-
-	juno_patchset_delete(srcPatches);
-	juno_patchset_delete(destPatches);
+	juno_patchset_delete(patches);
 
 	return (0);
 }
