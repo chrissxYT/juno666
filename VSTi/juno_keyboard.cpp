@@ -27,12 +27,12 @@ void JunoKeyboard_masterTuneChanged(MoogObject *o, double data, long)
     ((JunoKeyboard *)o)->masterTuneChanged(data);
 }
 */
-void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
+void __fastcall Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
 {
     ((JunoKeyboard *)o)->changePatch();
 }
 
-void JunoBender_midiValueChanged(MoogObject *o, double data, long userdata)
+void __fastcall JunoBender_midiValueChanged(MoogObject *o, double data, long userdata)
 {
     ((JunoKeyboard *)o)->changeBender(data);
 }
@@ -254,5 +254,4 @@ void JunoKeyboard::changePatch()
     control->MoogObject::getOutput("chorus_II_switch")->setData(patch->chorus_II_switch);
     control->MoogObject::getOutput("panning")->setData(patch->panning);
     control->MoogObject::getOutput("unisono")->setData(patch->unisono);
-
 }

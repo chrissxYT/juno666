@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/06/10 09:13:58 $
+ * $Revision: 1.5 $$Date: 2004/09/11 00:12:34 $
  */
 #ifndef JUNO_PATCH_H
 #define JUNO_PATCH_H
@@ -28,42 +28,44 @@ typedef struct
 {
 	int version;
 	int used;
-	double bender_dco;
-	double bender_vcf;
-	double lfo_trigger;
-	double volume;
-	double octave_transpose;
-	double arpeggio_switch;
-	double arpeggio_mode;
-	double arpeggio_range;
-	double arpeggio_rate;
-	double lfo_rate;
-	double lfo_delay;
-	double lfo_mode;
-	double dco_lfo;
-	double dco_pwm;
-	double dco_pwm_mod;
-	double dco_pulse_switch;
-	double dco_saw_switch;
-	double dco_sub_switch;
-	double dco_sub;
-	double dco_noise;
-	double hpf_frq;
-	double vcf_frq;
-	double vcf_res;
-	double vcf_env_invert;
-	double vcf_env;
-	double vcf_lfo;
-	double vcf_kbd;
-	double vca_mode;
-	double env_attack;
-	double env_decay;
-	double env_sustain;
-	double env_release;
-	double chorus_I_switch;
-	double chorus_II_switch;
-	double panning;
-	double unisono;
+	float bender_dco;
+	float bender_vcf;
+	float lfo_trigger;
+	float volume;
+	float octave_transpose;
+	float arpeggio_switch;
+	float arpeggio_mode;
+	float arpeggio_range;
+	float arpeggio_rate;
+	float lfo_rate;
+	float lfo_delay;
+	float lfo_mode;
+	float dco_lfo;
+	float dco_pwm;
+	float dco_pwm_mod;
+	float dco_pulse_switch;
+	float dco_saw_switch;
+	float dco_sub_switch;
+	float dco_sub;
+	float dco_noise;
+	float hpf_frq;
+	float vcf_frq;
+	float vcf_res;
+	float vcf_env_invert;
+	float vcf_env;
+	float vcf_lfo;
+	float vcf_kbd;
+	float vca_mode;
+	float env_attack;
+	float env_decay;
+	float env_sustain;
+	float env_release;
+	float chorus_I_switch;
+	float chorus_II_switch;
+	float panning;
+	float unisono;
+	float phaserrate;
+	float phaserfeedback;
 	char name[PATCH_NAME_LEN];
 } juno_patch;
 

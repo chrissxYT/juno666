@@ -10,7 +10,6 @@
 #include <libmoog/JunoArpeggio.h>
 #include <libmoog/JunoControl.h>
 #include <libmoog/JunoChorus.h>
-#include <libmoog/Phaser.h>
 #include <libmoog/JunoPatch.h>
 #include <libmoog/HPF.h>
 
@@ -67,11 +66,6 @@ enum
     kChorus_off_switch,
     kChorus_I_switch,
     kChorus_II_switch,
-    //kPhaserMinRange,
-    //kPhaserMaxRange,
-    kPhaserRate,
-    kPhaserFeedback,
-    //kPhaserDepth,
     kPanningSlider,
     kStereoSwitch,
     kUniSono,
@@ -132,8 +126,6 @@ private:
     Mixer *voiceMix;
     JunoChorus *chorus;
     JunoChorus *chorus2;
-    Phaser *phaser;
-    Phaser *phaser2;
     HPF *hpf;
 
     JunoVoice **voice;

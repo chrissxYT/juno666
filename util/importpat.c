@@ -175,7 +175,7 @@ int loadPatFile(char *name, juno_patch *patch,char *header)
 		}
 	 
 	 
-	fprintf(out,"{%d,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,\"%s\"},\r\n",
+	fprintf(out,"{%d,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\"%s\"},\r\n",
 	 patch[i].version,
 	 patch[i].used,
 	 patch[i].bender_dco,
@@ -214,13 +214,15 @@ int loadPatFile(char *name, juno_patch *patch,char *header)
 	 patch[i].chorus_II_switch,
 	 patch[i].panning,
 	 patch[i].unisono,
+	 patch[i].phaserrate,
+	 patch[i].phaserfeedback,
 	 patch[i].name);
 	}
 }
 
 int
 main(int argc, char **argv)
-{
+{	
 	juno_patch *patches;
 
 	if (argc < 3)

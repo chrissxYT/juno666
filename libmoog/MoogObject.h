@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.11 $$Date: 2004/06/25 10:38:42 $
+ * $Revision: 1.12 $$Date: 2004/09/11 00:12:34 $
  */
 #ifndef _MOOGOBJECT_H
 #define _MOOGOBJECT_H
@@ -82,7 +82,7 @@ protected:
     printf("from %s\n",getClassName());
     return NULL;
     }*/
-	Input *addInput(const char *name, moog_callback_t callback = NULL, long userData = 0, int timescale = 0);
+	Input * __fastcall addInput(const char *name, moog_callback_t callback = NULL, long userData = 0, int timescale = 0);
 
 	/* Every connection  has two MoogObjects involved: from->output  to->input
 	 * These MoogObject base impl. functions take these two objects then call

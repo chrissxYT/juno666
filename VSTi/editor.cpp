@@ -178,7 +178,7 @@ void Editor::valueChanged(CDrawContext *canvas, CControl *ccontrol)
     ccontrol->update(canvas);
 }
 
-void controlChanged(MoogObject *o, double data, long userdata)
+void __fastcall controlChanged(MoogObject *o, double data, long userdata)
 {
     ((Editor *)o)->changeControl(userdata,data);
 }

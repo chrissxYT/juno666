@@ -39,7 +39,7 @@ MoogObject::MoogObject(Scheduler *sched, ConnectionManager *conn): GoObject(sche
 	sprintf(name, "MoogObject_%d", goHandle);
 }
 
-void MoogObject::addPorts(char *name, ...)
+void __cdecl MoogObject::addPorts(char *name, ...)
 {
 
 	va_list va;
@@ -83,7 +83,7 @@ void MoogObject::addPorts(char *name, ...)
 	va_end(va);
 }
 
-Output *MoogObject::addOutput(const char *name, bool continuousOutput)
+Output  * MoogObject::addOutput(const char *name, bool continuousOutput)
 {
 	return addOutput(name, NULL, continuousOutput);
 }
@@ -102,7 +102,7 @@ Output *MoogObject::addOutput(const char *name, const char *displayname, int typ
 }
 
 
-Input *MoogObject::addInput(const char *name, moog_callback_t callback, long userData, int timescale)
+Input * MoogObject::addInput(const char *name, moog_callback_t callback, long userData, int timescale)
 {
 //printf("add input %s to %s %s\n",name,getName(),getClassName());
 
@@ -159,7 +159,7 @@ void MoogObject::set(const char *inputName, double value)
 }
 
 // These next two may want to be faster than a linear scan at some point
-int MoogObject::getInputNum(const char *name)
+int  MoogObject::getInputNum(const char *name)
 {
 
 	for (int i = 0;i < inputs.getSize();i++)
@@ -172,7 +172,7 @@ int MoogObject::getInputNum(const char *name)
 	return (-1);
 }
 
-int MoogObject::getOutputNum(const char *name)
+int  MoogObject::getOutputNum(const char *name)
 {
 
 	for (int i = 0;i < outputs.getSize();i++)
@@ -187,7 +187,7 @@ int MoogObject::getOutputNum(const char *name)
 	return (-1);
 }
 
-Input *MoogObject::getInput(const char *name)
+Input  *MoogObject::getInput(const char *name)
 {
 
 	int num = getInputNum(name);
@@ -197,7 +197,7 @@ Input *MoogObject::getInput(const char *name)
 	return (&inputs[num]);
 }
 
-Output *MoogObject::getOutput(const char *name)
+Output  *MoogObject::getOutput(const char *name)
 {
 
 	int num = getOutputNum(name);

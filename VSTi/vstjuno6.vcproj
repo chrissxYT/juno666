@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="vstjuno6"
+	OwnerKey="{EAF909A5-FA59-4C3D-9431-0FCC20D5BCF9}"
 	ProjectGUID="{0BE38C13-3D1F-4DB2-8D5E-AC1248551703}"
 	SccProjectName=""
 	SccLocalPath="">
@@ -102,15 +103,16 @@
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
 				BufferSecurityCheck="FALSE"
-				EnableFunctionLevelLinking="TRUE"
+				EnableFunctionLevelLinking="FALSE"
 				EnableEnhancedInstructionSet="1"
 				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Release/vstjuno6.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
-				WarningLevel="3"
+				WarningLevel="0"
 				SuppressStartupBanner="TRUE"
+				CallingConvention="0"
 				CompileAs="0"/>
 			<Tool
 				Name="VCCustomBuildTool"/>

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
+ * $Revision: 1.4 $$Date: 2004/09/11 00:12:34 $
  */
 #ifndef BALANCE_H
 #define BALANCE_H
@@ -55,7 +55,7 @@ public:
 	void sampleGo();
 
 	//override because both inputs are called 'sig'
-	Input *getInput(const char *n);
+	Input * getInput(const char *n);
 	const char *getClassName()
 	{
 		return "Balance";

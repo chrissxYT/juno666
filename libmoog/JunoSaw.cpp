@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.12 $$Date: 2004/09/10 10:56:58 $
+ * $Revision: 1.13 $$Date: 2004/09/11 00:12:34 $
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -118,7 +118,7 @@ void JunoSaw::sampleGo()
 		return;
 	}
 	double result = update_blit(&b,newFrq);
-	output->setData(result* (*inAmp));
+	output->setData(result* (*inAmp)*2);
 
 	/*
 	pos += frq;

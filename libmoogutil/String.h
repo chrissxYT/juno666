@@ -136,12 +136,12 @@ public:
     const String &operator += (const char *);
     const String &operator += (const String &);
 
-    friend String operator +(const String &, const String &);
-    friend String operator +(const String &, const char *);
-    friend String operator +(const char *, const String &);
-    friend String operator +(const String &, int);
-    friend String operator +(const String &, long);
-    friend String operator +(const String &, double);
+    friend String __fastcall operator +(const String &, const String &);
+    friend String __fastcall operator +(const String &, const char *);
+    friend String __fastcall operator +(const char *, const String &);
+    friend String __fastcall operator +(const String &, int);
+    friend String __fastcall operator +(const String &, long);
+    friend String __fastcall operator +(const String &, double);
 
     friend int operator ==(const String &, const String &);
     friend int operator ==(const String &, const char *);

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.4 $$Date: 2004/09/11 00:12:34 $
  */
 #ifndef _INPUT_H
 #define _INPUT_H
@@ -28,7 +28,7 @@ class MoogObject;
 #include <libmoogutil/SimpleArray.h>
 #include "NamedObject.h"
 
-typedef void (*moog_callback_t)(MoogObject *, double, long);
+typedef void  (__fastcall *moog_callback_t) (MoogObject *, double, long);
 
 class Input: public NamedObject
 {

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/09/04 17:10:31 $
+ * $Revision: 1.2 $$Date: 2004/09/11 00:12:34 $
  */
 #ifndef MIDIINPUTVST_H
 #define MIDIINPUTVST_H
@@ -84,7 +84,7 @@ public:
         return "MidiInput";
     }
 
-    inline Output *getOutput(const char *n);
+    inline Output * getOutput(const char *n);
 };
 
 #endif /* MIDIINPUTVST_H */

@@ -12,15 +12,15 @@
 
 class JunoKeyboard: public MoogObject
 {
-    friend void JunoBender_midiValueChanged(MoogObject *o, double data, long userdata);
-    friend void JunoKeyboard_midiGateChanged(MoogObject *, double, long);
-    friend void JunoKeyboard_gtkKeyPressed(int, int, void *);
-    friend void JunoKeyboard_gtkKeyReleased(int, void *);
-    friend void JunoKeyboard_octaveTransposeChanged(MoogObject *, double, long);
-    friend void JunoKeyboard_keyTransposeChanged(MoogObject *, double, long);
-    friend void JunoKeyboard_masterTuneChanged(MoogObject *, double, long);
-    friend void JunoKeyboard_holdChanged(MoogObject *, double, long);
-    friend void Junokeyboard_changePatch(MoogObject *o, double data, long userdata);
+    friend void __fastcall JunoBender_midiValueChanged(MoogObject *o, double data, long userdata);
+    friend void __fastcall JunoKeyboard_midiGateChanged(MoogObject *, double, long);
+    friend void __fastcall JunoKeyboard_gtkKeyPressed(int, int, void *);
+    friend void __fastcall JunoKeyboard_gtkKeyReleased(int, void *);
+    friend void __fastcall JunoKeyboard_octaveTransposeChanged(MoogObject *, double, long);
+    friend void __fastcall JunoKeyboard_keyTransposeChanged(MoogObject *, double, long);
+    friend void __fastcall JunoKeyboard_masterTuneChanged(MoogObject *, double, long);
+    friend void __fastcall JunoKeyboard_holdChanged(MoogObject *, double, long);
+    friend void __fastcall Junokeyboard_changePatch(MoogObject *o, double data, long userdata);
 
     int initz; //what is this for ???
 
