@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/06 09:54:22 $
+ * $Revision: 1.4 $$Date: 2004/04/07 09:30:43 $
  */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
@@ -67,7 +67,7 @@ public:
 	inline void doPitchBend(unsigned int amount);
 
 public:
-	MidiInput(JunoControl *jc,const char *device, int polyphony = 1);
+	MidiInput(JunoControl *jc, const char *device, int polyphony = 1);
 	~MidiInput();
 	inline void start();
 	inline void stop();

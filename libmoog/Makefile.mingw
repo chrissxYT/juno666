@@ -37,6 +37,7 @@ LIB_OBJS=ADSR.o\
 	WaveGen.o\
 	bilinear.o\
 	pitch.o\
+	JunoControl.o\
 	ao_win32.o
 
 LIBNAME=libmoog.dll

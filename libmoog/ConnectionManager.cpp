@@ -39,9 +39,6 @@ ConnectionManager::connect(MoogObject *from, const char *oname,
 {
 	ASSERT_CONTEXTS(from, to, NULL);
 
-//    printf("ConnectionManager::connect from:%s::%s(%s) to:%s::%s(%s)",
-//	   from->getName(), from->getClassName(), oname, to->getName(), to->getClassName(), iname);
-
 	/* we can assume the same context for both 'from' and 'to' so use 'to' */
 	if (to->contextTag)
 		return to->contextTag->connectImpl(from, oname, to, iname);
@@ -72,32 +69,33 @@ ConnectionManager::llConnect(MoogObject *from, const char *oname,
 	/* if the to->inum is already connected, force a disconnect first
 	 * set the reconnect flag in case someone needs to know...
 	 */
-	// puts("conn:getinput");
+
 	Input *input = to->getInput(iname);
 	if (input != NULL)
 	{
-//   puts("not null");
+
 		if (input->getConnection())
 		{
-			//  puts("disconnect before reconnect");
+
 			reconnect = 1;
 			disconnect(to->getInput(iname)->getConnection());
 			reconnect = 0;
 		}
-		//  puts("new connectioninfo");
+
 
 		ConnectionInfo *retval = new ConnectionInfo(from,
 			from->getOutput(oname),
 			to,
 			to->getInput(iname));
-//    printf("connect %s\n",from->getClassName());
+
 		from->connectFrom(retval);
-		//  printf("to %s\n",to->getClassName());
+
+
 		to->connectTo(retval);
-//    puts("ready");
+
 		return retval;
 	}
-//puts("was null, no connection was made");
+
 	return NULL;
 }
 

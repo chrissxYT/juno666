@@ -21,46 +21,46 @@
 
 IIR2::IIR2()
 {
-    gain = 0;
-    cx[0] = cx[1] = cy[0] = cy[1] = 0;
-    x[0] = x[1] = y[0] = y[1] = 0;
+	gain = 0;
+	cx[0] = cx[1] = cy[0] = cy[1] = 0;
+	x[0] = x[1] = y[0] = y[1] = 0;
 
-    addInput("sig", NULL, 0, 0);
-    addOutput("sig", true);
+	addInput("sig", NULL, 0, 0);
+	addOutput("sig", true);
 
-    output = getOutput(0);
+	output = getOutput(0);
 
-    Scheduler::scheduleSampleRate(this, true);
+	Scheduler::scheduleSampleRate(this, true);
 }
 
 void IIR2::connectTo(ConnectionInfo *info)
 {
-    MoogObject::connectTo(info);
-    in = inputs[0].data;
+	MoogObject::connectTo(info);
+	in = inputs[0].data;
 }
 void IIR2::disconnectTo(ConnectionInfo *info)
 {
-    MoogObject::disconnectTo(info);
-    in = inputs[0].data;
+	MoogObject::disconnectTo(info);
+	in = inputs[0].data;
 }
 
 
 void IIR2::sampleGo()
 {
-    double out = gain * *in;
-    out = out + cx[0] * x[0] + cx[1] * x[1] - cy[0] * y[0] - cy[1] * y[1];
+	double out = gain * *in;
+	out = out + cx[0] * x[0] + cx[1] * x[1] - cy[0] * y[0] - cy[1] * y[1];
 
 #ifndef _MSC_VER
-    if (isnan(out))
-        out = 0;
+	if (isnan(out))
+		out = 0;
 #endif
 
-    x[1] = x[0];
-    x[0] = *in;
+	x[1] = x[0];
+	x[0] = *in;
 
-    y[1] = y[0];
-    y[0] = out;
+	y[1] = y[0];
+	y[0] = out;
 
-    output->setData(out);
-    MOOG_DEBUG("in %f out %f", *in, out);
+	output->setData(out);
+	MOOG_DEBUG("in %f out %f", *in, out);
 }

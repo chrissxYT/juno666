@@ -15,23 +15,35 @@
  *     In no event shall UltraMaster Group be held liable for any damages
  *     arising from the use of UltraMaster Juno-6.
  */
+#include <math.h>		 d
 #include <libmoogutil/debug.h>
 #include <libmoogutil/sio.h>
 
 #include "DSPOutput.h"
 #include "Scheduler.h"
+#include "JunoControl.h"
 
-/* $Id: DSPOutput.cpp,v 1.2 2004/03/31 12:01:18 brainslayer Exp $ */
+/* $Id: DSPOutput.cpp,v 1.3 2004/04/07 09:30:43 brainslayer Exp $ */
 
-DSPOutput::DSPOutput(DSPDevice *_dsp)
+
+void setPanningValues(MoogObject *o, double data, long)
+{
+	((DSPOutput *)o)->setPanning(data);
+}
+
+
+DSPOutput::DSPOutput(JunoControl *jc, DSPDevice *_dsp)
 {
 	dsp = _dsp;
 	myDsp = 0;
-
+	addInput("panning", setPanningValues, 0, 1);
 	setup();
+	PATCH(jc, "panning", this, "panning");
+	setPanningValues(this, 0.5, 0);
 }
 
-DSPOutput::DSPOutput(const char *device   /* = "/dev/dsp" */,
+
+DSPOutput::DSPOutput(JunoControl *jc, const char *device   /* = "/dev/dsp" */,
 	int rate     /* = SAMPLE_RATE_44k */,
 	int channels /* = 1 */,
 	int numFrags /* = -1 */,
@@ -39,8 +51,10 @@ DSPOutput::DSPOutput(const char *device   /* = "/dev/dsp" */,
 {
 	dsp = new DSPDevice(device, DSP_WRITE, rate, channels, numFrags, fragSize);
 	myDsp = 1;
-
+	addInput("panning", setPanningValues, 0, 1);
 	setup();
+	PATCH(jc, "panning", this, "panning");
+	setPanningValues(this, 0.5, 0);
 }
 
 void DSPOutput::setup()
@@ -81,8 +95,8 @@ void DSPOutput::connectTo(ConnectionInfo *info)
 
 	for (int i = 0;i < dsp->channels;i++)
 	{
-		inSig[i] = inputs[2 * i].data;
-		inAmp[i] = inputs[2 * i+1].data;
+		inSig[i] = inputs[2 * i+1].data;
+		inAmp[i] = inputs[2 * i+2].data;
 	}
 }
 
@@ -92,23 +106,33 @@ void DSPOutput::disconnectTo(ConnectionInfo *info)
 
 	for (int i = 0;i < dsp->channels;i++)
 	{
-		inSig[i] = inputs[2 * i].data;
-		inAmp[i] = inputs[2 * i+1].data;
+		inSig[i] = inputs[2 * i+1].data;
+		inAmp[i] = inputs[2 * i+2].data;
 	}
+}
+
+
+void DSPOutput::setPanning(double data)
+{
+	if (data < 0)
+		return;
+	if (data > 1)
+		return;
+	panright = sqrt(data);
+	panleft = sqrt(1 - data);
 }
 
 void DSPOutput::sampleGo()
 {
 	int moved;
-
-	for (int i = 0;i < dsp->channels;i++)
+	if (dsp->channels == 1)
 	{
-		int b = (int)((*inSig[i] * *inAmp[i]) * 32768);
-		if (b > 32767)
-			b = 32767;
-		if (b < -32767)
-			b = -32767;
-		*dsp->writeDataPtr++ = b; //(short)((*inSig[i] * *inAmp[i]) * 32768);
+		*dsp->writeDataPtr++ = (int)((*inSig[0] * *inAmp[0]) * 32768);
+	}
+	else
+	{
+		*dsp->writeDataPtr++ = (int)((*inSig[0] * *inAmp[0] * panright) * 32768);
+		*dsp->writeDataPtr++ = (int)((*inSig[1] * *inAmp[1] * panleft) * 32768);
 	}
 
 	moved = dsp->checkFlushBuffers();

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/06 08:10:29 $
+ * $Revision: 1.5 $$Date: 2004/04/07 09:30:43 $
  */
 #ifndef _DSPDEVICE_H
 #define _DSPDEVICE_H
@@ -34,112 +34,101 @@
 class DSPDevice
 {
 #ifdef POSIX
-    int setBits(int);
-    int setChannels(int);
-    int setSampleRate(int);
-    int setFragments(int, int);
+	int setBits(int);
+	int setChannels(int);
+	int setSampleRate(int);
+	int setFragments(int, int);
 #else
-    int Play(void *data, int len);
+	int Play(void *data, int len);
 #endif
-    int mode;
-    int soundFd;
+	int mode;
+	int soundFd;
 
-    int bits;
+	int bits;
 public: //make channels public for a speed optimization
 
-    int channels;
+	int channels;
 private:
-    int sampleRate;
-    int numFrags;
-    int fragSize;
-    int fragsAvail;
+	int sampleRate;
+	int numFrags;
+	int fragSize;
+	int fragsAvail;
 
-    short *readBuffBase;
-    short *readBuffEnd;
+	short *readBuffBase;
+	short *readBuffEnd;
 
-    short *writeBuffBase;
-    short *writeBuffEnd;
+	short *writeBuffBase;
+	short *writeBuffEnd;
 
-    void initVars();
+	void initVars();
 
 public:
 
-    /* this is hardcoding 16 bit sample resoution ... */
-    short *readDataPtr;
-    short *writeDataPtr;
+	/* this is hardcoding 16 bit sample resoution ... */
+	short *readDataPtr;
+	short *writeDataPtr;
 
-    int checkFlushBuffers()
-    {
-        int retval = 0;
+	int checkFlushBuffers()
+	{
+		int retval = 0;
 
 #ifdef POSIX
-        if ((mode & DSP_READ) && readDataPtr >= readBuffEnd)
-        {
-            read(soundFd, readBuffBase, fragSize);
-            readDataPtr = readBuffBase;
-            retval |= DSP_READ;
-        }
-        if ((mode & DSP_WRITE) && writeDataPtr >= writeBuffEnd)
-        {
-            write(soundFd, writeBuffBase, fragSize);
-            writeDataPtr = writeBuffBase;
-            retval |= DSP_WRITE;
-        }
+		if ((mode & DSP_READ) && readDataPtr >= readBuffEnd)
+		{
+			read(soundFd, readBuffBase, fragSize);
+			readDataPtr = readBuffBase;
+			retval |= DSP_READ;
+		}
+		if ((mode & DSP_WRITE) && writeDataPtr >= writeBuffEnd)
+		{
+			write(soundFd, writeBuffBase, fragSize);
+			writeDataPtr = writeBuffBase;
+			retval |= DSP_WRITE;
+		}
 #else
-        if (writeDataPtr >= writeBuffEnd)
-        {
-            int tmpFragSize = fragSize;
-            int t;
+		if (writeDataPtr >= writeBuffEnd)
+		{
+			int tmpFragSize = fragSize;
+			int t;
 
-            int pos = 0;
-            //first type
-            while ((t = Play(writeBuffBase + pos, tmpFragSize)) < tmpFragSize)
-            {
-                tmpFragSize = tmpFragSize - t;
-                pos += t;
-            }
-            //printf("%d written\n",t);
-            writeDataPtr = writeBuffBase;
+			int pos = 0;
+			//first type
+			while ((t = Play(writeBuffBase + pos, tmpFragSize)) < tmpFragSize)
+			{
+				tmpFragSize = tmpFragSize - t;
+				pos += t;
+			}
+			writeDataPtr = writeBuffBase;
 
 
-            /*t = Play(writeBuffBase,fragSize);
-            if (t<fragSize)
-              {
-              memcpy(writeBuffBase,writeBuffBase+t,fragSize-t);
-              writeDataPtr=writeBuffBase+t;
-              }else
-              {
-              writeDataPtr=writeBuffBase;
-              }
-              */
-            retval |= DSP_WRITE;
-        }
+			retval |= DSP_WRITE;
+		}
 
 #endif
 
-        return retval;
-    }
+		return retval;
+	}
 
-    DSPDevice(const char *dev = "/dev/dsp",
-        int mode = DSP_WRITE,
-        int sampleRate = 44100,
-        int channels = 2,
-        int numFrags = -1,
-        int fragSize = -1);
+	DSPDevice(const char *dev = "/dev/dsp",
+		int mode = DSP_WRITE,
+		int sampleRate = 44100,
+		int channels = 2,
+		int numFrags = -1,
+		int fragSize = -1);
 
-    ~DSPDevice();
+	~DSPDevice();
 
-    bool isOpen()
-    {
-        return (soundFd >= 0);
-    }
-    int getSampleRate()
-    {
-        return sampleRate;
-    }
+	bool isOpen()
+	{
+		return (soundFd >= 0);
+	}
+	int getSampleRate()
+	{
+		return sampleRate;
+	}
 
-    /* channels variable has been made public as a speed optimization */
-    //int    getChannels() { return channels; }
+	/* channels variable has been made public as a speed optimization */
+	//int    getChannels() { return channels; }
 };
 
 #endif /* _DSPDEVICE_H */

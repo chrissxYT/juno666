@@ -34,10 +34,11 @@ Input::Input(const char *n, moog_callback_t _callback, MoogObject *_registrant, 
 
 void Input::connect(ConnectionInfo *info)
 {
+
 	data = info->output->getData();
 	connection = info;
-
 	doCallback(*data);
+
 }
 
 void Input::disconnect(ConnectionInfo * /* unused */)

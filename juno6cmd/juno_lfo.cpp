@@ -17,7 +17,7 @@
  */
 #include <math.h>
 #include "juno_lfo.h"
-#include "juno_control.h"
+#include <libmoog/JunoControl.h>
 #include <libmoog/moog.h>
 
 void JunoLfo_lforateChanged(MoogObject *o, double data, long userData)

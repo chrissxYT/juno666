@@ -17,10 +17,12 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/06 13:41:59 $
+ * $Revision: 1.1 $$Date: 2004/04/07 09:33:21 $
  */
 
-#include "juno_control.h"
+#include <libmoogutil/String.h>
+#include "JunoControl.h"
+
 
 JunoControl::JunoControl(int voices)
 {
@@ -77,6 +79,7 @@ JunoControl::JunoControl(int voices)
 	addOutput("chorus_I_switch", false);
 	addOutput("chorus_II_switch", false);
 	addOutput("patch_change", false);
+	addOutput("panning", false); //new and works only in stereo mode
 
 	for (int i = 0;i < voices;i++)
 	{

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:18 $
+ * $Revision: 1.3 $$Date: 2004/04/07 09:30:43 $
  */
 #ifndef _DSPOutput_H
 #define _DSPOutput_H
@@ -32,6 +32,8 @@
 #define SAMPLE_RATE_8k	 8000
 
 #include "DSPDevice.h"
+#include "JunoControl.h"
+#include "ConnectionManager.h"
 
 class DSPOutput: public MoogObject
 {
@@ -40,13 +42,15 @@ class DSPOutput: public MoogObject
 
 	double **inSig;
 	double **inAmp;
+	double panleft;
+	double panright;
 
 	void (*dataWrittenCallback)(void);
 	void setup();
 
 public:
-	DSPOutput(DSPDevice *dsp);
-	DSPOutput(const char *device = "/dev/dsp",
+	DSPOutput(JunoControl *jc, DSPDevice *dsp);
+	DSPOutput(JunoControl *jc, const char *device = "/dev/dsp",
 		int rate = SAMPLE_RATE_44k,
 		int channels = 1,
 		int numFrags = -1,
@@ -56,6 +60,7 @@ public:
 
 	void connectTo(ConnectionInfo *info);
 	void disconnectTo(ConnectionInfo *info);
+	void setPanning(double data);
 
 	void setDataWrittenCallback(void (*)(void));
 	void sampleGo();

@@ -232,7 +232,8 @@ void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwP
 						control->MoogObject::getOutput("volume")->setData(data[1] / 127);
 						break;
 					case 10: //panning
-						printf("panning not supported %d\n", data[1]);
+						printf("set panning %d\n", data[1]);
+						control->MoogObject::getOutput("panning")->setData(data[1] / 127);
 						break;
 					case 64: //sustain
 						printf("sustain not supported %d\n", data[1]);

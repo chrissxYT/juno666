@@ -17,7 +17,7 @@
  */
 #include <libmoogutil/String.h>
 #include "juno_voice.h"
-#include "juno_control.h"
+#include <libmoog/JunoControl.h>
 #include "juno_lfo.h"
 #include <math.h>
 

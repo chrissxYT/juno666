@@ -17,13 +17,13 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/03/31 12:01:17 $
+ * $Revision: 1.4 $$Date: 2004/04/07 09:30:41 $
  */
 #ifndef JUNO_GUI_H
 #define JUNO_GUI_H
 
 #include <libmoog/moog.h>
-#include "juno_control.h"
+#include <libmoog/JunoControl.h>
 #include "juno_patch.h"
 
 void initGui(JunoControl *junoControl,

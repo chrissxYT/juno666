@@ -6,7 +6,7 @@ wrapper for keyboard functions, replaces GTK UI
 */
 
 
-#include "juno_control.h"
+#include <libmoog/JunoControl.h>
 #include "juno_keyboard.h"
 
 extern Settings *settings;

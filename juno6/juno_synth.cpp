@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/06 09:54:22 $
+ * $Revision: 1.4 $$Date: 2004/04/07 09:30:41 $
  */
 #include <stdlib.h>
 #include "juno_synth.h"
@@ -114,7 +114,7 @@ initSynth(JunoControl *_junoControl,
 	if (strlen(p))
 		fragSize = atoi(p);
 	puts("new dsp");
-	dsp = new DSPOutput(settings->getString("devices", "dsp-output"),
+	dsp = new DSPOutput(_junoControl,settings->getString("devices", "dsp-output"),
 		SAMPLE_RATE_44k,
 		(stereo) ? 2 : 1,
 		numFrags,

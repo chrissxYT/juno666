@@ -20,7 +20,7 @@
 #include <string.h>
 #include <libmoogutil/debug.h>
 
-/* $Id: Mixer.cpp,v 1.2 2004/03/31 12:01:19 brainslayer Exp $ */
+/* $Id: Mixer.cpp,v 1.3 2004/04/07 09:30:43 brainslayer Exp $ */
 
 #include "Mixer.h"
 #include "Scheduler.h"
@@ -105,10 +105,10 @@ void Mixer::sampleGo()
 		tmpdata += *inputData[i] * *inputData[i-1];
 		i--;
 	}
-	if (tmpdata > 1.0)
+	/*if (tmpdata > 1.0)
 		tmpdata = 1;
 	if (tmpdata < -1.0)
-		tmpdata = -1;
+		tmpdata = -1;*/
 
 	output->setData(tmpdata);
 

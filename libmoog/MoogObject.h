@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/06 08:10:29 $
+ * $Revision: 1.4 $$Date: 2004/04/07 09:30:43 $
  */
 #ifndef _MOOGOBJECT_H
 #define _MOOGOBJECT_H
@@ -57,99 +57,99 @@ typedef SimpleArray <Control >ControlArray;
 
 class MoogObject: public GoObject, NamedObject
 {
-    //FIXME: we really shouldn't need these
-    // but it looks like every composite class will need to be here
-    friend class Chorus;
-    friend class Container;
-    friend class ConnectionManager;
-    friend class SamplePool;
-    friend class Delay;
-    friend class Balance;
-    friend class Reverb;
+	//FIXME: we really shouldn't need these
+	// but it looks like every composite class will need to be here
+	friend class Chorus;
+	friend class Container;
+	friend class ConnectionManager;
+	friend class SamplePool;
+	friend class Delay;
+	friend class Balance;
+	friend class Reverb;
 
 protected:
-    InputArray inputs;
-    OutputArray outputs;
+	InputArray inputs;
+	OutputArray outputs;
 
-    ConnectionManager *contextTag;
+	ConnectionManager *contextTag;
 
-    /* allow runtime configuration of objects */
-    void addPorts(char *,...);
-    Output *addOutput(const char *, bool);
+	/* allow runtime configuration of objects */
+	void addPorts(char *,...);
+	Output *addOutput(const char *, bool);
 /*    Input*           addInput(const char *name, int isCtrl){
     puts("should never be called");
     printf("from %s\n",getClassName());
     return NULL;
     }*/
-    Input *addInput(const char *name, moog_callback_t callback = NULL, long userData = 0, int timescale = 0);
+	Input *addInput(const char *name, moog_callback_t callback = NULL, long userData = 0, int timescale = 0);
 
-    /* Every connection  has two MoogObjects involved: from->output  to->input
-     * These MoogObject base impl. functions take these two objects then call
-     * the appropriate function in the From object or To object.
-     */
-    virtual void connectFrom(ConnectionInfo *);
-    virtual void connectTo(ConnectionInfo *);
-    virtual void disconnectFrom(ConnectionInfo *);
-    virtual void disconnectTo(ConnectionInfo *);
+	/* Every connection  has two MoogObjects involved: from->output  to->input
+	 * These MoogObject base impl. functions take these two objects then call
+	 * the appropriate function in the From object or To object.
+	 */
+	virtual void connectFrom(ConnectionInfo *);
+	virtual void connectTo(ConnectionInfo *);
+	virtual void disconnectFrom(ConnectionInfo *);
+	virtual void disconnectTo(ConnectionInfo *);
 
 public:
 #ifdef LIBMOOG_DEBUG
-    bool debug_flag;
+	bool debug_flag;
 #endif
 
-    MoogObject();
-    virtual ~MoogObject()
-    {
-    }
+	MoogObject();
+	virtual ~MoogObject()
+	{
+	}
 
-    /* each class should override this for RTTI */
-    virtual const char *getClassName() = 0;
+	/* each class should override this for RTTI */
+	virtual const char *getClassName() = 0;
 
-    virtual Input *getInput(int n)
-    {
-        return &(inputs[n]);
-    }
-    virtual Output *getOutput(int n)
-    {
-        return &(outputs[n]);
-    }
-    virtual Input *getInput(const char *n);
-    virtual Output *getOutput(const char *n);
+	virtual Input *getInput(int n)
+	{
+		return &(inputs[n]);
+	}
+	virtual Output *getOutput(int n)
+	{
+		return &(outputs[n]);
+	}
+	virtual Input *getInput(const char *n);
+	virtual Output *getOutput(const char *n);
 
-    int getNumInputs()
-    {
-        return inputs.getSize();
-    }
-    int getNumOutputs()
-    {
-        return outputs.getSize();
-    }
-    const char *getInputName(int n)
-    {
-        return inputs[n].getName();
-    }
-    const char *getOutputName(int n)
-    {
-        return outputs[n].getName();
-    }
+	int getNumInputs()
+	{
+		return inputs.getSize();
+	}
+	int getNumOutputs()
+	{
+		return outputs.getSize();
+	}
+	const char *getInputName(int n)
+	{
+		return inputs[n].getName();
+	}
+	const char *getOutputName(int n)
+	{
+		return outputs[n].getName();
+	}
 
-    /* get/set the context which handles the connect/disc. hooks. */
-    ConnectionManager *getContextTag();
-    void setContextTag(ConnectionManager *);
+	/* get/set the context which handles the connect/disc. hooks. */
+	ConnectionManager *getContextTag();
+	void setContextTag(ConnectionManager *);
 
-    /* set the static input value of one Input */
-    void set(int inputNum, double value);
-    void set(const char *inputName, double value);
+	/* set the static input value of one Input */
+	void set(int inputNum, double value);
+	void set(const char *inputName, double value);
 
-    int getInputNum(const char *name);
-    int getOutputNum(const char *name);
+	int getInputNum(const char *name);
+	int getOutputNum(const char *name);
 
-    virtual void start()
-    {
-    }
-    virtual void stop()
-    {
-    }
+	virtual void start()
+	{
+	}
+	virtual void stop()
+	{
+	}
 };
 
 #endif /* _MOOGOBJECT_H */

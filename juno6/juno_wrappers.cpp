@@ -15,7 +15,7 @@
  *     In no event shall UltraMaster Group be held liable for any damages
  *     arising from the use of UltraMaster Juno-6.
  */
-#include "juno_control.h"
+#include <libmoog/JunoControl.h>
 #include "juno_wrappers.h"
 
 //FIXME: globals from juno_gui.C
@@ -64,6 +64,7 @@ void JunoKeyboard_holdChanged(MoogObject *o, double data, long)
 
 void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
 {
+	printf("change patch to %d\n",userdata);
 	juno_patch *patch = &patches[userdata];
 	junoControl->MoogObject::getOutput("bender_dco")->setData(patch->bender_dco);
 	junoControl->MoogObject::getOutput("bender_vcf")->setData(patch->bender_vcf);
@@ -159,17 +160,19 @@ JunoKeyboard::JunoKeyboard(int _numVoices)
 	}
 
 	masterTune = 0;
+	
 	addInput("octave_transpose", JunoKeyboard_octaveTransposeChanged, 0, 1);
 	addInput("transpose_switch", JunoKeyboard_keyTransposeChanged, 0, 1);
 	addInput("master_tune", JunoKeyboard_masterTuneChanged, 0, 1);
 	addInput("hold_switch", JunoKeyboard_holdChanged, 0, 1);
 	addInput("patch_change", Junokeyboard_changePatch, 0, 1);
-
+	
 	PATCH(junoControl, "octave_transpose", this, "octave_transpose");
 	PATCH(junoControl, "transpose_switch", this, "transpose_switch");
 	PATCH(junoControl, "master_tune", this, "master_tune");
 	PATCH(junoControl, "hold_switch", this, "hold_switch");
 	PATCH(junoControl, "patch_change", this, "patch_change");
+	puts("ready");
 
 }
 

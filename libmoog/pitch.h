@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/06 08:10:29 $
+ * $Revision: 1.4 $$Date: 2004/04/07 09:30:43 $
  */
 #ifndef PITCH_H
 #define PITCH_H
@@ -29,9 +29,9 @@ extern double midi_notes[];
 inline int pitch_to_note(double pitch)
 {
 #ifdef _MSC_VER
-    return (int)( (log(pitch / midi_notes[0]) / log(2.0) * 12) + 0.5 );
+	return (int)((log(pitch / midi_notes[0]) / log(2.0) * 12) + 0.5);
 #else
-    return (int)rint(log(pitch / midi_notes[0]) / log(2.0) * 12);
+	return (int)rint(log(pitch / midi_notes[0]) / log(2.0) * 12);
 #endif
 }
 

@@ -17,13 +17,13 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/04/06 09:57:01 $
+ * $Revision: 1.2 $$Date: 2004/04/07 09:30:43 $
  */
 #ifndef JUNO_SYNTH_H
 #define JUNO_SYNTH_H
 
 #include <libmoog/moog.h>
-#include "juno_control.h"
+#include <libmoog/JunoControl.h>
 
 void
 initSynth(JunoControl *, Settings *, MidiInput *, int numVoices);

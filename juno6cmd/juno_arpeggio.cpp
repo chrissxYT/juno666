@@ -18,7 +18,7 @@
 #include <stdlib.h>
 
 #include "juno_arpeggio.h"
-#include "juno_control.h"
+#include <libmoog/JunoControl.h>
 #include <libmoog/moog.h>
 
 
