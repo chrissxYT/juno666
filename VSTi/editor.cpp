@@ -26,6 +26,14 @@ midiInput(midiinput)
 
     for (i = 0;i < MAX_KEYBOARD_KEYS;i++)
         guiKeyboard[i] = NULL;
+
+    // it is important for some hosts to set rect at construction.
+    UITYPES type = juno6ui[0];
+    CBitmap background(type.resource_id);
+    rect.top = rect.left = 0;
+    rect.bottom = (short)background.getHeight();
+    rect.right = (short)background.getWidth();
+    background.forget();
 }
 
 Editor::~Editor()
