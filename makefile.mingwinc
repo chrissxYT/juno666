@@ -14,6 +14,8 @@ else
 DEBUG=-g
 endif
 
+OPTIMIZE='-DHAVE_SSE -mms-bitfields -mno-cygwin -DDOMAIN -msse -mfpmath=sse,387 -march=pentium3 -O3 -ffast-math -malign-double -pipe -fomit-frame-pointer -mfpmath=387 -m128bit-long-double -minline-all-stringops'
+
 MAKEFLAGS="USE_STATIC=y USE_DEBUG=n"
 
 

@@ -17,12 +17,12 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:44:22 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:31:06 $
  */
 #ifndef SCOPE_H
 #define SCOPE_H
 
-#include <moog/MoogObject.h>
+#include <libmoog/MoogObject.h>
 #include "scope2.h"
 
 class Scope : public MoogObject

@@ -39,6 +39,6 @@ list_patches copy_patch: juno_patch.o
 
 .depend: Makefile
 	touch .depend
-	makedepend -f .depend $(INCLUDE_PATH) -I/usr/include/g++-2 *.C *.c
+	makedepend -f .depend $(INCLUDE_PATH) -I/usr/include/g++-2 *.cpp *.c
 
 include .depend

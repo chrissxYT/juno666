@@ -18,8 +18,8 @@
 #ifndef _JUNO_WRAPPERS_H
 #define _JUNO_WRAPPERS_H
 
-#include <moog/moog.h>
-#include <gmoog/juno_widgets.h>
+#include <libmoog/moog.h>
+#include <libgmoog/juno_widgets.h>
 
 /***********************/
 

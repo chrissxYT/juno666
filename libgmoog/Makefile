@@ -47,7 +47,7 @@ clean:
 
 .depend: Makefile
 	touch .depend
-	makedepend -f .depend $(INCLUDE_DIRS) -I/usr/include/g++-2 $(shell gtk-config --cflags) *.C *.c
+	makedepend -f .depend $(INCLUDE_DIRS) -I/usr/include/g++-2 $(shell gtk-config --cflags) *.cpp *.c
 
 .PHONY: objs
 

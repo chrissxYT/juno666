@@ -18,7 +18,7 @@
 #ifndef _JUNO_JUNO_VOICE_H
 #define _JUNO_JUNO_VOICE_H
 
-#include <moog/moog.h>
+#include <libmoog/moog.h>
 class JunoControl;
 
 class JunoVoice : public MoogObject

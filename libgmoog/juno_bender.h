@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:44:22 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:31:06 $
  */
 #ifndef JUNO_BENDER_H
 #define JUNO_BENDER_H
@@ -25,6 +25,10 @@
 #include <gdk/gdk.h>
 #include <gtk/gtkadjustment.h>
 #include <gtk/gtkwidget.h>
+
+#ifndef M_PI
+#define M_PI		3.14159265358979323846 
+#endif
 
 #ifdef __cplusplus
 extern "C" {

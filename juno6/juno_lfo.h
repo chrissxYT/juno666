@@ -18,8 +18,8 @@
 #ifndef _JUNO6_JUNO6_LFO_H
 #define _JUNO6_JUNO6_LFO_H
 
-#include <moog/MoogObject.h>
-#include <moog/Oscillator.h>
+#include <libmoog/MoogObject.h>
+#include <libmoog/Oscillator.h>
 
 class JunoControl;
 

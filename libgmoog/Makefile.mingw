@@ -1,4 +1,4 @@
-include ../Makefile.include
+include ../Makefile.mingwinc
 
 INCLUDE_DIRS=-I../include -I../lib/glib-2.0/include -I../lib/gtk+/include -I../include/glib-2.0 -I../
 CFLAGS=$(PIC) $(PROFILE) $(OPTIMIZE) $(DEBUG)  -Wall $(INCLUDE_DIRS)

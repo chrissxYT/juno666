@@ -18,8 +18,8 @@
 #ifndef _JUNO6_JUNO_ARPEGGIO_H
 #define _JUNO6_JUNO_ARPEGGIO_H
 
-#include <moog/MoogObject.h>
-#include <util/list.h>
+#include <libmoog/MoogObject.h>
+#include <libmoogutil/list.h>
 #ifdef POSIX
 #include <pthread.h>
 #else

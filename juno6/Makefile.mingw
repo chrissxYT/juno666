@@ -1,4 +1,4 @@
-include ../Makefile.include
+include ../Makefile.mingwinc
 
 GTK_CFLAGS=$(shell gtk-config --cflags)
 INCLUDE_PATH=-Iumg/base/include -I../include -I../lib/glib-2.0/include -I../lib/gtk+/include -I../include/glib-2.0 -I../
@@ -37,6 +37,6 @@ list_patches copy_patch: juno_patch.o
 
 .PHONY: test objs
 
-.depend: Makefile
+.depend: Makefile.mingw
 
 include .depend

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:44:22 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:31:06 $
  */
 #ifndef JUNO_KNOB_H
 #define JUNO_KNOB_H
@@ -29,7 +29,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
-    
+#ifndef M_PI
+#define M_PI		3.14159265358979323846 
+#endif
+
 #define GTK_JUNO_KNOB(obj) GTK_CHECK_CAST (obj, gtk_juno_knob_get_type (), GtkJunoKnob)
 #define GTK_JUNO_KNOB_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, gtk_juno_knob_get_type (), GtkJunoKnobClass)
 #define GTK_IS_JUNO_KNOB(obj) GTK_CHECK_TYPE (obj, gtk_juno_knob_get_type ())

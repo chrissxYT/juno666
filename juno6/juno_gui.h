@@ -17,12 +17,12 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:43:15 $
+ * $Revision: 1.2 $$Date: 2004/03/30 10:30:46 $
  */
 #ifndef JUNO_GUI_H
 #define JUNO_GUI_H
 
-#include <moog/moog.h>
+#include <libmoog/moog.h>
 #include "juno_control.h"
 #include "juno_patch.h"
 
