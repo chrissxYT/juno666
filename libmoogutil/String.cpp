@@ -43,7 +43,7 @@
 #define LEN    buffer->len
 #define BUFLEN buffer->buflen
 
-//RCSID("$Id: String.cpp,v 1.6 2004/04/06 08:10:29 strepto Exp $");
+//RCSID("$Id: String.cpp,v 1.7 2004/04/24 10:42:04 brainslayer Exp $");
 
 /* StringBuffer */
 StringBuffer::StringBuffer(const char *s, int initCapacity)
@@ -146,7 +146,7 @@ String::String()
     buffer = new StringBuffer(NULL, STRING_DEFAULT_SIZE);
 }
 
-String::String(const char *s, int initCapacity /* = -1 */)
+String::String(const char *s, size_t initCapacity /* = -1 */)
 {
     buffer = new StringBuffer(s, initCapacity);
 }
@@ -206,7 +206,7 @@ void String::append(const char *s)
 }
 
 
-void String::append(const char *s, int slen)
+void String::append(const char *s, size_t slen)
 {
     cow();
     buffer->copyBytes(LEN, s, slen);
@@ -240,7 +240,7 @@ int String::vsprintf(const char *fmt, va_list ap)
 {
     va_list apSave = ap;
     const char *pos;
-    int maxlen = 0;
+    size_t maxlen = 0;
     int retval;
 
     cow();
@@ -517,7 +517,7 @@ String &String::lower()
     return *this;
 }
 
-int String::find(const char which, int startPos /* = 0 */) const
+int String::find(const char which, size_t startPos /* = 0 */) const
 {
     char *pos;
 
@@ -527,7 +527,7 @@ int String::find(const char which, int startPos /* = 0 */) const
     return -1;
 }
 
-int String::find(const char *s, int startPos /* = 0 */) const
+int String::find(const char *s, size_t startPos /* = 0 */) const
 {
     char *pos;
 
@@ -557,7 +557,7 @@ int String::replace(const char *orig, const char *repl)
     return replaceInternal(orig, strlen(orig), repl, strlen(repl));
 }
 
-int String::replaceInternal(const char *s1, int l1, const char *s2, int l2)
+int String::replaceInternal(const char *s1, size_t l1, const char *s2, size_t l2)
 {
     int pos = find(s1);
 
@@ -648,7 +648,7 @@ char String::operator [](int pos) const
     return -1;
 }
 
-const String &String::assign(const char *s, int size)
+const String &String::assign(const char *s, size_t size)
 {
     cow();
 

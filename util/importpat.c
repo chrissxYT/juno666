@@ -5,128 +5,78 @@ unsigned char desc[128];
 
 unsigned char get3hex(FILE *in)
 {
-    int value1, value2;
-    value1 = getc(in);
-    if (value1 > ('0' - 1) && value1 < ('9' + 1))
-        value1 -= '0';
-    else
-        value1 = value1 - 'A' + 10;
-    value2 = getc(in);
-    if (value2 > ('0' - 1) && value2 < ('9' + 1))
-        value2 -= '0';
-    else
-        value2 = value2 - 'A' + 10;
-    getc(in);
-    return ((value1 << 4) + value2);
+	int value1, value2;
+	value1 = getc(in);
+	if (value1 > ('0' - 1) && value1 < ('9' + 1))
+		value1 -= '0';
+	else
+		value1 = value1 - 'A' + 10;
+	value2 = getc(in);
+	if (value2 > ('0' - 1) && value2 < ('9' + 1))
+		value2 -= '0';
+	else
+		value2 = value2 - 'A' + 10;
+	getc(in);
+	return ((value1 << 4) + value2);
 }
 
-int loadPatFile(char *listname, juno_patch *patch)
+int loadPatFile(char *name, juno_patch *patch)
 {
-    FILE *in,*list;
-    int i;
-	int b;
-	int a;
-	int len;
-	char c;
-    char pname[40];
-    double lfo_rate;
-    double lfo_delay;
-    double dco_lfo;
-    double dco_pwm;
-    double dco_noise;
-    double vcf_frq;
-    double vcf_res;
-    double vcf_env;
-    double vcf_lfo;
-    double vcf_kbd;
-    double vca_level; //what?
-    double env_attack;
-    double env_decay;
-    double env_sustain;
-    double env_release;
-    double dco_sub;
+	FILE *in;
+	int i;
+
+	double lfo_rate;
+	double lfo_delay;
+	double dco_lfo;
+	double dco_pwm;
+	double dco_noise;
+	double vcf_frq;
+	double vcf_res;
+	double vcf_env;
+	double vcf_lfo;
+	double vcf_kbd;
+	double vca_level; //what?
+	double env_attack;
+	double env_decay;
+	double env_sustain;
+	double env_release;
+	double dco_sub;
 	double octave_transpose;
-    unsigned char sw1;
-    unsigned char sw2;
+	unsigned char sw1;
+	unsigned char sw2;
 
-	
+	in = fopen(name, "rb");
+	if (in == NULL)
+		return -1;
 
-    list = fopen(listname, "rb");
-    if (list == NULL)
-        return -1;
-next:;
-	for (i=0;i<40;i++)
+	for (i = 0;i < NUM_PATCHES;i++)
 	{
-	b = getc(list);
-	if (b==EOF)
-	{
-		puts("done");
-		return;
-	}
-	if (b==0xd)
-	{
-		getc(list);
-		pname[i]=0;
-		goto readit;
-	}
-	pname[i] = b;
-	}
-   
-readit:;
-    {
-		
-        char *name = pname;
-		printf("reading %s\n",name);
-		in=fopen(name,"rb");
-		if (in==NULL)
-		{
-			puts("error");
-			return;
-		}
-		fseek(in,4,SEEK_SET);
-		i=getc(in);
-        c = 0;
-        len = 0;
+		char *name = patch[i].name;
+		char c = 0;
+		int len = 0;
 
-        
-		if (patch[i].used)
-		{
-		puts("patch already assigned, search another slot");
-		for (a =0;a<NUM_PATCHES;a++)
-		    {
-			if (!patch[a].used)
-			{
-				i = a;
-				printf("new slot %d\n",i);
-				break;
-			}
-			}
-		}
 		patch[i].version = 1;
-        patch[i].used = 1;
-		for (a=0;a<strlen(name);a++)
-		{
-			patch[i].name[a] = name[a];
-		}
-        lfo_rate = getc(in);
-        lfo_delay = getc(in);
-        dco_lfo = getc(in);
-        dco_pwm = getc(in);
-        dco_noise = getc(in);
-        vcf_frq = getc(in);
-        vcf_res = getc(in);
-        vcf_env = getc(in);
-        vcf_lfo = getc(in);
-        vcf_kbd = getc(in);
-        vca_level = getc(in);
-        env_attack = getc(in);
-        env_decay = getc(in);
-        env_sustain = getc(in);
-        env_release = getc(in);
-        dco_sub = getc(in);
-        sw1 = getc(in);
-        sw2 = getc(in);
-  
+		patch[i].used = 1;
+
+		lfo_rate = get3hex(in);
+		lfo_delay = get3hex(in);
+		dco_lfo = get3hex(in);
+		dco_pwm = get3hex(in);
+		dco_noise = get3hex(in);
+		vcf_frq = get3hex(in);
+		vcf_res = get3hex(in);
+		vcf_env = get3hex(in);
+		vcf_lfo = get3hex(in);
+		vcf_kbd = get3hex(in);
+		vca_level = get3hex(in);
+		env_attack = get3hex(in);
+		env_decay = get3hex(in);
+		env_sustain = get3hex(in);
+		env_release = get3hex(in);
+		dco_sub = get3hex(in);
+		sw1 = get3hex(in);
+		sw2 = get3hex(in);
+
 
 //get switches flag 1
 		octave_transpose = 0;
@@ -135,103 +85,112 @@ readit:;
 		*/
 		if (sw1 & 1) // octave up ('4)
 			octave_transpose = -1;
-		if (sw1 & 2)  //octave normal ('8)
+		if (sw1 & 2) //octave normal ('8)
 			octave_transpose = 0;
-		if (sw1 & 4)  //octave down ('16)
+		if (sw1 & 4) //octave down ('16)
 			octave_transpose = 1;
 
-        if (sw1 & 8)	
-            patch[i].dco_pulse_switch = 1;
-        if (sw1 & 16)
-            patch[i].dco_saw_switch = 1;
+		if (sw1 & 8)
+			patch[i].dco_pulse_switch = 1;
+		if (sw1 & 16)
+			patch[i].dco_saw_switch = 1;
 
-	
-        switch ((sw1 >> 5) & 3)
-        {
-            case 0:
-                patch[i].chorus_II_switch = 1;
-                break;
-            case 1:
-                break;
-            default: //should be 2
-                patch[i].chorus_I_switch = 1;
-        }
+
+		switch ((sw1 >> 5) & 3)
+		{
+			case 0:
+				patch[i].chorus_II_switch = 1;
+				break;
+			case 1:
+				break;
+			default: //should be 2
+				patch[i].chorus_I_switch = 1;
+		}
 
 //get switches flag 2
 // -1 = env, 0 = man 1 = lfo
-        if (sw2 & 1)
-            patch[i].dco_pwm_mod = 1; //MAN
-        else
-            patch[i].dco_pwm_mod = 0; //LFO
-        if (sw2 & 4)
-            patch[i].vca_mode = 1; //GATE
-        else
-            patch[i].vca_mode = 0; //ENV
-        if (sw2 & 2)
-            patch[i].vcf_env_invert = 1; //polarity inverted
-        else
-            patch[i].vcf_env_invert = 0;
-        patch[i].hpf_frq = ((double)((int)(sw2 >> 3) & 3)) / 8;
+		if (sw2 & 1)
+			patch[i].dco_pwm_mod = 1; //MAN
+		else
+			patch[i].dco_pwm_mod = 0; //LFO
+		if (sw2 & 4)
+			patch[i].vca_mode = 1; //GATE
+		else
+			patch[i].vca_mode = 0; //ENV
+		if (sw2 & 2)
+			patch[i].vcf_env_invert = 1; //polarity inverted
+		else
+			patch[i].vcf_env_invert = 0;
+		patch[i].hpf_frq = ((double)((int)(sw2 >> 3) & 3)) / 8;
 //controls
 
-        patch[i].lfo_rate = (double)lfo_rate / 127;
-        patch[i].lfo_delay = (double)lfo_delay / 127;
-        patch[i].dco_lfo = (double)dco_lfo / 127;
-        patch[i].dco_pwm = (double)dco_pwm / 127;
-        patch[i].dco_noise = (double)dco_noise / 127;
-        patch[i].vcf_frq = (double)vcf_frq / 127;
-        patch[i].vcf_res = (double)vcf_res / 127;
-        patch[i].vcf_env = (double)vcf_env / 127;
-        patch[i].vcf_lfo = (double)vcf_lfo / 127;
-        patch[i].vcf_kbd = (double)vcf_kbd / 127;
-        patch[i].volume = (double)vca_level / 127;
-		if (patch[i].volume==0)
+		patch[i].lfo_rate = (double)lfo_rate / 127;
+		patch[i].lfo_delay = (double)lfo_delay / 127;
+		patch[i].dco_lfo = (double)dco_lfo / 127;
+		patch[i].dco_pwm = (double)dco_pwm / 127;
+		patch[i].dco_noise = (double)dco_noise / 127;
+		patch[i].vcf_frq = (double)vcf_frq / 127;
+		patch[i].vcf_res = (double)vcf_res / 127;
+		patch[i].vcf_env = (double)vcf_env / 127;
+		patch[i].vcf_lfo = (double)vcf_lfo / 127;
+		patch[i].vcf_kbd = (double)vcf_kbd / 127;
+		patch[i].volume = (double)vca_level / 127;
+		if (patch[i].volume == 0)
 		{
-			printf("Patch %d: warning, volume is zero\n",i+1);
+			printf("Patch %d: warning, volume is zero\n", i + 1);
 		}
-        patch[i].env_attack = (double)env_attack / 127;
-        patch[i].env_decay = (double)env_decay / 127;
-        patch[i].env_sustain = (double)env_sustain / 127;
-        patch[i].env_release = (double)env_release / 127;
-        patch[i].dco_sub = (double)dco_sub / 127;
+		patch[i].env_attack = (double)env_attack / 127;
+		patch[i].env_decay = (double)env_decay / 127;
+		patch[i].env_sustain = (double)env_sustain / 127;
+		patch[i].env_release = (double)env_release / 127;
+		patch[i].dco_sub = (double)dco_sub / 127;
 		patch[i].octave_transpose = octave_transpose;
 		patch[i].panning = 0.5;
 //if an dco sub value is set, the dco switch will automaticly
 //enabled. roland missed to implement the switch in the sysex chart
-        if (dco_sub>0)
-            patch[i].dco_sub_switch = 1;
-		else 
+		if (dco_sub > 0)
+			patch[i].dco_sub_switch = 1;
+		else
 			patch[i].dco_sub_switch = 0;
 
-			if (patch[i].dco_saw_switch== 0 && 
-			patch[i].dco_pulse_switch==0 &&
-			patch[i].dco_sub_switch==0 &&
-			patch[i].dco_noise==0)
-			printf("patch %d: warning, no generator is active\n",i+1);
+		if (patch[i].dco_saw_switch == 0 &&
+			patch[i].dco_pulse_switch == 0 &&
+			patch[i].dco_sub_switch == 0 &&
+			patch[i].dco_noise == 0)
+			printf("patch %d: warning, no generator is active\n", i + 1);
+
+
+		c = getc(in);
 
 //read the name of the patch till the end of the line
-   
-		fclose(in);
-    }
-	goto next;
+		while (c != 0xa)
+		{
+			if (len < PATCH_NAME_LEN && c != 0xd)
+			{
+				*name++ = c;
+			}
+			c = getc(in);
+			len++;
+		}
+	}
 }
 
 int
 main(int argc, char **argv)
 {
-    juno_patch *patches;
+	juno_patch *patches;
 
-    if (argc < 3)
-    {
-        fprintf(stderr, "Usage: %s 'patfile' 'patchfile'\n", argv[0]);
-        return 1;
-    }
+	if (argc < 3)
+	{
+		fprintf(stderr, "Usage: %s 'patfile' 'patchfile'\n", argv[0]);
+		return 1;
+	}
 
-    patches = juno_patchset_new();
-    loadPatFile(argv[1], patches);
+	patches = juno_patchset_new();
+	loadPatFile(argv[1], patches);
 
-    save_patches(argv[2], patches);
-    juno_patchset_delete(patches);
+	save_patches(argv[2], patches);
+	juno_patchset_delete(patches);
 
-    return 0;
+	return 0;
 }

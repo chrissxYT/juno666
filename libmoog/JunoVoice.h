@@ -131,6 +131,9 @@ public:
 
     int isPlaying()
     {
+	if (vcamode==1)
+	return gateAdsr.isPlaying();
+	else
         return adsr.isPlaying();
     }
 
