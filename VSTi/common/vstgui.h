@@ -179,6 +179,9 @@ struct CRect
 	inline long width () const  { return right - left; }
 	inline long height () const { return bottom - top; }
 
+	inline void setWidth (long width) { right = left + width; }
+	inline void setHeight (long height) { bottom = top + height; }
+
 	CRect &offset (long x, long y)
 	{ left += x; right += x; top += y; bottom += y; return *this; }
 
@@ -291,7 +294,9 @@ struct CColor
 	unsigned char red;
 	unsigned char green;
 	unsigned char blue;
-	unsigned char unused;
+	union
+	{ unsigned char unused; unsigned char alpha; };
+
 };
 
 // define some basic colors
@@ -383,7 +388,8 @@ enum CDrawMode
 {
 	kCopyMode = 0,
 	kOrMode,
-	kXorMode
+	kXorMode,
+	kAntialias
 };
 
 //----------------------------
@@ -559,11 +565,20 @@ protected:
 	long iPenStyle;
 
 #elif MAC
+	#if QUARTZ
+	CGContextRef gCGContext;
+	public:
+	CGContextRef beginCGContext ();
+	void releaseCGContext (CGContextRef context);
+	protected:
+	#else
+
 	FontInfo fontInfoStruct;
 	Pattern fillPattern;
 	bool bInitialized;
 	virtual BitMapPtr getBitmap ();
 	virtual void releaseBitmap ();
+	#endif
 	virtual CGrafPtr getPort ();
 	
 #elif MOTIF
@@ -617,9 +632,13 @@ protected:
 	BBitmap *offscreenBitmap;
 
 #elif MAC
+	#if QUARTZ
+	void* offscreenBitmap;
+	#else
 	BitMapPtr getBitmap ();
 	void releaseBitmap ();
 	CGrafPtr getPort ();
+	#endif
 #endif
 };
 
@@ -632,7 +651,7 @@ class CBitmap
 public:
 	CBitmap (long resourceID);
 	CBitmap (CFrame &frame, long width, long height);
-	~CBitmap ();
+	virtual ~CBitmap ();
 
 	void draw (CDrawContext *pContext, CRect &rect, const CPoint &offset = CPoint (0, 0));
 	void drawTransparent (CDrawContext *pContext, CRect &rect, const CPoint &offset = CPoint (0, 0));
@@ -655,9 +674,16 @@ public:
 #if BEOS
 	static void closeResource ();
 #endif
+#if MACX
+	#if QUARTZ
+	virtual CGImageRef createCGImage (bool transparent = false);
+	#endif
+#endif
 
 	//-------------------------------------------
 protected:
+	CBitmap ();
+
 	long resourceID;
 	long nbReference;
 	long width;
@@ -706,7 +732,7 @@ public:
 	virtual void draw (CDrawContext *pContext);
 	virtual void drawRect (CDrawContext *pContext, CRect& updateRect) { draw (pContext); }
 	virtual bool checkUpdate (CRect& updateRect) { return updateRect.rectOverlap (size); }
-	virtual void mouse (CDrawContext *pContext, CPoint &where);
+	virtual void mouse (CDrawContext *pContext, CPoint &where, long buttons = -1);
 	virtual void update (CDrawContext *pContext);
 	virtual long notify (CView* sender, const char* message);
 	
@@ -754,6 +780,9 @@ public:
 	virtual void remember ();
 	virtual	long getNbReference () { return nbReference; }
 
+	virtual void getMouseLocation (CDrawContext* context, CPoint &point);
+	virtual void getFrameTopLeftPos (CPoint& topLeft);
+
 	//-------------------------------------------
 protected:
 	friend class CControl;
@@ -791,7 +820,7 @@ public:
 	void draw (CDrawContext *pContext);
 	void drawRect (CDrawContext *pContext, CRect& updateRect);
 	void draw (CView *pView = 0);
-	void mouse (CDrawContext *pContext, CPoint &where);
+	void mouse (CDrawContext *pContext, CPoint &where, long buttons = -1);
 	bool onDrop (void **ptrItems, long nbItems, long type, CPoint &where);
 	bool onWheel (CDrawContext *pContext, const CPoint &where, float distance);
 	long onKeyDown (VstKeyCode& keyCode);
@@ -830,6 +859,7 @@ public:
 	void  setCursor (CCursorType type);
 
 	CView *getCurrentView ();
+	CView *getViewAt (const CPoint& where);
 
 #if WINDOWS
 	HWND getOuterWindow ();
@@ -905,7 +935,22 @@ protected:
 #elif BEOS
 	PlugView *pPlugView;
 #endif
-
+#if QUARTZ
+	void setDrawContext (CDrawContext* context) { pFrameContext = context; }
+	friend class CDrawContext;
+#endif
+#if CARBON_EVENTS
+	static pascal OSStatus carbonEventHandler (EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void *inUserData);
+	bool registerWithToolbox ();
+	
+	ControlDefSpec controlSpec;
+	ControlRef controlRef;
+	bool hasFocus;
+	EventHandlerRef dragEventHandler;
+	public:
+	void* getPlatformControl () { return controlRef; }
+	protected:
+#endif
 	//-------------------------------------------
 private:
 	CDrawContext *pFrameContext;
@@ -928,6 +973,9 @@ public:
 	CCView   *pPrevious;
 };
 
+// Message to check if View is a CViewContainer
+extern char* kMsgCheckIfViewContainer;
+
 //-----------------------------------------------------------------------------
 // CViewContainer Declaration
 //-----------------------------------------------------------------------------
@@ -948,7 +996,7 @@ public:
 
 	virtual void draw (CDrawContext *pContext);
 	virtual void drawRect (CDrawContext *pContext, CRect& updateRect);
-	virtual void mouse (CDrawContext *pContext, CPoint &where);
+	virtual void mouse (CDrawContext *pContext, CPoint &where, long buttons = -1);
 	virtual bool onDrop (void **ptrItems, long nbItems, long type, CPoint &where);
 	virtual bool onWheel (CDrawContext *pContext, const CPoint &where, float distance);
 	virtual void update (CDrawContext *pContext);
@@ -986,6 +1034,10 @@ public:
 	virtual bool attached (CView* view);
 		
 	CView *getCurrentView ();
+	CView *getViewAt (const CPoint& where);
+
+	void modifyDrawContext (long save[4], CDrawContext* pContext);
+	void restoreDrawContext (CDrawContext* pContext, long save[4]);
 
 	//-------------------------------------------
 protected:

@@ -10,7 +10,7 @@ VstJuno6::VstJuno6 (audioMasterCallback audioMaster) :
 AudioEffectX (audioMaster, kNumPrograms, kNumParams)
 {
     setProgram (0);
-    
+	Scheduler::Init();   
     if (audioMaster)
     {
         setNumInputs (0);
@@ -27,6 +27,7 @@ AudioEffectX (audioMaster, kNumPrograms, kNumParams)
 
 VstJuno6::~VstJuno6 ()
 {
+	Scheduler::DeInit();
 }
 
 void VstJuno6::setProgram (long program)
@@ -51,7 +52,7 @@ void VstJuno6::getProgramName (char *name)
 
 void VstJuno6::getParameterLabel (long index, char *label)
 {
-    strcpy (label, "ildi");
+    strcpy (label, "roentgen");
 }
 
 void VstJuno6::getParameterDisplay (long index, char *text)
@@ -68,7 +69,11 @@ void VstJuno6::getParameterName (long index, char *label)
 {
     if(control)
     {
-        strcpy(label, control->getOutput(index)->getName());
+		const char *name = control->getOutput(index)->getDisplayName();
+		if (name!=NULL)
+			strcpy(label, name);
+		else 
+			strcpy(label,"");
     }
 }
 
@@ -124,7 +129,7 @@ bool VstJuno6::getEffectName (char* name)
 
 bool VstJuno6::getVendorString (char* text)
 {
-    strcpy (text, "Brainslayer");
+    strcpy (text, "Brainslayer & Strepto");
     return true;
 }
 

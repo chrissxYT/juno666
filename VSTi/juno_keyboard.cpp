@@ -173,12 +173,12 @@ void JunoKeyboard::gtkKeyPressed(unsigned int voice, unsigned int key)
 {
     if (keyTransposePressed)
     {
-        transposeVoices(pow(2, ((double)(key % 12) - keyTranspose) / 12));
+        transposeVoices(pow((double)2, (double)(((double)(key % 12) - keyTranspose) / 12)));
         keyTranspose = key % 12;
     }
     else
     {
-        double val = CPS(midi_notes[key+36 - octaveTranspose * 12 + keyTranspose]) * pow(2, masterTune / 12);
+        double val = CPS(midi_notes[key+36 - octaveTranspose * 12 + keyTranspose]) * pow((double)2, (double)(masterTune / 12));
         pitchOutputs[voice]->setData(val);
         gateOutputs[voice]->setData(1.0);
 
@@ -206,7 +206,7 @@ void JunoKeyboard::octaveTransposeChanged(double data)
     int octaves = (int)octaveTranspose - (int)data;
     octaveTranspose = (int)data;
 
-    transposeVoices(pow(2, (double)octaves));
+    transposeVoices(pow((double)2, (double)octaves));
 }
 
 void JunoKeyboard::keyTransposeChanged(double data)
@@ -219,7 +219,7 @@ void JunoKeyboard::keyTransposeChanged(double data)
 void JunoKeyboard::masterTuneChanged(double data)
 {
     data = data * 2 - 1;
-    double adjustment = pow(2, (data - masterTune) / 12.0);
+    double adjustment = pow((double)2, (double)((data - masterTune) / 12.0));
     masterTune = data;
 
     //printf("master tune changed to %f adjustment=%f\n", data, adjustment);

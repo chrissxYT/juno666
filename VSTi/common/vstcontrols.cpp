@@ -200,12 +200,12 @@ void COnOffButton::draw (CDrawContext *pContext)
 }
 
 //------------------------------------------------------------------------
-void COnOffButton::mouse (CDrawContext *pContext, CPoint &where)
+void COnOffButton::mouse (CDrawContext *pContext, CPoint &where, long button)
 {
 	if (!bMouseEnabled)
 		return;
 
- 	long button = pContext->getMouseButtons ();
+ 	if (button == -1) button = pContext->getMouseButtons ();
 	if (!(button & kLButton))
 		return;
 
@@ -297,12 +297,12 @@ void CKnob::drawHandle (CDrawContext *pContext)
 }
 
 //------------------------------------------------------------------------
-void CKnob::mouse (CDrawContext *pContext, CPoint &where)
+void CKnob::mouse (CDrawContext *pContext, CPoint &where, long button)
 {
 	if (!bMouseEnabled)
 		return;
 
-	long button = pContext->getMouseButtons ();
+	if (button == -1) button = pContext->getMouseButtons ();
 	if (!(button & kLButton))
 		return;
 
@@ -391,10 +391,9 @@ void CKnob::mouse (CDrawContext *pContext, CPoint &where)
 			if (isDirty () && listener)
 				listener->valueChanged (pContext, this);
 		}
-
-		pContext->getMouseLocation (where);
+		getMouseLocation (pContext, where);
 		doIdleStuff ();
-	
+
 	} while (button & kLButton);
 
 	// end of edit parameter
@@ -797,6 +796,10 @@ CTextEdit::CTextEdit (const CRect &size, CControlListener *listener, long tag,
 		strcpy (text, txt);
 	else
 		strcpy (text, "");
+#if MAC
+	// remember our VST plugin's resource map ID (it should be the current one at this moment)
+	pluginResID = CurResFile();
+#endif
 }
 
 //------------------------------------------------------------------------
@@ -849,6 +852,20 @@ void CTextEdit::draw (CDrawContext *pContext)
 		string[0] = 0;
 		editConvert (text, string);
 	}
+	// Allow to display strings through the stringConvert
+	// callbacks inherited from CParamDisplay
+	else if (stringConvert2)
+	{
+		string[0] = 0;
+		stringConvert2 (value, string, userData);
+		strcpy(text, string);
+	}
+	else if (stringConvert)
+	{
+		string[0] = 0;
+		stringConvert (value, string);
+		strcpy(text, string);
+	}
 	else
 		sprintf (string, "%s", text);
 
@@ -857,12 +874,12 @@ void CTextEdit::draw (CDrawContext *pContext)
 }
 
 //------------------------------------------------------------------------
-void CTextEdit::mouse (CDrawContext *pContext, CPoint &where)
+void CTextEdit::mouse (CDrawContext *pContext, CPoint &where, long button)
 {
 	if (!bMouseEnabled)
 		return;
 
-	long button = pContext->getMouseButtons ();
+	if (button == -1) button = pContext->getMouseButtons ();
 	if (button & kLButton)
 	{
 		if (getParent ()->getEditView () != this)
@@ -1018,8 +1035,67 @@ pascal OSStatus CarbonEventsTextControlProc (EventHandlerCallRef inHandlerCallRe
 							gTextEditCanceled = true;
 						else
 							textEdit->bWasReturnPressed = true;
+
+						WindowRef window = (WindowRef) (textEdit->getParent()->getSystemWindow());
+						GrafPtr	savedPort;
+						bool portChanged = window ? QDSwapPort (GetWindowPort (window), &savedPort) : false;
+
+						// remember the current resource map ID
+						short currentResID = CurResFile();
+						short vstResFileID = textEdit->pluginResID;
+						// if it's different (and if it's valid), set the current resource map ID to our plugin's resource map
+						if ( (vstResFileID != currentResID) && (vstResFileID > 0) )
+							UseResFile(vstResFileID);
+
 						textEdit->looseFocus ();
+
+						// revert the window port, if we changed it
+						if (portChanged)
+							QDSwapPort (savedPort, NULL);
+						// revert the current resource map, if we changed it
+						if ( (currentResID > 0) && (vstResFileID != currentResID) && (vstResFileID > 0) )
+							UseResFile(currentResID);
+
 						result = noErr;
+					}
+					else if (modifiers & cmdKey)
+					{
+						result = noErr;
+						TXNObject text_edit = (TXNObject) (textEdit->platformControl);
+						switch (toupper(macCharCode))
+						{
+							// copy
+							case 'C':
+								if (!TXNIsSelectionEmpty(text_edit))
+								{
+									OSStatus scrapErr = ClearCurrentScrap();
+									scrapErr = TXNCopy(text_edit);
+									result = noErr;
+								}
+								break;
+							// cut
+							case 'X':
+								if (!TXNIsSelectionEmpty(text_edit))
+								{
+									OSStatus scrapErr = ClearCurrentScrap();
+									scrapErr = TXNCut(text_edit);
+									result = noErr;
+								}
+								break;
+							// paste
+							case 'V':
+								TXNPaste(text_edit);
+								result = noErr;
+								break;
+
+							// select all
+							case 'A':
+								TXNSelectAll(text_edit);
+								break;
+
+							default:
+								break;
+						}
 					}
 					else
 					{
@@ -1068,14 +1144,35 @@ pascal OSStatus CarbonEventsTextControlProc (EventHandlerCallRef inHandlerCallRe
 		case kEventClassWindow:
 		{
 			WindowRef window;
-			GetEventParameter (inEvent, kEventParamDirectObject, typeWindowRef, NULL, sizeof (WindowRef), NULL, &window);
+			if (GetEventParameter (inEvent, kEventParamDirectObject, typeWindowRef, NULL, sizeof (WindowRef), NULL, &window) != noErr)
+				break;
 			switch (eventKind)
 			{
 				case kEventWindowDeactivated:
 				{
 					result = CallNextEventHandler (inHandlerCallRef, inEvent);
 					ClearKeyboardFocus (window);
+
+					// set up the correct drawing port for the window
+					GrafPtr	savedPort;
+					bool portChanged = QDSwapPort (GetWindowPort (window), &savedPort);
+
+					// remember the current resource map ID
+					short currentResID = CurResFile();
+					short vstResFileID = textEdit->pluginResID;
+					// if it's different (and if it's valid), set the current resource map ID to our plugin's resource map
+					if ( (vstResFileID != currentResID) && (vstResFileID > 0) )
+						UseResFile(vstResFileID);
+
 					textEdit->looseFocus ();
+
+					// revert the window port, if we changed it
+					if (portChanged)
+						QDSwapPort (savedPort, NULL);
+					// revert the current resource map, if we changed it
+					if ( (currentResID > 0) && (vstResFileID != currentResID) && (vstResFileID > 0) )
+						UseResFile(currentResID);
+
 					break;
 				}
 			}
@@ -1086,10 +1183,34 @@ pascal OSStatus CarbonEventsTextControlProc (EventHandlerCallRef inHandlerCallRe
 }
 #endif
 
+#if MAC && CALL_NOT_IN_CARBON
+#include <Scrap.h>
+#include <ctype.h>
+#define ClearCurrentScrap	ZeroScrap
+#endif
+
 //------------------------------------------------------------------------
 void CTextEdit::takeFocus (CDrawContext *pContext)
 {
 	bWasReturnPressed = false;
+
+#if WINDOWS || MACX
+	// calculate offset for CViewContainers
+	CRect rect (size);
+	CView* parent = getParentView ();
+	while (parent)
+	{
+		if (parent->notify (this, kMsgCheckIfViewContainer) == kMessageNotified)
+		{
+			CRect vSize;
+			parent->getViewSize (vSize);
+			rect.offset (vSize.left, vSize.top);
+		}
+		parent = parent->getParentView ();
+	}
+	if (pContext)
+		rect.offset (pContext->offset.h, pContext->offset.v);
+#endif
 
 #if WINDOWS
 	int wstyle = 0;
@@ -1099,10 +1220,6 @@ void CTextEdit::takeFocus (CDrawContext *pContext)
 		wstyle |= ES_RIGHT;
 	else
 		wstyle |= ES_CENTER;
-
-	CRect rect (size);
-	if (pContext)
-		rect.offset (pContext->offset.h, pContext->offset.v);
 
 	wstyle |= WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL;
 	platformControl = (void*)CreateWindow (
@@ -1142,28 +1259,33 @@ void CTextEdit::takeFocus (CDrawContext *pContext)
 #elif MAC
 	extern long standardFontSize[];
 #if MACX
+	static bool gTXNInititalized = false;
+	if (!gTXNInititalized)
+	{
+		TXNMacOSPreferredFontDescription defaults;  // fontID, pointSize, encoding, and fontStyle
+		defaults.fontID = NULL;
+		defaults.pointSize = kTXNDefaultFontSize;
+		defaults.encoding = CreateTextEncoding(kTextEncodingMacRoman, kTextEncodingDefaultVariant, kTextEncodingDefaultFormat);
+		defaults.fontStyle = kTXNDefaultFontStyle;
+		TXNInitOptions options = 0;
+		TXNInitTextension(&defaults, 1, options);
+		gTXNInititalized = true;
+	}
 	gTextEditCanceled = false;
 	WindowRef window = (WindowRef)getParent ()->getSystemWindow ();
 	TXNFrameOptions iFrameOptions = kTXNMonostyledTextMask | kTXNDisableDragAndDropMask; //kTXNNoKeyboardSyncMask | kTXNDisableDragAndDropMask | kTXNSingleLineOnlyMask | kTXNMonostyledTextMask;
 	TXNObject txnObj = 0;
 	TXNFrameID frameID = 0;
 	TXNObjectRefcon iRefCon = 0;
-	Rect rect;
-	rect.left   = size.left;
-	rect.right  = size.right;
-	rect.top    = size.top;
-	rect.bottom = size.bottom;
-	if (pContext)
-	{
-		rect.left   += pContext->offset.h;
-		rect.right  += pContext->offset.h;
-		rect.top    += pContext->offset.v;
-		rect.bottom += pContext->offset.v;
-	}
-	OSStatus err = TXNNewObject (NULL, window, &rect, iFrameOptions, kTXNTextEditStyleFrameType, kTXNSingleStylePerTextDocumentResType, kTXNMacOSEncoding, &txnObj, &frameID, iRefCon);
+	Rect r;
+	r.left   = rect.left;
+	r.right  = rect.right;
+	r.top    = rect.top;
+	r.bottom = rect.bottom;
+	OSStatus err = TXNNewObject (NULL, window, &r, iFrameOptions, kTXNTextEditStyleFrameType, kTXNSingleStylePerTextDocumentResType, kTXNMacOSEncoding, &txnObj, &frameID, iRefCon);
 	if (err == noErr)
 	{
-		TXNSetFrameBounds (txnObj, rect.top, rect.left, rect.bottom, rect.right, frameID);
+		TXNSetFrameBounds (txnObj, r.top, r.left, r.bottom, r.right, frameID);
 		platformControl = txnObj;
 
 		if (strlen (text) > 0)
@@ -1199,7 +1321,13 @@ void CTextEdit::takeFocus (CDrawContext *pContext)
 		extern const unsigned char* macXfontNames[];
 		
 		short familyID;
+		#if QUARTZ
+		Str255 fontName;
+		CopyCStringToPascal ((const char*)macXfontNames[fontID], fontName); 
+		GetFNum (fontName, &familyID);
+		#else
 		GetFNum (macXfontNames[fontID], &familyID);
+		#endif
 
 		ATSUFontID fontNameID;
 
@@ -1331,7 +1459,46 @@ void CTextEdit::takeFocus (CDrawContext *pContext)
 					else
 						c = -1;
 				}
-				if (!ende)
+				if (theEvent.modifiers & cmdKey)
+				{
+					switch (toupper(c))
+					{
+						// copy
+						case 'C':
+							if ((**(TEHandle)text_edit).selEnd > (**(TEHandle)text_edit).selStart)
+							{
+								OSStatus scrapErr = ClearCurrentScrap();
+								TECopy((TEHandle)text_edit);
+								if (scrapErr == noErr)
+									scrapErr = TEToScrap();
+							}
+							break;
+						// cut
+						case 'X':
+							if ((**(TEHandle)text_edit).selEnd > (**(TEHandle)text_edit).selStart)
+							{
+								OSStatus scrapErr = ClearCurrentScrap();
+								TECut((TEHandle)text_edit);
+								if (scrapErr == noErr)
+									scrapErr = TEToScrap();
+							}
+							break;
+						// paste
+						case 'V':
+							{
+								OSErr scrapErr = TEFromScrap();
+								TEPaste((TEHandle)text_edit);
+							}
+							break;
+						// select all
+						case 'A':
+							TESetSelect(0, (**(TEHandle)text_edit).teLength, (TEHandle)text_edit);
+							break;
+						default:
+							break;
+					}
+				}
+				else if (!ende)
 					TEKey (c, (TEHandle)text_edit);
 				break;
 			case mouseDown :
@@ -1501,6 +1668,8 @@ void CTextEdit::looseFocus (CDrawContext *pContext)
 			text [(s > 255) ? 255 : s] = 0;
 			DisposeHandle (dataHandle);
 		}
+		else
+			text[0] = 0;
 	}
 
 	TXNFocus ((TXNObject)platformControl, false);
@@ -1538,9 +1707,11 @@ void CTextEdit::looseFocus (CDrawContext *pContext)
 	delete textView;
 
 #endif
+	bool localContext = false;
 	CDrawContext *pContextTemp = 0;
 	if (!pContext)
 	{
+		localContext = true;
 		// create a local context
 #if WINDOWS
 		hwnd = (HWND)getParent ()->getSystemWindow ();
@@ -1572,7 +1743,7 @@ void CTextEdit::looseFocus (CDrawContext *pContext)
 	if (strcmp (oldText, text) && listener)
 		listener->valueChanged (pContextTemp, this);
 	
-	if (!pContext)
+	if (localContext)
 	{
 		if (pContextTemp)
 			delete pContextTemp;
@@ -1878,6 +2049,9 @@ bool COptionMenu::addEntry (COptionMenu *subMenu, char *txt)
 
 	nbEntries++;
 
+	if (currentIndex < 0)
+		currentIndex = 0;
+	
 	return true;
 }
 
@@ -2140,12 +2314,12 @@ void COptionMenu::draw (CDrawContext *pContext)
 }
 
 //------------------------------------------------------------------------
-void COptionMenu::mouse (CDrawContext *pContext, CPoint &where)
+void COptionMenu::mouse (CDrawContext *pContext, CPoint &where, long button)
 {
 	if (!bMouseEnabled || !getParent () || !pContext)
 		return;
 
-	lastButton = pContext->getMouseButtons ();
+	lastButton = (button != -1) ? button : pContext->getMouseButtons ();
 	if (lastButton & (kLButton|kRButton|kApple))
 	{
 		if (bgWhenClick)
@@ -2489,12 +2663,13 @@ void COptionMenu::takeFocus (CDrawContext *pContext)
 	lastResult = -1;
 	lastMenu = 0;
 
-#if WINDOWS
-	MSG msg;
-	long result = -1;
+#if MAC || WINDOWS
+	// calculate Screen Position
+	#if WINDOWS
 	HWND hwnd = (HWND)getParent ()->getSystemWindow ();
 
-	//---Get the position of the Parent
+	#endif
+
 	CRect rect;
 	if (pContext)
 	{
@@ -2502,12 +2677,30 @@ void COptionMenu::takeFocus (CDrawContext *pContext)
 		rect.top  = pContext->offsetScreen.v;
 	}
 	else
-	{
+	{ // do we really get a focus without a drawcontext ?
+		#if WINDOWS
 		RECT rctWinParent;
 		GetWindowRect (hwnd, &rctWinParent);
 		rect.left = rctWinParent.left;
 		rect.top  = rctWinParent.top;
+		#endif
 	}
+	CView* parent = getParentView ();
+	while (parent)
+	{
+		if (parent->notify (this, kMsgCheckIfViewContainer) == kMessageNotified)
+		{
+			CRect vSize;
+			parent->getViewSize (vSize);
+			rect.offset (vSize.left, vSize.top);
+		}
+		parent = parent->getParentView ();
+	}
+#endif
+	
+#if WINDOWS
+	MSG msg;
+	long result = -1;
 
 	//---Create the popup menu---
 	long offIdx = 0;
@@ -2612,18 +2805,15 @@ void COptionMenu::takeFocus (CDrawContext *pContext)
 	LToG.v = bounds.top + offset;
 	LToG.h = bounds.left + size.left;
 	
-	if (pContext)
-	{
-		LToG.h += pContext->offset.h;
-		LToG.v += pContext->offset.v;
-	}
-	
+	LToG.h += rect.left;
+	LToG.v += rect.top;
+
 	LocalToGlobal (&LToG);
 	
 	//---Create the popup menu---
 	long offIdx = 0;
 	MenuHandle theMenu = (MenuHandle)appendItems (offIdx);
-		
+
 	// Calculate the menu size (height and width)
 	CalcMenuSize (theMenu);
 	
@@ -2641,6 +2831,7 @@ void COptionMenu::takeFocus (CDrawContext *pContext)
 	// Calculate the size of one menu item (round to the next int)
 	int menuItemSize = (menuHeight + nbEntries - 1) / nbEntries;
 	
+	setDirty (false);	
 	//---Popup the Menu
 	long popUpItem = 1;
 	long PopUpMenuItem = 0;
@@ -2696,8 +2887,9 @@ void COptionMenu::takeFocus (CDrawContext *pContext)
 		}
 
 		// redraw the display
-		doIdleStuff ();
-		setDirty (false);
+		// AAAAARRRRGHHHHHHHHHHHHH!!
+		//doIdleStuff ();
+		//setDirty (false);
 
 		if (!pContext && pContextTemp)
 			delete pContextTemp;
@@ -2972,12 +3164,12 @@ void CVerticalSwitch::draw (CDrawContext *pContext)
 }
 
 //------------------------------------------------------------------------
-void CVerticalSwitch::mouse (CDrawContext *pContext, CPoint &where)
+void CVerticalSwitch::mouse (CDrawContext *pContext, CPoint &where, long button)
 {
 	if (!bMouseEnabled)
 		return;
 	
-	long button = pContext->getMouseButtons ();
+	if (button == -1) button = pContext->getMouseButtons ();
 	if (!(button & kLButton))
 		return;
 
@@ -3005,7 +3197,7 @@ void CVerticalSwitch::mouse (CDrawContext *pContext, CPoint &where)
 		if (isDirty () && listener)
 			listener->valueChanged (pContext, this);
 		
-		pContext->getMouseLocation (where);
+		getMouseLocation (pContext, where);
 		
 		doIdleStuff ();
 	}
@@ -3055,12 +3247,12 @@ void CHorizontalSwitch::draw (CDrawContext *pContext)
 }
 
 //------------------------------------------------------------------------
-void CHorizontalSwitch::mouse (CDrawContext *pContext, CPoint &where)
+void CHorizontalSwitch::mouse (CDrawContext *pContext, CPoint &where, long button)
 {
 	if (!bMouseEnabled)
 		return;
 
-	long button = pContext->getMouseButtons ();
+	if (button == -1) button = pContext->getMouseButtons ();
 	if (!(button & kLButton))
 		return;
 	
@@ -3089,7 +3281,7 @@ void CHorizontalSwitch::mouse (CDrawContext *pContext, CPoint &where)
 		if (isDirty () && listener)
 			listener->valueChanged (pContext, this);
 		
-		pContext->getMouseLocation (where);
+		getMouseLocation (pContext, where);
 		
 		doIdleStuff ();
 	}
@@ -3139,12 +3331,12 @@ void CRockerSwitch::draw (CDrawContext *pContext)
 }
 
 //------------------------------------------------------------------------
-void CRockerSwitch::mouse (CDrawContext *pContext, CPoint &where)
+void CRockerSwitch::mouse (CDrawContext *pContext, CPoint &where, long button)
 {
 	if (!bMouseEnabled)
 		return;
 
-	long button = pContext->getMouseButtons ();
+	if (button == -1) button = pContext->getMouseButtons ();
 	if (!(button & kLButton))
 		return;
 
@@ -3184,7 +3376,7 @@ void CRockerSwitch::mouse (CDrawContext *pContext, CPoint &where)
 			if (isDirty () && listener)
 				listener->valueChanged (pContext, this);
 
-			pContext->getMouseLocation (where);
+			getMouseLocation (pContext, where);
 
 			doIdleStuff ();
 		}
@@ -3314,12 +3506,12 @@ void CMovieButton::draw (CDrawContext *pContext)
 }
 
 //------------------------------------------------------------------------
-void CMovieButton::mouse (CDrawContext *pContext, CPoint &where)
+void CMovieButton::mouse (CDrawContext *pContext, CPoint &where, long button)
 {
 	if (!bMouseEnabled)
 		return;
 
-	long button = pContext->getMouseButtons ();
+	if (button == -1) button = pContext->getMouseButtons ();
 	if (!(button & kLButton))
 		return;
 
@@ -3343,7 +3535,7 @@ void CMovieButton::mouse (CDrawContext *pContext, CPoint &where)
 			if (isDirty () && listener)
 				listener->valueChanged (pContext, this);
 	    
-			pContext->getMouseLocation (where); 
+			getMouseLocation (pContext, where);
 
 			doIdleStuff ();
 		}
@@ -3406,12 +3598,12 @@ void CAutoAnimation::draw (CDrawContext *pContext)
 }
 
 //------------------------------------------------------------------------
-void CAutoAnimation::mouse (CDrawContext *pContext, CPoint &where)
+void CAutoAnimation::mouse (CDrawContext *pContext, CPoint &where, long button)
 {
 	if (!bMouseEnabled)
 		return;
 	
-	long button = pContext->getMouseButtons ();
+	if (button == -1) button = pContext->getMouseButtons ();
 	if (!(button & kLButton))
 		return;
 
@@ -3575,9 +3767,9 @@ bool CSlider::attached (CView *parent)
 {
 	if (pOScreen)
 		delete pOScreen;
-
+	#if !MACX
 	pOScreen = new COffscreenContext (getParent (), widthControl, heightControl, kBlackCColor);
-		
+	#endif		
 	return CControl::attached (parent);
 }
 
@@ -3595,6 +3787,8 @@ bool CSlider::removed (CView *parent)
 //------------------------------------------------------------------------
 void CSlider::draw (CDrawContext *pContext)
 {
+	CDrawContext* drawContext = pOScreen ? pOScreen : pContext;
+
 	float fValue;
 	if (style & kLeft || style & kTop)
 		fValue = value;
@@ -3603,12 +3797,14 @@ void CSlider::draw (CDrawContext *pContext)
 	
 	// (re)draw background
 	CRect rect (0, 0, widthControl, heightControl);
+	if (!pOScreen)
+		rect.offset (size.left, size.top);
 	if (pBackground)
 	{
 		if (bTransparencyEnabled)
-			pBackground->drawTransparent (pOScreen, rect, offset);
+			pBackground->drawTransparent (drawContext, rect, offset);
 		else
-			pBackground->draw (pOScreen, rect, offset);
+			pBackground->draw (drawContext, rect, offset);
 	}
 	
 	// calc new coords of slider
@@ -3635,28 +3831,31 @@ void CSlider::draw (CDrawContext *pContext)
 		rectNew.bottom = rectNew.top + heightOfSlider;
 		rectNew.bottom = (rectNew.bottom > maxTmp) ? maxTmp : rectNew.bottom;
 	}
+	if (!pOScreen)
+		rectNew.offset (size.left, size.top);
 
 	// draw slider at new position
 	if (pHandle)
 	{
 		if (bDrawTransparentEnabled)
-			pHandle->drawTransparent (pOScreen, rectNew);
+			pHandle->drawTransparent (drawContext, rectNew);
 		else 
-			pHandle->draw (pOScreen, rectNew);
+			pHandle->draw (drawContext, rectNew);
 	}
 
-	pOScreen->copyFrom (pContext, size);
+	if (pOScreen)
+		pOScreen->copyFrom (pContext, size);
 	
 	setDirty (false);
 }
 
 //------------------------------------------------------------------------
-void CSlider::mouse (CDrawContext *pContext, CPoint &where)
+void CSlider::mouse (CDrawContext *pContext, CPoint &where, long button)
 {
 	if (!bMouseEnabled)
 		return;
 
-	long button = pContext->getMouseButtons ();
+	if (button == -1) button = pContext->getMouseButtons ();
 
 	// set the default value
 	if (button == (kControl|kLButton))
@@ -3759,7 +3958,7 @@ void CSlider::mouse (CDrawContext *pContext, CPoint &where)
 		if (isDirty () && listener)
 			listener->valueChanged (pContext, this);
 
-		pContext->getMouseLocation (where);
+		getMouseLocation (pContext, where);
 
 		doIdleStuff ();
 	}
@@ -3812,7 +4011,6 @@ long CSlider::onKeyDown (VstKeyCode& keyCode)
 		} return 1;
 	}
 #endif
-
 	return -1;
 }
 
@@ -4020,12 +4218,12 @@ void CKickButton::draw (CDrawContext *pContext)
 }
 
 //------------------------------------------------------------------------
-void CKickButton::mouse (CDrawContext *pContext, CPoint &where)
+void CKickButton::mouse (CDrawContext *pContext, CPoint &where, long button)
 {
 	if (!bMouseEnabled)
 		return;
 	
-	long button = pContext->getMouseButtons ();
+	if (button == -1) button = pContext->getMouseButtons ();
 	if (!(button & kLButton))
 		return;
 
@@ -4047,7 +4245,7 @@ void CKickButton::mouse (CDrawContext *pContext, CPoint &where)
 			if (isDirty () && listener)
 				listener->valueChanged (pContext, this);
 			
-			pContext->getMouseLocation (where);
+			getMouseLocation (pContext, where);
 			
 			doIdleStuff ();
 		}
@@ -4110,12 +4308,12 @@ bool CSplashScreen::hitTest (const CPoint& where, const long buttons)
 }
 
 //------------------------------------------------------------------------
-void CSplashScreen::mouse (CDrawContext *pContext, CPoint &where)
+void CSplashScreen::mouse (CDrawContext *pContext, CPoint &where, long button)
 {
 	if (!bMouseEnabled)
 		return;
 
-	long button = pContext->getMouseButtons ();
+	if (button == -1) button = pContext->getMouseButtons ();
 	if (!(button & kLButton))
 		return;
 
