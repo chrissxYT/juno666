@@ -4,6 +4,20 @@
 #include "audioeffectx.h"
 #include "VstJuno6Program.h"
 
+//#include <libmoog/moog.h>
+
+#include <libmoog/JunoVoice.h>
+#include <libmoog/JunoLfo.h>
+#include <libmoog/JunoArpeggio.h>
+#include <libmoog/JunoChorus.h>
+#include <libmoog/JunoPatch.h>
+#include <libmoog/HPF.h>
+
+#include "libmoog/MidiInput.h"
+#include "libmoog/VSTOutput.h"
+
+#include "juno_keyboard.h"
+
 enum
 {
     // Global
@@ -81,29 +95,16 @@ public:
     
     virtual void resume ();
 
-    virtual bool getOutputProperties (long index, VstPinProperties* properties);
-        
     virtual bool getEffectName (char* name);
     virtual bool getVendorString (char* text);
     virtual bool getProductString (char* text);
     virtual long getVendorVersion () { return 1000; }
     virtual long canDo (char* text);
 
+    void initSynth(int numVoices);
+
 private:
     void initProcess ();
-    void noteOn (long note, long velocity, long delta);
-    void noteOff ();
-
-    float fWaveform1;
-    float fFreq1;
-    float fVolume1;
-    float fWaveform2;
-    float fFreq2;
-    float fVolume2;
-
-    float fVolume;  
-    float fPhase1, fPhase2;
-    float fScaler;
 
     VstJuno6Program* programs;
 
@@ -111,10 +112,14 @@ private:
 
     long channelPrograms[16];
 
-    long currentNote;
-    long currentVelocity;
     long currentDelta;
-    bool noteIsOn;
+
+    VSTOutput *dsp;
+
+    Mixer *voiceMix;
+    JunoChorus *chorus;
+    JunoChorus *chorus2;
+    HPF *hpf;
 };
 
 #endif /* __VstJuno6_H__ */

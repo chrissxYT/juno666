@@ -7,15 +7,13 @@ wrapper for keyboard functions, replaces GTK UI
 
 
 #include <libmoog/JunoControl.h>
+#include <libmoog/MidiInput.h>
 #include <libmoog/JunoPatch.h>
 #include "juno_keyboard.h"
 
-extern Settings *settings;
-extern JunoControl *junoControl;
+extern JunoControl *control;
 extern MidiInput *midiInput;
-extern JunoKeyboard *keyboard;
 extern juno_patch *patches;
-
 
 void JunoKeyboard_midiGateChanged(MoogObject *o, double data, long userData)
 {
@@ -61,43 +59,43 @@ void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
         return;
     }
     juno_patch *patch =&patches[userdata];
-    junoControl->MoogObject::getOutput("bender_dco")->setData(patch->bender_dco);
-    junoControl->MoogObject::getOutput("bender_vcf")->setData(patch->bender_vcf);
-    junoControl->MoogObject::getOutput("lfo_trigger")->setData(patch->lfo_trigger);
-    junoControl->MoogObject::getOutput("volume")->setData(patch->volume);
-    junoControl->MoogObject::getOutput("octave_transpose")->setData(patch->octave_transpose);
-    junoControl->MoogObject::getOutput("master_tune");
-    junoControl->MoogObject::getOutput("transpose_switch");
-    junoControl->MoogObject::getOutput("hold_switch");
-    junoControl->MoogObject::getOutput("arpeggio_switch")->setData(patch->arpeggio_switch);
-    junoControl->MoogObject::getOutput("arpeggio_mode")->setData(patch->arpeggio_mode);
-    junoControl->MoogObject::getOutput("arpeggio_range")->setData(patch->arpeggio_range);
-    junoControl->MoogObject::getOutput("arpeggio_rate")->setData(patch->arpeggio_rate);
-    junoControl->MoogObject::getOutput("lfo_rate")->setData(patch->lfo_rate);
-    junoControl->MoogObject::getOutput("lfo_delay")->setData(patch->lfo_delay);
-    junoControl->MoogObject::getOutput("lfo_mode")->setData(patch->lfo_mode);
-    junoControl->MoogObject::getOutput("dco_lfo")->setData(patch->dco_lfo);
-    junoControl->MoogObject::getOutput("dco_pwm")->setData(patch->dco_pwm);
-    junoControl->MoogObject::getOutput("dco_pwm_mod")->setData(patch->dco_pwm_mod);
-    junoControl->MoogObject::getOutput("dco_pulse_switch")->setData(patch->dco_pulse_switch);
-    junoControl->MoogObject::getOutput("dco_saw_switch")->setData(patch->dco_saw_switch);
-    junoControl->MoogObject::getOutput("dco_sub_switch")->setData(patch->dco_sub_switch);
-    junoControl->MoogObject::getOutput("dco_sub")->setData(patch->dco_sub);
-    junoControl->MoogObject::getOutput("dco_noise")->setData(patch->dco_noise);
-    junoControl->MoogObject::getOutput("hpf_frq")->setData(patch->hpf_frq);
-    junoControl->MoogObject::getOutput("vcf_frq")->setData(patch->vcf_frq);
-    junoControl->MoogObject::getOutput("vcf_res")->setData(patch->vcf_res);
-    junoControl->MoogObject::getOutput("vcf_env_invert")->setData(patch->vcf_env_invert);
-    junoControl->MoogObject::getOutput("vcf_env")->setData(patch->vcf_env);
-    junoControl->MoogObject::getOutput("vcf_lfo")->setData(patch->vcf_lfo);
-    junoControl->MoogObject::getOutput("vcf_kbd")->setData(patch->vcf_kbd);
-    junoControl->MoogObject::getOutput("vca_mode")->setData(patch->vca_mode);
-    junoControl->MoogObject::getOutput("env_attack")->setData(patch->env_attack);
-    junoControl->MoogObject::getOutput("env_decay")->setData(patch->env_decay);
-    junoControl->MoogObject::getOutput("env_sustain")->setData(patch->env_sustain);
-    junoControl->MoogObject::getOutput("env_release")->setData(patch->env_release);
-    junoControl->MoogObject::getOutput("chorus_I_switch")->setData(patch->chorus_I_switch);
-    junoControl->MoogObject::getOutput("chorus_II_switch")->setData(patch->chorus_II_switch);
+    control->MoogObject::getOutput("bender_dco")->setData(patch->bender_dco);
+    control->MoogObject::getOutput("bender_vcf")->setData(patch->bender_vcf);
+    control->MoogObject::getOutput("lfo_trigger")->setData(patch->lfo_trigger);
+    control->MoogObject::getOutput("volume")->setData(patch->volume);
+    control->MoogObject::getOutput("octave_transpose")->setData(patch->octave_transpose);
+    control->MoogObject::getOutput("master_tune");
+    control->MoogObject::getOutput("transpose_switch");
+    control->MoogObject::getOutput("hold_switch");
+    control->MoogObject::getOutput("arpeggio_switch")->setData(patch->arpeggio_switch);
+    control->MoogObject::getOutput("arpeggio_mode")->setData(patch->arpeggio_mode);
+    control->MoogObject::getOutput("arpeggio_range")->setData(patch->arpeggio_range);
+    control->MoogObject::getOutput("arpeggio_rate")->setData(patch->arpeggio_rate);
+    control->MoogObject::getOutput("lfo_rate")->setData(patch->lfo_rate);
+    control->MoogObject::getOutput("lfo_delay")->setData(patch->lfo_delay);
+    control->MoogObject::getOutput("lfo_mode")->setData(patch->lfo_mode);
+    control->MoogObject::getOutput("dco_lfo")->setData(patch->dco_lfo);
+    control->MoogObject::getOutput("dco_pwm")->setData(patch->dco_pwm);
+    control->MoogObject::getOutput("dco_pwm_mod")->setData(patch->dco_pwm_mod);
+    control->MoogObject::getOutput("dco_pulse_switch")->setData(patch->dco_pulse_switch);
+    control->MoogObject::getOutput("dco_saw_switch")->setData(patch->dco_saw_switch);
+    control->MoogObject::getOutput("dco_sub_switch")->setData(patch->dco_sub_switch);
+    control->MoogObject::getOutput("dco_sub")->setData(patch->dco_sub);
+    control->MoogObject::getOutput("dco_noise")->setData(patch->dco_noise);
+    control->MoogObject::getOutput("hpf_frq")->setData(patch->hpf_frq);
+    control->MoogObject::getOutput("vcf_frq")->setData(patch->vcf_frq);
+    control->MoogObject::getOutput("vcf_res")->setData(patch->vcf_res);
+    control->MoogObject::getOutput("vcf_env_invert")->setData(patch->vcf_env_invert);
+    control->MoogObject::getOutput("vcf_env")->setData(patch->vcf_env);
+    control->MoogObject::getOutput("vcf_lfo")->setData(patch->vcf_lfo);
+    control->MoogObject::getOutput("vcf_kbd")->setData(patch->vcf_kbd);
+    control->MoogObject::getOutput("vca_mode")->setData(patch->vca_mode);
+    control->MoogObject::getOutput("env_attack")->setData(patch->env_attack);
+    control->MoogObject::getOutput("env_decay")->setData(patch->env_decay);
+    control->MoogObject::getOutput("env_sustain")->setData(patch->env_sustain);
+    control->MoogObject::getOutput("env_release")->setData(patch->env_release);
+    control->MoogObject::getOutput("chorus_I_switch")->setData(patch->chorus_I_switch);
+    control->MoogObject::getOutput("chorus_II_switch")->setData(patch->chorus_II_switch);
 }
 
 
@@ -123,13 +121,13 @@ JunoKeyboard::JunoKeyboard(int _numVoices)
         tmp2.sprintf("voice%d_pitch", i);
         addInput(tmp2, NULL, 0, 0);
         PATCH(midiInput, tmp1, this, tmp2);
-        pitchOutputs[i] = junoControl->getOutput(tmp2);
+        pitchOutputs[i] = control->getOutput(tmp2);
 
         tmp1.sprintf("amp%d", i);
         tmp2.sprintf("voice%d_gate", i);
         addInput(tmp2, JunoKeyboard_midiGateChanged, i, 1);
         PATCH(midiInput, tmp1, this, tmp2);
-        gateOutputs[i] = junoControl->getOutput(tmp2);
+        gateOutputs[i] = control->getOutput(tmp2);
     }
 
     masterTune = 0;
@@ -139,11 +137,11 @@ JunoKeyboard::JunoKeyboard(int _numVoices)
     addInput("hold_switch", JunoKeyboard_holdChanged, 0, 1);
     addInput("patch_change", Junokeyboard_changePatch, 0, 1);
 
-    PATCH(junoControl, "octave_transpose", this, "octave_transpose");
-    PATCH(junoControl, "transpose_switch", this, "transpose_switch");
-    PATCH(junoControl, "master_tune", this, "master_tune");
-    PATCH(junoControl, "hold_switch", this, "hold_switch");
-    PATCH(junoControl, "patch_change", this, "patch_change");
+    PATCH(control, "octave_transpose", this, "octave_transpose");
+    PATCH(control, "transpose_switch", this, "transpose_switch");
+    PATCH(control, "master_tune", this, "master_tune");
+    PATCH(control, "hold_switch", this, "hold_switch");
+    PATCH(control, "patch_change", this, "patch_change");
     initz=1;
 }
 
@@ -154,13 +152,9 @@ JunoKeyboard::~JunoKeyboard()
     delete[]gateOutputs;
 }
 
-
-
-
-
 void JunoKeyboard::midiGateChanged(int voiceNum, double data)
 {
-if (!initz)return;
+    if (!initz)return;
     //printf("%f\n",inputs[voiceNum * 2].data);
     if (data > 0)
     {

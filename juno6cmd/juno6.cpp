@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/07 11:26:31 $
+ * $Revision: 1.5 $$Date: 2004/04/09 07:19:06 $
  */
 
 #include <stdio.h>
@@ -41,64 +41,63 @@ int main(int argc, char **argv)
 int Juno666(int argc, char **argv)
 #endif
 {
-	debuglvl = DEBUG_SYSERROR | DEBUG_APPERROR | DEBUG_APPMSG1;
-	
-	if (argc > 1)
-	{
-		patchFileName = argv[1];
-	}
-	else
-	{
-		//FIXME: maybe this should come from settings???
+    debuglvl = DEBUG_SYSERROR | DEBUG_APPERROR | DEBUG_APPMSG1;
+    
+    if (argc > 1)
+    {
+        patchFileName = argv[1];
+    }
+    else
+    {
+        //FIXME: maybe this should come from settings???
 
-		patchFileName = "juno6.patches";
-	}
+        patchFileName = "juno6.patches";
+    }
 
-	
+    
 
-	Settings settings;
-	puts("get settings");
-	const char *numVoicesStr = settings.getString("juno6", "num-voices");
-	int numVoices = 6;
+    Settings settings;
+    puts("get settings");
+    const char *numVoicesStr = settings.getString("juno6", "num-voices");
+    int numVoices = 6;
 
-	if (strcmp(numVoicesStr, "") != 0)
-		numVoices = atoi(numVoicesStr);
-	Scheduler::Init();
-	JunoControl *junoControl = new JunoControl(numVoices);
-	if (settings.getInt("devices", "use-midi"))
-	{
-		midiInput = new MidiInput(junoControl,settings.getString("devices",
-			"midi-input"),
-			numVoices);
+    if (strcmp(numVoicesStr, "") != 0)
+        numVoices = atoi(numVoicesStr);
+    Scheduler::Init();
+    JunoControl *junoControl = new JunoControl(numVoices);
+    if (settings.getInt("devices", "use-midi"))
+    {
+        midiInput = new MidiInput(junoControl, numVoices, false);
 
-		if (midiInput->isOpen())
-		{
-			midiInput->start();
-		}
-		else
-		{
-			delete midiInput;
-			midiInput = NULL;
-		}
-	}
-	
-	initSynth(junoControl, &settings, midiInput, numVoices);
+        if (midiInput->isOpen())
+        {
+            midiInput->start();
+        }
+        else
+        {
+            delete midiInput;
+            midiInput = NULL;
+        }
+    }
+    
+    initSynth(junoControl, &settings, midiInput, numVoices);
 
 
-	patches = juno_patchset_new();
-	load_patches(patchFileName, patches);
-	JunoKeyboard *keyboard = new JunoKeyboard(numVoices);
-	junoControl->MoogObject::getOutput("patch_change")->setData(0);
-	puts("press any key to abort");
-	getch();
-	Scheduler::DeInit();
-	exit(1);
-	return (0);
+    patches = juno_patchset_new();
+    load_patches(patchFileName, patches);
+    JunoKeyboard *keyboard = new JunoKeyboard(numVoices);
+    junoControl->MoogObject::getOutput("patch_change")->setData(0);
+    puts("press any key to abort");
+    getch();
+    Scheduler::stop();
+    Scheduler::DeInit();
+    exit(1);
+    return (0);
 }
 
 #ifndef DOMAIN
 extern "C" int Juno666main(int argc, char *argv[])
 {
-	return Juno666(argc, argv);
+    return Juno666(argc, argv);
 }
 #endif

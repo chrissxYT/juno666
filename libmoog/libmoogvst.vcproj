@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="libmoog"
-	ProjectGUID="{265CD8EC-7381-4105-B74C-C2ACB477C005}"
+	Name="libmoogvst"
+	ProjectGUID="{563E3A60-8D88-420B-B495-A7FD9655BEC7}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -32,7 +32,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="../lib/libmoog_d.lib"/>
+				OutputFile="../lib/libmoogvst_d.lib"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -70,8 +70,8 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="kernel32.lib winmm.lib"
-				OutputFile="../lib/libmoog.lib"/>
+				OutputFile="../lib/libmoogvst.lib"
+				IgnoreAllDefaultLibraries="FALSE"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -110,12 +110,6 @@
 			</File>
 			<File
 				RelativePath="ConnectionManager.cpp">
-			</File>
-			<File
-				RelativePath="DSPDeviceWin32.cpp">
-			</File>
-			<File
-				RelativePath="DSPOutput.cpp">
 			</File>
 			<File
 				RelativePath="DataBlock.cpp">
@@ -187,16 +181,16 @@
 				RelativePath="Rms.cpp">
 			</File>
 			<File
-				RelativePath="SchedulerWin32.cpp">
+				RelativePath="SchedulerVST.cpp">
 			</File>
 			<File
 				RelativePath="Settings.cpp">
 			</File>
 			<File
-				RelativePath="WaveGen.cpp">
+				RelativePath="VSTOutput.cpp">
 			</File>
 			<File
-				RelativePath="ao_win32.c">
+				RelativePath="WaveGen.cpp">
 			</File>
 			<File
 				RelativePath="bilinear.c">
@@ -228,12 +222,6 @@
 			</File>
 			<File
 				RelativePath="ConnectionManager.h">
-			</File>
-			<File
-				RelativePath="DSPDevice.h">
-			</File>
-			<File
-				RelativePath="DSPOutput.h">
 			</File>
 			<File
 				RelativePath="DataBlock.h">
@@ -275,9 +263,6 @@
 				RelativePath="JunoSaw.h">
 			</File>
 			<File
-				RelativePath="JunoSynth.h">
-			</File>
-			<File
 				RelativePath="JunoVoice.h">
 			</File>
 			<File
@@ -314,10 +299,19 @@
 				RelativePath="Settings.h">
 			</File>
 			<File
+				RelativePath="VSTOutput.h">
+			</File>
+			<File
 				RelativePath="WaveGen.h">
 			</File>
 			<File
+				RelativePath="afmt.h">
+			</File>
+			<File
 				RelativePath="bilinear.h">
+			</File>
+			<File
+				RelativePath="moog.h">
 			</File>
 			<File
 				RelativePath="pitch.h">

@@ -17,16 +17,16 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/07 11:26:32 $
+ * $Revision: 1.6 $$Date: 2004/04/09 07:19:07 $
  */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
 
-#include <pthread.h>
+#include "MoogObject.h"
 #include <windows.h>
 #include <mmsystem.h>
-#include "Juno_Control.h"
-#include "MidiDevice.h"
+#include "JunoControl.h"
+
 
 /* Note, there should be various modes ( there are more than these )
 1. monophonic, after key pressed other keys are ignored
@@ -45,39 +45,43 @@ also to think about portamento, glissando, unison, pitch bend, expression
 
 struct midi_voice
 {
-	int note;
-	Output *pitchOutput;
-	Output *gateOutput;
+    int note;
+    Output *pitchOutput;
+    Output *gateOutput;
 };
 
-class MidiInput: public MidiDevice
+class MidiInput: public MoogObject
 {
-	friend void *midi_input_run(void *);
+    friend void *midi_input_run(void *);
 
 public:
-	pthread_t midiThread;
-	pthread_mutex_t startStopLock;
-	int running;
-	int nvoices;
-	struct midi_voice *voices;
-	int lastNote;
-	inline void *run();
-	inline void doNoteOn(unsigned int c, unsigned int n, unsigned int v);
-	inline void doNoteOff(unsigned int c, unsigned int n, unsigned int v);
-	inline void doPitchBend(unsigned int amount);
+    int running;
+    int nvoices;
+    int lastNote;
+    struct midi_voice *voices;
 
-public:
-	MidiInput(JunoControl *jc, const char *device, int polyphony = 1);
-	~MidiInput();
-	inline void start();
-	inline void stop();
-	bool isOpen();
+    JunoControl *control;
 
-	inline virtual const char *getClassName()
-	{
-		return "MidiInput";
-	}
-	inline Output *getOutput(const char *n);
+    inline void *run();
+    inline void allNotesOff();
+    inline void doNoteOn(unsigned int c, unsigned int n, unsigned int v);
+    inline void doNoteOff(unsigned int c, unsigned int n, unsigned int v);
+    inline void doPitchBend(unsigned int amount);
+
+    MidiInput(JunoControl *jc, int nv, bool vst);
+    ~MidiInput();
+    void start();
+    void stop();
+    bool isOpen();
+
+    void proc(unsigned char cmd, unsigned char channel, unsigned char *data);
+
+    inline virtual const char *getClassName()
+    {
+        return "MidiInput";
+    }
+
+    inline Output *getOutput(const char *n);
 };
 
 #endif /* MIDIINPUT_H */

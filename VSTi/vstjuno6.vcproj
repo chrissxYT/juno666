@@ -20,6 +20,7 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/I.."
 				Optimization="0"
 				OptimizeForProcessor="1"
 				AdditionalIncludeDirectories="./common"
@@ -41,7 +42,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="odbc32.lib odbccp32.lib"
+				AdditionalDependencies="../lib/libmoogvst_d.lib odbc32.lib odbccp32.lib"
 				OutputFile="../bin/VstJuno6_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
@@ -81,6 +82,7 @@
 			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/I.."
 				InlineFunctionExpansion="1"
 				OptimizeForProcessor="1"
 				AdditionalIncludeDirectories="./common"
@@ -101,10 +103,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
-				AdditionalDependencies="odbc32.lib odbccp32.lib"
-				OutputFile="../bin/VstJuno6.dll"
+				AdditionalDependencies="../lib/libmoogvst.lib  odbc32.lib odbccp32.lib winmm.lib"
+				OutputFile="C:\Program Files\emagic\Logic 5\VstPlugIns\VstJuno6.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				IgnoreAllDefaultLibraries="FALSE"
+				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile=".\vstjuno6.def"
 				ProgramDatabaseFile=".\Release/VstJuno6.pdb"
 				SubSystem="2"
@@ -148,6 +152,9 @@
 			<File
 				RelativePath="Vstjuno6Program.cpp">
 			</File>
+			<File
+				RelativePath="juno_keyboard.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -157,6 +164,9 @@
 			</File>
 			<File
 				RelativePath="VstJuno6Program.h">
+			</File>
+			<File
+				RelativePath="juno_keyboard.h">
 			</File>
 		</Filter>
 		<Filter

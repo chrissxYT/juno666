@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.8 $$Date: 2004/04/07 11:26:30 $
+ * $Revision: 1.9 $$Date: 2004/04/09 07:19:05 $
  */
 
 #include <stdio.h>
@@ -42,73 +42,72 @@ int main(int argc, char **argv)
 int Juno666(int argc, char **argv)
 #endif
 {
-	debuglvl = DEBUG_SYSERROR | DEBUG_APPERROR | DEBUG_APPMSG1;
-	puts("init gthread");
-	g_thread_init(NULL);
-	puts("init gtk");
-	gtk_init(&argc, &argv);
+    debuglvl = DEBUG_SYSERROR | DEBUG_APPERROR | DEBUG_APPMSG1;
+    puts("init gthread");
+    g_thread_init(NULL);
+    puts("init gtk");
+    gtk_init(&argc, &argv);
 
-	if (argc > 1)
-	{
-		patchFileName = argv[1];
-	}
-	else
-	{
-		//FIXME: maybe this should come from settings???
+    if (argc > 1)
+    {
+        patchFileName = argv[1];
+    }
+    else
+    {
+        //FIXME: maybe this should come from settings???
 
-		patchFileName = "juno6.patches";
-	}
+        patchFileName = "juno6.patches";
+    }
 
-	MidiInput *midiInput = NULL;
+    MidiInput *midiInput = NULL;
 
-	Settings settings;
-	puts("get settings");
-	const char *numVoicesStr = settings.getString("juno6", "num-voices");
-	int numVoices = 6;
+    Settings settings;
+    puts("get settings");
+    const char *numVoicesStr = settings.getString("juno6", "num-voices");
+    int numVoices = 6;
 
-	if (strcmp(numVoicesStr, "") != 0)
-		numVoices = atoi(numVoicesStr);
-	Scheduler::Init();
-	JunoControl *junoControl = new JunoControl(numVoices);
+    if (strcmp(numVoicesStr, "") != 0)
+        numVoices = atoi(numVoicesStr);
+    Scheduler::Init();
+    JunoControl *junoControl = new JunoControl(numVoices);
 
-	if (settings.getInt("devices", "use-midi"))
-	{
-		midiInput = new MidiInput(junoControl, settings.getString("devices",
-			"midi-input"),
-			numVoices);
+    if (settings.getInt("devices", "use-midi"))
+    {
+        midiInput = new MidiInput(junoControl, numVoices, false);
 
-		if (midiInput->isOpen())
-		{
-			midiInput->start();
-		}
-		else
-		{
-			delete midiInput;
-			midiInput = NULL;
-		}
-	}
+        if (midiInput->isOpen())
+        {
+            midiInput->start();
+        }
+        else
+        {
+            delete midiInput;
+            midiInput = NULL;
+        }
+    }
 
-	initSynth(junoControl, &settings, midiInput, numVoices);
-	patches = juno_patchset_new();
-	load_patches(patchFileName, patches);
-	initGui(junoControl, &settings, midiInput, numVoices);
-	
-	
-	junoControl->MoogObject::getOutput("patch_change")->setData(0);
-	
-	gdk_threads_enter();
+    initSynth(junoControl, &settings, midiInput, numVoices);
+    patches = juno_patchset_new();
+    load_patches(patchFileName, patches);
+    initGui(junoControl, &settings, midiInput, numVoices);
+    
+    
+    junoControl->MoogObject::getOutput("patch_change")->setData(0);
+    
+    gdk_threads_enter();
 
-	gtk_main();
+    gtk_main();
 
-	gdk_threads_leave();
-	Scheduler::DeInit();
-	exit(1);
-	return (0);
+    gdk_threads_leave();
+    Scheduler::stop();
+    Scheduler::DeInit();
+    exit(1);
+    return (0);
 }
 
 #ifndef DOMAIN
 extern "C" int Juno666main(int argc, char *argv[])
 {
-	return Juno666(argc, argv);
+    return Juno666(argc, argv);
 }
 #endif

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.4 $$Date: 2004/04/09 07:19:07 $
  */
 #ifndef MOOG_H
 #define MOOG_H
@@ -40,11 +40,7 @@
 #include <libmoog/Input.h>
 #include <libmoog/JunoPulse.h>
 #include <libmoog/JunoSaw.h>
-#ifndef POSIX
-#include <libmoog/MidiInputWin32.h>
-#else
 #include <libmoog/MidiInput.h>
-#endif
 #include <libmoog/Mixer.h>
 #include <libmoog/MoogObject.h>
 #include <libmoog/Oscillator.h>

@@ -17,16 +17,12 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/07 11:26:30 $
+ * $Revision: 1.6 $$Date: 2004/04/09 07:19:05 $
  */
 
 #include <stdio.h>
 #include <gtk/gtk.h>
-#ifndef POSIX
-#include <libmoog/MidiInputWin32.h>
-#else
 #include <libmoog/MidiInput.h>
-#endif
 #include <libgmoog/juno_widgets.h>
 
 #include "juno_background.h"

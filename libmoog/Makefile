@@ -7,37 +7,37 @@ CPPFLAGS=$(CFLAGS)
 
 
 LIB_OBJS=ADSR.o\
-	Attenuator.o\
-	Balance.o\
-	Chorus.o\
-	ConnectionInfo.o\
-	ConnectionList.o\
-	ConnectionManager.o\
-	DSPDeviceWin32.o\
-	DSPOutput.o\
-	DataBlock.o\
-	Delay.o\
-	GoObject.o\
-	HPF.o\
-	IIR2.o\
-	Input.o\
-	JunoPulse.o\
-	JunoSaw.o\
-	midiInputWin32.o\
-	Mixer.o\
-	MoogObject.o\
-	NamedObject.o\
-	Oscillator.o\
-	Output.o\
-	Rand.o\
-	ResonantLowPass.o\
-	Rms.o\
-	SchedulerWin32.o\
-	Settings.o\
-	WaveGen.o\
-	bilinear.o\
-	pitch.o\
-	ao_win32.o
+    Attenuator.o\
+    Balance.o\
+    Chorus.o\
+    ConnectionInfo.o\
+    ConnectionList.o\
+    ConnectionManager.o\
+    DSPDeviceWin32.o\
+    DSPOutput.o\
+    DataBlock.o\
+    Delay.o\
+    GoObject.o\
+    HPF.o\
+    IIR2.o\
+    Input.o\
+    JunoPulse.o\
+    JunoSaw.o\
+    MidiInput.o\
+    Mixer.o\
+    MoogObject.o\
+    NamedObject.o\
+    Oscillator.o\
+    Output.o\
+    Rand.o\
+    ResonantLowPass.o\
+    Rms.o\
+    SchedulerWin32.o\
+    Settings.o\
+    WaveGen.o\
+    bilinear.o\
+    pitch.o\
+    ao_win32.o
 
 LIBNAME=libmoog.dll
 LIBSTATIC=libmoog.a
@@ -54,28 +54,28 @@ all: $(LIBFULLNAME)
 objs: $(LIB_OBJS)
 
 $(LIBFULLNAME): objs
-	/bin/g++ $(DYN_FLAGS) -o $@ $(LIB_OBJS) $(LIB_LIBS)
-	ln -f -s  $(LIBFULLNAME) $(LIBNAME)
-	ln -f -s  $(LIBFULLNAME) $(LIBNAME).$(LIBMAJOR)
+    /bin/g++ $(DYN_FLAGS) -o $@ $(LIB_OBJS) $(LIB_LIBS)
+    ln -f -s  $(LIBFULLNAME) $(LIBNAME)
+    ln -f -s  $(LIBFULLNAME) $(LIBNAME).$(LIBMAJOR)
 
 static: $(LIBSTATIC)
 
 $(LIBSTATIC): $(LIB_OBJS)
-	rm -f $(LIBSTATIC)
-	ar r $(LIBSTATIC) $(LIB_OBJS)
+    rm -f $(LIBSTATIC)
+    ar r $(LIBSTATIC) $(LIB_OBJS)
 
 install:
-	cp $(LIBFULLNAME) $(LIBDIR)
-	ln -f -s $(LIBDIR)/$(LIBFULLNAME) $(LIBDIR)/$(LIBNAME)
+    cp $(LIBFULLNAME) $(LIBDIR)
+    ln -f -s $(LIBDIR)/$(LIBFULLNAME) $(LIBDIR)/$(LIBNAME)
 
 clean:
-	rm -f *.o core .depend $(LIBNAME)* Makefile.bak
+    rm -f *.o core .depend $(LIBNAME)* Makefile.bak
 
 depend: .depend
 
 .depend: Makefile
-	touch .depend
-	makedepend -f .depend $(INCLUDE_DIRS) -I/usr/include/g++-2 *.cpp *.c
+    touch .depend
+    makedepend -f .depend $(INCLUDE_DIRS) -I/usr/include/g++-2 *.cpp *.c
 
 
 .PHONY: objs depend

@@ -265,7 +265,6 @@ void Scheduler::start(DSPOutput *_dsp)
 //    pthread_create(&tickThread, NULL, (DWORD *()(void*)&runSynth, NULL);
 }
 
-
 void Scheduler::stop()
 {
     running = 0;
@@ -340,8 +339,6 @@ void Scheduler::run()
         /* this is so we can run even without a DSPOutput object */
         if (!dsp && needListSync > 0)
         {
-
-
             pthread_cond_wait(&listOpCompleteCond, (HANDLE *)&beginListOpMutex);
         }
     }
@@ -359,7 +356,6 @@ void dataWrittenCallback()
 {
     if (needListSync > 0)
     {
-
         pthread_cond_wait(&listOpCompleteCond, (HANDLE *)&beginListOpMutex);
     }
 }

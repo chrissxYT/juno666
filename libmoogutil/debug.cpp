@@ -24,32 +24,32 @@
 #include "debug.h"
 #include "rcsid.h"
 
-//RCSID("$Id: debug.cpp,v 1.3 2004/03/31 12:01:19 brainslayer Exp $");
+//RCSID("$Id: debug.cpp,v 1.4 2004/04/09 07:19:07 strepto Exp $");
 
 int debuglvl = ~0;
 static FILE *debug_error = NULL;
 
 void vdebug(int dtype, const char *fmt, va_list ap)
 {
-	int keep_errno;
-	char msgbuff[1024];
+    int keep_errno;
+    char msgbuff[1024];
 
-	/* errno could be changed by vsprintf or perror */
-	keep_errno = errno;
+    /* errno could be changed by vsprintf or perror */
+    keep_errno = errno;
 
-	if (debuglvl & dtype)
-	{
-		vsprintf(msgbuff, fmt, ap);
+    if (debuglvl & dtype)
+    {
+        vsprintf(msgbuff, fmt, ap);
 
-		if (dtype == DEBUG_ERROR)
-			perror(msgbuff);
-		else
-			fprintf((debug_error) ? debug_error : stderr, "%s\n", msgbuff);
+        if (dtype == DEBUG_ERROR)
+            perror(msgbuff);
+        else
+            fprintf((debug_error) ? debug_error : stderr, "%s\n", msgbuff);
 
-		fflush((debug_error) ? debug_error : stderr);
-	}
+        fflush((debug_error) ? debug_error : stderr);
+    }
 
-	errno = keep_errno;
+    errno = keep_errno;
 }
 
 #ifndef NODEBUG
@@ -57,78 +57,78 @@ void vdebug(int dtype, const char *fmt, va_list ap)
 void debug(int dtype, const char *fmt, ...)
 {
 
-	va_list ap;
-	va_start(ap, fmt);
-	vdebug(dtype, fmt, ap);
-	va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    vdebug(dtype, fmt, ap);
+    va_end(ap);
 }
 #endif
 void hexdump(const char *ptr, int size, const char *fmt, ...)
 {
-	static char hexbuff[49];
-	static char printbuff[17];
-	int count = 0;
-	va_list ap;
+    static char hexbuff[49];
+    static char printbuff[17];
+    int count = 0;
+    va_list ap;
 
-	if (!debuglvl & DEBUG_STATUS)
-		return;
+    if (!debuglvl & DEBUG_STATUS)
+        return;
 
-	va_start(ap, fmt);
+    va_start(ap, fmt);
 
-	vfprintf((debug_error) ? debug_error : stderr, fmt, ap);
-	fprintf((debug_error) ? debug_error : stderr, "\n");
+    vfprintf((debug_error) ? debug_error : stderr, fmt, ap);
+    fprintf((debug_error) ? debug_error : stderr, "\n");
 
-	memset(hexbuff, 0, 49);
-	memset(printbuff, 0, 17);
+    memset(hexbuff, 0, 49);
+    memset(printbuff, 0, 17);
 
-	while (size--)
-	{
-		sprintf(hexbuff + (count * 3), "%02x ", (int) * ((unsigned char *)ptr));
+    while (size--)
+    {
+        sprintf(hexbuff + (count * 3), "%02x ", (int) * ((unsigned char *)ptr));
 
-		if (isprint(*ptr))
-			printbuff[count] = *ptr;
-		else
-			printbuff[count] = '.';
+        if (isprint(*ptr))
+            printbuff[count] = *ptr;
+        else
+            printbuff[count] = '.';
 
-		ptr++;
+        ptr++;
 
-		if (count++ == 15)
-		{
-			count = 0;
-			fprintf((debug_error) ? debug_error : stderr,
-				"%s %s\n", hexbuff, printbuff);
-			memset(hexbuff, 0, 49);
-			memset(printbuff, 0, 17);
-		}
-	}
+        if (count++ == 15)
+        {
+            count = 0;
+            fprintf((debug_error) ? debug_error : stderr,
+                "%s %s\n", hexbuff, printbuff);
+            memset(hexbuff, 0, 49);
+            memset(printbuff, 0, 17);
+        }
+    }
 
-	if (count > 0)
-	{
-		while (count % 16 != 0)
-		{
-			sprintf(hexbuff + (count * 3), "xx ");
-			printbuff[count++] = '.';
-		}
-		fprintf((debug_error) ? debug_error : stderr, "%s %s\n", hexbuff, printbuff);
-	}
+    if (count > 0)
+    {
+        while (count % 16 != 0)
+        {
+            sprintf(hexbuff + (count * 3), "xx ");
+            printbuff[count++] = '.';
+        }
+        fprintf((debug_error) ? debug_error : stderr, "%s %s\n", hexbuff, printbuff);
+    }
 
-	va_end(ap);
+    va_end(ap);
 }
 
 void
 to_hex(char *dest, const char *src, size_t n)
 {
-	while (n--)
-	{
-		sprintf(dest, "%02x ", (int) * ((unsigned char *)src));
-		dest += 3;
-		src++;
-	}
+    while (n--)
+    {
+        sprintf(dest, "%02x ", (int) * ((unsigned char *)src));
+        dest += 3;
+        src++;
+    }
 
-	*dest = 0;
+    *dest = 0;
 }
 
 void debug_set_error_file(FILE *f)
 {
-	debug_error = f;
+    debug_error = f;
 }
