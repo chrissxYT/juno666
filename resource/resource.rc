@@ -25,4 +25,3 @@ IDB_LAST          BITMAP DISCARDABLE "last.bmp"
 
 IDB_KNOB          BITMAP DISCARDABLE "knob.bmp"
 
-IDB_BENDER	  BITMAP DISCARDABLE "bender.bmp"
