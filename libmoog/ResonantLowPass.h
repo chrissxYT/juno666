@@ -20,25 +20,14 @@
 
 #include "MoogObject.h"
 
+
+#define SECTIONS 2
 struct BiQuad
 {
     double a0, a1, a2;
     double b0, b1, b2;
 };
 
-class FilterPrototype
-{
-    friend class ResonantLowPass;
-
-    int numSections;
-    BiQuad *coef;
-
-public:
-    FilterPrototype(int);
-    ~FilterPrototype();
-
-    void setSectionCoef(int, double, double, double, double, double, double);
-};
 
 class ResonantLowPass: public MoogObject
 {
@@ -46,10 +35,14 @@ class ResonantLowPass: public MoogObject
     friend void ResonantLowPass_cutoffChanged(MoogObject *, double, long);
     friend void ResonantLowPass_resonanceChanged(MoogObject *, double, long);
 
-    int len;
     double *hist;
     double *coef;
-    FilterPrototype *proto;
+
+	//copied from filterprototype
+    BiQuad *pcoef;
+	void setSectionCoef(int, double, double, double, double, double, double);
+
+    //FilterPrototype *proto;
 
     double gain;
     double resonance;
@@ -72,7 +65,6 @@ class ResonantLowPass: public MoogObject
 public:
 
     ResonantLowPass(Scheduler *sched);
-    ResonantLowPass(FilterPrototype *, Scheduler *sched);
     ~ResonantLowPass();
 
     void connectTo(ConnectionInfo *info);

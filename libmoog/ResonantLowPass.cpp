@@ -21,18 +21,9 @@
 #include "Scheduler.h"
 #include "bilinear.h"
 
-FilterPrototype::FilterPrototype(int ns)
-{
-    numSections = ns;
-    coef = new BiQuad[ns];
-}
 
-FilterPrototype::~FilterPrototype()
-{
-    delete coef;
-}
 
-void FilterPrototype::setSectionCoef(int section,
+void ResonantLowPass::setSectionCoef(int section,
     double a0,
     double a1,
     double a2,
@@ -40,18 +31,18 @@ void FilterPrototype::setSectionCoef(int section,
     double b1,
     double b2)
 {
-    if (section < 0 || section >= numSections)
+    if (section < 0 || section >= SECTIONS)
     {
-        debug(DEBUG_APPERROR, "FilterPrototype::setSectionCoef section of of range");
+        debug(DEBUG_APPERROR, "ResonantLowPass::setSectionCoef section of of range");
         return;
     }
 
-    coef[section].a0 = a0;
-    coef[section].a1 = a1;
-    coef[section].a2 = a2;
-    coef[section].b0 = b0;
-    coef[section].b1 = b1;
-    coef[section].b2 = b2;
+    pcoef[section].a0 = a0;
+    pcoef[section].a1 = a1;
+    pcoef[section].a2 = a2;
+    pcoef[section].b0 = b0;
+    pcoef[section].b1 = b1;
+    pcoef[section].b2 = b2;
 }
 
 /* ************************ */
@@ -73,29 +64,21 @@ void ResonantLowPass_resonanceChanged(MoogObject *o, double data, long )
 
 ResonantLowPass::ResonantLowPass(Scheduler *sched): MoogObject(sched, NULL)
 {
-    proto = new FilterPrototype(2);
-
-    proto->setSectionCoef(0, 1.0, 0, 0, 1.0, 0.765367, 1.0);
-    proto->setSectionCoef(1, 1.0, 0, 0, 1.0, 1.847759, 1.0);
-
-    init();
-}
-
-ResonantLowPass::ResonantLowPass(FilterPrototype *fp, Scheduler *sched): MoogObject(sched, NULL)
-{
-    proto = fp;
+    pcoef = new BiQuad[SECTIONS];
+    setSectionCoef(0, 1.0, 0, 0, 1.0, 0.765367, 1.0);
+    setSectionCoef(1, 1.0, 0, 0, 1.0, 1.847759, 1.0);
     init();
 }
 
 void ResonantLowPass::init()
 {
-    len = proto->numSections;
+    
 
-    hist = new double[2 * len];
-    coef = new double[4 * len];
+    hist = new double[2 * SECTIONS];
+    coef = new double[4 * SECTIONS];
 
-    memset(hist, 0, sizeof(double) * 2 * len);
-    memset(coef, 0, sizeof(double) * 4 * len);
+    memset(hist, 0, sizeof(double) * 2 * SECTIONS);
+    memset(coef, 0, sizeof(double) * 4 * SECTIONS);
 
     addPorts("sig", INPUT, NULL,
              "gain", INPUT, ResonantLowPass_gainChanged, 0, 1,
@@ -160,20 +143,20 @@ void ResonantLowPass::recalcFilter()
     double *coefptr = coef;
     fixedGain = gain;
 
-    for (int i = 0;i < len;i++)
+    for (int i = 0;i < SECTIONS;i++)
     {
-        szxform(proto->coef[i].a0,
-            proto->coef[i].a1,
-            proto->coef[i].a2,
-            proto->coef[i].b0,
+        szxform(pcoef[i].a0,
+            pcoef[i].a1,
+            pcoef[i].a2,
+            pcoef[i].b0,
             // the resonance of the filter, the Q, is actually the Q
             // of each section of the filter multiplied together.
             // but the actual Q should go from 1 to 1000.  Since this
             // is a two section filter, and we use the same Q for each
             // section, the max Q should be sqrt(1000) or 30.6227
             // FIXME: resonance should probably not be linear
-            proto->coef[i].b1 / (resonance * 30.6227 + 1),
-            proto->coef[i].b2,
+            pcoef[i].b1 / (resonance * 30.6227 + 1),
+            pcoef[i].b2,
             cutoff * schedule->nyquistFreq,
             schedule->sampleRate,
             &fixedGain,
@@ -195,7 +178,7 @@ void ResonantLowPass::sampleGo()
 
     tmpOutput = *inSig * fixedGain;
 
-    for (int i = 0;i < len;i++)
+    for (int i = 0;i < SECTIONS;i++)
     {
         hist1 = *hist1ptr;
         hist2 = *hist2ptr;
@@ -219,6 +202,6 @@ void ResonantLowPass::sampleGo()
 
 void ResonantLowPass::sync()
 {
-    memset(hist, 0, sizeof(double) * 2 * len);
-    memset(coef, 0, sizeof(double) * 4 * len);
+    memset(hist, 0, sizeof(double) * 2 * SECTIONS);
+    memset(coef, 0, sizeof(double) * 4 * SECTIONS);
 }
