@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.10 $$Date: 2004/04/09 13:40:06 $
+ * $Revision: 1.11 $$Date: 2004/04/15 21:53:09 $
  */
 
 #include <stdio.h>
@@ -90,8 +90,7 @@ int Juno666(int argc, char **argv)
     patches = juno_patchset_new();
     load_patches(patchFileName, patches);
     initGui(junoControl, &settings, midiInput, numVoices);
-    
-    
+   
     junoControl->MoogObject::getOutput("patch_change")->setData(0);
     
     gdk_threads_enter();
@@ -99,9 +98,11 @@ int Juno666(int argc, char **argv)
     gtk_main();
 
     gdk_threads_leave();
-    Scheduler::stop();
+
+    delete midiInput;
+
     Scheduler::DeInit();
-    exit(1);
+
     return (0);
 }
 

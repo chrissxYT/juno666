@@ -157,6 +157,11 @@ MidiInput::~MidiInput()
         stop();
     }
 
+    if (isOpen())
+    {
+        midiInClose(handle);
+    }
+
     delete[](voices);
 }
 
