@@ -22,69 +22,71 @@
 
 struct BiQuad
 {
-	double a0, a1, a2;
-	double b0, b1, b2;
+    double a0, a1, a2;
+    double b0, b1, b2;
 };
 
 class FilterPrototype
 {
-	friend class ResonantLowPass;
+    friend class ResonantLowPass;
 
-	int numSections;
-	BiQuad *coef;
+    int numSections;
+    BiQuad *coef;
 
 public:
-	FilterPrototype(int);
-	~FilterPrototype();
+    FilterPrototype(int);
+    ~FilterPrototype();
 
-	void setSectionCoef(int, double, double, double, double, double, double);
+    void setSectionCoef(int, double, double, double, double, double, double);
 };
 
 class ResonantLowPass: public MoogObject
 {
-	friend void ResonantLowPass_gainChanged(MoogObject *, double, long);
-	friend void ResonantLowPass_cutoffChanged(MoogObject *, double, long);
-	friend void ResonantLowPass_resonanceChanged(MoogObject *, double, long);
+    friend void ResonantLowPass_gainChanged(MoogObject *, double, long);
+    friend void ResonantLowPass_cutoffChanged(MoogObject *, double, long);
+    friend void ResonantLowPass_resonanceChanged(MoogObject *, double, long);
 
-	int len;
-	double *hist;
-	double *coef;
-	FilterPrototype *proto;
+    int len;
+    double *hist;
+    double *coef;
+    FilterPrototype *proto;
 
-	double gain;
-	double resonance;
-	double cutoff;
+    double gain;
+    double resonance;
+    double cutoff;
 
-	Output *output;
-	double *inSig;
-	double *inGain;
-	double *inCutoff;
-	double *inResonance;
+    Output *output;
+    double *inSig;
+    double *inGain;
+    double *inCutoff;
+    double *inResonance;
 
-	double fixedGain;
+    double fixedGain;
 
-	void init();
+    void init();
 
-	void gainChanged(double);
-	void cutoffChanged(double);
-	void resonanceChanged(double);
+    void gainChanged(double);
+    void cutoffChanged(double);
+    void resonanceChanged(double);
 
 public:
 
-	ResonantLowPass(Scheduler *sched);
-	ResonantLowPass(FilterPrototype *, Scheduler *sched);
-	~ResonantLowPass();
+    ResonantLowPass(Scheduler *sched);
+    ResonantLowPass(FilterPrototype *, Scheduler *sched);
+    ~ResonantLowPass();
 
-	void connectTo(ConnectionInfo *info);
-	void disconnectTo(ConnectionInfo *info);
+    void connectTo(ConnectionInfo *info);
+    void disconnectTo(ConnectionInfo *info);
 
-	void recalcFilter();
-	void sampleGo();
+    void recalcFilter();
+    void sampleGo();
 
-	const char *getClassName()
-	{
-		return "ResonantLowPass";
-	}
+    void sync();
+
+    const char *getClassName()
+    {
+        return "ResonantLowPass";
+    }
 };
 
 

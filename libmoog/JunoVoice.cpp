@@ -253,9 +253,12 @@ void JunoVoice::lfoChanged(double data)
 void JunoVoice::kbdChanged(double data)
 {
     // this gets rid of a lot of clicks for me, KARL
+
     pulse.sync();
     saw.sync();
     sub.sync();
+
+    vcf.sync();
 
     kbd = data;
     updateVcf();

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
+ * $Revision: 1.4 $$Date: 2004/04/18 22:25:14 $
  */
 #ifndef _OSCILLATOR_H
 #define _OSCILLATOR_H
@@ -29,54 +29,49 @@ class DataBlock;
 #define I_OSC_FRQ 0
 #define I_OSC_AMP 1
 #define I_OSC_ZRO 2
+
 #define O_OSC_SIG 0
+#define O_OSC_SYNC 1
 
 class Oscillator: public MoogObject
 {
 protected:
-	friend void oscillator_frq_changed(MoogObject *, double, long);
-	friend void oscillator_sync_changed(MoogObject *, double, long);
+    friend void oscillator_frq_changed(MoogObject *, double, long);
+    friend void oscillator_sync_changed(MoogObject *, double, long);
 
-	void frqChanged(double frq);
-	void syncChanged(double frq);
+    void frqChanged(double frq);
+    void syncChanged(double frq);
 
-	int lastTrigger;
+    int lastTrigger;
 
-	Output *output;
-	double *inFrq;
-	double *inAmp;
-	double *inZro;
-	double *inSync;
+    Output *output;
+    double *inFrq;
+    double *inAmp;
+    double *inZro;
+    double *inSync;
 
-	double *waveData;
-	int waveDataLen;
-	double pos;
-	double scale;
-	double speed;
+    double *waveData;
+    int waveDataLen;
+    double pos;
+    double scale;
+    double speed;
 
-	void init(DataBlock *w);
+    void init(DataBlock *w);
 
 public:
-	Oscillator(Scheduler *sched, DataBlock * = NULL);
-	Oscillator(DataBlock *w, double frq, double amp, double zro, Scheduler *sched);
+    Oscillator(Scheduler *sched, DataBlock * = NULL);
+    Oscillator(DataBlock *w, double frq, double amp, double zro, Scheduler *sched);
 
-	/* virtual overrides */
-	void connectTo(ConnectionInfo *info);
-	void disconnectTo(ConnectionInfo *info);
+    /* virtual overrides */
+    void connectTo(ConnectionInfo *info);
+    void disconnectTo(ConnectionInfo *info);
 
-	void setWaveData(DataBlock *);
-	void sampleGo();
-	const char *getClassName()
-	{
-		return "Oscillator";
-	}
+    void setWaveData(DataBlock *);
+    void sampleGo();
+    const char *getClassName()
+    {
+        return "Oscillator";
+    }
 };
 
 #endif /* _OSCILLATOR_H */
-
-
-
-
-
-
-

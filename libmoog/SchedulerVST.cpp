@@ -30,7 +30,7 @@ Scheduler::Scheduler()
     controlRate = 0;
     sampleRate = 0;
     sampleControlRatio = DEFAULT_SAMPLE_CONTROL_RATIO;
-    nyquistFreq = 44100 / 2;
+    nyquistFreq = 44100.0 / 2.0;
     controlRateList.prev = &controlRateList;
     controlRateList.next = &controlRateList;
     sampleRateList.prev = &sampleRateList;

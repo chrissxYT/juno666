@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/17 13:46:21 $
+ * $Revision: 1.5 $$Date: 2004/04/18 22:25:13 $
  */
 #include "JunoChorus.h"
 
@@ -59,7 +59,7 @@ MoogObject(object->schedule, object->getConnectionManager())
     c1.set("zro", .5);
     c1.set("mix", 1); // all wet
 
-    c2.set("amp", phase ? -.025 : 0.025);
+    c2.set("amp", phase ? -.025 : .025);
     c2.set("zro", .45);
     c2.set("mix", 1); // all wet
 
@@ -109,7 +109,6 @@ void JunoChorus::IChanged(double value)
             c1.set("frq", CPS(1.5));
             c2.set("frq", CPS(1.5));
         }
-
         else
         {
             m.set("amp1", 0);
@@ -129,7 +128,6 @@ void JunoChorus::IIChanged(double value)
             c1.set("frq", CPS(10));
             c2.set("frq", CPS(10));
         }
-
         else
         {
             c1.set("frq", CPS(1.5));
@@ -146,7 +144,6 @@ void JunoChorus::IIChanged(double value)
             c1.set("frq", CPS(.55));
             c2.set("frq", CPS(.55));
         }
-
         else
         {
             m.set("amp1", 0);

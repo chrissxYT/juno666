@@ -37,15 +37,7 @@ ConnectionManager::connect(MoogObject *from, const char *oname,
 {
     ASSERT_CONTEXTS(from, to, NULL);
 
-    /* we can assume the same context for both 'from' and 'to' so use 'to' */
-/*
-    if (to->contextTag)
-        return to->contextTag->connectImpl(from, oname, to, iname);
-    else
-*/
-        return llConnect(from, oname, to, iname);
-
-
+    return llConnect(from, oname, to, iname);
 }
 
 ConnectionInfo *
@@ -55,13 +47,7 @@ ConnectionManager::connect(MoogObject *from, int onum, MoogObject *to, int inum)
     debug(DEBUG_STATUS, "ConnectionManager::connect from:%s::%s(%d) to:%s::%s(%d)",
         from->getName(), from->getClassName(), onum, to->getName(), to->getClassName(), inum);
 
-    /* we can assume the same context for both 'from' and 'to' so use 'to' */
-/*
-    if (to->contextTag)
-        return to->contextTag->connectImpl(from, onum, to, inum);
-    else
-*/
-        return llConnect(from, onum, to, inum);
+    return llConnect(from, onum, to, inum);
 }
 
 ConnectionInfo *
@@ -130,13 +116,8 @@ ConnectionManager::disconnect(ConnectionInfo *connection)
     ASSERT_CONTEXTS(connection->from, connection->to, FALSE);
 
     debug(DEBUG_STATUS, "ConnectionManager::disconnect()");
-/*
-    if (connection->to->contextTag)
-        connection->to->contextTag->disconnectImpl(connection);
-    else
-*/
-        llDisconnect(connection);
 
+    llDisconnect(connection);
 }
 
 void
