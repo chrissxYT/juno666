@@ -57,6 +57,7 @@
 				AdditionalOptions="/I.. /D STRING_WITHOUT_NUMBER /D LOCAL_RCSID"
 				Optimization="2"
 				InlineFunctionExpansion="1"
+				ImproveFloatingPointConsistency="TRUE"
 				OmitFramePointers="TRUE"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				StringPooling="TRUE"
