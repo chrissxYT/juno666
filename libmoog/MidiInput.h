@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/04/09 07:19:07 $
+ * $Revision: 1.7 $$Date: 2004/04/09 13:40:07 $
  */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
@@ -52,7 +52,7 @@ struct midi_voice
 
 class MidiInput: public MoogObject
 {
-    friend void *midi_input_run(void *);
+//    friend void *midi_input_run(void *);
 
 public:
     int running;
@@ -68,8 +68,9 @@ public:
     inline void doNoteOff(unsigned int c, unsigned int n, unsigned int v);
     inline void doPitchBend(unsigned int amount);
 
-    MidiInput(JunoControl *jc, int nv, bool vst);
+    MidiInput(JunoControl *jc, int nv);
     ~MidiInput();
+
     void start();
     void stop();
     bool isOpen();

@@ -121,7 +121,7 @@ void VstJuno6::initProcess ()
 
     control = new JunoControl(numVoices);
 
-    midiInput = new MidiInput(control, numVoices, true);
+    midiInput = new MidiInput(control, numVoices);
 
     initSynth(numVoices);
 

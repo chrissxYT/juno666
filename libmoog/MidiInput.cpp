@@ -17,7 +17,10 @@ Win32 MIDI Implementation for Juno 666 project. (c) 2003 - 2004 Sebastian Gottsc
 #include "Scheduler.h"
 #include "pitch.h"
 #include <windows.h>
+
+#ifndef TARGET_VST
 #include <mmsystem.h>
+#endif
 
 /*
  * The 4 most significant bits of byte 0 specify the class of
@@ -90,7 +93,7 @@ void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwP
     }
 }
 
-MidiInput::MidiInput(JunoControl *jc, int nv, bool vst)
+MidiInput::MidiInput(JunoControl *jc, int nv)
 {
     char tmpname[16];
 
@@ -115,30 +118,32 @@ MidiInput::MidiInput(JunoControl *jc, int nv, bool vst)
         voices[i].gateOutput = addOutput(tmpname, false);
     }
 
-    if(!vst)
+#ifndef TARGET_VST
+
+    UINT devs = midiInGetNumDevs();
+    
+    for (UINT i = 0;i < devs;i++)
     {
-        UINT devs = midiInGetNumDevs();
-        
-        for (UINT i = 0;i < devs;i++)
+        MIDIINCAPS caps;
+        MMRESULT result = midiInGetDevCaps(i, &caps, sizeof(MIDIINCAPS));
+        if (result != MMSYSERR_NOERROR)
         {
-            MIDIINCAPS caps;
-            MMRESULT result = midiInGetDevCaps(i, &caps, sizeof(MIDIINCAPS));
-            if (result != MMSYSERR_NOERROR)
-            {
-                printf("Error opening Device :%d\n", result);
-                continue;
-            }
-        
-            printf("opening %d:%s \n", i, caps.szPname);
-            result = midiInOpen(&handle, i, (DWORD)MidiInProc, 0, CALLBACK_FUNCTION);
-            if (result != MMSYSERR_NOERROR)
-            {
-                printf("Error init Device :%d\n", result);
-                continue;
-            }
-            break;
+            printf("Error opening Device :%d\n", result);
+            continue;
         }
+    
+        printf("opening %d:%s \n", i, caps.szPname);
+        result = midiInOpen(&handle, i, (DWORD)MidiInProc, 0, CALLBACK_FUNCTION);
+        if (result != MMSYSERR_NOERROR)
+        {
+            printf("Error init Device :%d\n", result);
+            continue;
+        }
+        break;
     }
+
+#endif
+
 }
 
 MidiInput::~MidiInput()
@@ -177,14 +182,15 @@ MidiInput::start()
     {
         running = 1;
 
+#ifndef TARGET_VST
         MMRESULT result = midiInStart(handle);
 
         if (result != MMSYSERR_NOERROR)
         {
             printf("Error starting Device :%d\n", result);
         }
+#endif
     }
-
 }
 
 void
@@ -192,10 +198,18 @@ MidiInput::stop()
 {
     puts("stop midi device");
 
+#ifndef TARGET_VST
     midiInStop(handle);
+#endif
 
     running = 0;
 }
+
+bool MidiInput::isOpen()
+{
+    return (handle != NULL);
+}
+
 
 void
 MidiInput::proc(unsigned char cmd, unsigned char channel, unsigned char *data)
@@ -337,11 +351,6 @@ MidiInput::doNoteOff(unsigned int c, unsigned int n, unsigned int v)
             voices[i].gateOutput->setData(0);
         }
     }
-}
-
-bool MidiInput::isOpen()
-{
-    return (handle != NULL);
 }
 
 void

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/09 07:19:06 $
+ * $Revision: 1.6 $$Date: 2004/04/09 13:40:07 $
  */
 
 #include <stdio.h>
@@ -67,7 +67,7 @@ int Juno666(int argc, char **argv)
     JunoControl *junoControl = new JunoControl(numVoices);
     if (settings.getInt("devices", "use-midi"))
     {
-        midiInput = new MidiInput(junoControl, numVoices, false);
+        midiInput = new MidiInput(junoControl, numVoices);
 
         if (midiInput->isOpen())
         {
