@@ -16,7 +16,7 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
     control = new JunoControl(numVoices, schedule);
 
     midiInput = new MidiInput(control, numVoices, schedule);
-
+ 
     initSynth(numVoices);
 
     patches = juno_patchset_new();
@@ -25,7 +25,7 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 
     load_patches(patchFileName, patches);
 
-    keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
+	keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
 
     setProgram(0);
 

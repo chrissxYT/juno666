@@ -26,6 +26,7 @@ AEffect *main(audioMasterCallback audioMaster);
 //------------------------------------------------------------------------
 AEffect *main(audioMasterCallback audioMaster)
 {
+	
 	// Get VST Version
 	if (!audioMaster(0, audioMasterVersion, 0, 0, 0, 0))
 		return 0; // old version

@@ -24,6 +24,7 @@ void VstJuno6::resume()
 
 void VstJuno6::initSynth(int numVoices)
 {
+	int i;
     dsp = new VSTOutput(control, schedule, connection);
 
     lfo = new JunoLfo(control, numVoices, schedule, connection);
@@ -42,7 +43,7 @@ void VstJuno6::initSynth(int numVoices)
 
     pwmLfo->set("zro", .5);
 
-    for (int i = 0;i < numVoices;i++)
+    for (i = 0;i < numVoices;i++)
     {
         //debug(DEBUG_APPMSG1, "CREATING VOICE %d",i);
         voice[i] = new JunoVoice(control, i, noise, lfo, pwmLfo, schedule, connection);
@@ -78,7 +79,7 @@ void VstJuno6::initSynth(int numVoices)
     PATCH(chorus2, "sig", dsp, "sig1");
     PATCH(control, "volume", dsp, "amp1");
 
-    for (int i = 0;i < numVoices;i++)
+    for (i = 0;i < numVoices;i++)
     {
         control->getOutput((String)"voice" + i + (String)"_pitch")->setData(CPS(666));
     }
