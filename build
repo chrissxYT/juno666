@@ -1,0 +1,1 @@
+g++ -o juno6 *.o -l../.libs/gdk-0 -l../.libs/gtk-0 -l../.libs/glib-2.0-0 -l../.libs/gthread-2.0-0
