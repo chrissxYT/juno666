@@ -196,7 +196,7 @@ void JunoKeyboard::gtkKeyReleased(unsigned int voice)
         
         if (gateOutputs[voice]==NULL)puts("bad condition");
         
-        //gateOutputs[voice]->setData(0.0);
+        gateOutputs[voice]->setData(0.0);
     }
 
     savedGateInfo[voice] = 0;
