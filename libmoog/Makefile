@@ -1,11 +1,8 @@
 include ../Makefile.include
-
-INCLUDE_DIRS=-I..
+INCLUDE_DIRS=-I../
 DEFINES=-D_REENTRANT -D_GNU_SOURCE -DUSE_FASTMEMCPY
 CFLAGS=$(PIC) $(PROFILE) $(OPTIMIZE) $(DEBUG) -Wall $(INCLUDE_DIRS) $(DEFINES)
 CPPFLAGS=$(CFLAGS)
-
-
 LIB_OBJS=ADSR.o\
     Attenuator.o\
     Balance.o\
