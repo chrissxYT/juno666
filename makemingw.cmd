@@ -2,6 +2,7 @@
 set PATH=c:\mingw\bin;%PATH%
 set MAKEFLAGS="USE_STATIC=y USE_OPTIMIZE=max USE_DEBUG=n"
 mkdir objs
+del /q /s *.o
 del /q /s .depend*.*
 cd objs
 del  /q *.* 
