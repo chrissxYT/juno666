@@ -120,6 +120,11 @@ void Phaser::setup(double frequency,double minrange,double maxrange,double rate,
 
 void Phaser::sampleGo()
 {
+	if (m_dblFeedback==0.0)
+	{
+		output->setData(*inSig);
+		return;
+	}
 	double *input = inSig;
 	double d = _dmin + (_dmax - _dmin) * ((sin(_lfoPhase) + 1.0) / 2.0);
 

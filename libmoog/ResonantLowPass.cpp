@@ -82,19 +82,7 @@ ResonantLowPass::ResonantLowPass(Scheduler *sched): MoogObject(sched, NULL)
 
 void ResonantLowPass::init()
 {
-#ifdef MOOGVCF
-	in1 = 0.0;
-	in2 = 0.0;
-	in3 = 0.0;
-	in4 = 0.0;
-	out1 = 0.0;
-	out2 = 0.0;
-	out3 = 0.0;
-	out4 = 0.0;
-	resonance = 0.0;
-	cutoff = 0.0;
-	gain = 0.0;
-#endif
+
 #ifndef MOOGVCF
 	hist = new double[2 * SECTIONS];
 	coef = new double[4 * SECTIONS+1];
@@ -267,26 +255,38 @@ void ResonantLowPass::sampleGo()
 	/*
 	automatic slide adjustment. prevents strange filter effects
 	*/
-	processParameter(&resonance,*inResonance,0.001);
-	processParameter(&gain,*inGain,0.001);
-	processParameter(&cutoff,*inCutoff,0.001);
+// Karlsen 24dB Filter by Ove Karlsen / Synergy-7 in the year 2003.
+// b_f = frequency 0..1
+// b_q = resonance 0..50
+// b_in = input
+// to do bandpass, subtract poles from eachother, highpass subtract with input.
 
 
+		double b_in = *inSig; // before the while statement.
+		double b_f = *inCutoff;
+		double b_q = *inResonance * 30.6227 ;
+		int b_oversample=0;
+		double b_inSH = b_in;
+    while (b_oversample < 2) {                        //2x oversampling (@44.1khz)
+        double prevfp;
+        prevfp = b_fp;
+        if (prevfp > 1) {prevfp = 1;}                    // Q-limiter
 
-	double i = *inSig * gain;
-	double f = cutoff * 1.16;
-	double fb = resonance * (30.6227 / 2) * (1.0 - 0.15 * f * f);
-	i -= out4 * fb;
-	i *= 0.35013 * (f * f) * (f * f);
-	out1 = i + 0.3 * in1 + (1 - f) * out1; // Pole 1
-	in1 = i;
-	out2 = out1 + 0.3 * in2 + (1 - f) * out2; // Pole 2
-	in2 = out1;
-	out3 = out2 + 0.3 * in3 + (1 - f) * out3; // Pole 3
-	in3 = out2;
-	out4 = out3 + 0.3 * in4 + (1 - f) * out4; // Pole 4
-	in4 = out3;
-	output->setData(out4);
+        b_fp = (b_fp * 0.418) + ((b_q * pole4) * 0.582);        // dynamic feedback
+        double intfp;
+        intfp = (b_fp * 0.36) + (prevfp * 0.64);            // feedback phase
+        b_in =    b_inSH - intfp;                        // inverted feedback        
+                    
+        pole1 = (b_in   * b_f) + (pole1 * (1 - b_f));            // pole 1
+        if (pole1 > 1) {pole1 = 1;} else if (pole1 < -1) {pole1 = -1;}  // pole 1 clipping
+        pole2 = (pole1   * b_f) + (pole2 * (1 - b_f));            // pole 2
+        pole3 = (pole2   * b_f) + (pole3 * (1 - b_f));            // pole 3
+        pole4 = (pole3   * b_f) + (pole4 * (1 - b_f));            // pole 4
+
+        b_oversample++;
+        }
+	output->setData(pole4);
+
 }
 
 #endif

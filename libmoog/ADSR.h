@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.8 $$Date: 2004/06/25 10:38:42 $
+ * $Revision: 1.9 $$Date: 2004/09/10 19:08:22 $
  */
 #ifndef ADSR_H
 #define ADSR_H
@@ -53,6 +53,7 @@ protected:
 	int state;
 
 	double attack;
+	double sustainLevel;
 	double decay;
 	double sustain;
 	double release;

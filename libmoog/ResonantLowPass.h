@@ -21,7 +21,7 @@
 #include "MoogObject.h"
 #include <windows.h>
 
-//#define MOOGVCF
+#define MOOGVCF
 
 #ifndef MOOGVCF
 #define SECTIONS 2
@@ -55,14 +55,15 @@ class ResonantLowPass: public MoogObject
 	//FilterPrototype *proto;
 
 #ifdef MOOGVCF
-	double out1;
-	double in1;
-	double out2;
-	double in2;
-	double out3;
-	double in3;
-	double out4;
-	double in4;
+	
+
+	
+
+	double b_fp;
+	double pole1;
+	double pole2;
+	double pole3;
+	double pole4;
 #endif
 
 

@@ -27,202 +27,193 @@
 void
 adsr_attack_changed(MoogObject *o, double data, long)
 {
-	((ADSR *)o)->attackChanged(data);
+    ((ADSR *)o)->attackChanged(data);
 }
 
 void
 adsr_decay_changed(MoogObject *o, double data, long)
 {
-	((ADSR *)o)->decayChanged(data);
+    ((ADSR *)o)->decayChanged(data);
 }
 
 void
 adsr_sustain_changed(MoogObject *o, double data, long)
 {
-	((ADSR *)o)->sustainChanged(data);
+    ((ADSR *)o)->sustainChanged(data);
 }
 
 void
 adsr_release_changed(MoogObject *o, double data, long)
 {
-	((ADSR *)o)->releaseChanged(data);
+    ((ADSR *)o)->releaseChanged(data);
 }
 
 void
 adsr_amp_changed(MoogObject *o, double data, long)
 {
-	((ADSR *)o)->ampChanged(data);
+    ((ADSR *)o)->ampChanged(data);
 }
 
 void
 adsr_trigger_changed(MoogObject *o, double data, long)
 {
-	((ADSR *)o)->triggerChanged(data);
+    ((ADSR *)o)->triggerChanged(data);
 }
 
 ADSR::ADSR(Scheduler *sched, double _a, double _d, double _s, double _r, double _amp): MoogObject(sched, NULL)
 {
 
-	addPorts("a", INPUT, adsr_attack_changed, 0, 1,
-		"d", INPUT, adsr_decay_changed, 0, 1,
-		"s", INPUT, adsr_sustain_changed, 0, 1,
-		"r", INPUT, adsr_release_changed, 0, 1,
-		"amp", INPUT, adsr_amp_changed, 0, 1,
-		"trig", INPUT, adsr_trigger_changed, 0, 1,
-		"sig", OUTPUT, true,
-		NULL);
+    addPorts("a", INPUT, adsr_attack_changed, 0, 1,
+        "d", INPUT, adsr_decay_changed, 0, 1,
+        "s", INPUT, adsr_sustain_changed, 0, 1,
+        "r", INPUT, adsr_release_changed, 0, 1,
+        "amp", INPUT, adsr_amp_changed, 0, 1,
+        "trig", INPUT, adsr_trigger_changed, 0, 1,
+        "sig", OUTPUT, true,
+        NULL);
 
-	output = &outputs[0];
+    output = &outputs[0];
 
-	set(0, _a);
+    set(0, _a);
 
-	set(1, _d);
+    set(1, _d);
 
-	set(2, _s);
+    set(2, _s);
 
-	set(3, _r);
+    set(3, _r);
 
-	set(4, _amp);
+    set(4, _amp);
 
-	state = FINISHED;
+    state = FINISHED;
 }
 
 void ADSR::attackChanged(double attack)
 {
-	nosound = false;
+    nosound = false;
 
-	if (attack <= 0)
-	{
-		this->attack = .005;
-	}
-	else
-	{
-		if (attack < 0.05)
-			attack = 0.05;
-		this->attack = -log(attack * .94) * ADSR_SCALE;
-	}
+    if (attack <= .005)
+    {
+        attack = .005;
+    }
+    this->attack = -log(attack * .94) * ADSR_SCALE;
 }
 
 void ADSR::decayChanged(double decay)
 {
-	nosound = false;
+    nosound = false;
 
-	if (decay <= 0)
-	{
-		this->decay = -.005;
-	}
-	else
-	{
-		this->decay = log(decay * .94) * ADSR_SCALE;
-	}
+    if (decay <= .005)
+    {
+        decay = .005;
+    }
+    this->decay = log(decay * .94) * ADSR_SCALE;
 }
 
 void ADSR::sustainChanged(double sustain)
 {
-	nosound = false;
+    nosound = false;
 
-	if (sustain <= 0)
-	{
-		this->sustain = .0;
-	}
-	else
-	{
-		this->sustain = sustain;
-	}
+    if (sustain < 0)
+    {
+        this->sustain = .0;
+        sustainLevel = .0;
+    }
+    else
+    {
+        this->sustain = sustain;
+        sustainLevel = amp * sustain;
+    }
 }
 
 void ADSR::releaseChanged(double release)
 {
-	if (release <= 0)
-	{
-		this->release = -.005;
-	}
-	else
-	{
-		this->release = log(release * .94) * ADSR_SCALE;
-	}
+    if (release <= .005)
+    {
+        release = .005;
+    }
+    this->release = log(release * .94) * ADSR_SCALE;
 }
 
-void ADSR::ampChanged(double _amp)
+void ADSR::ampChanged(double amp)
 {
-	amp = _amp;
+    this->amp = amp;
+    sustainLevel = sustain * amp;
 }
 
 void ADSR::triggerChanged(double trigger)
 {
-	if (trigger > 0)
-	{
-		output->data = 0;
-		state = ATTACK;
-	}
-	else
-		state = RELEASE;
+    if (trigger > 0)
+    {
+        output->data = 0;
+        state = ATTACK;
+    }
+    else
+        state = RELEASE;
 
-	if (!isSampleScheduled())
-	{
-		schedule->scheduleSampleRate(this, true);
-	}
+    if (!isSampleScheduled())
+    {
+        schedule->scheduleSampleRate(this, true);
+    }
 }
 
 void ADSR::sampleGo()
 {
-	double tmpData = output->data;
+    double tmpData = output->data;
 
-	switch (state)
-	{
-		case ATTACK:
-			tmpData += attack;
+    switch (state)
+    {
+        case ATTACK:
+            tmpData += attack;
 
-			if (tmpData >= amp)
-			{
-				tmpData = amp;
-				state = DECAY;
-			}
-			break;
+            if (tmpData >= amp)
+            {
+                tmpData = amp;
+                state = DECAY;
+            }
+            break;
 
-		case DECAY:
-			tmpData += decay;
+        case DECAY:
+            tmpData += decay;
 
-			if (tmpData <= sustain * amp)
-			{
-				tmpData = sustain * amp;
-				state = SUSTAIN;
-			}
-			break;
+            if (tmpData <= sustainLevel)
+            {
+                tmpData = sustainLevel;
+                state = SUSTAIN;
+            }
+            break;
 
-		case SUSTAIN:
-			if (tmpData < sustain)
-			{
-				tmpData -= decay;
-				if (tmpData > sustain)
-					tmpData = sustain;
-			}
-			else if (tmpData > sustain)
-			{
-				tmpData += decay;
-				if (tmpData < sustain)
-					tmpData = sustain;
-			}
-			break;
+        case SUSTAIN:
 
-		case RELEASE:
+            if (tmpData < sustain)
+            {
+                tmpData -= decay;
+                if (tmpData > sustain)
+                    tmpData = sustain;
+            }
+            else if (tmpData > sustain)
+            {
+                tmpData += decay;
+                if (tmpData < sustain)
+                    tmpData = sustain;
+            }
+            break;
 
-			tmpData += release;
+        case RELEASE:
 
-			if (tmpData <= 0.0)
-			{
-				tmpData = 0.0;
-				state = FINISHED;
-			}
-			break;
+            tmpData += release;
 
-		case FINISHED:
+            if (tmpData <= 0.0)
+            {
+                tmpData = 0.0;
+                state = FINISHED;
+            }
+            break;
 
+        case FINISHED:
 
-			schedule->scheduleSampleRate(this, false);
-			break;
-	}
+            schedule->scheduleSampleRate(this, false);
+            break;
+    }
 
-	output->setData(tmpData);
-	// MOOG_DEBUG("output=%f", output->data);
+    output->setData(tmpData);
 }
