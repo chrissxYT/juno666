@@ -24,7 +24,13 @@
 
 #include <stdio.h>
 #include <stdarg.h>
-#include <iostream.h>
+#include <iostream>
+
+using std::iostream;
+using std::ostream;
+using std::istream;
+using std::ios;
+using std::streambuf; 
 
 #ifndef STRING_WITHOUT_NUMBER
 class Number;

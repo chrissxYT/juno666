@@ -22,7 +22,7 @@
 #include <unistd.h>
 #endif
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 #ifdef LOCAL_RCSID
 #include "rcsid.h"
 #else
@@ -43,7 +43,7 @@
 #define LEN    buffer->len
 #define BUFLEN buffer->buflen
 
-//RCSID("$Id: String.cpp,v 1.1 2004/03/30 10:08:52 brainslayer Exp $");
+//RCSID("$Id: String.cpp,v 1.2 2004/03/31 08:31:40 brainslayer Exp $");
 
 /* StringBuffer */
 StringBuffer::StringBuffer(const char *s, int initCapacity)
