@@ -57,7 +57,7 @@ Phaser::Phaser(MoogObject *inputobject, const char *inputname) : MoogObject(inpu
 	//addInput("maxrange",phaser_maxrange_changed,0,1);
 	addInput("rate",phaser_rate_changed,0,1);
 	addInput("feedback",phaser_feedback_changed,0,1);
-	addInput("depth",phaser_depth_changed,0,1);
+	//addInput("depth",phaser_depth_changed,0,1);
 	setup(44100.0,440.0,1600.0,0.5,0.7,1.0);
 	PATCH(inputobject,inputname,this,"sig");
 	schedule->scheduleSampleRate(this, true);

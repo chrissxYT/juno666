@@ -67,11 +67,11 @@ void VstJuno6::initSynth(int numVoices)
 	PATCH(control, "chorus_II_switch", chorus, "II");
 	
 	phaser = new Phaser(chorus,"sig");
-	PATCH(control,"phaser_minrange",phaser,"minrange");
-	PATCH(control,"phaser_maxrange",phaser,"maxrange");
+	//PATCH(control,"phaser_minrange",phaser,"minrange");
+	//PATCH(control,"phaser_maxrange",phaser,"maxrange");
 	PATCH(control,"phaser_rate",phaser,"rate");
 	PATCH(control,"phaser_feedback",phaser,"feedback");
-	PATCH(control,"phaser_depth",phaser,"depth");
+	//PATCH(control,"phaser_depth",phaser,"depth");
 
 	PATCH(phaser, "sig", dsp, "sig0");
 	PATCH(control, "volume", dsp, "amp0");

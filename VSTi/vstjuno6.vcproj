@@ -44,7 +44,7 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="../lib/libmoogvst_d.lib odbc32.lib odbccp32.lib"
-				OutputFile="../bin/VstJuno6_d.dll"
+				OutputFile="VstJuno6_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				IgnoreDefaultLibraryNames="libcmtd.lib;libmmt.lib"

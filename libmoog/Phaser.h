@@ -25,12 +25,12 @@ private:
 	friend void phaser_depth_changed(MoogObject *, double, long);
 	
 	double *inSig;
-	double *m_dblMinRange;
-	double *m_dblMaxRange;
-	double *m_dblRate;
-	double *m_dblFrequency;
-	double *m_dblFeedback;
-	double *m_dblDepth;
+	double m_dblMinRange;
+	double m_dblMaxRange;
+	double m_dblRate;
+	double m_dblFrequency;
+	double m_dblFeedback;
+	double m_dblDepth;
 
 	Output *output;
 
@@ -59,6 +59,7 @@ private:
 	class AllpassDelay
 	{
 	public:
+	double _a1, _zm1;
 		AllpassDelay():_a1(0.f), _zm1(0.f)
 	{
 	}
@@ -76,7 +77,7 @@ private:
 		return y;
 	}
 private:
-	double _a1, _zm1;
+	
 };
 
 AllpassDelay _alps[6];
