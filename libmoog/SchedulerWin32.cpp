@@ -68,14 +68,14 @@ void Scheduler::setSampleControlRatio(int r)
     /* force some recalculation done in setSampleRate */
     setSampleRate(sampleRate);
 }
-
+int listEnterFlag=0;
 void Scheduler::safeListOp(list_head *node, list_head *list, bool add)
 {
     needListSync++;
 ////puts("try to enter");
     EnterCriticalSection(&beginListOpMutex);
 ////puts("ready");
-
+    listEnterFlag=1;
     /* since the synth thread runs with the beginListOpMutex locked, 
      * getting here means that that thread is now waiting on the condition
      * variable, so we are safe to proceed, or this IS the synth thread
@@ -125,6 +125,7 @@ void Scheduler::safeListOp(list_head *node, list_head *list, bool add)
 //puts("try to leave");
     LeaveCriticalSection(&beginListOpMutex);
 //puts("ready");
+listEnterFlag=0;
 }
 
 void Scheduler::scheduleControlRate(GoObject *obj, bool schedule)
@@ -224,15 +225,22 @@ void Scheduler::run()
 	
 	while (currentListIter != &sampleRateList) 
 	{
+	    if (currentListIter!=NULL)
+	    {
 	    obj = list_entry(currentListIter, GoObject, sampleListNode);
-
-
 	    obj->sampleGo();
 	    currentListIter = currentListIter->next;
+            }else break;
 	}
 
 	/* this is so we can run even without a DSPOutput object */
-//	if (!dsp && needListSync > 0)
+	if (!dsp && needListSync > 0)
+		{
+		while(listEnterFlag)
+			{
+			puts("waiting");
+			}
+		}
 //	    pthread_cond_wait(&listOpCompleteCond, &beginListOpMutex);
     }
 }
