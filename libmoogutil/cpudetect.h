@@ -4,12 +4,13 @@
 #define CPUTYPE_I386	3
 #define CPUTYPE_I486	4
 #define CPUTYPE_I586	5
-#define CPUTYPE_I686    6
+#define CPUTYPE_I686	6
 #ifdef __cplusplus
-extern "C" 
+extern "C"
 {
 #endif
-typedef struct cpucaps_s {
+typedef struct cpucaps_s
+{
 	int cpuType;
 	int cpuStepping;
 	int hasMMX;
@@ -20,7 +21,7 @@ typedef struct cpucaps_s {
 	int hasSSE2;
 	int isX86;
 	unsigned cl_size; /* size of cache line */
-        int hasAltiVec;
+	int hasAltiVec;
 	int hasTSC;
 } CpuCaps;
 

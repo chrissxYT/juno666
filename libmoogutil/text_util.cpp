@@ -1,25 +1,25 @@
 /*
  * Copyright(c) 2000 UltraMaster Group
  *
- * License to use UltraMaster Juno-6 is provided free of charge subject to the 
+ * License to use UltraMaster Juno-6 is provided free of charge subject to the
  * following restrictions:
  *
  * 1.) This license is for your personal use only.
  *
- * 2.) No portion of this software may be redistributed by you to any other 
- *     person in any form. 
+ * 2.) No portion of this software may be redistributed by you to any other
+ *     person in any form.
  *
  * 3.) You may not sell UltraMaster Juno-6 to any person.
  *
- * 4.) UltraMaster Juno-6 is provided without any express or implied warranty. 
- *     In no event shall UltraMaster Group be held liable for any damages 
+ * 4.) UltraMaster Juno-6 is provided without any express or implied warranty.
+ *     In no event shall UltraMaster Group be held liable for any damages
  *     arising from the use of UltraMaster Juno-6.
  */
 /**
  * Copyright (c) 1998 Cobite, Inc. All Rights Reserved.
  * @author Karl LaRocca
  * @created Fri Nov  6 14:33:29 1998
- * @version $Revision: 1.1 $$Date: 2004/03/30 10:08:52 $
+ * @version $Revision: 1.2 $$Date: 2004/03/31 12:01:19 $
  */
 #include <ctype.h>
 #include <string.h>
@@ -28,191 +28,191 @@
 #include "text_util.h"
 #include "rcsid.h"
 
-//RCSID("$Id: text_util.cpp,v 1.1 2004/03/30 10:08:52 brainslayer Exp $");
+//RCSID("$Id: text_util.cpp,v 1.2 2004/03/31 12:01:19 brainslayer Exp $");
 
-char* 
-chop( char* src )
+char *
+chop(char *src)
 {
-  char* p = src + strlen(src) - 1;
+	char *p = src + strlen(src) - 1;
 
-  while( p >= src )
-  {
-    if ( *p == '\n' || *p == '\r' )
-    {
-      *p-- = 0;
-    } 
+	while (p >= src)
+	{
+		if (*p == '\n' || *p == '\r')
+		{
+			*p-- = 0;
+		}
 
-    else
-    {
-      break;
-    }
-  }
+		else
+		{
+			break;
+		}
+	}
 
-  return( src );
+	return (src);
 }
 
-char*
-digits( char* src )
+char *
+digits(char *src)
 {
-  char* start = src;
-  char* check = src;
+	char *start = src;
+	char *check = src;
 
-  while( *check )
-  {
-    if ( isdigit( *check ) )
-    {
-      *start++ = *check;
-    }
+	while (*check)
+	{
+		if (isdigit(*check))
+		{
+			*start++ = *check;
+		}
 
-    check++;
-  }
+		check++;
+	}
 
-  *start = 0;
+	*start = 0;
 
-  return( src );
+	return (src);
 }
 
-char* 
-lower_case( char* src )
+char *
+lower_case(char *src)
 {
-  char* p = src;
+	char *p = src;
 
-  while( *p )
-  {
-    *p = tolower( *p++ );
-  }
+	while (*p)
+	{
+		*p = tolower(*p++);
+	}
 
-  return( src );
+	return (src);
 }
 
-char*
-reverse( char* src )
+char *
+reverse(char *src)
 {
-  int  i;
-  int  len = strlen( src );
-  char tmp;
+	int i;
+	int len = strlen(src);
+	char tmp;
 
-  for( i = len / 2; --i >= 0; )
-  {
-    tmp = src[ i ];
-    src[ i ] = src[ len - i - 1 ];
-    src[ len - i - 1 ] = tmp;
-  }
+	for (i = len / 2;--i >= 0;)
+	{
+		tmp = src[i];
+		src[i] = src[len - i-1];
+		src[len - i-1] = tmp;
+	}
 
-  return( src );
+	return (src);
 }
 
-char* 
-trim( char* src )
+char *
+trim(char *src)
 {
-  char *p = src + strlen(src) - 1;
+	char *p = src + strlen(src) - 1;
 
-  while( p >= src && isspace(*p) )
-      *p-- = '\0';
+	while (p >= src && isspace(*p))
+		*p-- = '\0';
 
-  return src;
+	return src;
 }
 
-char* 
-upper_case( char* src )
+char *
+upper_case(char *src)
 {
-  char* p = src;
+	char *p = src;
 
-  while( *p )
-  {
-    *p = toupper(*p);
-    p++;
-  }
+	while (*p)
+	{
+		*p = toupper(*p);
+		p++;
+	}
 
-  return( src );
+	return (src);
 }
 
-/* 
- * Finding a - anywhere in the string makes it money negative. 
+/*
+ * Finding a - anywhere in the string makes it money negative.
  * all characters other than digits, '-', and '.' are ignored, so:
  * ab36-.g98 = -36.98
- * This is fair, I think, if we don't want to reject anything as 
+ * This is fair, I think, if we don't want to reject anything as
  * improperly formatted.
  */
-long 
-money2cents( const char* money )
+long
+money2cents(const char *money)
 {
-    long retval = 0;
-    int decimal_places = -1;
-    int neg = 0;
+	long retval = 0;
+	int decimal_places = -1;
+	int neg = 0;
 
-    while( *money && decimal_places < 2 )
-    {
-	if ( isdigit( *money ) )
+	while (*money && decimal_places < 2)
 	{
-	    if ( decimal_places >= 0 )
-		decimal_places++;
+		if (isdigit(*money))
+		{
+			if (decimal_places >= 0)
+				decimal_places++;
 
-	    retval *= 10;
-	    retval += (*money) - '0';
+			retval *= 10;
+			retval += (*money) - '0';
+		}
+
+		else if (*money == '.')
+			decimal_places = 0;
+
+		else if (*money == '-')
+			neg = 1;
+
+		money++;
 	}
-	
-	else if ( *money == '.' )
-	    decimal_places = 0;
 
-	else if ( *money == '-' )
-	    neg = 1;
+	if (decimal_places == 1)
+		retval *= 10;
 
-	money++;
-    }
-    
-    if ( decimal_places == 1 )
-	retval *= 10;
-    
-    else if ( decimal_places <= 0 )
-	retval *= 100;
-    
-    return( neg ? -retval : retval );
+	else if (decimal_places <= 0)
+		retval *= 100;
+
+	return (neg ? -retval : retval);
 }
 
-const char* 
-cents2money( long cents )
+const char *
+cents2money(long cents)
 {
-  static char buff[ 64 ];
-  int idx = 0; 
-  char* d = buff;
+	static char buff[64];
+	int idx = 0;
+	char *d = buff;
 
-  if ( cents == 0 )
-  {
-    strcpy( buff, "0.00" );
-  }
+	if (cents == 0)
+	{
+		strcpy(buff, "0.00");
+	}
 
-  else if ( cents < 100 )
-  {
-    sprintf( buff, "0.%2.2ld", cents );
-  }
+	else if (cents < 100)
+	{
+		sprintf(buff, "0.%2.2ld", cents);
+	}
 
-  else
-  {
-    while( cents > 0 )
-    {
-      *d++ = '0' + ( cents % 10 );
-      cents = cents / 10;
-      
-      if ( idx == 1 )
-      {
-	*d++ = '.';
-      }
-      
-      else if ( cents > 0 && ( idx - 1 ) % 3 == 0 )
-      {
-	*d++ = ',';
-      }
-      
-      idx++;
-    }
+	else
+	{
+		while (cents > 0)
+		{
+			*d++ = '0' + (cents % 10);
+			cents = cents / 10;
 
-    *d++ = 0;
-  
-    reverse( buff );
-  }
+			if (idx == 1)
+			{
+				*d++ = '.';
+			}
 
-  return( buff );
+			else if (cents > 0 && (idx - 1) % 3 == 0)
+			{
+				*d++ = ',';
+			}
+
+			idx++;
+		}
+
+		*d++ = 0;
+
+		reverse(buff);
+	}
+
+	return (buff);
 }
 
 

@@ -1,18 +1,18 @@
 /*
  * Copyright(c) 2000 UltraMaster Group
  *
- * License to use UltraMaster Juno-6 is provided free of charge subject to the 
+ * License to use UltraMaster Juno-6 is provided free of charge subject to the
  * following restrictions:
  *
  * 1.) This license is for your personal use only.
  *
- * 2.) No portion of this software may be redistributed by you to any other 
- *     person in any form. 
+ * 2.) No portion of this software may be redistributed by you to any other
+ *     person in any form.
  *
  * 3.) You may not sell UltraMaster Juno-6 to any person.
  *
- * 4.) UltraMaster Juno-6 is provided without any express or implied warranty. 
- *     In no event shall UltraMaster Group be held liable for any damages 
+ * 4.) UltraMaster Juno-6 is provided without any express or implied warranty.
+ *     In no event shall UltraMaster Group be held liable for any damages
  *     arising from the use of UltraMaster Juno-6.
  */
 #include <stdio.h>
@@ -27,72 +27,72 @@
 #include "sio.h"
 #include "rcsid.h"
 
-//RCSID("$Id: sio.cpp,v 1.3 2004/03/31 08:31:41 brainslayer Exp $");
+//RCSID("$Id: sio.cpp,v 1.4 2004/03/31 12:01:19 brainslayer Exp $");
 
 ssize_t readn(int fd, void *buf, size_t len)
 {
 
-  size_t nleft,nread;
+	size_t nleft, nread;
 
-  nleft = len;
+	nleft = len;
 
-  while (nleft > 0)
-  {
-    nread = read(fd,buf,nleft);
+	while (nleft > 0)
+	{
+		nread = read(fd, buf, nleft);
 
-    /* there is an issue which EINTR which could leave us a bit haywire
-     * if we get a signal after having read some bytes. special handling
-     * N.B: we *do* return EINTR if no data has been read yet (thanks Karl)
-     */
-    if (nread < 0)
-    {
-      if (errno == EINTR && nleft != len)
-        continue;
-      else
-	    return (nread);
-    }
-    else if (nread == 0)
-      break;
+		/* there is an issue which EINTR which could leave us a bit haywire
+		 * if we get a signal after having read some bytes. special handling
+		 * N.B: we *do* return EINTR if no data has been read yet (thanks Karl)
+		 */
+		if (nread < 0)
+		{
+			if (errno == EINTR && nleft != len)
+				continue;
+			else
+				return (nread);
+		}
+		else if (nread == 0)
+			break;
 
-    nleft -= nread;
+		nleft -= nread;
 
-    if (nleft)
-      buf = ((char *)buf) + nread;
-  }
-  return (len - nleft);
+		if (nleft)
+			buf = ((char *)buf) + nread;
+	}
+	return (len - nleft);
 }
 
 ssize_t writen(int fd, const void *buf, size_t len)
 {
-  
-  size_t nleft, nwritten;
 
-  nleft = len;
+	size_t nleft, nwritten;
 
-  while (nleft > 0)
-  {
-    nwritten = write(fd,buf,nleft);
+	nleft = len;
 
-    /* there is an issue with EINTR if we have already written
-       a few bytes! return if we have not written any yet */
-    if (nwritten < 0 && errno == EINTR)
-    {
-      if (nleft == len)
-	return nwritten;
-      
-      continue;
-    }
-    
+	while (nleft > 0)
+	{
+		nwritten = write(fd, buf, nleft);
 
-    if (nwritten <= 0)
-      return nwritten;
+		/* there is an issue with EINTR if we have already written
+		   a few bytes! return if we have not written any yet */
+		if (nwritten < 0 && errno == EINTR)
+		{
+			if (nleft == len)
+				return nwritten;
 
-    nleft -= nwritten;
+			continue;
+		}
 
-    if (nleft)
-      buf = ((char *)buf) + nwritten;
-  }
-  
-  return (len - nleft);
+
+		if (nwritten <= 0)
+			return nwritten;
+
+		nleft -= nwritten;
+
+		if (nleft)
+			buf = ((char *)buf) + nwritten;
+	}
+
+	return (len - nleft);
 }
 

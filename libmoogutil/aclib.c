@@ -109,19 +109,19 @@
 #endif
 
 
-void * fast_memcpy(void * to, const void * from, size_t len)
+void *fast_memcpy(void *to, const void *from, size_t len)
 {
 #ifdef HAVE_SSE2
-		fast_memcpy_SSE(to, from, len);
+	fast_memcpy_SSE(to, from, len);
 #elif defined (HAVE_MMX2)
-		fast_memcpy_MMX2(to, from, len);
+	fast_memcpy_MMX2(to, from, len);
 #elif defined (HAVE_3DNOW)
-		fast_memcpy_3DNow(to, from, len);
+	fast_memcpy_3DNow(to, from, len);
 #elif defined (HAVE_MMX)
-		fast_memcpy_MMX(to, from, len);
+	fast_memcpy_MMX(to, from, len);
 #else
 #undef memcpy
-		memcpy(to, from, len); // prior to mmx we use the standart memcpy
+	memcpy(to, from, len); // prior to mmx we use the standart memcpy
 #endif
 
 	return to;

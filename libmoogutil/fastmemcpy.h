@@ -9,7 +9,7 @@
 extern "C"
 {
 #endif
-extern void * fast_memcpy(void * to, const void * from, size_t len);
+extern void *fast_memcpy(void *to, const void *from, size_t len);
 #ifdef __cplusplus
 }
 #endif

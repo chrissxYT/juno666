@@ -21,20 +21,20 @@ extern int verbose; // defined in mplayer.c
 
 // code/module:
 
-#define MSGT_GLOBAL 0        // common player stuff errors
-#define MSGT_CPLAYER 1       // console player (mplayer.c)
-#define MSGT_GPLAYER 2       // gui player
+#define MSGT_GLOBAL 0	     // common player stuff errors
+#define MSGT_CPLAYER 1	     // console player (mplayer.c)
+#define MSGT_GPLAYER 2	     // gui player
 
 #define MSGT_VO 3	       // libvo
 #define MSGT_AO 4	       // libao
 
-#define MSGT_DEMUXER 5    // demuxer.c (general stuff)
-#define MSGT_DS 6         // demux stream (add/read packet etc)
-#define MSGT_DEMUX 7      // fileformat-specific stuff (demux_*.c)
-#define MSGT_HEADER 8     // fileformat-specific header (*header.c)
+#define MSGT_DEMUXER 5	  // demuxer.c (general stuff)
+#define MSGT_DS 6	  // demux stream (add/read packet etc)
+#define MSGT_DEMUX 7	  // fileformat-specific stuff (demux_*.c)
+#define MSGT_HEADER 8	  // fileformat-specific header (*header.c)
 
-#define MSGT_AVSYNC 9     // mplayer.c timer stuff
-#define MSGT_AUTOQ 10     // mplayer.c auto-quality stuff
+#define MSGT_AVSYNC 9	  // mplayer.c timer stuff
+#define MSGT_AUTOQ 10	  // mplayer.c auto-quality stuff
 
 #define MSGT_CFGPARSER 11 // cfgparser.c
 
@@ -49,8 +49,8 @@ extern int verbose; // defined in mplayer.c
 #define MSGT_PARSEES 18	// parse_es.c (mpeg stream parser)
 #define MSGT_LIRC 19	// lirc_mp.c and input lirc driver
 
-#define MSGT_STREAM 20  // stream.c
-#define MSGT_CACHE 21 	// cache2.c
+#define MSGT_STREAM 20	// stream.c
+#define MSGT_CACHE 21	// cache2.c
 
 #define MSGT_MENCODER 22
 
@@ -96,7 +96,7 @@ int mp_msg_test(int mod, int lev);
 #ifdef TARGET_OS2
 // va_start/vsnprintf seems to be broken under OS2 :(
 #define mp_msg(mod,lev, fmt, args... ) do{if((lev)<=mp_msg_levels[mod]) printf( fmt, ## args );}while(0)
-#define mp_dbg(mod,lev, args... ) 
+#define mp_dbg(mod,lev, args... )
 #else
 
 #ifdef USE_I18N
@@ -108,24 +108,24 @@ int mp_msg_test(int mod, int lev);
 #endif
 
 #ifdef __GNUC__
-void mp_msg_c( int x, const char *format, ... ) __attribute__ ((format (printf, 2, 3)));
+void mp_msg_c(int x, const char *format, ...) __attribute__((format(printf, 2, 3)));
 #define mp_msg(mod,lev, args... ) mp_msg_c(((mod)<<8)|(lev), ## args )
 
 #ifdef MP_DEBUG
 #define mp_dbg(mod,lev, args... ) mp_msg_c(((mod)<<8)|(lev), ## args )
 #else
 // these messages are only usefull for developers, disable them
-#define mp_dbg(mod,lev, args... ) 
+#define mp_dbg(mod,lev, args... )
 #endif
 #else // not GNU C
-void mp_msg_c( int x, const char *format, ... );
+void mp_msg_c(int x, const char *format, ...);
 #define mp_msg(mod,lev, ... ) mp_msg_c(((mod)<<8)|(lev), __VA_ARGS__)
 
 #ifdef MP_DEBUG
 #define mp_dbg(mod,lev, ... ) mp_msg_c(((mod)<<8)|(lev), __VA_ARGS__)
 #else
 // these messages are only usefull for developers, disable them
-#define mp_dbg(mod,lev, ... ) 
+#define mp_dbg(mod,lev, ... )
 #endif
 #endif
 

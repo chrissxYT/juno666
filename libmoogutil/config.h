@@ -339,16 +339,16 @@
 #define	DEFAULT_CDROM_DEVICE	"/vol/dev/aliases/cdrom0"
 #define DEFAULT_DVD_DEVICE	DEFAULT_CDROM_DEVICE
 #elif defined(HPUX)
-#define DEFAULT_CDROM_DEVICE    "/dev/cdrom"
+#define DEFAULT_CDROM_DEVICE	"/dev/cdrom"
 #define DEFAULT_DVD_DEVICE     "/dev/dvd"
 #elif defined(WIN32)
-#define DEFAULT_CDROM_DEVICE    "D:"
+#define DEFAULT_CDROM_DEVICE	"D:"
 #define DEFAULT_DVD_DEVICE	"D:"
 #elif defined(SYS_DARWIN)
-#define DEFAULT_CDROM_DEVICE    "/dev/rdiskN"
+#define DEFAULT_CDROM_DEVICE	"/dev/rdiskN"
 #define DEFAULT_DVD_DEVICE	DEFAULT_CDROM_DEVICE
 #else
-#define DEFAULT_CDROM_DEVICE    "/dev/cdrom"
+#define DEFAULT_CDROM_DEVICE	"/dev/cdrom"
 #define DEFAULT_DVD_DEVICE	"/dev/dvd"
 #endif
 
@@ -510,7 +510,7 @@
 #undef HAVE_DXR2
 #undef HAVE_DXR3
 #undef HAVE_DVB
-#undef HAS_DVBIN_SUPPORT 
+#undef HAS_DVBIN_SUPPORT
 #undef HAVE_SVGALIB
 #undef HAVE_VESA
 #define HAVE_XDPMS 1
