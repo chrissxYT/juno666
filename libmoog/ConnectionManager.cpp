@@ -127,7 +127,7 @@ ConnectionManager::llConnect(MoogObject *from, int onum, MoogObject *to, int inu
 void
 ConnectionManager::disconnect(ConnectionInfo *connection)
 {
-	ASSERT_CONTEXTS(connection->from, connection->to,);
+	ASSERT_CONTEXTS(connection->from, connection->to, FALSE);
 
 	debug(DEBUG_STATUS, "ConnectionManager::disconnect()");
 

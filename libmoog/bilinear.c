@@ -4,15 +4,20 @@
 #define M_PI		3.14159265358979323846
 #endif
 
+#ifdef _MSC_VER
+#define INLINE __inline
+#else
+#define INLINE inline
+#endif
 
-static inline void prewarp(
+static INLINE void prewarp(
 	double *a0,
 	double *a1,
 	double *a2,
 	double fc,
 	double fs);
 
-static inline void bilinear(
+static INLINE void bilinear(
 	double a0, double a1, double a2, /* numerator coef. */
 	double b0, double b1, double b2, /* denominator coef.  */
 	double *k, /* overall gain factor */

@@ -17,83 +17,69 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:17 $
+ * $Revision: 1.3 $$Date: 2004/04/06 08:10:29 $
  */
 
 #include "juno_control.h"
 
 JunoControl::JunoControl(int voices)
 {
-	for (int i = 0;i < voices;i++)
-	{
-		addOutput((String)"voice" + i + (String)"_pitch", false);
-		addOutput((String)"voice" + i + (String)"_gate", false);
+    addOutput("bender", false);
+    addOutput("bender_dco", false);
+    addOutput("bender_vcf", false);
+    addOutput("lfo_trigger", false);
+    addOutput("volume", false);
+    addOutput("octave_transpose", false);
 
-		/* addOutput( "voice1_pitch", false );
-		 addOutput( "voice1_gate", false );
+    addOutput("master_tune", false);
 
-		 addOutput( "voice2_pitch", false );
-		 addOutput( "voice2_gate", false );
+    addOutput("transpose_switch", false); // 0 = normal, non zero = transpose
+    addOutput("hold_switch", false); // 0 = normal, non zero = hold
 
-		 addOutput( "voice3_pitch", false );
-		 addOutput( "voice3_gate", false );
+    addOutput("arpeggio_switch", false); // 0 = off, non zero = on
+    addOutput("arpeggio_mode", false); // -1 = down, 0 = up and down, 1 = up
+    addOutput("arpeggio_range", false); // -1 = 3, 0 = 2, 1 = 1
+    addOutput("arpeggio_rate", false);
 
-		 addOutput( "voice4_pitch" , false);
-		 addOutput( "voice4_gate", false );
+    addOutput("lfo_rate", false);
+    addOutput("lfo_delay", false);
+    addOutput("lfo_mode", false); // 0 = auto, non zero = manual
 
-		 addOutput( "voice5_pitch", false );
-		 addOutput( "voice5_gate", false );*/
-	}
-	addOutput("bender", false);
-	addOutput("bender_dco", false);
-	addOutput("bender_vcf", false);
-	addOutput("lfo_trigger", false);
-	addOutput("volume", false);
-	addOutput("octave_transpose", false);
+    addOutput("dco_lfo", false);
+    addOutput("dco_pwm", false);
+    addOutput("dco_pwm_mod", false); // -1 = env, 0 = manual, 1 = lfo
 
-	addOutput("master_tune", false);
+    addOutput("dco_pulse_switch", false);
+    addOutput("dco_saw_switch", false);
+    addOutput("dco_sub_switch", false);
+    addOutput("dco_sub", false);
+    addOutput("dco_noise", false);
 
-	addOutput("transpose_switch", false); // 0 = normal, non zero = transpose
-	addOutput("hold_switch", false); // 0 = normal, non zero = hold
+    addOutput("hpf_frq", false);
 
-	addOutput("arpeggio_switch", false); // 0 = off, non zero = on
-	addOutput("arpeggio_mode", false); // -1 = down, 0 = up and down, 1 = up
-	addOutput("arpeggio_range", false); // -1 = 3, 0 = 2, 1 = 1
-	addOutput("arpeggio_rate", false);
+    addOutput("vcf_frq", false);
+    addOutput("vcf_res", false);
 
-	addOutput("lfo_rate", false);
-	addOutput("lfo_delay", false);
-	addOutput("lfo_mode", false); // 0 = auto, non zero = manual
+    addOutput("vcf_env_invert", false); // 0 = normal, non zero = inverted
 
-	addOutput("dco_lfo", false);
-	addOutput("dco_pwm", false);
-	addOutput("dco_pwm_mod", false); // -1 = env, 0 = manual, 1 = lfo
+    addOutput("vcf_env", false);
+    addOutput("vcf_lfo", false);
+    addOutput("vcf_kbd", false);
 
-	addOutput("dco_pulse_switch", false);
-	addOutput("dco_saw_switch", false);
-	addOutput("dco_sub_switch", false);
-	addOutput("dco_sub", false);
-	addOutput("dco_noise", false);
+    addOutput("vca_mode", false); // 0 == env, 1 == gate
 
-	addOutput("hpf_frq", false);
+    addOutput("env_attack", false);
+    addOutput("env_decay", false);
+    addOutput("env_sustain", false);
+    addOutput("env_release", false);
 
-	addOutput("vcf_frq", false);
-	addOutput("vcf_res", false);
+    addOutput("chorus_off_switch", false);
+    addOutput("chorus_I_switch", false);
+    addOutput("chorus_II_switch", false);
 
-	addOutput("vcf_env_invert", false); // 0 = normal, non zero = inverted
-
-	addOutput("vcf_env", false);
-	addOutput("vcf_lfo", false);
-	addOutput("vcf_kbd", false);
-
-	addOutput("vca_mode", false); // 0 == env, 1 == gate
-
-	addOutput("env_attack", false);
-	addOutput("env_decay", false);
-	addOutput("env_sustain", false);
-	addOutput("env_release", false);
-
-	addOutput("chorus_off_switch", false);
-	addOutput("chorus_I_switch", false);
-	addOutput("chorus_II_switch", false);
+    for (int i = 0;i < voices;i++)
+    {
+        addOutput((String)"voice" + i + (String)"_pitch", false);
+        addOutput((String)"voice" + i + (String)"_gate", false);
+    }
 }

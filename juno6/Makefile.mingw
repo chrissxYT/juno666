@@ -8,18 +8,16 @@ LDFLAGS= -L./ -L./libmoog -L./libmoogutil -L./libgmoog -lgmoog -lmoog -lmoogutil
 PROGS=juno6 list_patches copy_patch
 
 OBJS=   juno6.o\
-	juno_gui.o \
-	juno_synth.o \
-	juno_control.o \
-	juno_voice.o \
-	juno_wrappers.o \
-	juno_lfo.o \
-	juno_arpeggio.o\
-	juno_chorus.o\
-	juno_patch.o\
-	about.o\
-	juno_background.o\
-	juno_background_mask.o\
+    juno_gui.o \
+    juno_synth.o \
+    juno_control.o \
+    juno_voice.o \
+    juno_wrappers.o \
+    juno_lfo.o \
+    juno_arpeggio.o\
+    juno_chorus.o\
+    juno_patch.o\
+    about.o\
 
 all: $(PROGS)
 
@@ -28,10 +26,10 @@ objs: $(OBJS)
 juno6: $(OBJS)
 
 test:
-	./juno6
+    ./juno6
 
 clean:
-	rm -f *.o core .depend $(PROGS)
+    rm -f *.o core .depend $(PROGS)
 
 list_patches copy_patch: juno_patch.o
 

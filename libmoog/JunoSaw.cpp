@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.3 $$Date: 2004/04/06 08:10:29 $
  */
 #include <math.h>
 #include "JunoSaw.h"
@@ -29,102 +29,102 @@
 
 void JunoSaw_frqChanged(MoogObject *o, double data, long)
 {
-	((JunoSaw *)o)->frqChanged();
+    ((JunoSaw *)o)->frqChanged();
 }
 
 void JunoSaw_sync(MoogObject *o, double data, long)
 {
-	((JunoSaw *)o)->sync();
+    ((JunoSaw *)o)->sync();
 }
 
 JunoSaw::JunoSaw()
 {
-	addPorts("frq", INPUT, JunoSaw_frqChanged, 0, Scheduler::sampleControlRatio,
-		"amp", INPUT, NULL,
-		"sync", INPUT, JunoSaw_sync, 0, 1,
-		"sig", OUTPUT, true,
-		"sync", OUTPUT, false,
-		NULL);
+    addPorts("frq", INPUT, JunoSaw_frqChanged, 0, Scheduler::sampleControlRatio,
+             "amp", INPUT, NULL,
+             "sync", INPUT, JunoSaw_sync, 0, 1,
+             "sig", OUTPUT, true,
+             "sync", OUTPUT, false,
+             NULL);
 
-	output = &outputs[0];
-	inFrq = inputs[0].data;
-	inAmp = inputs[1].data;
-	inSync = inputs[2].data;
+    output = &outputs[0];
+    inFrq = inputs[0].data;
+    inAmp = inputs[1].data;
+    inSync = inputs[2].data;
 
-	frq = 0;
-	pos = 1.0;
-	lastTrigger = 0;
+    frq = 0;
+    pos = 1.0;
+    lastTrigger = 0;
 }
 
 void JunoSaw::connectTo(ConnectionInfo *info)
 {
-	MoogObject::connectTo(info);
-	inFrq = inputs[0].data;
-	inAmp = inputs[1].data;
-	inSync = inputs[2].data;
+    MoogObject::connectTo(info);
+    inFrq = inputs[0].data;
+    inAmp = inputs[1].data;
+    inSync = inputs[2].data;
 }
 
 void JunoSaw::disconnectTo(ConnectionInfo *info)
 {
-	MoogObject::disconnectTo(info);
-	inFrq = inputs[0].data;
-	inAmp = inputs[1].data;
-	inSync = inputs[2].data;
+    MoogObject::disconnectTo(info);
+    inFrq = inputs[0].data;
+    inAmp = inputs[1].data;
+    inSync = inputs[2].data;
 }
 
 void JunoSaw::frqChanged()
 {
-	newFrq = *inFrq / 2;
+    newFrq = *inFrq / 2;
 
-	MOOG_DEBUG("newFrq=%f", newFrq);
+    MOOG_DEBUG("newFrq=%f", newFrq);
 
-	if (newFrq < 0.0)
-		newFrq *= -1.0;
+    if (newFrq < 0.0)
+        newFrq *= -1.0;
 
-	if (newFrq == 0.0)
-		Scheduler::scheduleSampleRate(this, false);
-	else if (!isSampleScheduled())
-		Scheduler::scheduleSampleRate(this, true);
+    if (newFrq == 0.0)
+        Scheduler::scheduleSampleRate(this, false);
+    else if (!isSampleScheduled())
+        Scheduler::scheduleSampleRate(this, true);
 }
 
 void JunoSaw::sync()
 {
-	pos = 1.0;
+    pos = 1.0;
 }
 
 void JunoSaw::sampleGo()
 {
-	pos += frq;
+    pos += frq;
 
-	MOOG_DEBUG("pos=%f, frq=%f", pos, frq);
+    MOOG_DEBUG("pos=%f, frq=%f", pos, frq);
 
-	if (pos >= 1.0)
-	{
-		lastTrigger = 1;
-		outputs[1].setData(1);
+    if (pos >= 1.0)
+    {
+        lastTrigger = 1;
+        outputs[1].setData(1);
 
-		pos--;
+        pos--;
 
-		frq = newFrq;
-		output->data = -*inAmp;
-		power = *inAmp * (frq * 2.0 + .0072);
-		dampening = -*inAmp * (2.1 * frq * frq + .01 * frq + .000022);
-	}
+        frq = newFrq;
+        output->data = -*inAmp;
+        power = *inAmp * (frq * 2.0 + .0072);
+        dampening = -*inAmp * (2.1 * frq * frq + .01 * frq + .000022);
+    }
 
-	else if (lastTrigger == 1)
-	{
-		lastTrigger = 0;
-		outputs[1].setData(0);
-	}
+    else if (lastTrigger == 1)
+    {
+        lastTrigger = 0;
+        outputs[1].setData(0);
+    }
 
-	output->setData(output->data + power);
-	power += dampening;
+    output->setData(output->data + power);
+    power += dampening;
 
-	if (power < 0)
-	{
-		power = -.0004 * *inAmp;
-		dampening = 0;
-	}
+    if (power < 0)
+    {
+        power = -.0004 * *inAmp;
+        dampening = 0;
+    }
 
-	MOOG_DEBUG("output=%f", output->data);
+    MOOG_DEBUG("output=%f", output->data);
 }
