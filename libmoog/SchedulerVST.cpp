@@ -64,6 +64,7 @@ void Scheduler::safeListOp(list_head *node, list_head *list, bool add)
         if (node->next != NULL)
         {
             debug(DEBUG_APPERROR, "Warn: obj already on scheduling list");
+			ReleaseMutex( timerMutex );
             return;
         }
         list->next->prev = node;
@@ -76,6 +77,7 @@ void Scheduler::safeListOp(list_head *node, list_head *list, bool add)
         if (node->next == NULL)
         {
             debug(DEBUG_APPERROR, "Warn: obj not on scheduling list");
+			ReleaseMutex( timerMutex );
             return;
         }
 
