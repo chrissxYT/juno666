@@ -75,6 +75,11 @@ Rand::freqChanged(double data)
 void
 Rand::sampleGo()
 {
+	if (*inAmp==0.0)
+	{
+		output->setData(0.0);
+		return;
+	}
 	if (type == RND_NORMAL)
 	{
 		output->setData(*inZro + *inAmp * ((2.0 * rand() / RAND_MAX) - 1.0));

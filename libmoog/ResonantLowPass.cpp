@@ -73,7 +73,6 @@ ResonantLowPass::ResonantLowPass(Scheduler *sched): MoogObject(sched, NULL)
 {
 
 #ifndef MOOGVCF
-	changed = true;
 	pcoef = new BiQuad[SECTIONS];
 	setSectionCoef(0, 1.0, 0, 0, 1.0, 0.765367, 1.0);
 	setSectionCoef(1, 1.0, 0, 0, 1.0, 1.847759, 1.0);
@@ -98,7 +97,7 @@ void ResonantLowPass::init()
 #endif
 #ifndef MOOGVCF
 	hist = new double[2 * SECTIONS];
-	coef = new double[4 * SECTIONS];
+	coef = new double[4 * SECTIONS+1];
 
 	memset(hist, 0, sizeof(double) * 2 * SECTIONS);
 	memset(coef, 0, sizeof(double) * 4 * SECTIONS);
@@ -159,7 +158,7 @@ void ResonantLowPass::gainChanged(double data)
 	if (data < 0)
 		data = 0;
 	gain = data;
-	changed = true;
+	recalcFilter();
 
 }
 
@@ -174,9 +173,7 @@ void ResonantLowPass::cutoffChanged(double data)
 	if (data == 1)
 		data = 0.999;
 	cutoff = data;
-
-	changed = true;
-
+	recalcFilter();
 }
 
 void ResonantLowPass::resonanceChanged(double data)
@@ -190,7 +187,7 @@ void ResonantLowPass::resonanceChanged(double data)
 	if (data == 1)
 		data = 0.999;
 	resonance = data;
-	changed = true;
+	recalcFilter();
 
 }
 #endif
@@ -199,7 +196,6 @@ void ResonantLowPass::recalcFilter()
 {
 
 	double *coefptr = coef;
-	changed = true;
 	fixedGain = gain;
 	for (int i = 0;i < SECTIONS;i++)
 	{
@@ -222,6 +218,7 @@ void ResonantLowPass::recalcFilter()
 
 		coefptr += 4;
 	}
+	//coef[0] = fixedGain;
 
 
 
@@ -232,8 +229,6 @@ void ResonantLowPass::recalcFilter()
 #ifndef MOOGVCF
 void ResonantLowPass::sampleGo()
 {
-	if (changed)
-		recalcFilter();
 	double *coefptr = coef;
 	double *hist1ptr, *hist2ptr;
 	double newhist, hist1, hist2;

@@ -17,12 +17,13 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/06/25 10:38:42 $
+ * $Revision: 1.7 $$Date: 2004/09/10 10:56:58 $
  */
 #ifndef JUNOPULSE_H
 #define JUNOPULSE_H
 
 #include "MoogObject.h"
+#include "Blit.h"
 
 class JunoPulse: public MoogObject
 {
@@ -33,7 +34,8 @@ private:
 	friend void JunoPulse_sync(MoogObject *, double, long);
 
 	void horizBoundsChanged();
-
+	blit_t a;
+	blit_t b;
 	double *sig_data;
 	Output *sigOutput;
 	Output *syncOutput;

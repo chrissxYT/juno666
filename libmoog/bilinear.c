@@ -14,7 +14,7 @@ static INLINE void prewarp(
 	double *a0,
 	double *a1,
 	double *a2,
-	double fc,
+	double fc,	
 	double fs);
 
 static INLINE void bilinear(

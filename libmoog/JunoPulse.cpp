@@ -17,10 +17,11 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.11 $$Date: 2004/06/25 10:38:42 $
+ * $Revision: 1.12 $$Date: 2004/09/10 10:56:58 $
  */
 #include "JunoPulse.h"
 #include "Scheduler.h"
+#include "Blit.h"
 
 #define FRQ   0
 #define AMP   1
@@ -106,6 +107,11 @@ void JunoPulse::sync()
 
 void JunoPulse::sampleGo()
 {
+	if (*inAmp==0.0)
+	{
+		sigOutput->setData(0.0);
+		return;
+	}
 	pos += frq;
 	if (pos >= .45 && sign < 0)
 	{

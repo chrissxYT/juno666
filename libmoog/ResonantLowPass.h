@@ -43,7 +43,7 @@ class ResonantLowPass: public MoogObject
 	double *hist;
 	double *coef;
 
-	bool changed;
+	
 
 
 
