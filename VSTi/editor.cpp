@@ -2,6 +2,10 @@
 
 #include "../resource/resource.h"
 
+#define MAX_KEYBOARD_KEYS 64
+
+#define KEY_CONTROL_TAG_OFFSET 1024
+
 Editor::Editor (AudioEffect* fx, JunoControl *cntrl, MidiInput *midiinput) : 
 AEffGUIEditor(fx),
 control(cntrl),
@@ -9,12 +13,12 @@ midiInput(midiinput)
 {
     guiControl = new CControl *[control->getNumOutputs()];
 
-    guiKeyboard = new CControl *[64];
+    guiKeyboard = new CControl *[MAX_KEYBOARD_KEYS];
 
     for(int i=0; i<control->getNumOutputs(); i++)
         guiControl[i] = NULL;
 
-    for(int i=0; i<64; i++)
+    for(int i=0; i<MAX_KEYBOARD_KEYS; i++)
         guiKeyboard[i] = NULL;
 
     bmpBackground = new CBitmap(IDB_BACKGROUND);
@@ -50,6 +54,7 @@ Editor::open (void* ptr)
     addSlider(22, 127, "bender_dco");
     addSlider(41, 127, "bender_vcf");
     addThreeSwitch(70, 142, "octave_transpose");
+    addKickButton(75, 182, IDB_LFO_KICK, "lfo_trigger");
 
     addButton(125, 43, IDB_WHITE_BUTTON, "transpose_switch");
     addButton(152, 43, IDB_YELLOW_BUTTON, "hold_switch");
@@ -97,7 +102,7 @@ Editor::open (void* ptr)
     addSlider(743, 33, "env_release");
 
     /* Chorus */
-    addButton(765, 43, IDB_WHITE_BUTTON, "chorus_off_switch");
+    addKickButton(765, 52, IDB_WHITE_KBUTTON, "chorus_off_switch");
     addButton(781, 43, IDB_YELLOW_BUTTON, "chorus_I_switch");
     addButton(797, 43, IDB_ORANGE_BUTTON, "chorus_II_switch");
 
@@ -187,9 +192,9 @@ Editor::setParameter (long index, float value)
 {   
     if (frame)
     {
-        if (index >= 1000)
+        if (index & KEY_CONTROL_TAG_OFFSET)
         {
-            guiKeyboard[index-1000]->setValue(value);
+            guiKeyboard[index-KEY_CONTROL_TAG_OFFSET]->setValue(value);
             postUpdate();
             return;
         }
@@ -234,21 +239,30 @@ Editor::valueChanged (CDrawContext* canvas, CControl* ccontrol)
 {   
     long tag = ccontrol->getTag();
 
-    if(tag>=1000)
+    // hnadle gui keyboard
+    if(tag & KEY_CONTROL_TAG_OFFSET)
     {
         if(ccontrol->getValue()==1)
         {
-            midiInput->doNoteOn(0, (tag-1000) + 36, 127);
+            midiInput->doNoteOn(0, (tag-KEY_CONTROL_TAG_OFFSET) + 36, 127);
         }
         else
         {
-            midiInput->doNoteOff(0, (tag-1000) + 36, 127);
+            midiInput->doNoteOff(0, (tag-KEY_CONTROL_TAG_OFFSET) + 36, 127);
         }
 
         ccontrol->update(canvas);
         return;
     }
 
+    // handle chorus off switch
+    if (tag == control->getOutputNum("chorus_off_switch"))
+    {
+        effect->setParameterAutomated (control->getOutputNum("chorus_I_switch"), 0);
+        effect->setParameterAutomated (control->getOutputNum("chorus_II_switch"), 0);
+    }
+
+    // handle rest of the parameters
     effect->setParameterAutomated (tag, ccontrol->getValue());
     ccontrol->update(canvas);
 }
@@ -334,9 +348,12 @@ Editor::addThreeSwitch (int x, int y, char *outputName)
 }
 
 void
-Editor::addKey (int x, int y, int note, int keyBmp)
+Editor::addKey (int x, int y, int key, int bmp)
 {   
-    CBitmap *bitmap = new CBitmap(keyBmp);
+    if (key > MAX_KEYBOARD_KEYS)
+        return;
+
+    CBitmap *bitmap = new CBitmap(bmp);
 
     bitmap->setTransparentColor(kWhiteCColor);
 
@@ -344,15 +361,11 @@ Editor::addKey (int x, int y, int note, int keyBmp)
 
     CPoint point(0, 0);
 
-    guiKeyboard[note] = new CKickButton(size, this, note+1000, bitmap->getHeight() / 2, bitmap, point);
-/*
-    CRect mouseArea(x, 166, x + 22, 217);
+    guiKeyboard[key] = new CKickButton(size, this, key | KEY_CONTROL_TAG_OFFSET, bitmap->getHeight() / 2, bitmap, point);
 
-    guiKeyboard[note]->setMouseableArea(mouseArea);
-*/
-    guiKeyboard[note]->setTransparency(true);
+    guiKeyboard[key]->setTransparency(true);
 
-    frame->addView(guiKeyboard[note]);
+    frame->addView(guiKeyboard[key]);
 
     bitmap->forget();
 }
@@ -369,6 +382,24 @@ Editor::addKnob (int x, int y, char *outputName)
     CPoint point(0, 0);
 
     guiControl[tag] = new CAnimKnob(size, this, tag, 100, bitmap->getHeight() / 100, bitmap, point);
+
+    frame->addView(guiControl[tag]);
+
+    bitmap->forget();
+}
+
+void
+Editor::addKickButton (int x, int y, int bmp, char *outputName)
+{   
+    CBitmap *bitmap = new CBitmap(bmp);
+
+    int tag = control->getOutputNum(outputName);
+
+    CRect size(x, y, x + bitmap->getWidth(), y + bitmap->getHeight() / 2);
+
+    CPoint point(0, 0);
+
+    guiControl[tag] = new CKickButton(size, this, tag, bitmap->getHeight() / 2, bitmap, point);
 
     frame->addView(guiControl[tag]);
 

@@ -6,7 +6,8 @@
 #define IDB_WHITE_BUTTON                2205
 #define IDB_YELLOW_BUTTON               2206
 #define IDB_ORANGE_BUTTON               2207
-#define IDB_LED                         2208
+#define IDB_LFO_KICK                    2208
+#define IDB_WHITE_KBUTTON               2209
 
 #define IDB_C                           2210
 #define IDB_D                           2211
