@@ -114,7 +114,7 @@ void AEffGUIEditor::draw (ERect *ppErect)
 //-----------------------------------------------------------------------------
 long AEffGUIEditor::mouse (long x, long y)
 {
-	CDrawContext context (frame, NULL, systemWindow);
+	CDrawContext context (frame, systemWindow, systemWindow);
 	CPoint where (x, y);
 
 	if (frame)

@@ -43,7 +43,7 @@
 #define LEN    buffer->len
 #define BUFLEN buffer->buflen
 
-//RCSID("$Id: String.cpp,v 1.9 2004/04/30 07:00:09 brainslayer Exp $");
+//RCSID("$Id: String.cpp,v 1.10 2004/09/04 10:39:53 strepto Exp $");
 
 /* StringBuffer */
 StringBuffer::StringBuffer(const char *s, int initCapacity)
@@ -161,6 +161,12 @@ String::String(int intValue)
 {
     buffer = new StringBuffer(NULL, SPRINTF_MAX_INT_WIDTH);
     sprintf("%d", intValue);
+}
+
+String::String(long longValue)
+{
+    buffer = new StringBuffer(NULL, SPRINTF_MAX_LONG_WIDTH);
+    sprintf("%d", longValue);
 }
 
 String::String(double doubleValue)
@@ -726,6 +732,15 @@ String operator +(const char *s1, const String &s2)
 String operator +(const String &s1, int intValue)
 {
     String numString(intValue);
+    String r(NULL, s1.LEN + numString.LEN);
+    r.append(s1);
+    r.append(numString);
+    return r;
+}
+
+String operator +(const String &s1, long longValue)
+{
+    String numString(longValue);
     String r(NULL, s1.LEN + numString.LEN);
     r.append(s1);
     r.append(numString);

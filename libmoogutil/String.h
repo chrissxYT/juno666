@@ -18,8 +18,9 @@
 #ifndef _CBT_STRING_H
 #define _CBT_STRING_H
 
-#define STRING_DEFAULT_SIZE	32
-#define SPRINTF_MAX_INT_WIDTH	32
+#define STRING_DEFAULT_SIZE 32
+#define SPRINTF_MAX_INT_WIDTH   32
+#define SPRINTF_MAX_LONG_WIDTH  32
 #define SPRINTF_MAX_FLOAT_WIDTH 32
 
 #include <stdio.h>
@@ -39,116 +40,118 @@ class Number;
 class StringBuffer
 {
 public:
-	int refCount;
-	char *data;
-	int len;
-	int buflen;
+    int refCount;
+    char *data;
+    int len;
+    int buflen;
 
-	StringBuffer(const char *, int);
-	StringBuffer(StringBuffer &);
-	~StringBuffer();
+    StringBuffer(const char *, int);
+    StringBuffer(StringBuffer &);
+    ~StringBuffer();
 
-	void use();
-	void unuse();
-	void growTo(int);
-	void grow(int);
-	void setLength(int, char padChar);
-	void copyBytes(int, const char *, int);
+    void use();
+    void unuse();
+    void growTo(int);
+    void grow(int);
+    void setLength(int, char padChar);
+    void copyBytes(int, const char *, int);
 };
 
 
 class String
 {
 protected:
-	StringBuffer *buffer;
+    StringBuffer *buffer;
 
-	/* copy on write */
-	void cow();
-	int replaceInternal(const char *, int, const char *, int);
+    /* copy on write */
+    void cow();
+    int replaceInternal(const char *, int, const char *, int);
 
 public:
-	String();
-	String(const char *s, int = -1);
-	String(const String &);
+    String();
+    String(const char *s, int = -1);
+    String(const String &);
 
-	String(int);
-	String(double);
+    String(int);
+    String(long);
+    String(double);
 #ifndef STRING_WITHOUT_NUMBER
-	String(const Number &);
+    String(const Number &);
 #endif
 
-	~String();
+    ~String();
 
-	const String &assign(const String &);
-	const String &assign(const char *, int);
+    const String &assign(const String &);
+    const String &assign(const char *, int);
 
-	void append(const String &);
-	void append(const char *);
-	void append(const char *, int);
-	void appendChar(const char);
+    void append(const String &);
+    void append(const char *);
+    void append(const char *, int);
+    void appendChar(const char);
 
-	int getLength()const
-	{
-		return buffer->len;
-	}
-	void setLength(int, char padChar = ' ');
+    int getLength()const
+    {
+        return buffer->len;
+    }
+    void setLength(int, char padChar = ' ');
 
-	int sprintf(const char *,...);
-	int vsprintf(const char *, va_list);
+    int sprintf(const char *,...);
+    int vsprintf(const char *, va_list);
 
-	int readLine(istream *);
-	int write(ostream *)const;
-	int write(ostream *, int, int)const;
+    int readLine(istream *);
+    int write(ostream *)const;
+    int write(ostream *, int, int)const;
 
-	String &chop();
-	String &trim(const char = ' ');
-	String &rtrim(const char = ' ');
-	String &ltrim(const char = ' ');
-	String &upper();
-	String &lower();
-	int find(const char, int = 0)const;
-	int find(const char *, int = 0)const;
-	int replace(const String &, const String &);
-	int replace(const String &, const char *);
-	int replace(const char *, const String &);
-	int replace(const char *, const char *);
+    String &chop();
+    String &trim(const char = ' ');
+    String &rtrim(const char = ' ');
+    String &ltrim(const char = ' ');
+    String &upper();
+    String &lower();
+    int find(const char, int = 0)const;
+    int find(const char *, int = 0)const;
+    int replace(const String &, const String &);
+    int replace(const String &, const char *);
+    int replace(const char *, const String &);
+    int replace(const char *, const char *);
 
 
-	String substr(int, int = -1)const;
-	String left(int)const;
-	String right(int)const;
+    String substr(int, int = -1)const;
+    String left(int)const;
+    String right(int)const;
 
-	int compareTo(const String &s)const;
-	int compareTo(const char *s)const;
+    int compareTo(const String &s)const;
+    int compareTo(const char *s)const;
 
-	int intValue(int)const;
+    int intValue(int)const;
 
-	/* operator overloads */
+    /* operator overloads */
 
-	operator const char *()const;
-	char operator [](int)const;
+    operator const char *()const;
+    char operator [](int)const;
 
-	const String &operator = (const char *);
-	const String &operator = (const String &);
+    const String &operator = (const char *);
+    const String &operator = (const String &);
 
-	const String &operator += (const char *);
-	const String &operator += (const String &);
+    const String &operator += (const char *);
+    const String &operator += (const String &);
 
-	friend String operator +(const String &, const String &);
-	friend String operator +(const String &, const char *);
-	friend String operator +(const char *, const String &);
-	friend String operator +(const String &, int);
-	friend String operator +(const String &, double);
+    friend String operator +(const String &, const String &);
+    friend String operator +(const String &, const char *);
+    friend String operator +(const char *, const String &);
+    friend String operator +(const String &, int);
+    friend String operator +(const String &, long);
+    friend String operator +(const String &, double);
 
-	friend int operator ==(const String &, const String &);
-	friend int operator ==(const String &, const char *);
-	friend int operator ==(const char *, const String &);
-	friend int operator ==(const String &, const int);
-	friend int operator ==(const int, const String &);
+    friend int operator ==(const String &, const String &);
+    friend int operator ==(const String &, const char *);
+    friend int operator ==(const char *, const String &);
+    friend int operator ==(const String &, const int);
+    friend int operator ==(const int, const String &);
 
-	friend int operator !=(const String &, const String &);
-	friend int operator !=(const String &, const char *);
-	friend int operator !=(const char *, const String &);
+    friend int operator !=(const String &, const String &);
+    friend int operator !=(const String &, const char *);
+    friend int operator !=(const char *, const String &);
 };
 
 #endif /* _CBT_STRING_H */

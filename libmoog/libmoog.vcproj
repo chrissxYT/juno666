@@ -132,6 +132,9 @@
 				RelativePath="ConnectionManager.cpp">
 			</File>
 			<File
+				RelativePath=".\Control.cpp">
+			</File>
+			<File
 				RelativePath="DataBlock.cpp">
 			</File>
 			<File
@@ -198,6 +201,9 @@
 				RelativePath="Output.cpp">
 			</File>
 			<File
+				RelativePath=".\Phaser.cpp">
+			</File>
+			<File
 				RelativePath="pitch.cpp">
 			</File>
 			<File
@@ -245,6 +251,9 @@
 			</File>
 			<File
 				RelativePath="ConnectionManager.h">
+			</File>
+			<File
+				RelativePath=".\Control.h">
 			</File>
 			<File
 				RelativePath="DataBlock.h">
@@ -314,6 +323,9 @@
 			</File>
 			<File
 				RelativePath="Output.h">
+			</File>
+			<File
+				RelativePath=".\Phaser.h">
 			</File>
 			<File
 				RelativePath="pitch.h">

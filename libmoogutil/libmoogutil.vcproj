@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="libmoogutil"
-	OwnerKey="{EAF909A5-FA59-4C3D-9431-0FCC20D5BCF9}"
 	ProjectGUID="{C6B4AEFD-F334-49CA-AA5F-3438664B6B69}"
 	Keyword="Win32Proj">
 	<Platforms>
@@ -58,31 +57,22 @@
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="4"
-			CharacterSet="2"
-			WholeProgramOptimization="TRUE">
+			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/I.. /D STRING_WITHOUT_NUMBER /D LOCAL_RCSID"
 				Optimization="2"
-				GlobalOptimizations="TRUE"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="TRUE"
-				ImproveFloatingPointConsistency="FALSE"
-				FavorSizeOrSpeed="1"
+				InlineFunctionExpansion="1"
+				ImproveFloatingPointConsistency="TRUE"
 				OmitFramePointers="TRUE"
-				OptimizeForProcessor="2"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				StringPooling="TRUE"
-				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
-				StructMemberAlignment="0"
 				EnableFunctionLevelLinking="TRUE"
-				EnableEnhancedInstructionSet="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="3"
-				CallingConvention="1"/>
+				DebugInformationFormat="3"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -150,9 +140,6 @@
 			</File>
 			<File
 				RelativePath="String.h">
-			</File>
-			<File
-				RelativePath=".\valuehelper.h">
 			</File>
 		</Filter>
 	</Files>

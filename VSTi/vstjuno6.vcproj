@@ -3,7 +3,6 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="vstjuno6"
-	OwnerKey="{EAF909A5-FA59-4C3D-9431-0FCC20D5BCF9}"
 	ProjectGUID="{0BE38C13-3D1F-4DB2-8D5E-AC1248551703}"
 	SccProjectName=""
 	SccLocalPath="">
@@ -44,10 +43,9 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="../lib/libmoogvst_d.lib odbc32.lib odbccp32.lib"
-				OutputFile="VstJuno6_d.dll"
+				OutputFile="../bin/VstJuno6_d.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				IgnoreDefaultLibraryNames="libcmtd.lib;libmmt.lib"
 				ModuleDefinitionFile=".\vstjuno6.def"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug/VstJuno6.pdb"
@@ -87,26 +85,17 @@
 			IntermediateDirectory=".\Release"
 			ConfigurationType="2"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			WholeProgramOptimization="TRUE">
+			ATLMinimizesCRunTimeLibraryUsage="FALSE">
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/I.."
-				Optimization="2"
-				GlobalOptimizations="TRUE"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="TRUE"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="TRUE"
-				OptimizeForProcessor="2"
+				InlineFunctionExpansion="1"
+				OptimizeForProcessor="1"
 				AdditionalIncludeDirectories="./common"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;WINDOWS=1"
 				StringPooling="TRUE"
-				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
-				StructMemberAlignment="0"
 				EnableFunctionLevelLinking="TRUE"
-				EnableEnhancedInstructionSet="0"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\Release/vstjuno6.pch"
 				AssemblerListingLocation=".\Release/"
@@ -114,7 +103,6 @@
 				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="TRUE"
-				CallingConvention="1"
 				CompileAs="0"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
@@ -122,7 +110,7 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="../lib/libmoogvst.lib odbc32.lib odbccp32.lib"
-				OutputFile="VSTJuno6.dll"
+				OutputFile="C:\Program Files\emagic\Logic 5\VstPlugIns\VstJuno6.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				IgnoreAllDefaultLibraries="FALSE"
@@ -171,12 +159,6 @@
 			</File>
 			<File
 				RelativePath="juno_keyboard.cpp">
-			</File>
-			<File
-				RelativePath=".\JunoUI.h">
-			</File>
-			<File
-				RelativePath=".\UITypes.h">
 			</File>
 			<File
 				RelativePath="VstJuno6.cpp">
@@ -241,10 +223,25 @@
 				RelativePath="common\vstcontrols.h">
 			</File>
 			<File
+				RelativePath=".\common\vstfxstore.h">
+			</File>
+			<File
 				RelativePath="common\vstgui.cpp">
 			</File>
 			<File
 				RelativePath="common\vstgui.h">
+			</File>
+			<File
+				RelativePath=".\common\vstplugscarbon.h">
+			</File>
+			<File
+				RelativePath=".\common\vstplugsmac.h">
+			</File>
+			<File
+				RelativePath=".\common\vstplugsmacho.h">
+			</File>
+			<File
+				RelativePath=".\common\vstplugsquartz.h">
 			</File>
 		</Filter>
 		<Filter

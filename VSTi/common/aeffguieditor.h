@@ -42,10 +42,6 @@
 #include "AEffEditor.hpp"
 #endif
 
-#ifndef __audioeffectx__
-#include "audioeffectx.h"
-#endif
-
 #ifndef __vstgui__
 #include "vstgui.h"
 #endif
@@ -103,9 +99,6 @@ public :
 	#else
 	CFrame *getFrame () { return frame; }
 	#endif
-
-	virtual void beginEdit (long index) { ((AudioEffectX*)effect)->beginEdit (index); }
-	virtual void endEdit (long index) { ((AudioEffectX*)effect)->endEdit (index); }
 
 //---------------------------------------
 protected:

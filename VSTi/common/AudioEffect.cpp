@@ -21,7 +21,7 @@
 #endif
 
 //-------------------------------------------------------------------------------------------------------
-long __cdecl dispatchEffectClass (AEffect *e, long opCode, long index, long value, void *ptr, float opt)
+long dispatchEffectClass (AEffect *e, long opCode, long index, long value, void *ptr, float opt)
 {
 	AudioEffect *ae = (AudioEffect*)(e->object);
 
@@ -36,28 +36,28 @@ long __cdecl dispatchEffectClass (AEffect *e, long opCode, long index, long valu
 }
 
 //-------------------------------------------------------------------------------------------------------
-float __cdecl getParameterClass (AEffect *e, long index)
+float getParameterClass (AEffect *e, long index)
 {
 	AudioEffect *ae = (AudioEffect*)(e->object);
 	return ae->getParameter (index);
 }
 
 //-------------------------------------------------------------------------------------------------------
-void __cdecl setParameterClass (AEffect *e, long index, float value)
+void setParameterClass (AEffect *e, long index, float value)
 {
 	AudioEffect *ae = (AudioEffect*)(e->object);
 	ae->setParameter (index, value);
 }
 
 //-------------------------------------------------------------------------------------------------------
-void __cdecl processClass (AEffect *e, float **inputs, float **outputs, long sampleFrames)
+void processClass (AEffect *e, float **inputs, float **outputs, long sampleFrames)
 {
 	AudioEffect *ae = (AudioEffect*)(e->object);
 	ae->process (inputs, outputs, sampleFrames);
 }
 
 //-------------------------------------------------------------------------------------------------------
-void __cdecl processClassReplacing (AEffect *e, float **inputs, float **outputs, long sampleFrames)
+void processClassReplacing (AEffect *e, float **inputs, float **outputs, long sampleFrames)
 {
 	AudioEffect *ae = (AudioEffect*)(e->object);
 	ae->processReplacing (inputs, outputs, sampleFrames);

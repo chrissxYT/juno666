@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/06/25 10:38:42 $
+ * $Revision: 1.3 $$Date: 2004/09/04 10:39:53 $
  */
 
 #include <libmoogutil/String.h>
@@ -27,32 +27,32 @@
 
 void learn(MoogObject *obj, double data, long userdata)
 {
-	((Control *)obj)->midilearn(data, userdata);
+    ((Control *)obj)->midilearn(data, userdata);
 }
 void controlmap(MoogObject *obj, double data, long userdata)
 {
-	((Control *)obj)->controlMapping(data, userdata);
+    ((Control *)obj)->controlMapping(data, userdata);
 }
 void Control::controlMapping(double data, long userdata)
 {
-	getOutput((String)"control" + userdata + (String)"_change")->setData(data);
+    getOutput((String)"control" + userdata + "_change")->setData(data);
 }
 void Control::midilearn(double data, long userdata)
 {
-	if (data > 0)
-		learning = true;
-	else
-		learning = false;
+    if (data > 0)
+        learning = true;
+    else
+        learning = false;
 }
 
 Control::Control(Scheduler *sched): MoogObject(sched, NULL)
 {
 
-	// for (int i=0;i<128;i++)
-	{
-//		addInput((String)"map_control_"+i,controlmap,i,0);
-	}
+    // for (int i=0;i<128;i++)
+    {
+//      addInput((String)"map_control_"+i,controlmap,i,0);
+    }
 //   addInput("learn"
-	addOutput("midi_learn", "MIDI Control Learn", WAY2, false); // midi control learn function
-	learning = false;
+    addOutput("midi_learn", "MIDI Control Learn", WAY2, false); // midi control learn function
+    learning = false;
 }
