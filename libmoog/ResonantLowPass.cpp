@@ -56,17 +56,17 @@ void FilterPrototype::setSectionCoef(int section,
 
 /* ************************ */
 
-void ResonantLowPass_gainChanged(MoogObject *o, double data, long userData)
+void ResonantLowPass_gainChanged(MoogObject *o, double data, long)
 {
     ((ResonantLowPass *)o)->gainChanged(data);
 }
 
-void ResonantLowPass_cutoffChanged(MoogObject *o, double data, long userData)
+void ResonantLowPass_cutoffChanged(MoogObject *o, double data, long)
 {
     ((ResonantLowPass *)o)->cutoffChanged(data);
 }
 
-void ResonantLowPass_resonanceChanged(MoogObject *o, double data, long userData)
+void ResonantLowPass_resonanceChanged(MoogObject *o, double data, long )
 {
     ((ResonantLowPass *)o)->resonanceChanged(data);
 }

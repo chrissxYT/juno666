@@ -98,7 +98,7 @@ void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwP
 #endif
 
 
-void midi_holdChanged(MoogObject *obj,double data,long userdata)
+void midi_holdChanged(MoogObject *obj,double data,long)
 {
 ((MidiInput*)obj)->holdChanged(data);
 }
@@ -129,12 +129,12 @@ nvoices(nv)
     for (int i = 0;i < nvoices;i++)
     {
         voices[i].note = -1;
-        sprintf(tmpname, "sig%d", i);
-        puts("adding output 1");
-        voices[i].pitchOutput = addOutput(tmpname, false);
-        sprintf(tmpname, "amp%d", i);
-        puts("adding output 2");
-        voices[i].gateOutput = addOutput(tmpname, false);
+        sprintf(tmpname, "voice%d_pitch", i);
+   
+		voices[i].pitchOutput = jc->getOutput(tmpname);//addOutput(tmpname, false);
+        sprintf(tmpname, "voice%d_gate", i);
+        
+		voices[i].gateOutput = jc->getOutput(tmpname);//addOutput(tmpname, false);
     }
 
 	addInput("hold_switch", midi_holdChanged, 0, 1);

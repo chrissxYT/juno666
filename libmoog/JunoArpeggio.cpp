@@ -31,22 +31,22 @@ void JunoArpeggio_gateChanged(MoogObject *o, double data, long userData)
     ((JunoArpeggio *)o)->gateChanged(userData, data);
 }
 
-void JunoArpeggio_onoffChanged(MoogObject *o, double data, long userData)
+void JunoArpeggio_onoffChanged(MoogObject *o, double data, long)
 {
     ((JunoArpeggio *)o)->onoffChanged(data);
 }
 
-void JunoArpeggio_modeChanged(MoogObject *o, double data, long userData)
+void JunoArpeggio_modeChanged(MoogObject *o, double data, long)
 {
     ((JunoArpeggio *)o)->modeChanged(data);
 }
 
-void JunoArpeggio_rangeChanged(MoogObject *o, double data, long userData)
+void JunoArpeggio_rangeChanged(MoogObject *o, double data, long)
 {
     ((JunoArpeggio *)o)->rangeChanged(data);
 }
 
-void JunoArpeggio_rateChanged(MoogObject *o, double data, long userData)
+void JunoArpeggio_rateChanged(MoogObject *o, double data, long)
 {
     ((JunoArpeggio *)o)->rateChanged(data);
 }
@@ -63,8 +63,10 @@ numVoices(voices)
     NUM_VOICES = voices;
     //addInput("", JunoArpeggio_Changed, 0, 1);
     //PATCH(jc, "", this, "");
+	notes.next = &notes;
+	notes.prev = &notes;
 
-    INIT_LIST_HEAD(&notes);
+    //INIT_LIST_HEAD(&notes);
    #ifndef POSIX
     InitializeCriticalSection(&listMutex);
    #else

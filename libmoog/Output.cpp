@@ -58,13 +58,15 @@ void Output::disconnect(ConnectionInfo *info)
 	{
 		hasEventInputs = false;
 		connections.resetIterator();
-		while ((info = connections.getNextConnection()))
+		info = connections.getNextConnection();
+		while (info)
 		{
 			if (info->input->callback != NULL)
 			{
 				hasEventInputs = true;
 				break;
 			}
+			info = connections.getNextConnection();
 		}
 	}
 

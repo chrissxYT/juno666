@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.7 $$Date: 2004/04/15 12:58:08 $
+ * $Revision: 1.8 $$Date: 2004/04/20 15:01:35 $
  */
 #ifndef _OUTPUT_H
 #define _OUTPUT_H
@@ -71,13 +71,15 @@ public:
 
 			//FIXME: is this thread safe???
 			connections.resetIterator();
-			while ((info = connections.getNextConnection()))
+			info = connections.getNextConnection();
+			while (info)
 			{
 				if (!continuousOutput ||
 					++info->input->currentTimeout == info->input->timescale)
 				{
 					info->input->doCallback(data);
 				}
+			info = connections.getNextConnection();
 			}
 		}
 	}

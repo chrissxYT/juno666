@@ -27,83 +27,83 @@ extern void setScope(int voice);
 
 #define JUNO_CONTROL_RATE 32
 
-void JunoVoice_envChanged(MoogObject *o, double data, long userData)
+void JunoVoice_envChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->envChanged(data);
 }
 
-void JunoVoice_lfoChanged(MoogObject *o, double data, long userData)
+void JunoVoice_lfoChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->lfoChanged(data);
 }
 
-void JunoVoice_kbdChanged(MoogObject *o, double data, long userData)
+void JunoVoice_kbdChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->kbdChanged(data);
 }
 
-void JunoVoice_benderChanged(MoogObject *o, double data, long userData)
+void JunoVoice_benderChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->benderChanged(data);
 }
 
-void JunoVoice_benderdcoChanged(MoogObject *o, double data, long userData)
+void JunoVoice_benderdcoChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->benderdcoChanged(data);
 }
 
-void JunoVoice_bendervcfChanged(MoogObject *o, double data, long userData)
+void JunoVoice_bendervcfChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->bendervcfChanged(data);
 }
 
-void JunoVoice_subSwitchChanged(MoogObject *o, double data, long userData)
+void JunoVoice_subSwitchChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->subSwitchChanged(data);
 }
 
-void JunoVoice_dcolfoChanged(MoogObject *o, double data, long userData)
+void JunoVoice_dcolfoChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->dcolfoChanged(data);
 }
 
-void JunoVoice_pwmModeChanged(MoogObject *o, double data, long userData)
+void JunoVoice_pwmModeChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->pwmModeChanged(data);
 }
 
-void JunoVoice_vcffrqChanged(MoogObject *o, double data, long userData)
+void JunoVoice_vcffrqChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->vcffrqChanged(data);
 }
 
-void JunoVoice_vcfresChanged(MoogObject *o, double data, long userData)
+void JunoVoice_vcfresChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->vcfresChanged(data);
 }
 
-void JunoVoice_vcfenvinvertChanged(MoogObject *o, double data, long userData)
+void JunoVoice_vcfenvinvertChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->vcfenvinvertChanged(data);
 }
 
-void JunoVoice_vcfenvChanged(MoogObject *o, double data, long userData)
+void JunoVoice_vcfenvChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->vcfenvChanged(data);
 }
 
-void JunoVoice_vcflfoChanged(MoogObject *o, double data, long userData)
+void JunoVoice_vcflfoChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->vcflfoChanged(data);
 }
 
-void JunoVoice_vcfkbdChanged(MoogObject *o, double data, long userData)
+void JunoVoice_vcfkbdChanged(MoogObject *o, double data, long)
 {
     ((JunoVoice *)o)->vcfkbdChanged(data);
 }
 
 
-void JunoVoice_vcamodeChanged(MoogObject *o, double data, long userData)
+void JunoVoice_vcamodeChanged(MoogObject *o, double data, long )
 {
     ((JunoVoice *)o)->vcamodeChanged(data);
 }

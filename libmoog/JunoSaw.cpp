@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/04/17 13:46:21 $
+ * $Revision: 1.7 $$Date: 2004/04/20 15:01:35 $
  */
 #include <math.h>
 #include "JunoSaw.h"
@@ -27,12 +27,12 @@
 #define FRQ   0
 #define AMP   1
 
-void JunoSaw_frqChanged(MoogObject *o, double data, long)
+void JunoSaw_frqChanged(MoogObject *o, double, long)
 {
 	((JunoSaw *)o)->frqChanged();
 }
 
-void JunoSaw_sync(MoogObject *o, double data, long)
+void JunoSaw_sync(MoogObject *o, double, long)
 {
 	((JunoSaw *)o)->sync();
 }

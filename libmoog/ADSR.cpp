@@ -25,37 +25,37 @@
 #define ADSR_SCALE .00010;
 
 void
-adsr_attack_changed(MoogObject *o, double data, long userData)
+adsr_attack_changed(MoogObject *o, double data, long)
 {
     ((ADSR *)o)->attackChanged(data);
 }
 
 void
-adsr_decay_changed(MoogObject *o, double data, long userData)
+adsr_decay_changed(MoogObject *o, double data, long)
 {
     ((ADSR *)o)->decayChanged(data);
 }
 
 void
-adsr_sustain_changed(MoogObject *o, double data, long userData)
+adsr_sustain_changed(MoogObject *o, double data, long)
 {
     ((ADSR *)o)->sustainChanged(data);
 }
 
 void
-adsr_release_changed(MoogObject *o, double data, long userData)
+adsr_release_changed(MoogObject *o, double data, long)
 {
     ((ADSR *)o)->releaseChanged(data);
 }
 
 void
-adsr_amp_changed(MoogObject *o, double data, long userData)
+adsr_amp_changed(MoogObject *o, double data, long)
 {
     ((ADSR *)o)->ampChanged(data);
 }
 
 void
-adsr_trigger_changed(MoogObject *o, double data, long userData)
+adsr_trigger_changed(MoogObject *o, double data, long)
 {
     ((ADSR *)o)->triggerChanged(data);
 }

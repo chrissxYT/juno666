@@ -19,12 +19,12 @@
 #include "Scheduler.h"
 #include "HPF.h"
 
-void HPF_frqChanged(MoogObject *o, double data, long userData)
+void HPF_frqChanged(MoogObject *o, double data, long)
 {
 	((HPF *)o)->frqChanged(data);
 }
 
-void HPF_QChanged(MoogObject *o, double data, long userData)
+void HPF_QChanged(MoogObject *o, double data, long)
 {
 	((HPF *)o)->QChanged(data);
 }

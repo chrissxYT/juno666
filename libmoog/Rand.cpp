@@ -21,7 +21,7 @@
 #include "Rand.h"
 #include "Scheduler.h"
 
-void Rand_freqChanged(MoogObject *o, double data, long userData)
+void Rand_freqChanged(MoogObject *o, double data, long)
 {
 	((Rand *)o)->freqChanged(data);
 }

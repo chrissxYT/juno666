@@ -41,10 +41,6 @@ void JunoKeyboard_masterTuneChanged(MoogObject *o, double data, long)
     ((JunoKeyboard *)o)->masterTuneChanged(data);
 }
 
-void JunoKeyboard_holdChanged(MoogObject *o, double data, long)
-{
-    ((JunoKeyboard *)o)->holdChanged(data);
-}
 
 void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
 {
@@ -74,7 +70,7 @@ numVoices(_numVoices)
 
     memset(savedGateInfo, 0, numVoices * sizeof(int));
 
-    for (int i = 0;i < numVoices;i++)
+   /* for (int i = 0;i < numVoices;i++)
     {
         String tmp1, tmp2;
         tmp1.sprintf("sig%d", i);
@@ -88,19 +84,17 @@ numVoices(_numVoices)
         addInput(tmp2, JunoKeyboard_midiGateChanged, i, 1);
         PATCH(midiInput, tmp1, this, tmp2);
         gateOutputs[i] = control->getOutput(tmp2);
-    }
+    }*/
 
     masterTune = 0;
-    addInput("octave_transpose", JunoKeyboard_octaveTransposeChanged, 0, 1);
-    addInput("transpose_switch", JunoKeyboard_keyTransposeChanged, 0, 1);
-    addInput("master_tune", JunoKeyboard_masterTuneChanged, 0, 1);
-    addInput("hold_switch", JunoKeyboard_holdChanged, 0, 1);
+    //addInput("octave_transpose", JunoKeyboard_octaveTransposeChanged, 0, 1);
+    //addInput("transpose_switch", JunoKeyboard_keyTransposeChanged, 0, 1);
+    //addInput("master_tune", JunoKeyboard_masterTuneChanged, 0, 1);
     addInput("patch_change", Junokeyboard_changePatch, 0, 1);
 
-    PATCH(control, "octave_transpose", this, "octave_transpose");
-    PATCH(control, "transpose_switch", this, "transpose_switch");
-    PATCH(control, "master_tune", this, "master_tune");
-    //PATCH(control, "hold_switch", this, "hold_switch");
+   // PATCH(control, "octave_transpose", this, "octave_transpose");
+   // PATCH(control, "transpose_switch", this, "transpose_switch");
+   // PATCH(control, "master_tune", this, "master_tune");
     PATCH(control, "patch_change", this, "patch_change");
 
     initz = 1;
@@ -232,7 +226,9 @@ void JunoKeyboard::changePatch()
         printf("can't change. highest patch number is %d\n", NUM_PATCHES);
         return;
     }
+	if (control==NULL)return;
     juno_patch *patch = &patches[patchId];
+	if (patch==NULL)return;
     control->MoogObject::getOutput("bender_dco")->setData(patch->bender_dco);
     control->MoogObject::getOutput("bender_vcf")->setData(patch->bender_vcf);
     control->MoogObject::getOutput("lfo_trigger")->setData(patch->lfo_trigger);

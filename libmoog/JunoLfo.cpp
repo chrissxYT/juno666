@@ -22,22 +22,22 @@
 #include "WaveGen.h"
 #include "Scheduler.h"
 
-void JunoLfo_lforateChanged(MoogObject *o, double data, long userData)
+void JunoLfo_lforateChanged(MoogObject *o, double data, long)
 {
     ((JunoLfo *)o)->lforateChanged(data);
 }
 
-void JunoLfo_lfodelayChanged(MoogObject *o, double data, long userData)
+void JunoLfo_lfodelayChanged(MoogObject *o, double data, long)
 {
     ((JunoLfo *)o)->lfodelayChanged(data);
 }
 
-void JunoLfo_lfomodeChanged(MoogObject *o, double data, long userData)
+void JunoLfo_lfomodeChanged(MoogObject *o, double data, long)
 {
     ((JunoLfo *)o)->lfomodeChanged(data);
 }
 
-void JunoLfo_lfotriggerChanged(MoogObject *o, double data, long userData)
+void JunoLfo_lfotriggerChanged(MoogObject *o, double data, long )
 {
     ((JunoLfo *)o)->lfotriggerChanged(data);
 }

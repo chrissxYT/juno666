@@ -18,7 +18,7 @@
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
  *
- * $Revision: 1.5 $$Date: 2004/04/18 22:25:14 $
+ * $Revision: 1.6 $$Date: 2004/04/20 15:01:35 $
  */
 
 #include <stdio.h>
@@ -30,13 +30,13 @@
 #include "Scheduler.h"
 
 void
-oscillator_frq_changed(MoogObject *o, double data, long userData)
+oscillator_frq_changed(MoogObject *o, double data, long )
 {
     ((Oscillator *)o)->frqChanged(data);
 }
 
 void
-oscillator_sync_changed(MoogObject *o, double data, long userData)
+oscillator_sync_changed(MoogObject *o, double data, long )
 {
     ((Oscillator *)o)->syncChanged(data);
 }

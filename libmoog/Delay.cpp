@@ -24,13 +24,13 @@
 #define DELAY_INTERPOLATE
 
 void
-delay_mix_changed(MoogObject *o, double data, long userData)
+delay_mix_changed(MoogObject *o, double data, long)
 {
 	((Delay *)o)->mixChanged(data);
 }
 
 void
-delay_feedback_changed(MoogObject *o, double data, long userData)
+delay_feedback_changed(MoogObject *o, double data, long)
 {
 	((Delay *)o)->feedbackChanged(data);
 }

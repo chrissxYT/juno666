@@ -22,7 +22,7 @@
 #include "GoObject.h"
 #include "Scheduler.h"
 
-RCSID("$Id: GoObject.cpp,v 1.3 2004/04/16 15:23:56 brainslayer Exp $");
+RCSID("$Id: GoObject.cpp,v 1.4 2004/04/20 15:01:35 brainslayer Exp $");
 
 
 
@@ -31,8 +31,12 @@ RCSID("$Id: GoObject.cpp,v 1.3 2004/04/16 15:23:56 brainslayer Exp $");
 GoObject::GoObject(Scheduler *sched)
 {
 	schedule = sched;
-	CLEAR_LIST_NODE(&controlListNode);
-	CLEAR_LIST_NODE(&sampleListNode);
+	
+	controlListNode.next = NULL;
+	controlListNode.prev = NULL;
+	
+	sampleListNode.next = NULL;
+	sampleListNode.prev = NULL;
 
 	goHandle = schedule->nextGoHandle++;
 }

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/04/17 13:46:21 $
+ * $Revision: 1.7 $$Date: 2004/04/20 15:01:35 $
  */
 #include "JunoPulse.h"
 #include "Scheduler.h"
@@ -26,12 +26,12 @@
 #define AMP   1
 #define WIDTH 2
 
-void JunoPulse_horizBoundsChanged(MoogObject *o, double data, long)
+void JunoPulse_horizBoundsChanged(MoogObject *o, double, long)
 {
 	((JunoPulse *)o)->horizBoundsChanged();
 }
 
-void JunoPulse_sync(MoogObject *o, double data, long)
+void JunoPulse_sync(MoogObject *o, double, long)
 {
 	((JunoPulse *)o)->sync();
 }

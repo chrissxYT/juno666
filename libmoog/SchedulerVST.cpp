@@ -28,6 +28,7 @@ Scheduler::Scheduler()
     nextGoHandle = 0;
     tickThread;
     controlRate = 0;
+	controlCount = 0;
     sampleRate = 0;
     sampleControlRatio = DEFAULT_SAMPLE_CONTROL_RATIO;
     nyquistFreq = 44100.0 / 2.0;
@@ -59,8 +60,10 @@ void Scheduler::safeListOp(list_head *node, list_head *list, bool add)
             debug(DEBUG_APPERROR, "Warn: obj already on scheduling list");
             return;
         }
-
-        list_add(node, list);
+		list->next->prev = node;
+		node->next=list->next;
+		node->prev=list;
+		list->next = node;
     }
     else
     {
@@ -80,10 +83,14 @@ void Scheduler::safeListOp(list_head *node, list_head *list, bool add)
         if (node == currentListIter)
         {
             currentListIter = currentListIter->prev;
-        }
+        }	
 
-        list_del(node);
-        CLEAR_LIST_NODE(node);
+		node->next->prev = node->prev;
+	    node->prev->next = node->next;
+
+       
+		node->prev = NULL;
+		node->next = NULL;
     }
 }
 
@@ -101,10 +108,7 @@ void Scheduler::scheduleSampleRate(GoObject *obj, bool schedule)
 
 void Scheduler::run()
 {
-    static int controlCount = 0;
-
     GoObject *obj;
-
     if (controlCount == 0)
     {
         currentListIter = controlRateList.next;
@@ -116,7 +120,7 @@ void Scheduler::run()
                 break;
             }
 
-            obj = list_entry(currentListIter, GoObject, GoObject::controlListNode);
+            obj = list_entry(currentListIter, GoObject, controlListNode);
             obj->controlGo();
             currentListIter = currentListIter->next;
         }

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.11 $$Date: 2004/04/18 16:47:50 $
+ * $Revision: 1.12 $$Date: 2004/04/20 15:01:35 $
  */
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
@@ -64,6 +64,7 @@ public:
     Scheduler();
     ~Scheduler();
 
+	int controlCount;
     int sampleRate;
     int sampleControlRatio;
     double controlRate;

@@ -17,21 +17,21 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/18 22:25:13 $
+ * $Revision: 1.6 $$Date: 2004/04/20 15:01:35 $
  */
 #include "JunoChorus.h"
 
-void JunoChorus_offChanged(MoogObject *o, double data, long userData)
+void JunoChorus_offChanged(MoogObject *o, double data, long)
 {
     ((JunoChorus *)o)->offChanged(data);
 }
 
-void JunoChorus_IChanged(MoogObject *o, double data, long userData)
+void JunoChorus_IChanged(MoogObject *o, double data, long)
 {
     ((JunoChorus *)o)->IChanged(data);
 }
 
-void JunoChorus_IIChanged(MoogObject *o, double data, long userData)
+void JunoChorus_IIChanged(MoogObject *o, double data, long)
 {
     ((JunoChorus *)o)->IIChanged(data);
 }
@@ -73,7 +73,7 @@ JunoChorus::~JunoChorus()
     outputs.removeElement(0);
 }
 
-void JunoChorus::offChanged(double value)
+void JunoChorus::offChanged(double)
 {
     oneOn = false;
     twoOn = false;
