@@ -61,6 +61,7 @@ class JunoVoice: public MoogObject
     //SawWave saw;
     JunoPulse pulse;
     JunoSaw saw;
+	
 public:
     //PulseWave sub;
     JunoPulse sub;
@@ -122,9 +123,11 @@ private:
     void updateVcf();
     void updateFrq();
 
+	bool hasStopped;
+
 public:
     JunoVoice(JunoControl *, int, Rand *_noise, JunoLfo *_lfo, Attenuator *_pwmLfo, Scheduler *sched, ConnectionManager *conn);
-
+	
     ~JunoVoice();
 
     void attachVoice(MoogObject *);
@@ -138,13 +141,17 @@ public:
         else 
             playing = adsr.isPlaying();         
 
-        if(playing)
+        if(playing && hasStopped==true)
         {
-
             pwmAttenuator.on();
+			junolfo->on();
+			pwmLfo->on();
+			
 
             pulse.on();
             saw.on();
+			
+			noise->on();
             sub.on();
             subMix.on();
 
@@ -156,13 +163,19 @@ public:
 
             voiceVol.on();
 
-            return true;
+            
         }
-
+		if (playing == 0 && hasStopped==false)
+		{
+		hasStopped=true;
         pwmAttenuator.off();
+		junolfo->off();
+		pwmLfo->off();
 
         pulse.off();
         saw.off();
+		
+		noise->off();
         sub.off();
         subMix.off();
 
@@ -173,8 +186,8 @@ public:
         gateAdsr.off();
 
         voiceVol.off();
-
-        return false;
+		}
+		return playing>0?true:false;
     }
 
     const char *getClassName()
