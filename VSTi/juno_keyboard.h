@@ -16,6 +16,8 @@ class JunoKeyboard: public MoogObject
     friend void JunoKeyboard_holdChanged(MoogObject *, double, long);
     friend void Junokeyboard_changePatch(MoogObject *o, double data, long userdata);
 
+    int initz; //what is this for ???
+
     int octaveTranspose;
     int keyTransposePressed;
     int keyTranspose;
@@ -66,5 +68,3 @@ int, Scheduler *sched, ConnectionManager *conn);
 };
 
 #endif
-
-

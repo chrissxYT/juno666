@@ -51,8 +51,6 @@ void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
     ((JunoKeyboard *)o)->changePatch();
 }
 
-
-int initz = 0;
 JunoKeyboard::JunoKeyboard(
 JunoControl *_control,
 MidiInput *_midiInput,
@@ -64,6 +62,8 @@ midiInput(_midiInput),
 patches(_patches),
 numVoices(_numVoices)
 {
+    initz = 0;
+
     octaveTranspose = -1;
     keyTransposePressed = 0;
     keyTranspose = 0;
@@ -167,8 +167,8 @@ void JunoKeyboard::gtkKeyReleased(unsigned int voice)
 
 void JunoKeyboard::octaveTransposeChanged(double data)
 {
-if (!initz)
-    return;
+    if (!initz)
+        return;
     //printf("octave transpose changed to %f\n", data);
 
     int octaves = (int)octaveTranspose - (int)data;

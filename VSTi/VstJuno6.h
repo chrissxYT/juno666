@@ -112,8 +112,6 @@ public:
 ConnectionManager* VstJuno6::getConnectionManager();
 
 private:
-    void initProcess();
-
     long currentDelta;
 
     VSTOutput *dsp;

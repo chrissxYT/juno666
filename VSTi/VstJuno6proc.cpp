@@ -42,7 +42,7 @@ void VstJuno6::initSynth(int numVoices)
 
     pwmLfo->set("zro", .5);
 
-    /* fall thru each case */
+    // fall thru each case
     if (numVoices > 64)
     {
         numVoices = 64;
@@ -92,28 +92,6 @@ void VstJuno6::initSynth(int numVoices)
     }
 }
 
-void VstJuno6::initProcess()
-{
-    int numVoices = 6;
-
-    control = new JunoControl(numVoices, schedule);
-
-    midiInput = new MidiInput(control, numVoices, schedule);
-
-    initSynth(numVoices);
-
-    patches = juno_patchset_new();
-
-    String patchFileName = "juno6.patches";
-
-    load_patches(patchFileName, patches);
-
-    keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
-
-    control->MoogObject::getOutput("patch_change")->setData(0);
-
-}
-
 void VstJuno6::process(float **inputs, float **outputs, long sampleFrames)
 {
     processReplacing(inputs, outputs, sampleFrames);
@@ -157,10 +135,8 @@ void VstJuno6::processReplacing(float **inputs, float **outputs, long sampleFram
 
         while (--sampleFrames >= 0)
         {
-
             schedule->run();
         }
-
     }
     else
     {

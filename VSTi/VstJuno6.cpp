@@ -5,11 +5,28 @@
 VstJuno6::VstJuno6(audioMasterCallback audioMaster):
 AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 {
-    setProgram(0);
+    int numVoices = 6;
+
     schedule = new Scheduler();
     schedule->Init();
 
     connection = new ConnectionManager();
+
+    control = new JunoControl(numVoices, schedule);
+
+    midiInput = new MidiInput(control, numVoices, schedule);
+
+    initSynth(numVoices);
+
+    patches = juno_patchset_new();
+
+    String patchFileName = "juno6.patches";
+
+    load_patches(patchFileName, patches);
+
+    keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
+
+    setProgram(0);
 
     if (audioMaster)
     {
@@ -21,7 +38,6 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
         isSynth();
         setUniqueID('Jun6');
     }
-    initProcess();
     suspend();
 }
 
@@ -139,8 +155,6 @@ bool VstJuno6::getProgramNameIndexed(long category, long index, char *text)
 {
     if (index < kNumPrograms)
     {
-//        sprintf(text,"%4.4f",(float)*control->getOutput(0)->getData());
-
         strcpy(text, patches[index].name);
         return true;
     }
