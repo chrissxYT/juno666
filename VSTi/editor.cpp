@@ -65,6 +65,11 @@ Editor::open (void* ptr)
     addSlider(726, 33, "env_sustain");
     addSlider(743, 33, "env_release");
 
+    for(int i=0; i<control->getNumOutputs(); i++)
+    {
+        setParameter(i, (float) * control->getOutput(i)->getData());
+    }
+
     return true;    
 }
 
