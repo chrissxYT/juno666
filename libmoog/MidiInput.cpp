@@ -441,7 +441,7 @@ MidiInput::doPitchBend(unsigned int amount)
 
     double pitchBend = (double)amount / 8192 - 1.0;
 
-#ifdef KARL_BEND
+/*#ifdef KARL_BEND
     for (int i = 0;i < nvoices;i++)
     {
         if (voices[i] != -1)
@@ -450,9 +450,9 @@ MidiInput::doPitchBend(unsigned int amount)
                 CPS(midi_notes[voices[i]]) * pitchBend;
         }
     }
-#else
+#else*/
     outputs[0].setData(pitchBend);
-#endif
+//#endif
 }
 
 void

@@ -279,6 +279,7 @@ void JunoVoice::kbdChanged(double data)
 void JunoVoice::benderChanged(double data)
 {
     if (!init)return;
+	
     //printf("bender changed to %f\n", data);
     bender = data;
     updateVcf();
@@ -288,6 +289,7 @@ void JunoVoice::benderChanged(double data)
 void JunoVoice::benderdcoChanged(double data)
 {
     if (!init)return;
+	
     //printf("benderdco changed to %f\n", data);
     benderdco = data;
     updateFrq();
@@ -447,8 +449,8 @@ void JunoVoice::updateVcf()
 void JunoVoice::updateFrq()
 {
     if (!init)return;
-    double frq = kbd * pow((double)2, (double)(2 * lfo * dcolfo / 12) * pow((double)2, (double)(bender * benderdco)));
-
+	double frq = kbd * pow(2.0, 2 * lfo * dcolfo / 12) * pow(2.0, bender * benderdco);
+ 	
     pulse.set("frq", frq);
     saw.set("frq", frq);
     sub.set("frq", frq / 2);
