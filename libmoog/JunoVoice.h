@@ -116,8 +116,6 @@ private:
     void updateVcf();
     void updateFrq();
 
-    MoogObject *voiceSrc;
-
     Rand       *noise;
     JunoLfo    *junolfo;
     Attenuator *pwmLfo;
@@ -131,10 +129,49 @@ public:
 
     int isPlaying()
     {
-	if (vcamode==1)
-	return gateAdsr.isPlaying();
-	else
-        return adsr.isPlaying();
+        int playing;
+
+        if (vcamode==1) 
+            playing = gateAdsr.isPlaying(); 
+        else 
+            playing = adsr.isPlaying();         
+
+        if(playing)
+        {
+            pwmAttenuator.on();
+
+            pulse.on();
+            saw.on();
+            sub.on();
+            subMix.on();
+
+            vcf.on();
+            balance.on();
+
+            adsr.on();
+            gateAdsr.on();
+
+            voiceVol.on();
+
+            return true;
+        }
+
+        pwmAttenuator.off();
+
+        pulse.off();
+        saw.off();
+        sub.off();
+        subMix.off();
+
+        vcf.off();
+        balance.off();
+
+        adsr.off();
+        gateAdsr.off();
+
+        voiceVol.off();
+
+        return false;
     }
 
     const char *getClassName()

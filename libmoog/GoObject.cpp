@@ -22,7 +22,7 @@
 #include "GoObject.h"
 #include "Scheduler.h"
 
-RCSID("$Id: GoObject.cpp,v 1.4 2004/04/20 15:01:35 brainslayer Exp $");
+RCSID("$Id: GoObject.cpp,v 1.5 2004/04/24 22:24:10 strepto Exp $");
 
 
 
@@ -30,38 +30,47 @@ RCSID("$Id: GoObject.cpp,v 1.4 2004/04/20 15:01:35 brainslayer Exp $");
 
 GoObject::GoObject(Scheduler *sched)
 {
-	schedule = sched;
-	
-	controlListNode.next = NULL;
-	controlListNode.prev = NULL;
-	
-	sampleListNode.next = NULL;
-	sampleListNode.prev = NULL;
+    schedule = sched;
+    
+    controlListNode.next = NULL;
+    controlListNode.prev = NULL;
+    
+    sampleListNode.next = NULL;
+    sampleListNode.prev = NULL;
 
-	goHandle = schedule->nextGoHandle++;
+    goHandle = schedule->nextGoHandle++;
 }
 
 bool GoObject::isControlScheduled()
 {
-	return controlListNode.next != NULL;
+    return controlListNode.next != NULL;
 }
 
 bool GoObject::isSampleScheduled()
 {
-	return sampleListNode.next != NULL;
+    return sampleListNode.next != NULL;
 }
 
 void GoObject::controlGo()
 {
-	//FIXME: cast GoObject as MoogObject
-	debug(DEBUG_APPERROR, "GoObject::controlGo should never get called! [%s]",
-		((MoogObject *)this)->getClassName());
+    //FIXME: cast GoObject as MoogObject
+    debug(DEBUG_APPERROR, "GoObject::controlGo should never get called! [%s]",
+        ((MoogObject *)this)->getClassName());
 }
 
 void GoObject::sampleGo()
 {
-	//FIXME: cast GoObject as MoogObject
-	debug(DEBUG_APPERROR, "GoObject::sampleGo should never get called! [%s]",
-		((MoogObject *)this)->getClassName());
+    //FIXME: cast GoObject as MoogObject
+    debug(DEBUG_APPERROR, "GoObject::sampleGo should never get called! [%s]",
+        ((MoogObject *)this)->getClassName());
 }
 
+void GoObject::on()
+{
+    schedule->scheduleSampleRate(this, true);
+}
+
+void GoObject::off()
+{
+    schedule->scheduleSampleRate(this, false);
+}

@@ -229,7 +229,6 @@ JunoVoice::~JunoVoice()
 
 void JunoVoice::attachVoice(MoogObject *src)
 {
-    voiceSrc = src;
     PATCH(src, (String)"voice" + voiceNum + "_gate", &adsr, "trig");
     PATCH(src, (String)"voice" + voiceNum + "_gate", &gateAdsr, "trig");
     PATCH(src, (String)"voice" + voiceNum + "_pitch", this, "kbd");
@@ -426,9 +425,10 @@ void JunoVoice::updateVcf()
     tmp += env * vcfenv * vcfenvinvert;
     //printf("tmp is %f\n", tmp);
 
-    tmp = tmp * pow((double)2, (double)(bender * bendervcf));
+    tmp *= pow((double)2, (double)(bender * bendervcf));
 
     tmp = pow(tmp, 4.0);
+
     if (tmp >= .999)
         tmp = .999;
 

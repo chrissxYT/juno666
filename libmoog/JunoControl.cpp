@@ -17,15 +17,13 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.9 $$Date: 2004/04/22 22:59:09 $
+ * $Revision: 1.10 $$Date: 2004/04/24 22:24:10 $
  */
 
 #include <libmoogutil/String.h>
 #include "JunoControl.h"
 
 //types
-
-
 
 JunoControl::JunoControl(int voices, Scheduler *sched): MoogObject(sched, NULL)
 {

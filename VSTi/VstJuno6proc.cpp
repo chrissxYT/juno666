@@ -100,22 +100,16 @@ fclose ( verbose );
 */
 int VstJuno6::isAnyVoicePlaying()
 {
-    static int lastFound = 0;
-
-    if(voice[lastFound]->isPlaying())
-    {
-        return true;
-    }
+    int found = false;
 
     for (int i = 0;i < numVoices;i++)
     {
         if(voice[i]->isPlaying())
         {
-            lastFound = i;
-            return true;
+            found = true;
         }
     }
-    return false;
+    return found;
 }
 
 void VstJuno6::processReplacing(float **inputs, float **outputs, long sampleFrames)

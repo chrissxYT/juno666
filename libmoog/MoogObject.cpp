@@ -209,4 +209,3 @@ Output *MoogObject::getOutput(const char *name)
 
     return (&outputs[num]);
 }
-
