@@ -6,146 +6,182 @@ extern JunoControl *control;
 extern juno_patch *patches;
 extern JunoKeyboard *keyboard;
 
-VstJuno6::VstJuno6 (audioMasterCallback audioMaster) : 
-AudioEffectX (audioMaster, kNumPrograms, kNumParams)
+VstJuno6::VstJuno6(audioMasterCallback audioMaster):
+AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 {
-    setProgram (0);
-	Scheduler::Init();   
-    if (audioMaster)
-    {
-        setNumInputs (0);
-        setNumOutputs (kNumOutputs);
-        canProcessReplacing ();
-        hasVu (false);
-        hasClip (false);
-        isSynth ();
-        setUniqueID ('Jun6');
-    }
-    initProcess ();
-    suspend ();
+	setProgram(0);
+	Scheduler::Init();
+	if (audioMaster)
+	{
+		setNumInputs(0);
+		setNumOutputs(kNumOutputs);
+		canProcessReplacing();
+		hasVu(false);
+		hasClip(false);
+		isSynth();
+		setUniqueID('Jun6');
+	}
+	initProcess();
+	suspend();
 }
 
-VstJuno6::~VstJuno6 ()
+VstJuno6::~VstJuno6()
 {
 	Scheduler::DeInit();
 }
 
-void VstJuno6::setProgram (long program)
+void VstJuno6::setProgram(long program)
 {
-    if (!control || program < 0 || program >= kNumPrograms)
-        return;
+	if (!control || program < 0 || program >= kNumPrograms)
+		return;
 
-    curProgram = program;
+	curProgram = program;
 
-    control->MoogObject::getOutput("patch_change")->setData(program);
+	control->MoogObject::getOutput("patch_change")->setData(program);
 }
 
-void VstJuno6::setProgramName (char *name)
+void VstJuno6::setProgramName(char *name)
 {
-    strncpy (patches[curProgram].name, name, PATCH_NAME_LEN);
+	strncpy(patches[curProgram].name, name, PATCH_NAME_LEN);
 }
 
-void VstJuno6::getProgramName (char *name)
+void VstJuno6::getProgramName(char *name)
 {
-    strcpy (name, patches[curProgram].name);
+	strcpy(name, patches[curProgram].name);
 }
 
-void VstJuno6::getParameterLabel (long index, char *label)
+void VstJuno6::getParameterLabel(long index, char *label)
 {
-    strcpy (label, "roentgen");
+	strcpy(label, "roentgen");
 }
 
-void VstJuno6::getParameterDisplay (long index, char *text)
+void VstJuno6::getParameterDisplay(long index, char *text)
 {
-    text[0] = 0;
+	text[0] = 0;
 
-    if(control)
-    {
-        float2string ((float)*control->getOutput(index)->getData(), text);
-    }
+	if (control)
+	{
+		float2string((float) * control->getOutput(index)->getData(), text);
+	}
 }
 
-void VstJuno6::getParameterName (long index, char *label)
+void VstJuno6::getParameterName(long index, char *label)
 {
-    if(control)
-    {
+	if (control)
+	{
 		const char *name = control->getOutput(index)->getDisplayName();
-		if (name!=NULL)
+		if (name != NULL)
 			strcpy(label, name);
-		else 
-			strcpy(label,"");
-    }
+		else
+			strcpy(label, "");
+	}
 }
 
-void VstJuno6::setParameter (long index, float value)
+void VstJuno6::setParameter(long index, float value)
 {
-    if(control)
-    {
-        control->getOutput(index)->setData(value);
-    }
+	if (control)
+	{
+		switch (control->getOutput(index)->getType())
+		{
+			case WAY2:
+				if (value > 0.1)
+					value = 1;
+				else
+					value = 0;
+				control->getOutput(index)->setData(value);
+				break;
+			case WAY3:
+				if (value < 0.4)
+					value = -1;
+				else
+					if (value > 0.6)
+						value = 1;
+					else
+						value = 0;
+				control->getOutput(index)->setData(value);
+				break;
+			default:
+				control->getOutput(index)->setData(value);
+		}
+	}
 }
 
-float VstJuno6::getParameter (long index)
+float VstJuno6::getParameter(long index)
 {
-    if(control)
-    {
-        return (float)*control->getOutput(index)->getData();
-    }
-    else
-    {
-        return 0;
-    }    
+	if (control)
+	{
+		float value = (float) * control->getOutput(index)->getData();
+		switch (control->getOutput(index)->getType())
+		{
+			case WAY2:
+				return value;
+				break;
+			case WAY3:
+				value += 1;
+				value /= 2;
+				return value;
+				break;
+			default:
+				return value;
+
+		}
+		return value;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
-bool VstJuno6::getProgramNameIndexed (long category, long index, char* text)
+bool VstJuno6::getProgramNameIndexed(long category, long index, char *text)
 {
-    if (index < kNumPrograms)
-    {
+	if (index < kNumPrograms)
+	{
 //        sprintf(text,"%4.4f",(float)*control->getOutput(0)->getData());
 
-        strcpy (text, patches[index].name);
-        return true;
-    }
-    return false;
+		strcpy(text, patches[index].name);
+		return true;
+	}
+	return false;
 }
 
-bool VstJuno6::copyProgram (long destination)
+bool VstJuno6::copyProgram(long destination)
 {
 /*
     if (destination < kNumPrograms)
     {
-        programs[destination] = programs[curProgram];
-        return true;
+	programs[destination] = programs[curProgram];
+	return true;
     }
 */
-    return false;
+	return false;
 }
 
-bool VstJuno6::getEffectName (char* name)
+bool VstJuno6::getEffectName(char *name)
 {
-    strcpy (name, "VstJuno6");
-    return true;
+	strcpy(name, "VstJuno6");
+	return true;
 }
 
-bool VstJuno6::getVendorString (char* text)
+bool VstJuno6::getVendorString(char *text)
 {
-    strcpy (text, "Brainslayer & Strepto");
-    return true;
+	strcpy(text, "Brainslayer & Strepto");
+	return true;
 }
 
-bool VstJuno6::getProductString (char* text)
+bool VstJuno6::getProductString(char *text)
 {
-    strcpy (text, "Juno 106");
-    return true;
+	strcpy(text, "Juno 106");
+	return true;
 }
 
-long VstJuno6::canDo (char* text)
+long VstJuno6::canDo(char *text)
 {
-    if (!strcmp (text, "receiveVstEvents"))
-        return 1;
-    if (!strcmp (text, "receiveVstMidiEvent"))
-        return 1;
-    if (!strcmp (text, "midiProgramNames"))
-        return 1;
-    return -1;  // explicitly can't do; 0 => don't know
+	if (!strcmp(text, "receiveVstEvents"))
+		return 1;
+	if (!strcmp(text, "receiveVstMidiEvent"))
+		return 1;
+	if (!strcmp(text, "midiProgramNames"))
+		return 1;
+	return -1; // explicitly can't do; 0 => don't know
 }

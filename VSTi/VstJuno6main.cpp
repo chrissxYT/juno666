@@ -13,29 +13,29 @@
 //------------------------------------------------------------------------
 #if BEOS
 #define main main_plugin
-extern "C" __declspec(dllexport) AEffect *main_plugin (audioMasterCallback audioMaster);
+extern "C" __declspec(dllexport) AEffect *main_plugin(audioMasterCallback audioMaster);
 
 #elif MACX
 #define main main_macho
-extern "C" AEffect *main_macho (audioMasterCallback audioMaster);
+extern "C" AEffect *main_macho(audioMasterCallback audioMaster);
 
 #else
-AEffect *main (audioMasterCallback audioMaster);
+AEffect *main(audioMasterCallback audioMaster);
 #endif
 
 //------------------------------------------------------------------------
-AEffect *main (audioMasterCallback audioMaster)
+AEffect *main(audioMasterCallback audioMaster)
 {
-    // Get VST Version
-    if (!audioMaster (0, audioMasterVersion, 0, 0, 0, 0))
-        return 0;  // old version
+	// Get VST Version
+	if (!audioMaster(0, audioMasterVersion, 0, 0, 0, 0))
+		return 0; // old version
 
-    // Create the AudioEffect
-    VstJuno6* effect = new VstJuno6 (audioMaster);
-    if (!effect)
-        return 0;
+	// Create the AudioEffect
+	VstJuno6 *effect = new VstJuno6(audioMaster);
+	if (!effect)
+		return 0;
 
-    return effect->getAeffect ();
+	return effect->getAeffect();
 }
 
 #if MAC
@@ -45,10 +45,10 @@ AEffect *main (audioMasterCallback audioMaster)
 //------------------------------------------------------------------------
 #if WIN32
 #include <windows.h>
-void* hInstance;
-BOOL WINAPI DllMain (HINSTANCE hInst, DWORD dwReason, LPVOID lpvReserved)
+void *hInstance;
+BOOL WINAPI DllMain(HINSTANCE hInst, DWORD dwReason, LPVOID lpvReserved)
 {
-    hInstance = hInst;
-    return 1;
+	hInstance = hInst;
+	return 1;
 }
 #endif
