@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/06 09:54:22 $
+ * $Revision: 1.5 $$Date: 2004/04/14 12:28:55 $
  */
 #ifndef _OUTPUT_H
 #define _OUTPUT_H
@@ -36,6 +36,7 @@ class Output: public NamedObject
 	bool continuousOutput;
 
 public:
+	Output(const char *name,const char *displayname, bool);
 	Output(const char *name, bool);
 
 	void connect(ConnectionInfo *);

@@ -20,7 +20,13 @@
 #include "Output.h"
 #include "ConnectionInfo.h"
 
-Output::Output(const char *n, bool _continuousOutput): NamedObject(n)
+Output::Output(const char *n,const char *displayname, bool _continuousOutput): NamedObject(n,displayname)
+{
+	data = 0;
+	hasEventInputs = false;
+	continuousOutput = _continuousOutput;
+}
+Output::Output(const char *n,bool _continuousOutput): NamedObject(n,NULL)
 {
 	data = 0;
 	hasEventInputs = false;

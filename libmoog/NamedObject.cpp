@@ -17,24 +17,32 @@
  */
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "NamedObject.h"
 
 NamedObject::NamedObject()
 {
 	name = NULL;
+	display = NULL;
 }
 
-NamedObject::NamedObject(const char *n)
+NamedObject::NamedObject(const char *n,const char *display)
 {
 	name = NULL;
 	setName(n);
+	setDisplayName(display);
 }
 
 NamedObject::~NamedObject()
 {
 	if (name)
 		delete(name);
+}
+
+void NamedObject::setDisplayName(const char *displayname)
+{
+	display = displayname;
 }
 
 void

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.3 $$Date: 2004/04/14 12:28:55 $
  */
 #ifndef NAMEDOBJECT_H
 #define NAMEDOBJECT_H
@@ -26,15 +26,21 @@ class NamedObject
 {
 protected:
 	char *name;
+	const char *display;
 
 public:
 	NamedObject();
-	NamedObject(const char *name);
+	NamedObject(const char *name,const char *displayname);
 	~NamedObject();
 	void setName(const char *name);
+	void setDisplayName(const char *name);
 	const char *getName()
 	{
 		return name;
+	}
+	const char *getDisplayName()
+	{
+		return display;
 	}
 };
 

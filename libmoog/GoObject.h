@@ -17,14 +17,15 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.4 $$Date: 2004/04/14 12:28:55 $
  */
 #ifndef _GOOBJECT_H
 #define _GOOBJECT_H
 
 #include <libmoogutil/list.h>
+#include <libmoogutil/SimpleArray.h>
 
-/* $Id: GoObject.h,v 1.3 2004/03/31 12:01:19 brainslayer Exp $ */
+/* $Id: GoObject.h,v 1.4 2004/04/14 12:28:55 brainslayer Exp $ */
 
 class GoObject
 {
@@ -46,7 +47,6 @@ public:
 	virtual void controlGo();
 	virtual void sampleGo();
 };
-
 
 #endif /* _GOOBJECT_H */
 

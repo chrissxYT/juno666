@@ -113,8 +113,10 @@ MidiInput::MidiInput(JunoControl *jc, int nv)
     {
         voices[i].note = -1;
         sprintf(tmpname, "sig%d", i);
+		puts("adding output 1");
         voices[i].pitchOutput = addOutput(tmpname, false);
         sprintf(tmpname, "amp%d", i);
+		puts("adding output 2");
         voices[i].gateOutput = addOutput(tmpname, false);
     }
 

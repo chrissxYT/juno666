@@ -51,7 +51,7 @@ void IIR2::sampleGo()
 	out = out + cx[0] * x[0] + cx[1] * x[1] - cy[0] * y[0] - cy[1] * y[1];
 
 #ifndef _MSC_VER
-	if (isnan(out))
+	if (isnan(out))  //check for not a number
 		out = 0;
 #endif
 

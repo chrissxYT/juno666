@@ -20,7 +20,7 @@
 #include "ConnectionInfo.h"
 #include "Output.h"
 
-Input::Input(const char *n, moog_callback_t _callback, MoogObject *_registrant, long _userData, int _timescale): NamedObject(n)
+Input::Input(const char *n, moog_callback_t _callback, MoogObject *_registrant, long _userData, int _timescale): NamedObject(n,NULL)
 {
 	callback = _callback;
 	registrant = _registrant;
@@ -31,6 +31,7 @@ Input::Input(const char *n, moog_callback_t _callback, MoogObject *_registrant, 
 	staticValue = 0;
 	data = &staticValue;
 }
+
 
 void Input::connect(ConnectionInfo *info)
 {

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/07 09:30:43 $
+ * $Revision: 1.5 $$Date: 2004/04/14 12:28:55 $
  */
 #ifndef _MOOGOBJECT_H
 #define _MOOGOBJECT_H
@@ -55,6 +55,7 @@ typedef SimpleArray <Control >ControlArray;
 
 #endif
 
+
 class MoogObject: public GoObject, NamedObject
 {
 	//FIXME: we really shouldn't need these
@@ -76,6 +77,7 @@ protected:
 	/* allow runtime configuration of objects */
 	void addPorts(char *,...);
 	Output *addOutput(const char *, bool);
+	Output *addOutput(const char *,const char *, bool);
 /*    Input*           addInput(const char *name, int isCtrl){
     puts("should never be called");
     printf("from %s\n",getClassName());
