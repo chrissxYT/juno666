@@ -10,20 +10,10 @@ wrapper for keyboard functions, replaces GTK UI
 #include <libmoog/MidiInput.h>
 #include <libmoog/JunoPatch.h>
 #include "juno_keyboard.h"
-
+/*
 void JunoKeyboard_midiGateChanged(MoogObject *o, double data, long userData)
 {
     ((JunoKeyboard *)o)->midiGateChanged(userData, data);
-}
-
-void JunoKeyboard_gtkKeyPressed(int voice, int key, void *data)
-{
-    ((JunoKeyboard *)data)->gtkKeyPressed(voice, key);
-}
-
-void JunoKeyboard_gtkKeyReleased(int voice, void *data)
-{
-    ((JunoKeyboard *)data)->gtkKeyReleased(voice);
 }
 
 void JunoKeyboard_octaveTransposeChanged(MoogObject *o, double data, long)
@@ -40,8 +30,7 @@ void JunoKeyboard_masterTuneChanged(MoogObject *o, double data, long)
 {
     ((JunoKeyboard *)o)->masterTuneChanged(data);
 }
-
-
+*/
 void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
 {
     ((JunoKeyboard *)o)->changePatch();
@@ -69,7 +58,7 @@ numVoices(_numVoices)
     gateOutputs = new Output *[numVoices];
 
     memset(savedGateInfo, 0, numVoices * sizeof(int));
-
+/*
     for (int i = 0;i < numVoices;i++)
     {
         String tmp1, tmp2;
@@ -85,7 +74,7 @@ numVoices(_numVoices)
         PATCH(midiInput, tmp1, this, tmp2);
         gateOutputs[i] = control->getOutput(tmp2);
     }
-
+*/
     masterTune = 0;
     //addInput("octave_transpose", JunoKeyboard_octaveTransposeChanged, 0, 1);
     //addInput("transpose_switch", JunoKeyboard_keyTransposeChanged, 0, 1);
@@ -106,7 +95,7 @@ JunoKeyboard::~JunoKeyboard()
     delete[]pitchOutputs;
     delete[]gateOutputs;
 }
-
+/*
 void JunoKeyboard::midiGateChanged(int voiceNum, double data)
 {
     if (!initz)
@@ -115,7 +104,6 @@ void JunoKeyboard::midiGateChanged(int voiceNum, double data)
     if (data > 0)
     {
         gtkKeyPressed(voiceNum, pitch_to_note(schedule->nyquistFreq * *inputs[voiceNum * 2].data) - 36);
-
     }
     else
     {
@@ -199,7 +187,7 @@ void JunoKeyboard::transposeVoices(double tune)
     for (int i = 0;i < numVoices;i++)
         pitchOutputs[i]->setData(pitchOutputs[i]->data * tune);
 }
-
+*/
 void JunoKeyboard::changePatch()
 {
     if (!initz)

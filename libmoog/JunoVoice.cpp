@@ -122,8 +122,6 @@ noise(_noise),
 junolfo(_lfo),
 pwmLfo(_pwmLfo)
 {
-//    jc = _jc;
-//    voiceNum = _voiceNum;
     init = 0;
     vcamode = 0;
     addInput("lfo", JunoVoice_lfoChanged, 0, JUNO_CONTROL_RATE);

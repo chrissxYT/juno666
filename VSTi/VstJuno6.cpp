@@ -5,7 +5,7 @@
 VstJuno6::VstJuno6(audioMasterCallback audioMaster):
 AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 {
-    int numVoices = 2;
+    numVoices = 6;
 
     voice = new JunoVoice *[numVoices];
 

@@ -109,10 +109,14 @@ public:
 
     void initSynth(int numVoices);
 
-ConnectionManager* VstJuno6::getConnectionManager();
+    ConnectionManager* VstJuno6::getConnectionManager();
+
+    int isAnyVoicePlaying();
 
 private:
     long currentDelta;
+
+    int numVoices;
 
     VSTOutput *dsp;
 
@@ -121,19 +125,18 @@ private:
     JunoChorus *chorus2;
     HPF *hpf;
 
-JunoVoice **voice;
+    JunoVoice **voice;
 
-JunoKeyboard *keyboard;
-MidiInput *midiInput;
+    JunoKeyboard *keyboard;
+    MidiInput *midiInput;
 
-juno_patch *patches;
+    juno_patch *patches;
 
-JunoArpeggio *arpeggio;
-JunoControl *control;
-Attenuator *pwmLfo;
-JunoLfo *lfo;
-Rand *noise;
-
+    JunoArpeggio *arpeggio;
+    JunoControl *control;
+    Attenuator *pwmLfo;
+    JunoLfo *lfo;
+    Rand *noise;
 };
 
 #endif /* __VstJuno6_H__ */

@@ -28,7 +28,7 @@ class JunoKeyboard: public MoogObject
     int *savedGateInfo;
     Output **pitchOutputs;
     Output **gateOutputs;
-
+/*
     void midiGateChanged(int, double);
     void gtkKeyPressed(unsigned int, unsigned int);
     void gtkKeyReleased(unsigned int);
@@ -36,6 +36,7 @@ class JunoKeyboard: public MoogObject
     void keyTransposeChanged(double);
     void masterTuneChanged(double);
     void holdChanged(double);
+*/
     void changePatch();
 
     void transposeVoices(double);

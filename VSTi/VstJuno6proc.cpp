@@ -98,13 +98,32 @@ fprintf ( verbose, "loop %d\n", sampleFrames);
 
 fclose ( verbose );
 */
+int VstJuno6::isAnyVoicePlaying()
+{
+    static int lastFound = 0;
+
+    if(voice[lastFound]->isPlaying())
+    {
+        return true;
+    }
+
+    for (int i = 0;i < numVoices;i++)
+    {
+        if(voice[i]->isPlaying())
+        {
+            lastFound = i;
+            return true;
+        }
+    }
+    return false;
+}
 
 void VstJuno6::processReplacing(float **inputs, float **outputs, long sampleFrames)
 {
     float *out1 = outputs[0];
     float *out2 = outputs[1];
 
-    if (midiInput->isNoteOn())
+    if (isAnyVoicePlaying())
     {
         if (currentDelta > 0)
         {

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/22 22:59:09 $
+ * $Revision: 1.5 $$Date: 2004/04/24 08:01:23 $
  */
 #ifndef ADSR_H
 #define ADSR_H
@@ -62,7 +62,13 @@ public:
     ADSR(Scheduler *scheduler, double a = 0, double d = 0, double s = 1,
         double r = 0, double amp = 1);
 
+    int isPlaying()
+    {
+        return (state!=FINISHED);
+    }
+
     void sampleGo();
+
     const char *getClassName()
     {
         return "ADSR";

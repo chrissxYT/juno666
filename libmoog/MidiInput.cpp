@@ -134,8 +134,11 @@ nvoices(nv)
 
         sprintf(tmpname, "voice%d_pitch", i);
         voices[i].pitchOutput = jc->getOutput(tmpname);
+        voices[i].pitchOutput->setData(0);
+
         sprintf(tmpname, "voice%d_gate", i);
         voices[i].gateOutput = jc->getOutput(tmpname);
+        voices[i].gateOutput->setData(0);
     }
 
     addInput("hold_switch", midi_holdChanged, 0, 1);
@@ -427,18 +430,4 @@ MidiInput::holdChanged(double data)
             if (!savedGateInfo[i])
                 voices[i].gateOutput->setData(0.0);
     }
-}
-
-bool
-MidiInput::isNoteOn()
-{
-    for (int i = 0;i < nvoices;i++)
-    {
-        if (voices[i].note != -1)
-        {
-            return true;
-        }
-    }
-
-    return false;
 }

@@ -123,16 +123,16 @@ private:
     Attenuator *pwmLfo;
 
 public:
-    JunoVoice(JunoControl *, int, 
-Rand *_noise,
-JunoLfo *_lfo,
-Attenuator *_pwmLfo,
-
-Scheduler *sched, ConnectionManager *conn);
+    JunoVoice(JunoControl *, int, Rand *_noise, JunoLfo *_lfo, Attenuator *_pwmLfo, Scheduler *sched, ConnectionManager *conn);
 
     ~JunoVoice();
 
     void attachVoice(MoogObject *);
+
+    int isPlaying()
+    {
+        return adsr.isPlaying();
+    }
 
     const char *getClassName()
     {
