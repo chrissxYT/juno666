@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.5 $$Date: 2004/04/24 08:01:23 $
+ * $Revision: 1.6 $$Date: 2004/05/24 19:55:40 $
  */
 #ifndef ADSR_H
 #define ADSR_H
@@ -46,6 +46,8 @@ private:
     void releaseChanged(double);
     void ampChanged(double);
     void triggerChanged(double);
+
+    int nosound;
 
 protected:
     int state;

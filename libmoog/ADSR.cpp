@@ -22,7 +22,7 @@
 #include <libmoogutil/debug.h>
 
 // note, this is a good scale at 441000, needs to be base on sample rate
-#define ADSR_SCALE .00010;
+#define ADSR_SCALE .00010
 
 void
 adsr_attack_changed(MoogObject *o, double data, long)
@@ -87,33 +87,58 @@ ADSR::ADSR(Scheduler *sched, double _a, double _d, double _s, double _r, double 
     state = FINISHED;
 }
 
-void ADSR::attackChanged(double _attack)
+void ADSR::attackChanged(double attack)
 {
-    if (_attack <= 0)
-        attack = 1.0;
+    nosound = false;
+
+    if (attack <= 0)
+    {
+        this->attack = .005;
+    }
     else
-        attack = -log(_attack * .94) * ADSR_SCALE;
+    {
+        this->attack = -log(attack * .94) * ADSR_SCALE;
+    }
 }
 
-void ADSR::decayChanged(double _decay)
+void ADSR::decayChanged(double decay)
 {
-    if (_decay <= 0)
-        decay = -1.0;
+    nosound = false;
+
+    if (decay <= 0)
+    {
+        this->decay = -.005;
+    }
     else
-        decay = log(_decay * .94) * ADSR_SCALE;
+    {
+        this->decay = log(decay * .94) * ADSR_SCALE;
+    }
 }
 
-void ADSR::sustainChanged(double _sustain)
+void ADSR::sustainChanged(double sustain)
 {
-    sustain = _sustain;
+    nosound = false;
+
+    if (sustain <= 0)
+    {
+        this->sustain = .0;
+    }
+    else
+    {
+        this->sustain = sustain;
+    }
 }
 
-void ADSR::releaseChanged(double _release)
+void ADSR::releaseChanged(double release)
 {
-    if (_release <= 0)
-        release = -1.0;
+    if (release <= 0)
+    {
+        this->release = -.005;
+    }
     else
-        release = log(_release * .94) * ADSR_SCALE;
+    {
+        this->release = log(release * .94) * ADSR_SCALE;
+    }
 }
 
 void ADSR::ampChanged(double _amp)
@@ -137,8 +162,6 @@ void ADSR::triggerChanged(double trigger)
 void ADSR::sampleGo()
 {
     double tmpData = output->data;
-
-    //printf("%f: %f %f %f %f %d\n", tmpData, attack, decay, sustain, release, state);
 
     switch (state)
     {
