@@ -3,18 +3,13 @@
 #include "VstJuno6.h"
 
 extern JunoControl *control;
+extern juno_patch *patches;
+extern JunoKeyboard *keyboard;
 
 VstJuno6::VstJuno6 (audioMasterCallback audioMaster) : 
 AudioEffectX (audioMaster, kNumPrograms, kNumParams)
 {
-    // initialize programs
-    programs = new VstJuno6Program[kNumPrograms];
-
-    for (long i = 0; i < 16; i++)
-        channelPrograms[i] = i;
-
-    if (programs)
-        setProgram (0);
+    setProgram (0);
     
     if (audioMaster)
     {
@@ -32,22 +27,16 @@ AudioEffectX (audioMaster, kNumPrograms, kNumParams)
 
 VstJuno6::~VstJuno6 ()
 {
-    if (programs)
-        delete[] programs;
 }
 
 void VstJuno6::setProgram (long program)
 {
-    if (program < 0 || program >= kNumPrograms)
+    if (!control || program < 0 || program >= kNumPrograms)
         return;
-    
-    currentProgram = &programs[program];
+
     curProgram = program;
 
-    if(control)
-    {
-        control->MoogObject::getOutput("patch_change")->setData(program);
-    }
+    control->MoogObject::getOutput("patch_change")->setData(program);
 }
 
 void VstJuno6::setProgramName (char *name)
@@ -59,6 +48,8 @@ void VstJuno6::setProgramName (char *name)
 
 void VstJuno6::getProgramName (char *name)
 {
+    strcpy (name, "faszom");
+
 /*
     strcpy (name, currentProgram->name);
 */
@@ -111,7 +102,9 @@ bool VstJuno6::getProgramNameIndexed (long category, long index, char* text)
 {
     if (index < kNumPrograms)
     {
-        strcpy (text, programs[index].name);
+//        sprintf(text,"%4.4f",(float)*control->getOutput(0)->getData());
+
+        strcpy (text, "wazze");
         return true;
     }
     return false;
@@ -119,11 +112,13 @@ bool VstJuno6::getProgramNameIndexed (long category, long index, char* text)
 
 bool VstJuno6::copyProgram (long destination)
 {
+/*
     if (destination < kNumPrograms)
     {
         programs[destination] = programs[curProgram];
         return true;
     }
+*/
     return false;
 }
 

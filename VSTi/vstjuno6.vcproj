@@ -150,9 +150,6 @@
 				RelativePath="VstJuno6proc.cpp">
 			</File>
 			<File
-				RelativePath="Vstjuno6Program.cpp">
-			</File>
-			<File
 				RelativePath="juno_keyboard.cpp">
 			</File>
 		</Filter>
@@ -161,9 +158,6 @@
 			Filter="">
 			<File
 				RelativePath="VstJuno6.h">
-			</File>
-			<File
-				RelativePath="VstJuno6Program.h">
 			</File>
 			<File
 				RelativePath="juno_keyboard.h">

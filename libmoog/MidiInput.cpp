@@ -328,7 +328,6 @@ MidiInput::allNotesOff()
 {
     for (int i = 0;i < nvoices;i++)
     {
-
         voices[i].note = -1;
         // important to keep outputting the pitch signal though
         voices[i].gateOutput->setData(0);

@@ -50,9 +50,10 @@ void JunoKeyboard_holdChanged(MoogObject *o, double data, long)
     ((JunoKeyboard *)o)->holdChanged(data);
 }
 
-
 void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
 {
+    userdata = (long)*control->MoogObject::getOutput("patch_change")->getData();
+
     if (userdata > NUM_PATCHES)
     {
         printf("can't change. highest patch number is %d\n", NUM_PATCHES);
@@ -113,7 +114,6 @@ JunoKeyboard::JunoKeyboard(int _numVoices)
     
     memset(savedGateInfo, 0, numVoices * sizeof(int));
 
-
     for (int i = 0;i < numVoices;i++)
     {
         String tmp1, tmp2;
@@ -142,6 +142,7 @@ JunoKeyboard::JunoKeyboard(int _numVoices)
     PATCH(control, "master_tune", this, "master_tune");
     PATCH(control, "hold_switch", this, "hold_switch");
     PATCH(control, "patch_change", this, "patch_change");
+
     initz=1;
 }
 
@@ -170,8 +171,6 @@ void JunoKeyboard::midiGateChanged(int voiceNum, double data)
 
 void JunoKeyboard::gtkKeyPressed(unsigned int voice, unsigned int key)
 {
-    //printf("----------------key %u was pressed on voice %u\n", key, voice);
-
     if (keyTransposePressed)
     {
         transposeVoices(pow(2, ((double)(key % 12) - keyTranspose) / 12));
@@ -189,8 +188,6 @@ void JunoKeyboard::gtkKeyPressed(unsigned int voice, unsigned int key)
 
 void JunoKeyboard::gtkKeyReleased(unsigned int voice)
 {
-    //printf("----------------voice %u was released\n", voice);
-
     if (!holdPressed)
     {
         
@@ -200,9 +197,7 @@ void JunoKeyboard::gtkKeyReleased(unsigned int voice)
     }
 
     savedGateInfo[voice] = 0;
-
 }
-
 
 void JunoKeyboard::octaveTransposeChanged(double data)
 {

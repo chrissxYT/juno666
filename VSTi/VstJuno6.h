@@ -2,7 +2,6 @@
 #define __VstJuno6_H__
 
 #include "audioeffectx.h"
-#include "VstJuno6Program.h"
 
 //#include <libmoog/moog.h>
 
@@ -105,12 +104,6 @@ public:
 
 private:
     void initProcess ();
-
-    VstJuno6Program* programs;
-
-    VstJuno6Program* currentProgram;
-
-    long channelPrograms[16];
 
     long currentDelta;
 
