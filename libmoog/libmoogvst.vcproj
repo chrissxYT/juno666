@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="windows-1250"?>
+<?xml version="1.0" encoding = "windows-1250"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.10"
+	Version="7.00"
 	Name="libmoogvst"
-	OwnerKey="{EAF909A5-FA59-4C3D-9431-0FCC20D5BCF9}"
 	ProjectGUID="{563E3A60-8D88-420B-B495-A7FD9655BEC7}"
 	Keyword="Win32Proj">
 	<Platforms>
@@ -46,39 +45,26 @@
 				Name="VCResourceCompilerTool"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="4"
-			CharacterSet="2"
-			WholeProgramOptimization="TRUE">
+			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/I.. /D TARGET_VST"
 				Optimization="2"
-				GlobalOptimizations="TRUE"
-				InlineFunctionExpansion="2"
-				EnableIntrinsicFunctions="TRUE"
-				ImproveFloatingPointConsistency="FALSE"
-				FavorSizeOrSpeed="1"
+				InlineFunctionExpansion="1"
 				OmitFramePointers="TRUE"
-				OptimizeForProcessor="2"
-				OptimizeForWindowsApplication="TRUE"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;HAVE_SSE2"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="FALSE"
+				Detect64BitPortabilityProblems="TRUE"
 				DebugInformationFormat="3"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
@@ -98,16 +84,8 @@
 				Name="VCResourceCompilerTool"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 	</Configurations>
-	<References>
-	</References>
 	<Files>
 		<Filter
 			Name="Source Files"
@@ -120,9 +98,6 @@
 			</File>
 			<File
 				RelativePath="Balance.cpp">
-			</File>
-			<File
-				RelativePath="bilinear.c">
 			</File>
 			<File
 				RelativePath="Chorus.cpp">
@@ -197,9 +172,6 @@
 				RelativePath="Output.cpp">
 			</File>
 			<File
-				RelativePath="pitch.cpp">
-			</File>
-			<File
 				RelativePath="Rand.cpp">
 			</File>
 			<File
@@ -220,6 +192,12 @@
 			<File
 				RelativePath="WaveGen.cpp">
 			</File>
+			<File
+				RelativePath="bilinear.c">
+			</File>
+			<File
+				RelativePath="pitch.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -228,16 +206,10 @@
 				RelativePath="ADSR.h">
 			</File>
 			<File
-				RelativePath="afmt.h">
-			</File>
-			<File
 				RelativePath="Attenuator.h">
 			</File>
 			<File
 				RelativePath="Balance.h">
-			</File>
-			<File
-				RelativePath="bilinear.h">
 			</File>
 			<File
 				RelativePath="Chorus.h">
@@ -300,9 +272,6 @@
 				RelativePath="Mixer.h">
 			</File>
 			<File
-				RelativePath="moog.h">
-			</File>
-			<File
 				RelativePath="MoogObject.h">
 			</File>
 			<File
@@ -313,9 +282,6 @@
 			</File>
 			<File
 				RelativePath="Output.h">
-			</File>
-			<File
-				RelativePath="pitch.h">
 			</File>
 			<File
 				RelativePath="Rand.h">
@@ -337,6 +303,18 @@
 			</File>
 			<File
 				RelativePath="WaveGen.h">
+			</File>
+			<File
+				RelativePath="afmt.h">
+			</File>
+			<File
+				RelativePath="bilinear.h">
+			</File>
+			<File
+				RelativePath="moog.h">
+			</File>
+			<File
+				RelativePath="pitch.h">
 			</File>
 		</Filter>
 	</Files>

@@ -80,6 +80,11 @@ private:
     Mixer subMix;
     Attenuator pwmAttenuator;
 
+    /* externals */
+    Rand       *noise;
+    JunoLfo    *junolfo;
+    Attenuator *pwmLfo;
+
     /* vcf calculation variables */
     double env;
     double lfo;
@@ -115,10 +120,6 @@ private:
 
     void updateVcf();
     void updateFrq();
-
-    Rand       *noise;
-    JunoLfo    *junolfo;
-    Attenuator *pwmLfo;
 
 public:
     JunoVoice(JunoControl *, int, Rand *_noise, JunoLfo *_lfo, Attenuator *_pwmLfo, Scheduler *sched, ConnectionManager *conn);
