@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.10 $$Date: 2004/04/17 13:46:21 $
+ * $Revision: 1.11 $$Date: 2004/04/18 16:47:50 $
  */
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
@@ -61,8 +61,8 @@ public:
     int nextGoHandle;
     void run();
 
-    void Init();
-    void DeInit();
+    Scheduler();
+    ~Scheduler();
 
     int sampleRate;
     int sampleControlRatio;

@@ -56,9 +56,6 @@ typedef struct
     // allows us to optimize the code if we're just signaling.
 } pthread_cond_t;
 
-
-
-
 int
 pthread_cond_init(pthread_cond_t *cv)
 {
@@ -76,13 +73,8 @@ pthread_cond_init(pthread_cond_t *cv)
     return 0;
 }
 
-
-
-
-
 int
-pthread_cond_wait(pthread_cond_t *cv,
-    HANDLE *external_mutex)
+pthread_cond_wait(pthread_cond_t *cv, HANDLE *external_mutex)
 {
     // Avoid race conditions.
     EnterCriticalSection(&cv->waiters_count_lock_);
@@ -118,9 +110,6 @@ pthread_cond_wait(pthread_cond_t *cv,
     return 0;
 }
 
-
-
-
 int
 pthread_cond_signal(pthread_cond_t *cv)
 {
@@ -136,14 +125,7 @@ pthread_cond_signal(pthread_cond_t *cv)
 
 static pthread_cond_t listOpCompleteCond;
 
-void Scheduler::DeInit()
-{
-    stop();
-
-    DeleteCriticalSection(&beginListOpMutex);
-}
-
-void Scheduler::Init()
+Scheduler::Scheduler()
 {
     dsp = NULL;
 
@@ -161,6 +143,13 @@ void Scheduler::Init()
 
     pthread_cond_init(&listOpCompleteCond);
     InitializeCriticalSection(&beginListOpMutex);
+}
+
+Scheduler::~Scheduler()
+{
+    stop();
+
+    DeleteCriticalSection(&beginListOpMutex);
 }
 
 void Scheduler::setSampleRate(int actual)

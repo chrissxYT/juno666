@@ -23,7 +23,7 @@
 #include "Scheduler.h"
 #include "GoObject.h"
 
-void Scheduler::Init()
+Scheduler::Scheduler()
 {
     nextGoHandle = 0;
     tickThread;
@@ -37,7 +37,7 @@ void Scheduler::Init()
     sampleRateList.next = &sampleRateList;
 }
 
-void Scheduler::DeInit()
+Scheduler::~Scheduler()
 {
 }
 

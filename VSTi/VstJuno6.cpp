@@ -8,7 +8,6 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
     int numVoices = 6;
 
     schedule = new Scheduler();
-    schedule->Init();
 
     connection = new ConnectionManager();
 
@@ -43,8 +42,11 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 
 VstJuno6::~VstJuno6()
 {
-    schedule->DeInit();
     delete schedule;
+    delete connection;
+    delete control;
+    delete midiInput;
+
 }
 
 void VstJuno6::setProgram(long program)

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.8 $$Date: 2004/04/17 13:46:20 $
+ * $Revision: 1.9 $$Date: 2004/04/18 16:47:50 $
  */
 
 #include <stdio.h>
@@ -65,9 +65,8 @@ int Juno666(int argc, char **argv)
         numVoices = atoi(numVoicesStr);
 
     schedule = new Scheduler();
-    connection = new ConnectionManager();
 
-    schedule->Init();
+    connection = new ConnectionManager();
 
     JunoControl *junoControl = new JunoControl(numVoices, schedule);
 
@@ -99,7 +98,7 @@ int Juno666(int argc, char **argv)
 
     delete midiInput;
 
-    schedule->DeInit();
+    delete schedule;
 
     return 0;
 }
