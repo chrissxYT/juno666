@@ -17,17 +17,17 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:43:15 $
+ * $Revision: 1.1 $$Date: 2004/03/30 10:03:03 $
  */
 
 #include <stdio.h>
 #include <gtk/gtk.h>
 #ifndef POSIX
-#include <moog/MidiInputWin32.h>
+#include <libmoog/MidiInputWin32.h>
 #else
-#include <moog/MidiInput.h>
+#include <libmoog/MidiInput.h>
 #endif
-#include <gmoog/juno_widgets.h>
+#include <libgmoog/juno_widgets.h>
 extern char *juno_background_data[];
 #define juno_background_mask_width 940
 #define juno_background_mask_height 224
@@ -39,7 +39,7 @@ extern char juno_background_mask_bits[];
 #include "juno_wrappers.h"
 #include "juno_patch.h"
 #include "about.h"
-#include <gmoog/Scope.h>
+#include <libgmoog/Scope.h>
 
 extern String patchFileName;
 

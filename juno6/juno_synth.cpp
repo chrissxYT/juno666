@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:43:15 $
+ * $Revision: 1.1 $$Date: 2004/03/30 10:03:03 $
  */
 #include <stdlib.h>
 #include "juno_synth.h"
@@ -25,7 +25,7 @@
 #include "juno_lfo.h"
 #include "juno_arpeggio.h"
 #include "juno_chorus.h"
-#include <gmoog/Scope.h>
+#include <libgmoog/Scope.h>
 #include "juno_patch.h"
 
 //FIXME: this is grosser than gross

@@ -15,7 +15,7 @@
  *     In no event shall UltraMaster Group be held liable for any damages 
  *     arising from the use of UltraMaster Juno-6.
  */
-#include <util/String.h>
+#include <libmoogutil/String.h>
 #include "juno_voice.h"
 #include "juno_control.h"
 #include "juno_lfo.h"

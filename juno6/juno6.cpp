@@ -17,17 +17,17 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/03/26 18:43:15 $
+ * $Revision: 1.1 $$Date: 2004/03/30 10:03:03 $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <moog/moog.h>
-#include <util/String.h>
+#include <libmoog/moog.h>
+#include <libmoogutil/String.h>
 #include <sys/types.h>
-#include <util/debug.h>
+#include <libmoogutil/debug.h>
 //#include <util/cpudetect.h>
 #include "juno_patch.h"
 #include "juno_gui.h"
