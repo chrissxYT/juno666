@@ -11,37 +11,14 @@ bool inline processParameter(double *orig, double destination,double speed)
 	if (*orig != destination)
 	{
 	double step = destination - *orig;
-	if (abs(step)<0.002)
+	if (abs(step)<speed)
 		{
 			*orig = destination;
 			return true;
 		}
-	step *=speed;
-	*orig+=step;
-	return true;
+	if (step<0)*orig-=speed;
+	else	   *orig+=speed;
 	}
 	return false;
 }
-bool inline processParameter(double *orig, double destination,double speed,double initialdiff)
-{
-	if (initialdiff==0.0){
-		return false;
-	}
-	if (*orig != destination) //prevents divide by zeros too
-	{
-		double step = destination - *orig;
-	if (abs(step)<0.002)
-		{
-			*orig = destination;
-			return true;
-		}
-	step *=speed;
-	step *=initialdiff;
-	*orig+=step;
-	return true;
-	}
-	return false;
-}
-
-
 #endif

@@ -48,6 +48,8 @@ void ResonantLowPass::setSectionCoef(int section,
 	pcoef[section].b1 = b1;
 	pcoef[section].b2 = b2;
 }
+#else
+#include <libmoogutil/valuehelper.h>
 #endif
 
 /* ************************ */
@@ -267,9 +269,18 @@ void ResonantLowPass::sampleGo()
 #else
 void ResonantLowPass::sampleGo()
 {
-	double i = *inSig * *inGain;
-	double f = *inCutoff * 1.16;
-	double fb = *inResonance * (30.6227 / 2) * (1.0 - 0.15 * f * f);
+	/*
+	automatic slide adjustment. prevents strange filter effects
+	*/
+	processParameter(&resonance,*inResonance,0.001);
+	processParameter(&gain,*inGain,0.001);
+	processParameter(&cutoff,*inCutoff,0.001);
+
+
+
+	double i = *inSig * gain;
+	double f = cutoff * 1.16;
+	double fb = resonance * (30.6227 / 2) * (1.0 - 0.15 * f * f);
 	i -= out4 * fb;
 	i *= 0.35013 * (f * f) * (f * f);
 	out1 = i + 0.3 * in1 + (1 - f) * out1; // Pole 1
