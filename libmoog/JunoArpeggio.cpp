@@ -57,7 +57,7 @@ void JunoArpeggio_rateChanged(MoogObject *o, double data, long userData)
 }
 
 
-JunoArpeggio::JunoArpeggio(JunoControl *jc, int voices)
+JunoArpeggio::JunoArpeggio(JunoControl *jc, int voices, Scheduler *sched): MoogObject(sched)
 {
 	printf("creating arpeggio for %d voices\n", voices);
 	NUM_VOICES = voices;
@@ -397,7 +397,7 @@ void JunoArpeggio::startInternal()
 	outputs[currentNote->voice].setData(*inPitches[currentNote->voice] * oct_x[currentOctave]);
 	outputs[currentNote->voice + NUM_VOICES].setData(1);
 
-	Scheduler::scheduleControlRate(this, true);
+	schedule->scheduleControlRate(this, true);
 }
 
 /* note: this must be called with mutex locked */
@@ -494,7 +494,7 @@ void JunoArpeggio::moveNextNote()
 
 		if (list_empty(&notes))
 		{
-			Scheduler::scheduleControlRate(this, false);
+			schedule->scheduleControlRate(this, false);
 			currentNote = NULL;
 			return;
 		}

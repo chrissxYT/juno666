@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
  */
 #ifndef _MIXER_H
 #define _MIXER_H
@@ -38,7 +38,7 @@ private:
 	double **inputData;
 
 public:
-	Mixer(int, int obj = 0, ...);
+	Mixer(Scheduler *sched, int, int obj = 0, ...);
 	~Mixer();
 
 	void connectTo(ConnectionInfo *info);

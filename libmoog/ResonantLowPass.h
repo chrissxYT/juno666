@@ -71,8 +71,8 @@ class ResonantLowPass: public MoogObject
 
 public:
 
-	ResonantLowPass();
-	ResonantLowPass(FilterPrototype *);
+	ResonantLowPass(Scheduler *sched);
+	ResonantLowPass(FilterPrototype *, Scheduler *sched);
 	~ResonantLowPass();
 
 	void connectTo(ConnectionInfo *info);

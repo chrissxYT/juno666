@@ -33,7 +33,7 @@ void setStereoValue(MoogObject *o, double data, long)
 	((VSTOutput *)o)->VSTOutput::setStereo(data);
 }
 
-VSTOutput::VSTOutput(JunoControl *jc)
+VSTOutput::VSTOutput(JunoControl *jc, Scheduler *sched): MoogObject(sched)
 {
 	addInput("panning", setPanningValues, 0, 1);
 	addInput("stereo_switch", setStereoValue, 0, 1);
@@ -61,9 +61,9 @@ void VSTOutput::setup()
 
 	dataWrittenCallback = NULL;
 
-	Scheduler::setSampleRate(SAMPLE_RATE_44k);
+	schedule->setSampleRate(SAMPLE_RATE_44k);
 
-	Scheduler::scheduleSampleRate(this, true);
+	schedule->scheduleSampleRate(this, true);
 }
 
 VSTOutput::~VSTOutput()

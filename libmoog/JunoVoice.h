@@ -119,7 +119,7 @@ private:
 	MoogObject *voiceSrc;
 
 public:
-	JunoVoice(JunoControl *, int);
+	JunoVoice(JunoControl *, int, Scheduler *sched);
 	~JunoVoice();
 
 	void attachVoice(MoogObject *);

@@ -71,6 +71,7 @@ enum
 class VstJuno6: public AudioEffectX
 {
 public:
+	Scheduler *schedule;
 	VstJuno6(audioMasterCallback audioMaster);
 	~VstJuno6();
 

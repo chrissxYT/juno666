@@ -18,7 +18,7 @@
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
  *
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
  */
 
 #include <stdio.h>
@@ -41,12 +41,12 @@ oscillator_sync_changed(MoogObject *o, double data, long userData)
 	((Oscillator *)o)->syncChanged(data);
 }
 
-Oscillator::Oscillator(DataBlock *w /* = NULL */)
+Oscillator::Oscillator(Scheduler *sched, DataBlock *w /* = NULL */): MoogObject(sched)
 {
 	init(w);
 }
 
-Oscillator::Oscillator(DataBlock *w, double frq, double amp = 1, double zro = 0)
+Oscillator::Oscillator(DataBlock *w, double frq, double amp = 1, double zro = 0, Scheduler *sched = NULL): MoogObject(sched)
 {
 	init(w);
 	set(I_OSC_FRQ, frq);
@@ -78,7 +78,7 @@ Oscillator::init(DataBlock *w)
 		setWaveData(w);
 	}
 
-	Scheduler::scheduleSampleRate(this, true);
+	schedule->scheduleSampleRate(this, true);
 }
 
 void Oscillator::connectTo(ConnectionInfo *info)
@@ -154,8 +154,8 @@ void Oscillator::setWaveData(DataBlock *w)
 	pos = 0;
 	waveData = w->data;
 	waveDataLen = w->length;
-	scale = ((double)waveDataLen / Scheduler::sampleRate) *
-		Scheduler::nyquistFreq;
+	scale = ((double)waveDataLen / schedule->sampleRate) *
+		schedule->nyquistFreq;
 }
 
 

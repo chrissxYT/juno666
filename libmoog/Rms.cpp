@@ -19,7 +19,7 @@
 #include "Rms.h"
 #include "Scheduler.h"
 
-Rms::Rms()
+Rms::Rms(Scheduler *sched): MoogObject(sched)
 {
 	addPorts("sig", INPUT, NULL,
 		"pow", OUTPUT, true,
@@ -28,7 +28,7 @@ Rms::Rms()
 	output = &outputs[O_RMS_POWER];
 
 	double b;
-	double twoPiDivSampleRate = 2 * M_PI / Scheduler::sampleRate;
+	double twoPiDivSampleRate = 2 * M_PI / schedule->sampleRate;
 	double halfPower = 10;
 
 	b = 2.0 - cos(halfPower * twoPiDivSampleRate);
@@ -37,7 +37,7 @@ Rms::Rms()
 
 	inSig = inputs[0].data;
 
-	Scheduler::scheduleSampleRate(this, true);
+	schedule->scheduleSampleRate(this, true);
 }
 
 void Rms::connectTo(ConnectionInfo *info)

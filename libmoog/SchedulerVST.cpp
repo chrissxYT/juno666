@@ -24,19 +24,24 @@
 #include "GoObject.h"
 
 
-static list_head *currentListIter;
+list_head *currentListIter;
 
-HANDLE Scheduler::tickThread;
-double Scheduler::controlRate = 0;
-int Scheduler::sampleRate = 0;
-int Scheduler::sampleControlRatio = DEFAULT_SAMPLE_CONTROL_RATIO;
-double Scheduler::nyquistFreq = 0;
 
-LIST_HEAD(Scheduler::controlRateList);
-LIST_HEAD(Scheduler::sampleRateList);
+
 
 void Scheduler::Init()
 {
+
+	tickThread;
+	controlRate = 0;
+	sampleRate = 0;
+	sampleControlRatio = DEFAULT_SAMPLE_CONTROL_RATIO;
+	nyquistFreq = 44100 / 2;
+	controlRateList.prev = &controlRateList;
+	controlRateList.next = &controlRateList;
+	sampleRateList.prev = &sampleRateList;
+	sampleRateList.next = &sampleRateList;
+
 }
 void Scheduler::DeInit()
 {
@@ -44,6 +49,8 @@ void Scheduler::DeInit()
 
 void Scheduler::setSampleRate(int actual)
 {
+	//if (actual<2)
+
 	sampleRate = actual;
 	controlRate = sampleRate / sampleControlRatio;
 	nyquistFreq = sampleRate / 2;

@@ -60,7 +60,7 @@ adsr_trigger_changed(MoogObject *o, double data, long userData)
 	((ADSR *)o)->triggerChanged(data);
 }
 
-ADSR::ADSR(double _a, double _d, double _s, double _r, double _amp)
+ADSR::ADSR(Scheduler *sched, double _a, double _d, double _s, double _r, double _amp): MoogObject(sched)
 {
 
 	addPorts("a", INPUT, adsr_attack_changed, 0, 1,
@@ -131,7 +131,7 @@ void ADSR::triggerChanged(double trigger)
 
 	if (!isSampleScheduled())
 	{
-		Scheduler::scheduleSampleRate(this, true);
+		schedule->scheduleSampleRate(this, true);
 	}
 }
 
@@ -191,7 +191,7 @@ void ADSR::sampleGo()
 
 		case FINISHED:
 			MOOG_DEBUG("finished");
-			Scheduler::scheduleSampleRate(this, false);
+			schedule->scheduleSampleRate(this, false);
 			break;
 	}
 

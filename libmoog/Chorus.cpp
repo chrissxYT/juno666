@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:18 $
+ * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
  */
 #include "Chorus.h"
 #include "ConnectionManager.h"
@@ -26,12 +26,12 @@
 #include "Oscillator.h"
 #include "Scheduler.h"
 
-Chorus::Chorus()
+Chorus::Chorus(Scheduler *sched): MoogObject(sched)
 {
 	// 30 ms delay
 	// FIXME, add a depth control
-	dly = new Delay((int)(Scheduler::sampleRate * .03));
-	osc = new Oscillator(wg_tri((int)(Scheduler::sampleRate * .03)));
+	dly = new Delay(sched, (int)(schedule->sampleRate * .03));
+	osc = new Oscillator(sched, wg_tri((int)(schedule->sampleRate * .03)));
 
 	inputs.appendElement(dly->getInput("sig"));
 	inputs.appendElement(osc->getInput("frq"));

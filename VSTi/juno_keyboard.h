@@ -38,7 +38,7 @@ class JunoKeyboard: public MoogObject
 
 public:
 
-	JunoKeyboard(int);
+	JunoKeyboard(int, Scheduler *sched);
 	~JunoKeyboard();
 
 	int getKeyTranspose()

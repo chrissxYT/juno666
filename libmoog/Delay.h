@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
  */
 #ifndef _DELAY_H
 #define _DELAY_H
@@ -53,7 +53,7 @@ private:
 	double mix;
 
 public:
-	Delay(int buffSize = 44000);
+	Delay(Scheduler *sched, int buffSize = 44000);
 
 	void connectTo(ConnectionInfo *info);
 	void disconnectTo(ConnectionInfo *info);

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.7 $$Date: 2004/04/15 12:58:08 $
+ * $Revision: 1.8 $$Date: 2004/04/16 14:39:00 $
  */
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
@@ -35,49 +35,49 @@ class DSPOutput;
 
 DWORD WINAPI runSynth(void *);
 
-#define CPS(x) (double)(x)/Scheduler::nyquistFreq
+#define CPS(x) (double)(x)/schedule->nyquistFreq
 
 class Scheduler
 {
 	friend DWORD WINAPI runSynth(void *);
 
-	static list_head controlRateList;
-	static list_head sampleRateList;
+	list_head controlRateList;
+	list_head sampleRateList;
 
-	static DSPOutput *dsp;
+	DSPOutput *dsp;
 //#ifdef POSIX
 //    static pthread_t tickThread;
 //#else
-	static HANDLE tickThread;
+	HANDLE tickThread;
 //#endif
 
-	static void safeListOp(list_head *node, list_head *list, bool add);
+	void safeListOp(list_head *node, list_head *list, bool add);
 
 public:
 
-	static void run();
+	void run();
 
-	static void Init();
-	static void DeInit();
+	void Init();
+	void DeInit();
 
-	static int sampleRate;
-	static int sampleControlRatio;
-	static double controlRate;
-	static double nyquistFreq;
-	static int suspended;
+	int sampleRate;
+	int sampleControlRatio;
+	double controlRate;
+	double nyquistFreq;
+	int suspended;
 
-	static void setSampleRate(int actual);
-	static void setSampleControlRatio(int);
+	void setSampleRate(int actual);
+	void setSampleControlRatio(int);
 
-	static void scheduleControlRate(GoObject *, bool);
-	static void scheduleSampleRate(GoObject *, bool);
+	void scheduleControlRate(GoObject *, bool);
+	void scheduleSampleRate(GoObject *, bool);
 
-	static void start(DSPOutput *);
-	static void start();
-	static void stop();
+	void start(DSPOutput *);
+	void start();
+	void stop();
 
-	static void suspend();
-	static void resume();
+	void suspend();
+	void resume();
 };
 
 

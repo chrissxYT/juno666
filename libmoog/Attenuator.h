@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:18 $
+ * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
  */
 #ifndef _ATTENUATOR_H
 #define _ATTENUATOR_H
@@ -40,7 +40,7 @@ private:
 	double *inZro;
 
 public:
-	Attenuator(double _amp = 0, double _zro = 0);
+	Attenuator(Scheduler *sched, double _amp = 0, double _zro = 0);
 
 	void connectTo(ConnectionInfo *info);
 	void disconnectTo(ConnectionInfo *info);

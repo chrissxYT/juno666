@@ -47,7 +47,7 @@ void JunoLfo_voicegateChanged(MoogObject *o, double data, long userData)
 	((JunoLfo *)o)->voicegateChanged(userData, data);
 }
 
-JunoLfo::JunoLfo(JunoControl *jc, int voices)
+JunoLfo::JunoLfo(JunoControl *jc, int voices, Scheduler *sched): MoogObject(sched), osc(sched)
 {
 	osc.setWaveData(wg_tri(4096));
 
@@ -161,7 +161,7 @@ void JunoLfo::checkTrigger()
 			 */
 
 			if (isControlScheduled())
-				Scheduler::scheduleControlRate(this, false);
+				schedule->scheduleControlRate(this, false);
 
 			if (lfomode == 1)
 				osc.set("amp", 0);
@@ -172,7 +172,7 @@ void JunoLfo::checkTrigger()
 			lfoamp = 0;
 
 			if (!isControlScheduled())
-				Scheduler::scheduleControlRate(this, true);
+				schedule->scheduleControlRate(this, true);
 		}
 	}
 }
@@ -186,7 +186,7 @@ void JunoLfo::controlGo()
 	if (lfoamp >= 1.0)
 	{
 		osc.set("amp", 1.0);
-		Scheduler::scheduleControlRate(this, false);
+		schedule->scheduleControlRate(this, false);
 	}
 	else
 	{

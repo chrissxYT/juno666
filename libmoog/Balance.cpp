@@ -20,7 +20,7 @@
 #include "Scheduler.h"
 #include "ConnectionInfo.h"
 
-Balance::Balance()
+Balance::Balance(Scheduler *sched): MoogObject(sched), rms1(sched), rms2(sched)
 {
 	addPorts("sig", OUTPUT, true,
 		NULL);
@@ -34,7 +34,7 @@ Balance::Balance()
 	output = &outputs[O_BAL_SIG]; // just for optimization
 	inSig = inputs[1].data;
 
-	Scheduler::scheduleSampleRate(this, true);
+	schedule->scheduleSampleRate(this, true);
 }
 
 Balance::~Balance()

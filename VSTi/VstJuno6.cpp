@@ -10,7 +10,9 @@ VstJuno6::VstJuno6(audioMasterCallback audioMaster):
 AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 {
 	setProgram(0);
-	Scheduler::Init();
+	schedule = new Scheduler();
+	schedule->Init();
+
 	if (audioMaster)
 	{
 		setNumInputs(0);
@@ -27,7 +29,8 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 
 VstJuno6::~VstJuno6()
 {
-	Scheduler::DeInit();
+	schedule->DeInit();
+	delete schedule;
 }
 
 void VstJuno6::setProgram(long program)

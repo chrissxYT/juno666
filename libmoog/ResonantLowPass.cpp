@@ -75,7 +75,7 @@ void ResonantLowPass_resonanceChanged(MoogObject *o, double data, long userData)
 }
 
 
-ResonantLowPass::ResonantLowPass()
+ResonantLowPass::ResonantLowPass(Scheduler *sched): MoogObject(sched)
 {
 	if (!basicLowPassFilterInitialized)
 	{
@@ -87,7 +87,7 @@ ResonantLowPass::ResonantLowPass()
 	init();
 }
 
-ResonantLowPass::ResonantLowPass(FilterPrototype *fp)
+ResonantLowPass::ResonantLowPass(FilterPrototype *fp, Scheduler *sched): MoogObject(sched)
 {
 	proto = fp;
 	init();
@@ -116,7 +116,7 @@ void ResonantLowPass::init()
 	inCutoff = inputs[2].data;
 	inResonance = inputs[3].data;
 
-	Scheduler::scheduleSampleRate(this, true);
+	schedule->scheduleSampleRate(this, true);
 }
 
 ResonantLowPass::~ResonantLowPass()
@@ -180,8 +180,8 @@ void ResonantLowPass::recalcFilter()
 			// FIXME: resonance should probably not be linear
 			proto->coef[i].b1 / (resonance * 30.6227 + 1),
 			proto->coef[i].b2,
-			cutoff * Scheduler::nyquistFreq,
-			Scheduler::sampleRate,
+			cutoff * schedule->nyquistFreq,
+			schedule->sampleRate,
 			&fixedGain,
 			coefptr);
 

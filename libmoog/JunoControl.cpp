@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/04/15 12:58:08 $
+ * $Revision: 1.7 $$Date: 2004/04/16 14:39:00 $
  */
 
 #include <libmoogutil/String.h>
@@ -27,7 +27,7 @@
 
 
 
-JunoControl::JunoControl(int voices)
+JunoControl::JunoControl(int voices, Scheduler *sched): MoogObject(sched)
 {
 	addOutput("bender", "Pitch Bender", false);
 	addOutput("bender_dco", "DCO", false);

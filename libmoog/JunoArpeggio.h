@@ -79,7 +79,7 @@ class JunoArpeggio: public MoogObject
 	void moveNextNote();
 
 public:
-	JunoArpeggio(JunoControl *, int);
+	JunoArpeggio(JunoControl *, int, Scheduler *sched);
 
 	void connectTo(ConnectionInfo *info);
 	void disconnectTo(ConnectionInfo *info);

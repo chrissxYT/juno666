@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/04/07 11:26:32 $
+ * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
  */
 #include "JunoChorus.h"
 
@@ -36,7 +36,7 @@ void JunoChorus_IIChanged(MoogObject *o, double data, long userData)
 	((JunoChorus *)o)->IIChanged(data);
 }
 
-JunoChorus::JunoChorus(MoogObject *object, const char *outputName, int phase): m(3)
+JunoChorus::JunoChorus(MoogObject *object, const char *outputName, int phase): m(object->schedule, 3), c1(object->schedule), c2(object->schedule), MoogObject(object->schedule)
 {
 	addInput("off", JunoChorus_offChanged, 0, 1);
 	addInput("I", JunoChorus_IChanged, 0, 1);

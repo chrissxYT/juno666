@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/07 09:30:43 $
+ * $Revision: 1.5 $$Date: 2004/04/16 14:39:00 $
  */
 #include <math.h>
 #include "JunoSaw.h"
@@ -37,9 +37,9 @@ void JunoSaw_sync(MoogObject *o, double data, long)
 	((JunoSaw *)o)->sync();
 }
 
-JunoSaw::JunoSaw()
+JunoSaw::JunoSaw(Scheduler *sched): MoogObject(sched)
 {
-	addPorts("frq", INPUT, JunoSaw_frqChanged, 0, Scheduler::sampleControlRatio,
+	addPorts("frq", INPUT, JunoSaw_frqChanged, 0, schedule->sampleControlRatio,
 		"amp", INPUT, NULL,
 		"sync", INPUT, JunoSaw_sync, 0, 1,
 		"sig", OUTPUT, true,
@@ -82,9 +82,9 @@ void JunoSaw::frqChanged()
 		newFrq *= -1.0;
 
 	if (newFrq == 0.0)
-		Scheduler::scheduleSampleRate(this, false);
+		schedule->scheduleSampleRate(this, false);
 	else if (!isSampleScheduled())
-		Scheduler::scheduleSampleRate(this, true);
+		schedule->scheduleSampleRate(this, true);
 }
 
 void JunoSaw::sync()

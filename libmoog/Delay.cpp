@@ -21,7 +21,7 @@
 #include "Delay.h"
 #include "Scheduler.h"
 
-//#define DELAY_INTERPOLATE
+#define DELAY_INTERPOLATE
 
 void
 delay_mix_changed(MoogObject *o, double data, long userData)
@@ -35,7 +35,7 @@ delay_feedback_changed(MoogObject *o, double data, long userData)
 	((Delay *)o)->feedbackChanged(data);
 }
 
-Delay::Delay(int _dsize)
+Delay::Delay(Scheduler *sched, int _dsize): MoogObject(sched)
 {
 	dsize = _dsize;
 	dline = new double[dsize];
@@ -59,7 +59,7 @@ Delay::Delay(int _dsize)
 	inFeedback = inputs[2].data;
 	inMix = inputs[3].data;
 
-	Scheduler::scheduleSampleRate(this, true);
+	schedule->scheduleSampleRate(this, true);
 }
 
 void Delay::connectTo(ConnectionInfo *info)

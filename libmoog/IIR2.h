@@ -33,7 +33,7 @@ protected:
 	double y[2];
 
 public:
-	IIR2();
+	IIR2(Scheduler *sched);
 
 	void connectTo(ConnectionInfo *);
 	void disconnectTo(ConnectionInfo *);

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
  */
 #ifndef _OSCILLATOR_H
 #define _OSCILLATOR_H
@@ -57,8 +57,8 @@ protected:
 	void init(DataBlock *w);
 
 public:
-	Oscillator(DataBlock * = NULL);
-	Oscillator(DataBlock *w, double frq, double amp, double zro);
+	Oscillator(Scheduler *sched, DataBlock * = NULL);
+	Oscillator(DataBlock *w, double frq, double amp, double zro, Scheduler *sched);
 
 	/* virtual overrides */
 	void connectTo(ConnectionInfo *info);

@@ -25,14 +25,15 @@
 #include "ConnectionList.h"
 #include "ConnectionManager.h"
 
-MoogObject::MoogObject()
+MoogObject::MoogObject(Scheduler *sched)
 {
+
 #ifdef LIBMOOG_DEBUG
 	debug_flag = false;
 #endif
 
 	contextTag = NULL;
-
+	schedule = sched;
 	/* create a default unique name for every object */
 	name = new char[strlen("MoogObject")+10];
 	sprintf(name, "MoogObject_%d", goHandle);
@@ -40,6 +41,7 @@ MoogObject::MoogObject()
 
 void MoogObject::addPorts(char *name, ...)
 {
+
 	va_list va;
 	int io;
 	moog_callback_t callback;
@@ -124,21 +126,25 @@ void MoogObject::setContextTag(ConnectionManager *t)
 
 void MoogObject::connectFrom(ConnectionInfo *info)
 {
+
 	info->output->connect(info);
 }
 
 void MoogObject::connectTo(ConnectionInfo *info)
 {
+
 	info->input->connect(info);
 }
 
 void MoogObject::disconnectFrom(ConnectionInfo *info)
 {
+
 	info->output->disconnect(info);
 }
 
 void MoogObject::disconnectTo(ConnectionInfo *info)
 {
+
 	info->input->disconnect(info);
 }
 
@@ -155,6 +161,7 @@ void MoogObject::set(const char *inputName, double value)
 // These next two may want to be faster than a linear scan at some point
 int MoogObject::getInputNum(const char *name)
 {
+
 	for (int i = 0;i < inputs.getSize();i++)
 	{
 		if (strcmp(inputs[i].getName(), name) == 0)
@@ -167,6 +174,7 @@ int MoogObject::getInputNum(const char *name)
 
 int MoogObject::getOutputNum(const char *name)
 {
+
 	for (int i = 0;i < outputs.getSize();i++)
 	{
 		if (strcmp(outputs[i].getName(), name) == 0)
@@ -181,6 +189,7 @@ int MoogObject::getOutputNum(const char *name)
 
 Input *MoogObject::getInput(const char *name)
 {
+
 	int num = getInputNum(name);
 	if (num == -1)
 		return (NULL);
@@ -190,6 +199,7 @@ Input *MoogObject::getInput(const char *name)
 
 Output *MoogObject::getOutput(const char *name)
 {
+
 	int num = getOutputNum(name);
 	if (num == -1)
 	{

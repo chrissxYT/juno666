@@ -46,7 +46,7 @@ class HPF: public IIR2
 	void updateCoef();
 
 public:
-	HPF();
+	HPF(Scheduler *sched);
 	const char *getClassName()
 	{
 		return "HPF";

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:18 $
+ * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
  */
 #ifndef ADSR_H
 #define ADSR_H
@@ -59,8 +59,9 @@ protected:
 	Output *output;
 
 public:
-	ADSR(double a = 0, double d = 0, double s = 1,
+	ADSR(Scheduler *scheduler, double a = 0, double d = 0, double s = 1,
 		double r = 0, double amp = 1);
+
 	void sampleGo();
 	const char *getClassName()
 	{

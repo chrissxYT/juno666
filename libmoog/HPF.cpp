@@ -29,7 +29,7 @@ void HPF_QChanged(MoogObject *o, double data, long userData)
 	((HPF *)o)->QChanged(data);
 }
 
-HPF::HPF()
+HPF::HPF(Scheduler *sched): IIR2(sched)
 {
 	addInput("frq", HPF_frqChanged, 0, 1);
 	addInput("Q", HPF_QChanged, 0, 1);

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/03/31 12:01:19 $
+ * $Revision: 1.4 $$Date: 2004/04/16 14:39:00 $
  */
 #ifndef RMS_H
 #define RMS_H
@@ -46,7 +46,7 @@ class Rms: public MoogObject
 	double *inSig;
 
 public:
-	Rms();
+	Rms(Scheduler *sched);
 
 	void connectTo(ConnectionInfo *info);
 	void disconnectTo(ConnectionInfo *info);

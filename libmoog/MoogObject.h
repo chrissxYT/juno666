@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.7 $$Date: 2004/04/15 12:58:08 $
+ * $Revision: 1.8 $$Date: 2004/04/16 14:39:00 $
  */
 #ifndef _MOOGOBJECT_H
 #define _MOOGOBJECT_H
@@ -72,6 +72,7 @@ protected:
 	InputArray inputs;
 	OutputArray outputs;
 
+
 	ConnectionManager *contextTag;
 
 	/* allow runtime configuration of objects */
@@ -96,11 +97,13 @@ protected:
 	virtual void disconnectTo(ConnectionInfo *);
 
 public:
+	Scheduler *schedule;
 #ifdef LIBMOOG_DEBUG
 	bool debug_flag;
 #endif
 
-	MoogObject();
+	MoogObject(Scheduler *sched);
+
 	virtual ~MoogObject()
 	{
 	}

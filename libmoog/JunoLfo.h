@@ -51,7 +51,7 @@ class JunoLfo: public MoogObject
 	void checkTrigger();
 
 public:
-	JunoLfo(JunoControl *, int);
+	JunoLfo(JunoControl *, int, Scheduler *sched);
 	~JunoLfo();
 
 	void controlGo();

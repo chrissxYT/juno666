@@ -19,7 +19,7 @@
 #include "IIR2.h"
 #include "Scheduler.h"
 
-IIR2::IIR2()
+IIR2::IIR2(Scheduler *sched): MoogObject(sched)
 {
 	gain = 0;
 	cx[0] = cx[1] = cy[0] = cy[1] = 0;
@@ -30,7 +30,7 @@ IIR2::IIR2()
 
 	output = getOutput(0);
 
-	Scheduler::scheduleSampleRate(this, true);
+	schedule->scheduleSampleRate(this, true);
 }
 
 void IIR2::connectTo(ConnectionInfo *info)

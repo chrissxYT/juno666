@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/04/15 12:58:08 $
+ * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
  */
 #ifndef _VSTOutput_H
 #define _VSTOutput_H
@@ -49,7 +49,7 @@ class VSTOutput: public MoogObject
 	float *out2;
 
 public:
-	VSTOutput(JunoControl *jc);
+	VSTOutput(JunoControl *jc, Scheduler *sched);
 	~VSTOutput();
 
 	void connectTo(ConnectionInfo *info);

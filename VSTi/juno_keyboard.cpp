@@ -102,7 +102,7 @@ void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
 
 
 int initz = 0;
-JunoKeyboard::JunoKeyboard(int _numVoices)
+JunoKeyboard::JunoKeyboard(int _numVoices, Scheduler *sched): MoogObject(sched)
 {
 	numVoices = _numVoices;
 	octaveTranspose = -1;
@@ -161,7 +161,7 @@ void JunoKeyboard::midiGateChanged(int voiceNum, double data)
 	//printf("%f\n",inputs[voiceNum * 2].data);
 	if (data > 0)
 	{
-		JunoKeyboard::gtkKeyPressed(voiceNum, pitch_to_note(Scheduler::nyquistFreq * *inputs[voiceNum * 2].data) - 36);
+		JunoKeyboard::gtkKeyPressed(voiceNum, pitch_to_note(schedule->nyquistFreq * *inputs[voiceNum * 2].data) - 36);
 
 	}
 	else

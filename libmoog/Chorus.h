@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/03/31 12:01:18 $
+ * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
  */
 #ifndef CHORUS_H
 #define CHORUS_H
@@ -36,7 +36,7 @@ private:
 	double mod;
 
 public:
-	Chorus();
+	Chorus(Scheduler *sched);
 	~Chorus();
 
 	void connectTo(ConnectionInfo *info);

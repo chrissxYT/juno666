@@ -20,7 +20,7 @@
 #include "Attenuator.h"
 #include "Scheduler.h"
 
-Attenuator::Attenuator(double _amp, double _zro)
+Attenuator::Attenuator(Scheduler *sched, double _amp, double _zro): MoogObject(sched)
 {
 	addPorts("sig", INPUT, NULL,
 		"amp", INPUT, NULL,
@@ -37,7 +37,7 @@ Attenuator::Attenuator(double _amp, double _zro)
 	inAmp = inputs[I_ATT_AMP].data;
 	inZro = inputs[I_ATT_ZRO].data;
 
-	Scheduler::scheduleSampleRate(this, true);
+	schedule->scheduleSampleRate(this, true);
 }
 
 void Attenuator::connectTo(ConnectionInfo *info)

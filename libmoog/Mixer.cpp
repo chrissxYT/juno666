@@ -20,13 +20,13 @@
 #include <string.h>
 #include <libmoogutil/debug.h>
 
-/* $Id: Mixer.cpp,v 1.3 2004/04/07 09:30:43 brainslayer Exp $ */
+/* $Id: Mixer.cpp,v 1.4 2004/04/16 14:39:00 brainslayer Exp $ */
 
 #include "Mixer.h"
 #include "Scheduler.h"
 #include "ConnectionManager.h"
 
-Mixer::Mixer(int n, int objs, ...)
+Mixer::Mixer(Scheduler *sched, int n, int objs, ...): MoogObject(sched)
 {
 	init(n);
 
@@ -70,7 +70,7 @@ Mixer::init(int n)
 	for (int i = 0;i < numChannels * 2;i++)
 		inputData[i] = inputs[i].data;
 
-	Scheduler::scheduleSampleRate(this, true);
+	schedule->scheduleSampleRate(this, true);
 }
 
 Mixer::~Mixer()

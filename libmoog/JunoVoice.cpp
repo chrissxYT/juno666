@@ -111,8 +111,7 @@ void JunoVoice_vcamodeChanged(MoogObject *o, double data, long userData)
 	((JunoVoice *)o)->vcamodeChanged(data);
 }
 
-JunoVoice::JunoVoice(JunoControl *_jc, int _voiceNum)
-	: subMix(4)
+JunoVoice::JunoVoice(JunoControl *_jc, int _voiceNum, Scheduler *sched): MoogObject(sched), voiceVol(sched), pwmAttenuator(sched), subMix(sched, 4), pulse(sched), saw(sched), sub(sched), vcf(sched), balance(sched), adsr(sched), gateAdsr(sched)
 {
 	jc = _jc;
 	voiceNum = _voiceNum;

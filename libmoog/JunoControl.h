@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/14 13:48:25 $
+ * $Revision: 1.5 $$Date: 2004/04/16 14:39:00 $
  */
 #ifndef JUNO_CONTROL_H
 #define JUNO_CONTROL_H
@@ -32,7 +32,7 @@
 class JunoControl: public MoogObject
 {
 public:
-	JunoControl(int);
+	JunoControl(int, Scheduler *sched);
 	const char *getClassName()
 	{
 		return "JunoControl";
