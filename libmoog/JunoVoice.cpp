@@ -397,7 +397,7 @@ void JunoVoice::updateVcf()
 	tmp += env * vcfenv * vcfenvinvert;
 	//printf("tmp is %f\n", tmp);
 
-	tmp = tmp * pow(2, bender * bendervcf);
+	tmp = tmp * pow((double)2,(double)(bender * bendervcf));
 
 	tmp = pow(tmp, 4.0);
 	if (tmp >= .999)
@@ -411,7 +411,7 @@ void JunoVoice::updateVcf()
 
 void JunoVoice::updateFrq()
 {
-	double frq = kbd * pow(2, 2 * lfo * dcolfo / 12) * pow(2, bender * benderdco);
+	double frq = kbd * pow((double)2, (double)(2 * lfo * dcolfo / 12) * pow((double)2, (double)(bender * benderdco)));
 
 	pulse.set("frq", frq);
 	saw.set("frq", frq);

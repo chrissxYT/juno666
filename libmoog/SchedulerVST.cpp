@@ -90,10 +90,10 @@ void Scheduler::scheduleSampleRate(GoObject *obj, bool schedule)
     if (schedule != obj->isSampleScheduled())
         safeListOp(&obj->sampleListNode, &sampleRateList, schedule);
 }
-
+int controlCount = 0;
 void Scheduler::run()
 {
-    int controlCount = 0;
+    
     GoObject *obj;
 
     if (controlCount == 0)
