@@ -113,6 +113,7 @@ Editor::setParameter(long index, float value)
 	}
 }
 
+
 // FIXME: I allready exist in VstJuno6
 float
 Editor::getParameter(long index)
@@ -192,6 +193,18 @@ void controlChanged(MoogObject *o, double data, long userdata)
 
 void Editor::changeControl(long tag,double value)
 {
+		switch (control->getOutput(tag)->getType())
+		{
+			case WAY2:
+				break;
+			case WAY3:
+				value += 1;
+				value /= 2;
+				break;
+			default:
+				break;
+
+		}
 	guiControl[tag]->setValue(value);
 }
 
@@ -207,7 +220,7 @@ Editor::addSlider(int x, int y, char *outputName)
 	CRect size(x, y, x + sliderBg->getWidth(), y + sliderBg->getHeight());
 
 	CPoint point(0, 0);
-
+	
 	guiControl[tag] = new CVerticalSlider(size, this, tag,
 		size.top + 2,
 		size.top + sliderBg->getHeight() - sliderPick->getHeight(),
@@ -226,6 +239,9 @@ Editor::addSlider(int x, int y, char *outputName)
 	sliderBg->forget();
 	sliderPick->forget();
 }
+
+
+
 
 
 

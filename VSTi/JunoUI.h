@@ -8,13 +8,13 @@
 UITYPES juno6ui[] =
 {
 	{UIBITMAP, 0, 0, 0, IDB_BACKGROUND},
-	{UIBUTTON, 900, 43, 0, IDB_WHITE_BUTTON, "unisono"},
-	{UIBUTTON, 884,43,0,IDB_WHITE_BUTTON, "stereo_switch"},
+	{UIBUTTON, 857, 43, 0, IDB_WHITE_BUTTON, "unisono"}, //special params
+	{UIBUTTON, 828,43,0,IDB_WHITE_BUTTON, "stereo_switch"},
 	{UIKNOB, 80, 52, 0, 0, "master_tune"},
 	{UISLIDER, 22, 127, 0, 0, "bender_dco"},
 	{UISLIDER, 41, 127, 0, 0, "bender_vcf"},
 	{UISLIDER, 60, 127, 0, 0, "bender"},
-	{UITHREESWITCH, 70, 142, 0, 0, "octave_transpose"},
+	{UITHREESWITCH, 82, 142, 0, 0, "octave_transpose"},
 	{UIKICKBUTTON, 75, 182, 0, IDB_LFO_KICK, "lfo_trigger"},
 	{UIBUTTON, 125, 43, 0, IDB_WHITE_BUTTON, "transpose_switch"},
 	{UIBUTTON, 152, 43, 0, IDB_YELLOW_BUTTON, "hold_switch"},

@@ -16,6 +16,7 @@ public:
 		return "JunoEditor";
 	}
 
+	void addBender(int x, int y, int bmp, char *outputname);
 	void addBitmap(int x, int y, int bmp, void *ptr); //no control yet
 	void addKnob(int x, int y, char *outputName);
 	void addButton(int x, int y, int bmp, char *outputName);
