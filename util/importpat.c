@@ -25,22 +25,23 @@ int loadPatFile(char *name, juno_patch *patch)
     FILE *in;
     int i;
 
-    unsigned char lfo_rate;
-    unsigned char lfo_delay;
-    unsigned char dco_lfo;
-    unsigned char dco_pwm;
-    unsigned char dco_noise;
-    unsigned char vcf_frq;
-    unsigned char vcf_res;
-    unsigned char vcf_env;
-    unsigned char vcf_lfo;
-    unsigned char vcf_kbd;
-    unsigned char vca_level; //what?
-    unsigned char env_attack;
-    unsigned char env_decay;
-    unsigned char env_sustain;
-    unsigned char env_release;
-    unsigned char dco_sub;
+    double lfo_rate;
+    double lfo_delay;
+    double dco_lfo;
+    double dco_pwm;
+    double dco_noise;
+    double vcf_frq;
+    double vcf_res;
+    double vcf_env;
+    double vcf_lfo;
+    double vcf_kbd;
+    double vca_level; //what?
+    double env_attack;
+    double env_decay;
+    double env_sustain;
+    double env_release;
+    double dco_sub;
+	double octave_transpose;
     unsigned char sw1;
     unsigned char sw2;
 
@@ -78,7 +79,19 @@ int loadPatFile(char *name, juno_patch *patch)
         printf("converting %d\n", i);
 
 //get switches flag 1
-        if (sw1 & 8)
+		octave_transpose = 0;
+		/*
+		these switches are handled exclusive
+		*/
+		if (sw1 & 1) // octave up ('4)
+			octave_transpose = -1;
+		if (sw1 & 2)  //octave normal ('8)
+			octave_transpose = 0;
+		if (sw1 & 4)  //octave down ('16)
+			octave_transpose = 1;
+
+		if (i==79)printf(" sw1 %d\n",sw1);
+        if (sw1 & 8)	
             patch[i].dco_pulse_switch = 1;
         if (sw1 & 16)
             patch[i].dco_saw_switch = 1;
@@ -127,9 +140,10 @@ int loadPatFile(char *name, juno_patch *patch)
         patch[i].env_sustain = (double)env_sustain / 127;
         patch[i].env_release = (double)env_release / 127;
         patch[i].dco_sub = (double)dco_sub / 127;
+		patch[i].octave_transpose = octave_transpose;
 //if an dco sub value is set, the dco switch will automaticly
 //enabled. roland missed to implement the switch in the sysex chart
-        if (dco_sub)
+        if (dco_sub>0)
             patch[i].dco_sub_switch = 1;
 
         c = getc(in);
@@ -137,7 +151,7 @@ int loadPatFile(char *name, juno_patch *patch)
 //read the name of the patch till the end of the line
         while ( c != 0xa )
         {
-            if ( len < PATCH_NAME_LEN )
+            if ( len < PATCH_NAME_LEN && c!=0xd)
             {
                 *name++ = c;
             }
