@@ -3,8 +3,8 @@
 void
 phaser_frequency_changed(MoogObject *o, double data, long)
 {
-	Phaser *p = (Phaser*)o;
-	p->setup(data,*p->m_dblMinRange,*p->m_dblMaxRange,*p->m_dblRate,*p->m_dblFeedback,*p->m_dblDepth);
+	//Phaser *p = (Phaser*)o;
+	//p->setup(data,*p->m_dblMinRange,*p->m_dblMaxRange,*p->m_dblRate,*p->m_dblFeedback,*p->m_dblDepth);
 
 }
 void
@@ -45,12 +45,12 @@ phaser_depth_changed(MoogObject *o, double data, long)
 
 
 
-Phaser::Phaser(Scheduler *sched, ConnectionManager *conn) : MoogObject(sched,conn)
+Phaser::Phaser(MoogObject *inputobject, const char *inputname) : MoogObject(inputobject->schedule,inputobject->getConnectionManager())
 {
 	setup(44100.0,440.0,1600.0,0.5,0.7,1.0);
 	//signal routing
 	addInput("sig",NULL,0,0);
-	addOutput("sig",true);
+	output = addOutput("sig",true);
 	//parameter
 	addInput("frequency",phaser_frequency_changed,0,1);
 	addInput("minrange",phaser_minrange_changed,0,1);
@@ -58,6 +58,7 @@ Phaser::Phaser(Scheduler *sched, ConnectionManager *conn) : MoogObject(sched,con
 	addInput("rate",phaser_rate_changed,0,1);
 	addInput("feedback",phaser_feedback_changed,0,1);
 	addInput("depth",phaser_depth_changed,0,1);
+	PATCH(inputobject,inputname,this,"sig");
 }
 
 Phaser::~Phaser(void)

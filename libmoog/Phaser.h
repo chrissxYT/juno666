@@ -2,6 +2,8 @@
 
 #include <math.h>
 #include "MoogObject.h"
+#include "ConnectionManager.h"
+#include "Scheduler.h"
 
 
 #ifndef M_PI
@@ -33,7 +35,7 @@ private:
 	Output *output;
 
 public:
-	Phaser(Scheduler *sched,ConnectionManager *conn);
+	Phaser(MoogObject *inputobject, const char *inputname);
 	virtual ~Phaser(void);
 
 	void setup(

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.16 $$Date: 2004/06/25 10:38:42 $
+ * $Revision: 1.17 $$Date: 2004/09/03 12:01:22 $
  */
 
 #include <libmoogutil/String.h>
@@ -77,6 +77,14 @@ JunoControl::JunoControl(int voices, Scheduler *sched): Control(sched)
 	addOutput("chorus_off_switch", "Chorus Off", WAY2, false);
 	addOutput("chorus_I_switch", "Chorus I", WAY2, false);
 	addOutput("chorus_II_switch", "Chorus II", WAY2, false);
+	//phaser
+	addOutput("phaser_minrange","Phaser MinRange",false);
+	addOutput("phaser_maxrange","Phaser MaxRange",false);
+	addOutput("phaser_rate","Phaser Rate",false);
+	addOutput("phaser_feedback","Phaser Feedback",false);
+	addOutput("phaser_depth","Phaser Depth",false);
+
+
 	addOutput("panning", "Panning", false); //new and works only in stereo mode
 	addOutput("stereo_switch", "Stereo Mode", WAY2, false);
 	addOutput("unisono", "UniSono", WAY2, false);
