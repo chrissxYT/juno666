@@ -204,6 +204,9 @@
 				RelativePath="Output.cpp">
 			</File>
 			<File
+				RelativePath=".\Phaser.cpp">
+			</File>
+			<File
 				RelativePath="pitch.cpp">
 			</File>
 			<File
@@ -332,6 +335,9 @@
 			</File>
 			<File
 				RelativePath="Output.h">
+			</File>
+			<File
+				RelativePath=".\Phaser.h">
 			</File>
 			<File
 				RelativePath="pitch.h">
