@@ -156,11 +156,12 @@ MidiInput::~MidiInput()
     {
         stop();
     }
-
+#ifndef TARGET_VST
     if (isOpen())
     {
         midiInClose(handle);
     }
+#endif
 
     delete[](voices);
 }
