@@ -17,9 +17,9 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.1 $$Date: 2004/04/06 09:57:01 $
+ * $Revision: 1.1 $$Date: 2004/04/07 10:58:51 $
  */
-#include "juno_chorus.h"
+#include "JunoChorus.h"
 
 void JunoChorus_offChanged(MoogObject *o, double data, long userData)
 {

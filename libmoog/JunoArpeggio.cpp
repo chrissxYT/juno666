@@ -17,9 +17,11 @@
  */
 #include <stdlib.h>
 
-#include "juno_arpeggio.h"
-#include <libmoog/JunoControl.h>
-#include <libmoog/moog.h>
+#include "JunoArpeggio.h"
+#include "JunoControl.h"
+#include "MoogObject.h"
+#include "ConnectionManager.h"
+#include "Scheduler.h"
 
 
 static int oct_x[] = {1, 2, 4};

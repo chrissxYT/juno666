@@ -17,12 +17,16 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/03/31 12:01:17 $
+ * $Revision: 1.1 $$Date: 2004/04/07 10:58:51 $
  */
 #ifndef JUNO_CHORUS_H
 #define JUNO_CHORUS_H
 
-#include <libmoog/moog.h>
+#include "MoogObject.h"
+#include "Chorus.h"
+#include "Mixer.h"
+#include "ConnectionManager.h"
+#include "Scheduler.h"
 
 class JunoChorus: public MoogObject
 {

@@ -8,11 +8,7 @@ PROGS=juno6 list_patches copy_patch
 OBJS=juno6.o\
     juno_gui.o\
     juno_synth.o\
-    juno_voice.o\
     juno_wrappers.o\
-    juno_lfo.o\
-    juno_arpeggio.o\
-    juno_chorus.o\
     juno_patch.o\
     about.o\
 

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.2 $$Date: 2004/04/07 09:30:43 $
+ * $Revision: 1.1 $$Date: 2004/04/07 10:58:52 $
  */
 #ifndef JUNO_SYNTH_H
 #define JUNO_SYNTH_H

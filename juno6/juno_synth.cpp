@@ -17,14 +17,14 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.4 $$Date: 2004/04/07 09:30:41 $
+ * $Revision: 1.5 $$Date: 2004/04/07 10:58:50 $
  */
 #include <stdlib.h>
-#include "juno_synth.h"
-#include "juno_voice.h"
-#include "juno_lfo.h"
-#include "juno_arpeggio.h"
-#include "juno_chorus.h"
+#include <libmoog/JunoSynth.h>
+#include <libmoog/JunoVoice.h>
+#include <libmoog/JunoLfo.h>
+#include <libmoog/JunoArpeggio.h>
+#include <libmoog/JunoChorus.h>
 #include <libgmoog/Scope.h>
 #include "juno_patch.h"
 

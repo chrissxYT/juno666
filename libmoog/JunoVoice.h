@@ -18,7 +18,20 @@
 #ifndef _JUNO_JUNO_VOICE_H
 #define _JUNO_JUNO_VOICE_H
 
-#include <libmoog/moog.h>
+#include "MoogObject.h"
+#include "JunoPulse.h"
+#include "JunoSaw.h"
+#include "ResonantLowPass.h"
+#include "ConnectionManager.h"
+#include "ADSR.h"
+#include "Attenuator.h"
+#include "Mixer.h"
+#include "Balance.h"
+#include "Rand.h"
+#include "JunoLfo.h"
+#include "Scheduler.h"
+#include "Settings.h"
+
 class JunoControl;
 
 class JunoVoice: public MoogObject

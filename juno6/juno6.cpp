@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.6 $$Date: 2004/04/07 09:30:41 $
+ * $Revision: 1.7 $$Date: 2004/04/07 10:58:50 $
  */
 
 #include <stdio.h>
@@ -31,7 +31,7 @@
 //#include <util/cpudetect.h>
 #include "juno_patch.h"
 #include "juno_gui.h"
-#include "juno_synth.h"
+#include <libmoog/JunoSynth.h>
 
 String patchFileName;
 juno_patch *patches;

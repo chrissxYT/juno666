@@ -16,9 +16,11 @@
  *     arising from the use of UltraMaster Juno-6.
  */
 #include <math.h>
-#include "juno_lfo.h"
-#include <libmoog/JunoControl.h>
-#include <libmoog/moog.h>
+#include "JunoLfo.h"
+#include "JunoControl.h"
+#include "ConnectionManager.h"
+#include "WaveGen.h"
+#include "Scheduler.h"
 
 void JunoLfo_lforateChanged(MoogObject *o, double data, long userData)
 {
