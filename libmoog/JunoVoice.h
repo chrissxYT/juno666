@@ -89,6 +89,7 @@ private:
     double env;
     double lfo;
     double kbd;
+	double newkbd;
     double bender;
     double benderdco;
     double bendervcf;

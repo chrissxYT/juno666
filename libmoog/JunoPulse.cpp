@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.8 $$Date: 2004/04/24 22:24:10 $
+ * $Revision: 1.9 $$Date: 2004/06/04 09:49:44 $
  */
 #include "JunoPulse.h"
 #include "Scheduler.h"
@@ -77,18 +77,19 @@ void JunoPulse::disconnectTo(ConnectionInfo *info)
     inWidth = inputs[2].data;
     inSync = inputs[3].data;
 }
-
+#define ASIMUL 128
 void JunoPulse::horizBoundsChanged()
 {
     frq = *inFrq;
-
-    MOOG_DEBUG("freq=%f", frq);
+	
 
     if (frq < 0.0)
         frq *= -1.0;
 
     if (frq == 0.0)
+	{
         schedule->scheduleSampleRate(this, false);
+	}
     else if (!isSampleScheduled())
         schedule->scheduleSampleRate(this, true);
 }
@@ -102,7 +103,6 @@ void JunoPulse::sync()
 void JunoPulse::sampleGo()
 {
     pos += frq;
-
     if (pos >= .45 && sign < 0)
     {
         if (lastTrigger == 0)

@@ -19,6 +19,7 @@
 #define _LIBMOOG_LOWPASS_H
 
 #include "MoogObject.h"
+#include <windows.h>
 
 
 #define SECTIONS 2
@@ -37,6 +38,8 @@ class ResonantLowPass: public MoogObject
 
     double *hist;
     double *coef;
+	bool changed;
+	
 
 	//copied from filterprototype
     BiQuad *pcoef;

@@ -136,6 +136,7 @@ void VstJuno6::processReplacing(float **inputs, float **outputs, long sampleFram
     }
 }
 
+
 long VstJuno6::processEvents(VstEvents *ev)
 {
     unsigned char cmd = 0;

@@ -356,16 +356,16 @@ MidiInput::doNoteOn(unsigned int c, unsigned int n, unsigned int v)
     {
         for (int i=0;i<nvoices;i++)
         {
-            if (voices[i].note == -1)
+           // if (voices[i].note == -1) //no that isnt monophonic playing
             {
                 voices[i].note = n;
-                double detune = 0;
-                if (i)
-                    detune+=midi_notes[0];
+                double detune = ((midi_notes[n+1]-midi_notes[n-1])/(nvoices*12));
+                
+				
                 if (i%2)
-                    voices[i].pitchOutput->setData(CPS(midi_notes[n])+CPS(detune/2));
+                    voices[i].pitchOutput->setData(CPS(midi_notes[n])+CPS(detune*(i+1)));
                 else
-                    voices[i].pitchOutput->setData(CPS(midi_notes[n])-CPS(detune/2));
+                    voices[i].pitchOutput->setData(CPS(midi_notes[n])-CPS(detune*(i+1)));
             
                 voices[i].gateOutput->setData(v / 127.0);
                 savedGateInfo[i] = 1;

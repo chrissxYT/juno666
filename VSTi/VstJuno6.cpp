@@ -24,10 +24,6 @@ AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 
     patches = (juno_patch*)&junofactory;
 
-    //String patchFileName = "juno6.patches";
-
-    //load_patches(patchFileName, patches);
-
     keyboard = new JunoKeyboard(control, midiInput, patches, numVoices, schedule, connection);
 
     setEditor( new Editor( this, control, midiInput ) );

@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.7 $$Date: 2004/04/20 15:01:35 $
+ * $Revision: 1.8 $$Date: 2004/06/04 09:49:44 $
  */
 #include <math.h>
 #include "JunoSaw.h"
@@ -71,20 +71,27 @@ void JunoSaw::disconnectTo(ConnectionInfo *info)
 	inAmp = inputs[1].data;
 	inSync = inputs[2].data;
 }
-
+#define ASIMUL 128
 void JunoSaw::frqChanged()
 {
 	newFrq = *inFrq / 2;
+	
 
-	MOOG_DEBUG("newFrq=%f", newFrq);
+	//newFrq = *inFrq / 2;
+
+	//MOOG_DEBUG("newFrq=%f", newFrq);
 
 	if (newFrq < 0.0)
 		newFrq *= -1.0;
 
 	if (newFrq == 0.0)
+	{
 		schedule->scheduleSampleRate(this, false);
+		newFrq = 0.0;
+	}
 	else if (!isSampleScheduled())
 		schedule->scheduleSampleRate(this, true);
+	//newfrq = abs((double)((newfrq - newFrq) / (double)ASIMUL));
 }
 
 void JunoSaw::sync()
@@ -94,6 +101,7 @@ void JunoSaw::sync()
 
 void JunoSaw::sampleGo()
 {
+	
 	pos += frq;
 
 	MOOG_DEBUG("pos=%f, frq=%f", pos, frq);

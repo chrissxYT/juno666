@@ -64,6 +64,7 @@ void ResonantLowPass_resonanceChanged(MoogObject *o, double data, long )
 
 ResonantLowPass::ResonantLowPass(Scheduler *sched): MoogObject(sched, NULL)
 {
+    changed = true;
     pcoef = new BiQuad[SECTIONS];
     setSectionCoef(0, 1.0, 0, 0, 1.0, 0.765367, 1.0);
     setSectionCoef(1, 1.0, 0, 0, 1.0, 1.847759, 1.0);
@@ -122,24 +123,34 @@ void ResonantLowPass::disconnectTo(ConnectionInfo *info)
 
 void ResonantLowPass::gainChanged(double data)
 {
+	if (data>1)data = 1;
+	if (data<0)data = 0;
     gain = data;
-    recalcFilter();
+	changed = true;
+   // recalcFilter();
 }
 
 void ResonantLowPass::cutoffChanged(double data)
 {
+	if (data>1)data = 1;
+	if (data<0)data = 0;
     cutoff = data;
-    recalcFilter();
+	changed = true;
+   // recalcFilter();
 }
 
 void ResonantLowPass::resonanceChanged(double data)
 {
+	if (data>1)data = 1;
+	if (data<0)data = 0;
     resonance = data;
-    recalcFilter();
+	changed = true;
+    //recalcFilter();
 }
 
 void ResonantLowPass::recalcFilter()
 {
+	
     double *coefptr = coef;
     fixedGain = gain;
 
@@ -164,10 +175,14 @@ void ResonantLowPass::recalcFilter()
 
         coefptr += 4;
     }
+	changed = false;
+	
 }
 #define denormal_fix  0.00000001
 void ResonantLowPass::sampleGo()
 {
+	if (changed)
+		recalcFilter();
     double *coefptr = coef;
     double *hist1ptr, *hist2ptr;
     double newhist, hist1, hist2;
@@ -196,8 +211,9 @@ void ResonantLowPass::sampleGo()
         hist1ptr++;
         hist2ptr++;
     }
-
+	
     output->setData(tmpOutput);
+	
 }
 
 void ResonantLowPass::sync()

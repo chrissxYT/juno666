@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/04/16 14:39:00 $
+ * $Revision: 1.4 $$Date: 2004/06/04 09:49:44 $
  */
 #ifndef JUNOSAW_H
 #define JUNOSAW_H
@@ -39,6 +39,8 @@ private:
 
 	double pos;
 	double frq;
+	double newfrq;
+	double destfrq;
 
 	double newFrq;
 	double power;
