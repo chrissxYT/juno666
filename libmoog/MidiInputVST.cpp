@@ -3,24 +3,13 @@ Win32 MIDI Implementation for Juno 666 project. (c) 2003 - 2004 Sebastian Gottsc
 
 */
 
-#include <sys/types.h>
+#include "MidiInputVST.h"
+
 #include <libmoogutil/debug.h>
 #include <libmoogutil/String.h>
-#include "MidiInput.h"
 #include "ConnectionManager.h"
-
 #include "Scheduler.h"
 #include "pitch.h"
-
-#include <windows.h>
-#include <mmsystem.h>
-
-#ifdef _MSC_VER
-#include <time.h>
-#else
-#include <sys/time.h>
-#include <unistd.h>
-#endif
 
 /*
  * The 4 most significant bits of byte 0 specify the class of
@@ -65,33 +54,6 @@ Win32 MIDI Implementation for Juno 666 project. (c) 2003 - 2004 Sebastian Gottsc
 
 #define MIDI_SYSTEM_PREFIX  0xF0
 
-HMIDIIN handle;
-MidiInput *input;
-
-void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
-
-void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2)
-{
-    unsigned char cmd = 0;
-    unsigned char channel = 0;
-    unsigned char data[2];
-
-    if (wMsg == MM_MIM_DATA) //accept only complete events
-    {
-        cmd = dwParam1 & 0xf0;
-        channel = dwParam1 & 0x0f;
-        data[0] = (dwParam1 >> 8) & 0xff;
-        data[1] = (dwParam1 >> 16) & 0xff;
-
-        if (input == NULL)
-        {
-            return;
-        }
-
-        input->proc(cmd, channel, data);
-    }
-}
-
 void midi_holdChanged(MoogObject *obj, double data, long)
 {
     ((MidiInput *)obj)->holdChanged(data);
@@ -108,8 +70,6 @@ control(jc),
 nvoices(nv)
 {
     char tmpname[16];
-
-    input = this;
 
     voices = new midi_voice[nvoices];
     savedGateInfo = new int[nvoices];
@@ -150,28 +110,6 @@ nvoices(nv)
     PATCH(control, "hold_switch", this, "hold_switch");
     addInput("unisono", midi_doUniSono, 0, 1);
     PATCH(control, "unisono", this, "unisono");
-
-    UINT devs = midiInGetNumDevs();
-
-    for (UINT i = 0;i < devs;i++)
-    {
-        MIDIINCAPS caps;
-        MMRESULT result = midiInGetDevCaps(i, &caps, sizeof(MIDIINCAPS));
-        if (result != MMSYSERR_NOERROR)
-        {
-            printf("Error opening Device :%d\n", result);
-            continue;
-        }
-
-        printf("opening %d:%s \n", i, caps.szPname);
-        result = midiInOpen(&handle, i, (DWORD)MidiInProc, 0, CALLBACK_FUNCTION);
-        if (result != MMSYSERR_NOERROR)
-        {
-            printf("Error init Device :%d\n", result);
-            continue;
-        }
-        break;
-    }
 }
 
 MidiInput::~MidiInput()
@@ -182,12 +120,6 @@ MidiInput::~MidiInput()
     {
         stop();
     }
-
-    if (isOpen())
-    {
-        midiInClose(handle);
-    }
-
     delete[]savedGateInfo;
     delete[](voices);
 }
@@ -204,8 +136,6 @@ Output * MidiInput::getOutput(const char *n)
 
 void MidiInput::start()
 {
-    input = this;
-
     if (running == 1)
     {
         //debug(DEBUG_APPERROR, "MidiInput already started!");
@@ -213,26 +143,12 @@ void MidiInput::start()
     else
     {
         running = 1;
-
-        MMRESULT result = midiInStart(handle);
-
-        if (result != MMSYSERR_NOERROR)
-        {
-            printf("Error starting Device :%d\n", result);
-        }
     }
 }
 
 void MidiInput::stop()
 {
-    midiInStop(handle);
-
     running = 0;
-}
-
-bool MidiInput::isOpen()
-{
-    return (handle != NULL);
 }
 
 void MidiInput::proc(unsigned char cmd, unsigned char channel, unsigned char *data)
@@ -319,6 +235,7 @@ void MidiInput::proc(unsigned char cmd, unsigned char channel, unsigned char *da
             //   debug(DEBUG_STATUS, "[%d]\n", cmd);
             break;
     }
+
 }
 
 void MidiInput::doNoteOn(unsigned int c, unsigned int n, unsigned int v)

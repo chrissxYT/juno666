@@ -57,7 +57,7 @@ void Junokeyboard_changePatch(MoogObject *o, double data, long userdata)
         return;
     }
 
-    juno_patch *patch =patches[userdata];
+    juno_patch *patch = &patches[userdata];
     junoControl->MoogObject::getOutput("bender_dco")->setData(patch->bender_dco);
     junoControl->MoogObject::getOutput("bender_vcf")->setData(patch->bender_vcf);
     junoControl->MoogObject::getOutput("lfo_trigger")->setData(patch->lfo_trigger);

@@ -110,7 +110,7 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="../lib/libmoogvst.lib odbc32.lib odbccp32.lib"
-				OutputFile="C:\Program Files\emagic\Logic 5\VstPlugIns\VstJuno6.dll"
+				OutputFile="../bin/VstJuno6.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				IgnoreAllDefaultLibraries="FALSE"

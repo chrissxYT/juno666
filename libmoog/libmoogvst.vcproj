@@ -174,7 +174,7 @@
 				RelativePath="JunoVoice.cpp">
 			</File>
 			<File
-				RelativePath="MidiInput.cpp">
+				RelativePath=".\MidiInputVST.cpp">
 			</File>
 			<File
 				RelativePath="Mixer.cpp">
@@ -295,13 +295,10 @@
 				RelativePath="JunoVoice.h">
 			</File>
 			<File
-				RelativePath="MidiInput.h">
+				RelativePath=".\MidiInputVST.h">
 			</File>
 			<File
 				RelativePath="Mixer.h">
-			</File>
-			<File
-				RelativePath="moog.h">
 			</File>
 			<File
 				RelativePath="MoogObject.h">

@@ -17,13 +17,14 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.16 $$Date: 2004/09/04 17:10:31 $
+ * $Revision: 1.1 $$Date: 2004/09/04 17:10:31 $
  */
-#ifndef MIDIINPUT_H
-#define MIDIINPUT_H
+#ifndef MIDIINPUTVST_H
+#define MIDIINPUTVST_H
 
 #include "MoogObject.h"
 #include "Control.h"
+
 
 /* Note, there should be various modes ( there are more than these )
 1. monophonic, after key pressed other keys are ignored
@@ -75,7 +76,6 @@ public:
 
     void start();
     void stop();
-    bool isOpen();
 
     void proc(unsigned char cmd, unsigned char channel, unsigned char *data);
 
@@ -87,4 +87,4 @@ public:
     inline Output *getOutput(const char *n);
 };
 
-#endif /* MIDIINPUT_H */
+#endif /* MIDIINPUTVST_H */

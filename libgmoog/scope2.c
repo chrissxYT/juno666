@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.3 $$Date: 2004/03/31 12:01:18 $
+ * $Revision: 1.4 $$Date: 2004/09/04 17:10:31 $
  */
 #include <math.h>
 #include <stdio.h>
@@ -26,7 +26,7 @@
 #include <gdk/gdk.h>
 #include <stdlib.h>
 #include "scope2.h"
-#include <libmoogutil/fastmemcpy.h>
+//#include <libmoogutil/fastmemcpy.h>
 
 static GtkWidgetClass *parent_class = NULL;
 
