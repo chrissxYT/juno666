@@ -21,7 +21,7 @@
 #include "MoogObject.h"
 #include <windows.h>
 
-#define MOOGVCF
+//#define MOOGVCF
 
 #ifndef MOOGVCF
 #define SECTIONS 2

@@ -81,7 +81,7 @@
 				EnableEnhancedInstructionSet="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="TRUE"
+				Detect64BitPortabilityProblems="FALSE"
 				DebugInformationFormat="3"
 				CallingConvention="1"/>
 			<Tool
@@ -184,15 +184,6 @@
 			</File>
 			<File
 				RelativePath="JunoVoice.cpp">
-			</File>
-			<File
-				RelativePath=".\JupiterControl.cpp">
-			</File>
-			<File
-				RelativePath=".\JupiterSaw2.cpp">
-			</File>
-			<File
-				RelativePath=".\JupiterVoice.cpp">
 			</File>
 			<File
 				RelativePath="MidiInput.cpp">
