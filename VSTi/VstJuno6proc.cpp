@@ -42,21 +42,13 @@ void VstJuno6::initSynth(int numVoices)
 
     pwmLfo->set("zro", .5);
 
-    // fall thru each case
-    if (numVoices > 64)
-    {
-        numVoices = 64;
-    }
-
     for (int i = 0;i < numVoices;i++)
     {
         //debug(DEBUG_APPMSG1, "CREATING VOICE %d",i);
         voice[i] = new JunoVoice(control, i, noise, lfo, pwmLfo, schedule, connection);
         char *tmp = new char[6];
         sprintf(tmp, "sig%d", i);
-        //debug(DEBUG_APPMSG1, "patching voice",i);
         PATCH(voice[i], "sig", voiceMix, tmp);
-        //voice[i]->attachVoice(midiInput);
     }
 
     arpeggio = new JunoArpeggio(control, numVoices, voice, schedule, connection);

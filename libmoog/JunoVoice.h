@@ -30,7 +30,6 @@
 #include "Rand.h"
 #include "JunoLfo.h"
 #include "Scheduler.h"
-//#include "Settings.h"
 
 class JunoControl;
 
@@ -55,7 +54,7 @@ class JunoVoice: public MoogObject
 
     JunoControl *jc;
     int voiceNum;
-	int init;
+    int init;
 
     /* basic elements */
     //PulseWave pulse;
@@ -142,12 +141,3 @@ Scheduler *sched, ConnectionManager *conn);
 };
 
 #endif /* _JUNO_JUNO_VOICE_H */
-
-
-
-
-
-
-
-
-

@@ -303,6 +303,11 @@ void Scheduler::run()
 
             while (currentListIter != &controlRateList)
             {
+                if (!currentListIter)
+                {
+                    break;
+                }
+
                 obj = list_entry(currentListIter, GoObject, GoObject::controlListNode);
                 obj->controlGo();
                 currentListIter = currentListIter->next;
@@ -317,14 +322,14 @@ void Scheduler::run()
 
         while (currentListIter != &sampleRateList)
         {
-            if (currentListIter != NULL)
+            if (!currentListIter)
             {
-                obj = list_entry(currentListIter, GoObject, sampleListNode);
-                obj->sampleGo();
-                currentListIter = currentListIter->next;
-            }
-            else
                 break;
+            }
+
+            obj = list_entry(currentListIter, GoObject, sampleListNode);
+            obj->sampleGo();
+            currentListIter = currentListIter->next;
         }
 
         /* this is so we can run even without a DSPOutput object */

@@ -121,7 +121,7 @@ private:
     JunoChorus *chorus2;
     HPF *hpf;
 
-JunoVoice *voice[64];
+JunoVoice **voice;
 
 JunoKeyboard *keyboard;
 MidiInput *midiInput;

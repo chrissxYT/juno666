@@ -5,7 +5,9 @@
 VstJuno6::VstJuno6(audioMasterCallback audioMaster):
 AudioEffectX(audioMaster, kNumPrograms, kNumParams)
 {
-    int numVoices = 6;
+    int numVoices = 2;
+
+    voice = new JunoVoice *[numVoices];
 
     schedule = new Scheduler();
 
