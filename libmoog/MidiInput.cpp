@@ -36,11 +36,11 @@ Win32 MIDI Implementation for Juno 666 project. (c) 2003 - 2004 Sebastian Gottsc
  *
  */
 
-#define EV_SEQ_LOCAL	    0x80
-#define EV_TIMING	    0x81
-#define EV_CHN_COMMON	    0x92
-#define EV_CHN_VOICE	    0x93
-#define EV_SYSEX	    0x94
+#define EV_SEQ_LOCAL        0x80
+#define EV_TIMING       0x81
+#define EV_CHN_COMMON       0x92
+#define EV_CHN_VOICE        0x93
+#define EV_SYSEX        0x94
 /*
  * Event types 200 to 220 are reserved for application use.
  * These numbers will not be used by the driver.
@@ -50,8 +50,8 @@ Win32 MIDI Implementation for Juno 666 project. (c) 2003 - 2004 Sebastian Gottsc
  * Events for event type EV_CHN_VOICE
  */
 
-#define MIDI_NOTEOFF	    0x80
-#define MIDI_NOTEON	    0x90
+#define MIDI_NOTEOFF        0x80
+#define MIDI_NOTEON     0x90
 #define MIDI_KEY_PRESSURE   0xA0
 
 /*
@@ -73,76 +73,76 @@ void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwP
 
 void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2)
 {
-	unsigned char cmd = 0;
-	unsigned char channel = 0;
-	unsigned char data[2];
+    unsigned char cmd = 0;
+    unsigned char channel = 0;
+    unsigned char data[2];
 
-	if (wMsg == MM_MIM_DATA) //accept only complete events
-	{
-		cmd = dwParam1 & 0xf0;
-		channel = dwParam1 & 0x0f;
-		data[0] = (dwParam1 >> 8) & 0xff;
-		data[1] = (dwParam1 >> 16) & 0xff;
+    if (wMsg == MM_MIM_DATA) //accept only complete events
+    {
+        cmd = dwParam1 & 0xf0;
+        channel = dwParam1 & 0x0f;
+        data[0] = (dwParam1 >> 8) & 0xff;
+        data[1] = (dwParam1 >> 16) & 0xff;
 
-		if (input == NULL)
-		{
-			return;
-		}
+        if (input == NULL)
+        {
+            return;
+        }
 
-		input->proc(cmd, channel, data);
-	}
+        input->proc(cmd, channel, data);
+    }
 }
 
 MidiInput::MidiInput(JunoControl *jc, int nv)
 {
-	char tmpname[16];
+    char tmpname[16];
 
-	this->control = jc;
-	this->nvoices = nv;
+    this->control = jc;
+    this->nvoices = nv;
 
-	input = this;
+    input = this;
 
-	voices = new midi_voice[nvoices];
+    voices = new midi_voice[nvoices];
 
-	running = 0;
-	lastNote = -1;
+    running = 0;
+    lastNote = -1;
 
-	addOutput("bend", false);
+    addOutput("bend", false);
 
-	for (int i = 0;i < nvoices;i++)
-	{
-		voices[i].note = -1;
-		sprintf(tmpname, "sig%d", i);
-		puts("adding output 1");
-		voices[i].pitchOutput = addOutput(tmpname, false);
-		sprintf(tmpname, "amp%d", i);
-		puts("adding output 2");
-		voices[i].gateOutput = addOutput(tmpname, false);
-	}
+    for (int i = 0;i < nvoices;i++)
+    {
+        voices[i].note = -1;
+        sprintf(tmpname, "sig%d", i);
+        puts("adding output 1");
+        voices[i].pitchOutput = addOutput(tmpname, false);
+        sprintf(tmpname, "amp%d", i);
+        puts("adding output 2");
+        voices[i].gateOutput = addOutput(tmpname, false);
+    }
 
 #ifndef TARGET_VST
 
-	UINT devs = midiInGetNumDevs();
+    UINT devs = midiInGetNumDevs();
 
-	for (UINT i = 0;i < devs;i++)
-	{
-		MIDIINCAPS caps;
-		MMRESULT result = midiInGetDevCaps(i, &caps, sizeof(MIDIINCAPS));
-		if (result != MMSYSERR_NOERROR)
-		{
-			printf("Error opening Device :%d\n", result);
-			continue;
-		}
+    for (UINT i = 0;i < devs;i++)
+    {
+        MIDIINCAPS caps;
+        MMRESULT result = midiInGetDevCaps(i, &caps, sizeof(MIDIINCAPS));
+        if (result != MMSYSERR_NOERROR)
+        {
+            printf("Error opening Device :%d\n", result);
+            continue;
+        }
 
-		printf("opening %d:%s \n", i, caps.szPname);
-		result = midiInOpen(&handle, i, (DWORD)MidiInProc, 0, CALLBACK_FUNCTION);
-		if (result != MMSYSERR_NOERROR)
-		{
-			printf("Error init Device :%d\n", result);
-			continue;
-		}
-		break;
-	}
+        printf("opening %d:%s \n", i, caps.szPname);
+        result = midiInOpen(&handle, i, (DWORD)MidiInProc, 0, CALLBACK_FUNCTION);
+        if (result != MMSYSERR_NOERROR)
+        {
+            printf("Error init Device :%d\n", result);
+            continue;
+        }
+        break;
+    }
 
 #endif
 
@@ -150,228 +150,241 @@ MidiInput::MidiInput(JunoControl *jc, int nv)
 
 MidiInput::~MidiInput()
 {
-	puts("destruct");
+    puts("destruct");
 
-	if (running)
-	{
-		stop();
-	}
+    if (running)
+    {
+        stop();
+    }
 
-	delete[](voices);
+    delete[](voices);
 }
 
 Output *
 MidiInput::getOutput(const char *n)
 {
-	Output *retval = MoogObject::getOutput(n);
-	if (retval == NULL && strlen(n) > 3 && strncmp("ctl", n, 3) == 0)
-	{
-		retval = addOutput(n, false);
-	}
-	return (retval);
+    Output *retval = MoogObject::getOutput(n);
+    if (retval == NULL && strlen(n) > 3 && strncmp("ctl", n, 3) == 0)
+    {
+        retval = addOutput(n, false);
+    }
+    return (retval);
 }
 
 void
 MidiInput::start()
 {
-	input = this;
+    input = this;
 
-	if (running == 1)
-	{
-		debug(DEBUG_APPERROR, "MidiInput already started!");
-	}
-	else
-	{
-		running = 1;
+    if (running == 1)
+    {
+        debug(DEBUG_APPERROR, "MidiInput already started!");
+    }
+    else
+    {
+        running = 1;
 
 #ifndef TARGET_VST
-		MMRESULT result = midiInStart(handle);
+        MMRESULT result = midiInStart(handle);
 
-		if (result != MMSYSERR_NOERROR)
-		{
-			printf("Error starting Device :%d\n", result);
-		}
+        if (result != MMSYSERR_NOERROR)
+        {
+            printf("Error starting Device :%d\n", result);
+        }
 #endif
-	}
+    }
 }
 
 void
 MidiInput::stop()
 {
-	puts("stop midi device");
+    puts("stop midi device");
 
 #ifndef TARGET_VST
-	midiInStop(handle);
+    midiInStop(handle);
 #endif
 
-	running = 0;
+    running = 0;
 }
 
 bool MidiInput::isOpen()
 {
-	return (handle != NULL);
+    return (handle != NULL);
 }
 
 
 void
 MidiInput::proc(unsigned char cmd, unsigned char channel, unsigned char *data)
 {
-	switch (cmd)
-	{
-		case MIDI_NOTEOFF: //0x80
+    switch (cmd)
+    {
+        case MIDI_NOTEOFF: //0x80
 
-			doNoteOff(channel, data[0], data[1]);
-			break;
+            doNoteOff(channel, data[0], data[1]);
+            break;
 
-		case MIDI_NOTEON: //0x90
+        case MIDI_NOTEON: //0x90
 
-			if (data[1] == 0) // some midi keyboards or synths are returning Velocity 0 if the key is released
-			{
-				doNoteOff(channel, data[0], data[1]);
-			}
-			else
-			{
-				doNoteOn(channel, data[0], data[1]);
-			}
-			break;
+            if (data[1] == 0) // some midi keyboards or synths are returning Velocity 0 if the key is released
+            {
+                doNoteOff(channel, data[0], data[1]);
+            }
+            else
+            {
+                doNoteOn(channel, data[0], data[1]);
+            }
+            break;
 
-		case MIDI_KEY_PRESSURE: //0xA0
+        case MIDI_KEY_PRESSURE: //0xA0
 
-			debug(DEBUG_STATUS, "KEY PRESSURE ch=%d note=%d amount=%d\n",
-				channel, cmd, data[0]);
-			break;
+            debug(DEBUG_STATUS, "KEY PRESSURE ch=%d note=%d amount=%d\n",
+                channel, cmd, data[0]);
+            break;
 
-		case MIDI_CTL_CHANGE: //0xB0
+        case MIDI_CTL_CHANGE: //0xB0
 
-			debug(DEBUG_STATUS, "CTL_CHANGE %d %d %d\n", channel, data[0], data[1]);
-			switch (data[0])
-			{
-				case 1: // modulation
-					printf("modulation to %d\n", data[1]);
-					break;
-				case 7: //main volume
-					printf("set main volume to %d\n", data[1]);
-					control->MoogObject::getOutput("volume")->setData(data[1] / 127);
-					break;
-				case 10: //panning
-					printf("set panning %d\n", data[1]);
-					control->MoogObject::getOutput("panning")->setData(data[1] / 127);
-					break;
-				case 64: //sustain
-					printf("sustain not supported %d\n", data[1]);
-					break;
-				case 123: //all notes off
-					allNotesOff();
-					break;
-				default:
-					printf("unsupported command %d\n", data[0]);
-					break;
-			}
+            debug(DEBUG_STATUS, "CTL_CHANGE %d %d %d\n", channel, data[0], data[1]);
+            switch (data[0])
+            {
+                case 1: // modulation
+                    printf("modulation to %d\n", data[1]);
+                    break;
+                case 7: //main volume
+                    printf("set main volume to %d\n", data[1]);
+                    control->MoogObject::getOutput("volume")->setData(data[1] / 127);
+                    break;
+                case 10: //panning
+                    printf("set panning %d\n", data[1]);
+                    control->MoogObject::getOutput("panning")->setData(data[1] / 127);
+                    break;
+                case 64: //sustain
+                    printf("sustain not supported %d\n", data[1]);
+                    break;
+                case 123: //all notes off
+                    allNotesOff();
+                    break;
+                default:
+                    printf("unsupported command %d\n", data[0]);
+                    break;
+            }
 
-			break;
+            break;
 
-		case MIDI_PGM_CHANGE: //0xC0
+        case MIDI_PGM_CHANGE: //0xC0
 
-			debug(DEBUG_STATUS, "PGM_CHANGE %d %d\n", channel, data[0]);
-			printf("change program to %d\n", data[0]);
-			control->MoogObject::getOutput("patch_change")->setData(data[0]);
+            debug(DEBUG_STATUS, "PGM_CHANGE %d %d\n", channel, data[0]);
+            printf("change program to %d\n", data[0]);
+            control->MoogObject::getOutput("patch_change")->setData(data[0]);
 
-			break;
+            break;
 
-		case MIDI_CHN_PRESSURE: //0xD0
+        case MIDI_CHN_PRESSURE: //0xD0
 
-			debug(DEBUG_STATUS, "CHN_PRESSURE %d %d\n", channel, data[0]);
-			break;
+            debug(DEBUG_STATUS, "CHN_PRESSURE %d %d\n", channel, data[0]);
+            break;
 
-		case MIDI_PITCH_BEND: //0xE0
+        case MIDI_PITCH_BEND: //0xE0
 
-			doPitchBend((data[1] << 7) & 0xFF00 | data[0]);
-			break;
+            doPitchBend((data[1] << 7) & 0xFF00 | data[0]);
+            break;
 
-		case MIDI_SYSTEM_PREFIX: //0xF0 SysEx? i have to study the format first. currently not supported
-			switch (channel)
-			{
-				case 0:
-					break;
-			}
-			break;
+        case MIDI_SYSTEM_PREFIX: //0xF0 SysEx? i have to study the format first. currently not supported
+            switch (channel)
+            {
+                case 0:
+                    break;
+            }
+            break;
 
-		default:
-			debug(DEBUG_STATUS, "[%d]\n", cmd);
-	}
+        default:
+            debug(DEBUG_STATUS, "[%d]\n", cmd);
+    }
 }
 
 void
 MidiInput::doNoteOn(unsigned int c, unsigned int n, unsigned int v)
 {
-	/* try to avoid re-using the same note as long as possible, so that
-	 * if it has a Release envelope, it will get as much time as possible
-	 */
-	int start = (lastNote + 1) % nvoices;
-	int i = start;
+    /* try to avoid re-using the same note as long as possible, so that
+     * if it has a Release envelope, it will get as much time as possible
+     */
+    int start = (lastNote + 1) % nvoices;
+    int i = start;
 
-	do
-	{
-		if (voices[i].note == -1)
-		{
-			voices[i].note = n;
-			voices[i].pitchOutput->setData(CPS(midi_notes[n]));
-			voices[i].gateOutput->setData(v / 127.0);
-			lastNote = i;
-			break;
-		}
+    do
+    {
+        if (voices[i].note == -1)
+        {
+            voices[i].note = n;
+            voices[i].pitchOutput->setData(CPS(midi_notes[n]));
+            voices[i].gateOutput->setData(v / 127.0);
+            lastNote = i;
+            break;
+        }
 
-		i = (i + 1) % nvoices;
-	} while (i != start);
+        i = (i + 1) % nvoices;
+    } while (i != start);
 }
 
 void
 MidiInput::allNotesOff()
 {
-	for (int i = 0;i < nvoices;i++)
-	{
-		voices[i].note = -1;
-		// important to keep outputting the pitch signal though
-		voices[i].gateOutput->setData(0);
-	}
+    for (int i = 0;i < nvoices;i++)
+    {
+        voices[i].note = -1;
+        // important to keep outputting the pitch signal though
+        voices[i].gateOutput->setData(0);
+    }
 
 }
 
 void
 MidiInput::doNoteOff(unsigned int c, unsigned int n, unsigned int v)
 {
-	//debug( DEBUG_STATUS, "MidiInput::noteOff %d %d %d", c, n, v );
+    //debug( DEBUG_STATUS, "MidiInput::noteOff %d %d %d", c, n, v );
 
-	// stop all voices playing this note ( because of race condition? )
-	for (int i = 0;i < nvoices;i++)
-	{
-		if (voices[i].note == (int)n)
-		{
-			voices[i].note = -1;
-			// important to keep outputting the pitch signal though
-			voices[i].gateOutput->setData(0);
-		}
-	}
+    // stop all voices playing this note ( because of race condition? )
+    for (int i = 0;i < nvoices;i++)
+    {
+        if (voices[i].note == (int)n)
+        {
+            voices[i].note = -1;
+            // important to keep outputting the pitch signal though
+            voices[i].gateOutput->setData(0);
+        }
+    }
 }
 
 void
 MidiInput::doPitchBend(unsigned int amount)
 {
-	//debug( DEBUG_STATUS, "MidiInput::pitchBend %d", amount );
+    //debug( DEBUG_STATUS, "MidiInput::pitchBend %d", amount );
 
-	double pitchBend = (double)amount / 8192 - 1.0;
+    double pitchBend = (double)amount / 8192 - 1.0;
 
 #ifdef KARL_BEND
-	for (int i = 0;i < nvoices;i++)
-	{
-		if (voices[i] != -1)
-		{
-			outputs[O_MIDI_SIG(i)].data =
-				CPS(midi_notes[voices[i]]) * pitchBend;
-		}
-	}
+    for (int i = 0;i < nvoices;i++)
+    {
+        if (voices[i] != -1)
+        {
+            outputs[O_MIDI_SIG(i)].data =
+                CPS(midi_notes[voices[i]]) * pitchBend;
+        }
+    }
 #else
-	outputs[0].setData(pitchBend);
+    outputs[0].setData(pitchBend);
 #endif
 }
 
+bool 
+MidiInput::isNoteOn()
+{
+    for (int i = 0;i < nvoices;i++)
+    {
+        if (voices[i].note != -1)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}

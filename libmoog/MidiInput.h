@@ -17,7 +17,7 @@
  */
 /**
  * Copyright (c) UltraMaster Group, LLC. All Rights Reserved.
- * $Revision: 1.8 $$Date: 2004/04/15 12:58:08 $
+ * $Revision: 1.9 $$Date: 2004/04/15 20:20:23 $
  */
 #ifndef MIDIINPUT_H
 #define MIDIINPUT_H
@@ -45,9 +45,9 @@ also to think about portamento, glissando, unison, pitch bend, expression
 
 struct midi_voice
 {
-	int note;
-	Output *pitchOutput;
-	Output *gateOutput;
+    int note;
+    Output *pitchOutput;
+    Output *gateOutput;
 };
 
 class MidiInput: public MoogObject
@@ -55,34 +55,35 @@ class MidiInput: public MoogObject
 //    friend void *midi_input_run(void *);
 
 public:
-	int running;
-	int nvoices;
-	int lastNote;
-	struct midi_voice *voices;
+    int running;
+    int nvoices;
+    int lastNote;
+    struct midi_voice *voices;
 
-	JunoControl *control;
+    JunoControl *control;
 
-	inline void *run();
-	inline void allNotesOff();
-	inline void doNoteOn(unsigned int c, unsigned int n, unsigned int v);
-	inline void doNoteOff(unsigned int c, unsigned int n, unsigned int v);
-	inline void doPitchBend(unsigned int amount);
+    inline void *run();
+    inline void allNotesOff();
+    inline void doNoteOn(unsigned int c, unsigned int n, unsigned int v);
+    inline void doNoteOff(unsigned int c, unsigned int n, unsigned int v);
+    inline void doPitchBend(unsigned int amount);
 
-	MidiInput(JunoControl *jc, int nv);
-	~MidiInput();
+    MidiInput(JunoControl *jc, int nv);
+    ~MidiInput();
 
-	void start();
-	void stop();
-	bool isOpen();
+    void start();
+    void stop();
+    bool isOpen();
+    bool isNoteOn();
 
-	void proc(unsigned char cmd, unsigned char channel, unsigned char *data);
+    void proc(unsigned char cmd, unsigned char channel, unsigned char *data);
 
-	inline virtual const char *getClassName()
-	{
-		return "MidiInput";
-	}
+    inline virtual const char *getClassName()
+    {
+        return "MidiInput";
+    }
 
-	inline Output *getOutput(const char *n);
+    inline Output *getOutput(const char *n);
 };
 
 #endif /* MIDIINPUT_H */
